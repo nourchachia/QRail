@@ -1,0 +1,502 @@
+[
+  {
+    "incident_id": "inc_golden_01",
+    "semantic_description": "Total signal loss at West Hub. Peak AM. Rerouted all R1 prefix trains to Platform 1 via Segment A",
+    "resolution_code": "REROUTE_WEST_P1_VIA_A",
+    "outcome_metrics": {
+      "delay_minutes": 19,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_02",
+    "semantic_description": "Switch malfunction at West Hub. Peak PM. Isolated faulty switch, directed L2 trains to alternate Platform 4",
+    "resolution_code": "ISOLATE_SWITCH_WEST_P4",
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_03",
+    "semantic_description": "Platform equipment failure at River Station. Midday. Bypassed River Station, E1 trains skip-stopped to North Terminal",
+    "resolution_code": "BYPASS_RIVE_TO_NORT",
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_04",
+    "semantic_description": "Track obstruction on Segment A between North Terminal and Bridge Station. Early morning. Activated alternate loop route via Lake Station",
+    "resolution_code": "LOOP_VIA_LAKE",
+    "outcome_metrics": {
+      "delay_minutes": 17,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_05",
+    "semantic_description": "Power system fault at Meadow Station. Late evening. Diverted L2 services to diesel routing via Valley Station",
+    "resolution_code": "DIESEL_ROUTE_MEAD_VIA_VALL",
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_06",
+    "semantic_description": "Communication system loss at East Exchange. Peak AM. Manual signal authorization, reduced capacity on Platform 11",
+    "resolution_code": "MANUAL_AUTH_EAST_P11",
+    "outcome_metrics": {
+      "delay_minutes": 13,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_07",
+    "semantic_description": "Signal degradation on main line Segment B. Midday. Reduced speed limit to 80 km/h, spacing adjustments on all R1 trains",
+    "resolution_code": "REDUCE_SPEED_B_ALL_R1",
+    "outcome_metrics": {
+      "delay_minutes": 4,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_08",
+    "semantic_description": "Interlocking system fault at East Exchange. Peak PM. Emergency manual operations, consolidated arrivals to Platform 3",
+    "resolution_code": "MANUAL_OPS_EAST_CONSOL_P3",
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_09",
+    "semantic_description": "Track maintenance emergency at Grove Station. Early morning. Single-track operation, alternating T3 trains every 15 min",
+    "resolution_code": "SINGLE_TRACK_GROV_ALT_T3",
+    "outcome_metrics": {
+      "delay_minutes": 14,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_10",
+    "semantic_description": "Platform overcrowding at East Exchange. Peak AM. Split arrivals between Platform 11 and Platform 6, extra T1 service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_EAST_P11_P6",
+    "outcome_metrics": {
+      "delay_minutes": 2,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_11",
+    "semantic_description": "Total signal loss at Central Station. Peak AM. Rerouted all X1 prefix trains to Platform 2 via Segment C",
+    "resolution_code": "REROUTE_CENT_P2_VIA_C",
+    "outcome_metrics": {
+      "delay_minutes": 20,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_12",
+    "semantic_description": "Switch malfunction at North Terminal. Peak PM. Isolated faulty switch, directed T3 trains to alternate Platform 3",
+    "resolution_code": "ISOLATE_SWITCH_NORT_P3",
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_13",
+    "semantic_description": "Platform equipment failure at Forest Station. Midday. Bypassed Forest Station, E2 trains skip-stopped to West Hub",
+    "resolution_code": "BYPASS_FORE_TO_WEST",
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_14",
+    "semantic_description": "Track obstruction on Segment D between North Terminal and Heights Station. Early morning. Activated alternate loop route via Meadow Station",
+    "resolution_code": "LOOP_VIA_MEAD",
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_15",
+    "semantic_description": "Power system fault at Lake Station. Late evening. Diverted L1 services to diesel routing via Grove Station",
+    "resolution_code": "DIESEL_ROUTE_LAKE_VIA_GROV",
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_16",
+    "semantic_description": "Communication system loss at South Junction. Peak AM. Manual signal authorization, reduced capacity on Platform 11",
+    "resolution_code": "MANUAL_AUTH_SOUT_P11",
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_17",
+    "semantic_description": "Signal degradation on main line Segment B. Midday. Reduced speed limit to 80 km/h, spacing adjustments on all R2 trains",
+    "resolution_code": "REDUCE_SPEED_B_ALL_R2",
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_18",
+    "semantic_description": "Interlocking system fault at North Terminal. Peak PM. Emergency manual operations, consolidated arrivals to Platform 11",
+    "resolution_code": "MANUAL_OPS_NORT_CONSOL_P11",
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_19",
+    "semantic_description": "Track maintenance emergency at Hill Station. Early morning. Single-track operation, alternating X1 trains every 15 min",
+    "resolution_code": "SINGLE_TRACK_HILL_ALT_X1",
+    "outcome_metrics": {
+      "delay_minutes": 13,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_20",
+    "semantic_description": "Platform overcrowding at East Exchange. Peak AM. Split arrivals between Platform 5 and Platform 4, extra T1 service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_EAST_P5_P4",
+    "outcome_metrics": {
+      "delay_minutes": 2,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_21",
+    "semantic_description": "Total signal loss at West Hub. Peak AM. Rerouted all T3 prefix trains to Platform 2 via Segment D",
+    "resolution_code": "REROUTE_WEST_P2_VIA_D",
+    "outcome_metrics": {
+      "delay_minutes": 19,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_22",
+    "semantic_description": "Switch malfunction at East Exchange. Peak PM. Isolated faulty switch, directed E2 trains to alternate Platform 9",
+    "resolution_code": "ISOLATE_SWITCH_EAST_P9",
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_23",
+    "semantic_description": "Platform equipment failure at Bridge Station. Midday. Bypassed Bridge Station, E1 trains skip-stopped to West Hub",
+    "resolution_code": "BYPASS_BRID_TO_WEST",
+    "outcome_metrics": {
+      "delay_minutes": 9,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_24",
+    "semantic_description": "Track obstruction on Segment B between West Hub and River Station. Early morning. Activated alternate loop route via Grove Station",
+    "resolution_code": "LOOP_VIA_GROV",
+    "outcome_metrics": {
+      "delay_minutes": 15,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_25",
+    "semantic_description": "Power system fault at Forest Station. Late evening. Diverted T2 services to diesel routing via Bridge Station",
+    "resolution_code": "DIESEL_ROUTE_FORE_VIA_BRID",
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_26",
+    "semantic_description": "Communication system loss at North Terminal. Peak AM. Manual signal authorization, reduced capacity on Platform 2",
+    "resolution_code": "MANUAL_AUTH_NORT_P2",
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_27",
+    "semantic_description": "Signal degradation on main line Segment B. Midday. Reduced speed limit to 80 km/h, spacing adjustments on all X1 trains",
+    "resolution_code": "REDUCE_SPEED_B_ALL_X1",
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_28",
+    "semantic_description": "Interlocking system fault at North Terminal. Peak PM. Emergency manual operations, consolidated arrivals to Platform 2",
+    "resolution_code": "MANUAL_OPS_NORT_CONSOL_P2",
+    "outcome_metrics": {
+      "delay_minutes": 17,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_29",
+    "semantic_description": "Track maintenance emergency at Lake Station. Early morning. Single-track operation, alternating T2 trains every 15 min",
+    "resolution_code": "SINGLE_TRACK_LAKE_ALT_T2",
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_30",
+    "semantic_description": "Platform overcrowding at East Exchange. Peak AM. Split arrivals between Platform 4 and Platform 5, extra L2 service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_EAST_P4_P5",
+    "outcome_metrics": {
+      "delay_minutes": 4,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_31",
+    "semantic_description": "Total signal loss at North Terminal. Peak AM. Rerouted all T2 prefix trains to Platform 8 via Segment C",
+    "resolution_code": "REROUTE_NORT_P8_VIA_C",
+    "outcome_metrics": {
+      "delay_minutes": 21,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_32",
+    "semantic_description": "Switch malfunction at West Hub. Peak PM. Isolated faulty switch, directed R1 trains to alternate Platform 1",
+    "resolution_code": "ISOLATE_SWITCH_WEST_P1",
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_33",
+    "semantic_description": "Platform equipment failure at River Station. Midday. Bypassed River Station, T3 trains skip-stopped to East Exchange",
+    "resolution_code": "BYPASS_RIVE_TO_EAST",
+    "outcome_metrics": {
+      "delay_minutes": 9,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_34",
+    "semantic_description": "Track obstruction on Segment D between Central Station and Lake Station. Early morning. Activated alternate loop route via Valley Station",
+    "resolution_code": "LOOP_VIA_VALL",
+    "outcome_metrics": {
+      "delay_minutes": 18,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_35",
+    "semantic_description": "Power system fault at Bridge Station. Late evening. Diverted L2 services to diesel routing via Hill Station",
+    "resolution_code": "DIESEL_ROUTE_BRID_VIA_HILL",
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_36",
+    "semantic_description": "Communication system loss at South Junction. Peak AM. Manual signal authorization, reduced capacity on Platform 8",
+    "resolution_code": "MANUAL_AUTH_SOUT_P8",
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_37",
+    "semantic_description": "Signal degradation on main line Segment B. Midday. Reduced speed limit to 80 km/h, spacing adjustments on all T2 trains",
+    "resolution_code": "REDUCE_SPEED_B_ALL_T2",
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_38",
+    "semantic_description": "Interlocking system fault at East Exchange. Peak PM. Emergency manual operations, consolidated arrivals to Platform 10",
+    "resolution_code": "MANUAL_OPS_EAST_CONSOL_P10",
+    "outcome_metrics": {
+      "delay_minutes": 15,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_39",
+    "semantic_description": "Track maintenance emergency at Meadow Station. Early morning. Single-track operation, alternating E1 trains every 15 min",
+    "resolution_code": "SINGLE_TRACK_MEAD_ALT_E1",
+    "outcome_metrics": {
+      "delay_minutes": 12,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_40",
+    "semantic_description": "Platform overcrowding at South Junction. Peak AM. Split arrivals between Platform 8 and Platform 6, extra T2 service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_SOUT_P8_P6",
+    "outcome_metrics": {
+      "delay_minutes": 1,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_41",
+    "semantic_description": "Total signal loss at East Exchange. Peak AM. Rerouted all L2 prefix trains to Platform 9 via Segment A",
+    "resolution_code": "REROUTE_EAST_P9_VIA_A",
+    "outcome_metrics": {
+      "delay_minutes": 20,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_42",
+    "semantic_description": "Switch malfunction at North Terminal. Peak PM. Isolated faulty switch, directed T3 trains to alternate Platform 6",
+    "resolution_code": "ISOLATE_SWITCH_NORT_P6",
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_43",
+    "semantic_description": "Platform equipment failure at Valley Station. Midday. Bypassed Valley Station, R2 trains skip-stopped to West Hub",
+    "resolution_code": "BYPASS_VALL_TO_WEST",
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_44",
+    "semantic_description": "Track obstruction on Segment A between North Terminal and Valley Station. Early morning. Activated alternate loop route via Grove Station",
+    "resolution_code": "LOOP_VIA_GROV",
+    "outcome_metrics": {
+      "delay_minutes": 17,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_45",
+    "semantic_description": "Power system fault at Meadow Station. Late evening. Diverted R2 services to diesel routing via Bridge Station",
+    "resolution_code": "DIESEL_ROUTE_MEAD_VIA_BRID",
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_46",
+    "semantic_description": "Communication system loss at East Exchange. Peak AM. Manual signal authorization, reduced capacity on Platform 11",
+    "resolution_code": "MANUAL_AUTH_EAST_P11",
+    "outcome_metrics": {
+      "delay_minutes": 9,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_47",
+    "semantic_description": "Signal degradation on main line Segment C. Midday. Reduced speed limit to 80 km/h, spacing adjustments on all L2 trains",
+    "resolution_code": "REDUCE_SPEED_C_ALL_L2",
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_48",
+    "semantic_description": "Interlocking system fault at West Hub. Peak PM. Emergency manual operations, consolidated arrivals to Platform 12",
+    "resolution_code": "MANUAL_OPS_WEST_CONSOL_P12",
+    "outcome_metrics": {
+      "delay_minutes": 15,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_49",
+    "semantic_description": "Track maintenance emergency at Meadow Station. Early morning. Single-track operation, alternating T1 trains every 15 min",
+    "resolution_code": "SINGLE_TRACK_MEAD_ALT_T1",
+    "outcome_metrics": {
+      "delay_minutes": 13,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_50",
+    "semantic_description": "Platform overcrowding at South Junction. Peak AM. Split arrivals between Platform 11 and Platform 4, extra T2 service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_SOUT_P11_P4",
+    "outcome_metrics": {
+      "delay_minutes": 3,
+      "passenger_satisfaction": "High"
+    },
+    "is_golden": true
+  }
+]
