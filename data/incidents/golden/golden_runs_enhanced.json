@@ -1,0 +1,1519 @@
+[
+  {
+    "incident_id": "inc_golden_01",
+    "incident_type": "signal_loss",
+    "semantic_description": "Total signal loss at West Hub. Peak AM. Rerouted all trains via loop segments to maintain service",
+    "resolution_code": "REROUTE_WEST_LOOP",
+    "primary_station": {
+      "id": "STN_005",
+      "name": "West Hub",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 135302,
+      "platforms": 12,
+      "coordinates": [56.18, 30.98]
+    },
+    "affected_segments": [
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20, "is_critical": true},
+      {"id": "SEG_005", "from_station": "STN_005", "to_station": "STN_001", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20, "is_critical": true}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_055", "from_station": "STN_007", "to_station": "STN_008", "length_km": 95.8, "capacity": 10},
+        {"id": "SEG_056", "from_station": "STN_007", "to_station": "STN_009", "length_km": 79.0, "capacity": 10}
+      ],
+      "total_distance_km": 174.8,
+      "original_capacity": 20,
+      "alternate_capacity": 10
+    },
+    "outcome_metrics": {
+      "delay_minutes": 19,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 3847,
+      "recovery_time_minutes": 45,
+      "service_continuity": "maintained"
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_02",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at West Hub. Peak PM. Isolated faulty switch, directed trains to alternate platform with minimal delay",
+    "resolution_code": "ISOLATE_SWITCH_WEST",
+    "primary_station": {
+      "id": "STN_005",
+      "name": "West Hub",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 135302,
+      "platforms": 12,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20},
+      {"id": "SEG_009", "from_station": "STN_005", "to_station": "STN_009", "type": "branch", "length_km": 29.5, "speed_limit": 120, "capacity": 12}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "affected_platforms": [4, 5, 6],
+      "redirected_platforms": [7, 8, 9]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High",
+      "service_continuity": "maintained",
+      "trains_affected": 12
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_03",
+    "incident_type": "platform_failure",
+    "semantic_description": "Platform equipment failure at River Station. Bypassed station via skip-stop service to North Terminal",
+    "resolution_code": "BYPASS_RIVER_SKIP_STOP",
+    "primary_station": {
+      "id": "STN_013",
+      "name": "River Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 56178,
+      "platforms": 4,
+      "coordinates": [84.29, 84.22]
+    },
+    "affected_segments": [
+      {"id": "SEG_013", "from_station": "STN_002", "to_station": "STN_013", "type": "branch", "length_km": 63.9, "speed_limit": 120, "capacity": 12},
+      {"id": "SEG_052", "from_station": "STN_006", "to_station": "STN_013", "type": "loop", "length_km": 61.7, "speed_limit": 100, "capacity": 10}
+    ],
+    "bypass_stations": ["STN_013"],
+    "skip_stop_route": {
+      "segments": [
+        {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "length_km": 58.8},
+        {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "length_km": 58.8}
+      ],
+      "total_distance_km": 117.6
+    },
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1606,
+      "skip_stop_passengers_handled": 1606
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_04",
+    "incident_type": "track_obstruction",
+    "semantic_description": "Track obstruction on main line. Early morning. Activated alternate loop route via Lake Station",
+    "resolution_code": "ACTIVATE_LOOP_LAKE",
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20, "is_critical": true}
+    ],
+    "obstruction_location": {
+      "segment_id": "SEG_002",
+      "station_from": "STN_002",
+      "station_from_name": "North Terminal",
+      "station_to": "STN_003",
+      "station_to_name": "South Junction"
+    },
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_012", "from_station": "STN_002", "to_station": "STN_012", "type": "branch", "length_km": 29.5},
+        {"id": "SEG_058", "from_station": "STN_008", "to_station": "STN_012", "type": "loop", "length_km": 73.6}
+      ],
+      "total_distance_km": 103.1,
+      "additional_time_minutes": 22
+    },
+    "outcome_metrics": {
+      "delay_minutes": 17,
+      "passenger_satisfaction": "High",
+      "service_recovery_time_minutes": 52,
+      "trains_rerouted": 18
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_05",
+    "incident_type": "power_fault",
+    "semantic_description": "Power system fault at Meadow Station. Late evening. Diverted services to diesel routing via Valley Station",
+    "resolution_code": "DIESEL_ROUTE_MEADOW",
+    "primary_station": {
+      "id": "STN_015",
+      "name": "Meadow Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 34935,
+      "platforms": 6,
+      "electrified": true
+    },
+    "affected_segments": [
+      {"id": "SEG_015", "from_station": "STN_002", "to_station": "STN_015", "type": "branch", "length_km": 22.9, "speed_limit": 120, "capacity": 12}
+    ],
+    "resolution": {
+      "action": "diesel_routing",
+      "reason": "electrification_loss",
+      "alternate_station": "STN_010",
+      "alternate_station_name": "Valley Station"
+    },
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High",
+      "diesel_trains_deployed": 4,
+      "electrified_coverage_restored_minutes": 38
+    },
+    "time_of_day": "late_evening",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_06",
+    "incident_type": "communication_loss",
+    "semantic_description": "Communication system loss at East Exchange. Peak AM. Manual signal authorization with reduced platform capacity",
+    "resolution_code": "MANUAL_AUTH_EAST",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8,
+      "has_switches": true,
+      "is_junction": true
+    },
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20},
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20},
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5, "speed_limit": 120, "capacity": 12}
+    ],
+    "resolution": {
+      "action": "manual_signal_authorization",
+      "original_capacity": 8,
+      "reduced_capacity": 5,
+      "capacity_reduction_percent": 37.5,
+      "dispatcher_staff_deployed": 8
+    },
+    "outcome_metrics": {
+      "delay_minutes": 13,
+      "passenger_satisfaction": "High",
+      "trains_per_hour_capacity": 12,
+      "communication_restored_minutes": 47
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_07",
+    "incident_type": "signal_degradation",
+    "semantic_description": "Signal degradation on main line. Midday. Reduced speed limit to 80 km/h with spacing adjustments",
+    "resolution_code": "REDUCE_SPEED_MAIN_LINE",
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20}
+    ],
+    "resolution": {
+      "action": "speed_reduction",
+      "original_speed_limit": 160,
+      "reduced_speed_limit": 80,
+      "speed_reduction_percent": 50,
+      "spacing_interval_seconds": 180,
+      "trains_affected": 24
+    },
+    "impact_analysis": {
+      "normal_travel_time_minutes": 22.08,
+      "degraded_travel_time_minutes": 44.16,
+      "additional_travel_time_minutes": 22.08,
+      "capacity_reduction_percent": 25
+    },
+    "outcome_metrics": {
+      "delay_minutes": 4,
+      "passenger_satisfaction": "High",
+      "signal_degradation_resolved_minutes": 28
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_08",
+    "incident_type": "interlocking_fault",
+    "semantic_description": "Interlocking system fault at East Exchange. Peak PM. Emergency manual operations with consolidated arrivals",
+    "resolution_code": "MANUAL_OPS_EAST",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8
+    },
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5}
+    ],
+    "resolution": {
+      "action": "consolidated_arrivals",
+      "primary_platform": 3,
+      "consolidated_from_platforms": [1, 2, 4, 5, 6, 7, 8],
+      "manual_controllers_deployed": 6,
+      "interlocking_restored_time_minutes": 52
+    },
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High",
+      "trains_consolidated": 22
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_09",
+    "incident_type": "track_maintenance",
+    "semantic_description": "Track maintenance emergency at Grove Station. Early morning. Single-track operation with alternating train dispatch",
+    "resolution_code": "SINGLE_TRACK_GROVE",
+    "primary_station": {
+      "id": "STN_007",
+      "name": "Grove Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 55713,
+      "platforms": 6,
+      "is_junction": true
+    },
+    "affected_segments": [
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5, "speed_limit": 120, "capacity": 12, "bidirectional": true},
+      {"id": "SEG_055", "from_station": "STN_007", "to_station": "STN_008", "type": "loop", "length_km": 95.8, "speed_limit": 100, "capacity": 10}
+    ],
+    "resolution": {
+      "action": "single_track_operation",
+      "normal_capacity_both_directions": 24,
+      "single_track_capacity": 6,
+      "capacity_reduction_percent": 75,
+      "alternating_dispatch_interval_minutes": 15,
+      "maintenance_duration_hours": 4
+    },
+    "outcome_metrics": {
+      "delay_minutes": 14,
+      "passenger_satisfaction": "High",
+      "trains_delayed": 14,
+      "service_restoration_time_hours": 4.2
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_10",
+    "incident_type": "platform_overcrowding",
+    "semantic_description": "Platform overcrowding at East Exchange. Peak AM. Split arrivals between multiple platforms with extra service deployed",
+    "resolution_code": "SPLIT_ARRIVALS_EAST",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8
+    },
+    "resolution": {
+      "action": "split_arrivals",
+      "primary_platforms": [1, 2, 3],
+      "secondary_platforms": [4, 5],
+      "extra_services_deployed": 2,
+      "crowd_distribution_percent": 40,
+      "platform_capacity_utilization_before": 95,
+      "platform_capacity_utilization_after": 65
+    },
+    "outcome_metrics": {
+      "delay_minutes": 2,
+      "passenger_satisfaction": "High",
+      "passengers_redistributed": 4568,
+      "extra_train_cost_minutes": 12
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_11",
+    "incident_type": "signal_loss",
+    "semantic_description": "Total signal loss at Central Station. Peak AM. Rerouted trains via alternate core segments",
+    "resolution_code": "REROUTE_CENTRAL",
+    "primary_station": {
+      "id": "STN_001",
+      "name": "Central Station",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 83278,
+      "platforms": 8,
+      "coordinates": [70.0, 50.0]
+    },
+    "affected_segments": [
+      {"id": "SEG_005", "from_station": "STN_005", "to_station": "STN_001", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_051", "from_station": "STN_006", "to_station": "STN_012", "type": "loop", "length_km": 92.2},
+        {"id": "SEG_069", "from_station": "STN_011", "to_station": "STN_012", "type": "loop", "length_km": 71.0}
+      ],
+      "total_distance_km": 163.2
+    },
+    "outcome_metrics": {
+      "delay_minutes": 20,
+      "passenger_satisfaction": "High",
+      "signal_restoration_time_minutes": 48,
+      "affected_passengers": 3747
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_12",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at North Terminal. Peak PM. Isolated faulty switch with rapid platform redirection",
+    "resolution_code": "ISOLATE_SWITCH_NORTH",
+    "primary_station": {
+      "id": "STN_002",
+      "name": "North Terminal",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 112098,
+      "platforms": 10,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_010", "from_station": "STN_002", "to_station": "STN_010", "type": "branch", "length_km": 38.2}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "faulty_switch_location": "junction_between_main_and_branch",
+      "affected_platforms": [3, 4, 5],
+      "redirected_platforms": [6, 7, 8]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 8,
+      "switch_repair_time_minutes": 22
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_13",
+    "incident_type": "platform_failure",
+    "semantic_description": "Platform equipment failure at Forest Station. Bypassed station with skip-stop service to West Hub",
+    "resolution_code": "BYPASS_FOREST",
+    "primary_station": {
+      "id": "STN_014",
+      "name": "Forest Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 57837,
+      "platforms": 5,
+      "coordinates": [38.59, 91.02]
+    },
+    "affected_segments": [
+      {"id": "SEG_014", "from_station": "STN_002", "to_station": "STN_014", "type": "branch", "length_km": 56.3},
+      {"id": "SEG_059", "from_station": "STN_008", "to_station": "STN_014", "type": "loop", "length_km": 69.7}
+    ],
+    "bypass_stations": ["STN_014"],
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1648,
+      "platform_repair_time_hours": 3.5
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_14",
+    "incident_type": "track_obstruction",
+    "semantic_description": "Track obstruction on main line. Early morning. Activated alternate loop route via Meadow Station",
+    "resolution_code": "ACTIVATE_LOOP_MEADOW",
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8, "speed_limit": 160}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_018", "from_station": "STN_003", "to_station": "STN_018", "type": "branch", "length_km": 30.0},
+        {"id": "SEG_067", "from_station": "STN_010", "to_station": "STN_018", "type": "loop", "length_km": 43.1}
+      ],
+      "total_distance_km": 73.1
+    },
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 20,
+      "obstruction_cleared_time_minutes": 38
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_15",
+    "incident_type": "power_fault",
+    "semantic_description": "Power system fault at Lake Station. Late evening. Diverted services to diesel routing via Grove Station",
+    "resolution_code": "DIESEL_ROUTE_LAKE",
+    "primary_station": {
+      "id": "STN_012",
+      "name": "Lake Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 55142,
+      "platforms": 5,
+      "electrified": true
+    },
+    "affected_segments": [
+      {"id": "SEG_012", "from_station": "STN_002", "to_station": "STN_012", "type": "branch", "length_km": 29.5},
+      {"id": "SEG_058", "from_station": "STN_008", "to_station": "STN_012", "type": "loop", "length_km": 73.6}
+    ],
+    "resolution": {
+      "action": "diesel_routing",
+      "diesel_trains_deployed": 3,
+      "alternate_charging_station": "STN_007",
+      "alternate_charging_station_name": "Grove Station"
+    },
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High",
+      "electrification_restoration_time_minutes": 35,
+      "diesel_trains_repositioned": 3
+    },
+    "time_of_day": "late_evening",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_16",
+    "incident_type": "communication_loss",
+    "semantic_description": "Communication system loss at South Junction. Peak AM. Manual signal authorization with strategic capacity management",
+    "resolution_code": "MANUAL_AUTH_SOUTH",
+    "primary_station": {
+      "id": "STN_003",
+      "name": "South Junction",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 98289,
+      "platforms": 9,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_008", "from_station": "STN_003", "to_station": "STN_008", "type": "branch", "length_km": 38.6}
+    ],
+    "resolution": {
+      "action": "manual_signal_authorization",
+      "dispatcher_staff_deployed": 7,
+      "reduced_capacity_percent": 30
+    },
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High",
+      "communication_restoration_time_minutes": 42,
+      "trains_per_hour_capacity": 14
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_17",
+    "incident_type": "signal_degradation",
+    "semantic_description": "Signal degradation on main line. Midday. Reduced speed limit to 80 km/h with spacing adjustments",
+    "resolution_code": "REDUCE_SPEED_MAIN_B",
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8, "speed_limit": 160}
+    ],
+    "resolution": {
+      "action": "speed_reduction",
+      "original_speed_limit": 160,
+      "reduced_speed_limit": 80,
+      "spacing_adjustment_seconds": 180
+    },
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "trains_affected": 22,
+      "signal_restoration_time_minutes": 31
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_18",
+    "incident_type": "interlocking_fault",
+    "semantic_description": "Interlocking system fault at North Terminal. Peak PM. Emergency manual operations with platform consolidation",
+    "resolution_code": "MANUAL_OPS_NORTH",
+    "primary_station": {
+      "id": "STN_002",
+      "name": "North Terminal",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 112098,
+      "platforms": 10
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "consolidated_arrivals",
+      "primary_platform": 5,
+      "consolidated_from_platforms": [1, 2, 3, 4, 6, 7, 8, 9, 10],
+      "manual_controllers": 5
+    },
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High",
+      "trains_consolidated": 20,
+      "interlocking_restoration_time_minutes": 48
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_19",
+    "incident_type": "track_maintenance",
+    "semantic_description": "Track maintenance emergency at Hill Station. Early morning. Single-track operation with 15-minute alternating dispatch",
+    "resolution_code": "SINGLE_TRACK_HILL",
+    "primary_station": {
+      "id": "STN_011",
+      "name": "Hill Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 59565,
+      "platforms": 5,
+      "has_switches": false
+    },
+    "affected_segments": [
+      {"id": "SEG_011", "from_station": "STN_001", "to_station": "STN_011", "type": "branch", "length_km": 37.6, "speed_limit": 120, "capacity": 12, "has_switches": false},
+      {"id": "SEG_063", "from_station": "STN_010", "to_station": "STN_011", "type": "loop", "length_km": 80.2}
+    ],
+    "resolution": {
+      "action": "single_track_operation",
+      "alternating_dispatch_interval_minutes": 15,
+      "maintenance_duration_hours": 3.5
+    },
+    "outcome_metrics": {
+      "delay_minutes": 13,
+      "passenger_satisfaction": "High",
+      "trains_delayed": 12,
+      "service_restoration_hours": 3.8
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_20",
+    "incident_type": "platform_overcrowding",
+    "semantic_description": "Platform overcrowding at East Exchange. Peak AM. Split arrivals with extra service deployment",
+    "resolution_code": "SPLIT_ARRIVALS_EAST_EXTRA",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8
+    },
+    "resolution": {
+      "action": "split_arrivals",
+      "primary_platforms": [1, 2, 3],
+      "secondary_platforms": [4, 5],
+      "extra_services": 2,
+      "crowd_distribution": 45
+    },
+    "outcome_metrics": {
+      "delay_minutes": 2,
+      "passenger_satisfaction": "High",
+      "passengers_distributed": 4100,
+      "platform_utilization_after": 62
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_21",
+    "incident_type": "signal_loss",
+    "semantic_description": "Total signal loss at South Junction. Peak AM. Rerouted trains via alternate main line segments",
+    "resolution_code": "REROUTE_SOUTH_MAIN",
+    "primary_station": {
+      "id": "STN_003",
+      "name": "South Junction",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 98289,
+      "platforms": 9,
+      "coordinates": [33.82, 61.76]
+    },
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20, "is_critical": true},
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "capacity": 20, "is_critical": true}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_018", "from_station": "STN_003", "to_station": "STN_018", "length_km": 30.0},
+        {"id": "SEG_067", "from_station": "STN_010", "to_station": "STN_018", "length_km": 43.1}
+      ],
+      "total_distance_km": 73.1
+    },
+    "outcome_metrics": {
+      "delay_minutes": 21,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 3532,
+      "recovery_time_minutes": 48
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_22",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at Central Station. Peak PM. Isolated switch and redirected all traffic to main platform",
+    "resolution_code": "ISOLATE_SWITCH_CENTER",
+    "primary_station": {
+      "id": "STN_001",
+      "name": "Central Station",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 83278,
+      "platforms": 8,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_005", "from_station": "STN_005", "to_station": "STN_001", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "affected_platforms": [2, 3, 4],
+      "redirected_platforms": [5, 6, 7, 8]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High",
+      "trains_affected": 14,
+      "recovery_time_minutes": 28
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_23",
+    "incident_type": "platform_failure",
+    "semantic_description": "Platform equipment failure at Valley Station. Midday. Bypassed station with skip-stop service to North Terminal",
+    "resolution_code": "BYPASS_VALLEY",
+    "primary_station": {
+      "id": "STN_010",
+      "name": "Valley Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 26698,
+      "platforms": 5,
+      "coordinates": [44.02, 83.78]
+    },
+    "affected_segments": [
+      {"id": "SEG_010", "from_station": "STN_002", "to_station": "STN_010", "type": "branch", "length_km": 38.2},
+      {"id": "SEG_068", "from_station": "STN_010", "to_station": "STN_020", "type": "loop", "length_km": 56.1}
+    ],
+    "bypass_stations": ["STN_010"],
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1206,
+      "recovery_time_minutes": 22
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_24",
+    "incident_type": "track_obstruction",
+    "semantic_description": "Track obstruction between South Junction and East Exchange. Early morning. Activated alternate loop via Bridge Station",
+    "resolution_code": "ACTIVATE_LOOP_BRIDGE",
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_060", "from_station": "STN_008", "to_station": "STN_019", "length_km": 89.9},
+        {"id": "SEG_062", "from_station": "STN_009", "to_station": "STN_019", "length_km": 66.4}
+      ],
+      "total_distance_km": 156.3
+    },
+    "outcome_metrics": {
+      "delay_minutes": 19,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 16,
+      "recovery_time_minutes": 54
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_25",
+    "incident_type": "power_fault",
+    "semantic_description": "Power system fault at Hill Station. Late evening. Diverted services to diesel routing via Lake Station",
+    "resolution_code": "DIESEL_ROUTE_HILL",
+    "primary_station": {
+      "id": "STN_011",
+      "name": "Hill Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 59565,
+      "platforms": 5,
+      "electrified": true
+    },
+    "affected_segments": [
+      {"id": "SEG_011", "from_station": "STN_001", "to_station": "STN_011", "type": "branch", "length_km": 37.6},
+      {"id": "SEG_063", "from_station": "STN_010", "to_station": "STN_011", "type": "loop", "length_km": 80.2}
+    ],
+    "resolution": {
+      "action": "diesel_routing",
+      "diesel_trains_deployed": 3,
+      "alternate_station": "STN_012"
+    },
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 32
+    },
+    "time_of_day": "late_evening",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_26",
+    "incident_type": "communication_loss",
+    "semantic_description": "Communication system loss at North Terminal. Peak AM. Manual signal authorization with dispatcher coordination",
+    "resolution_code": "MANUAL_AUTH_NORTH_PEAK",
+    "primary_station": {
+      "id": "STN_002",
+      "name": "North Terminal",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 112098,
+      "platforms": 10,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "manual_signal_authorization",
+      "dispatcher_staff": 8,
+      "capacity_reduction_percent": 25
+    },
+    "outcome_metrics": {
+      "delay_minutes": 12,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 45
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_27",
+    "incident_type": "signal_degradation",
+    "semantic_description": "Signal degradation on main line. Midday. Reduced speed limit to 100 km/h with modified train spacing",
+    "resolution_code": "REDUCE_SPEED_MODERATE",
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8, "speed_limit": 160}
+    ],
+    "resolution": {
+      "action": "speed_reduction",
+      "original_speed_limit": 160,
+      "reduced_speed_limit": 100,
+      "spacing_adjustment_seconds": 120
+    },
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High",
+      "trains_affected": 20,
+      "recovery_time_minutes": 26
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_28",
+    "incident_type": "interlocking_fault",
+    "semantic_description": "Interlocking system fault at West Hub. Peak PM. Emergency manual operations with consolidated platform strategy",
+    "resolution_code": "MANUAL_OPS_WEST_PM",
+    "primary_station": {
+      "id": "STN_005",
+      "name": "West Hub",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 135302,
+      "platforms": 12
+    },
+    "affected_segments": [
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_005", "from_station": "STN_005", "to_station": "STN_001", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "consolidated_arrivals",
+      "primary_platform": 6,
+      "consolidated_from_platforms": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12],
+      "manual_controllers": 7
+    },
+    "outcome_metrics": {
+      "delay_minutes": 17,
+      "passenger_satisfaction": "High",
+      "trains_consolidated": 24,
+      "recovery_time_minutes": 50
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_29",
+    "incident_type": "track_maintenance",
+    "semantic_description": "Track maintenance emergency at River Station area. Early morning. Single-track operation with 12-minute alternating dispatch",
+    "resolution_code": "SINGLE_TRACK_RIVER",
+    "primary_station": {
+      "id": "STN_013",
+      "name": "River Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 56178,
+      "platforms": 4
+    },
+    "affected_segments": [
+      {"id": "SEG_013", "from_station": "STN_002", "to_station": "STN_013", "type": "branch", "length_km": 63.9},
+      {"id": "SEG_052", "from_station": "STN_006", "to_station": "STN_013", "type": "loop", "length_km": 61.7}
+    ],
+    "resolution": {
+      "action": "single_track_operation",
+      "alternating_dispatch_interval_minutes": 12,
+      "maintenance_duration_hours": 3
+    },
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High",
+      "trains_delayed": 10,
+      "recovery_time_hours": 3.3
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_30",
+    "incident_type": "platform_overcrowding",
+    "semantic_description": "Platform overcrowding at North Terminal. Peak AM. Split arrivals between multiple platforms with extra service",
+    "resolution_code": "SPLIT_ARRIVALS_NORTH",
+    "primary_station": {
+      "id": "STN_002",
+      "name": "North Terminal",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 112098,
+      "platforms": 10
+    },
+    "resolution": {
+      "action": "split_arrivals",
+      "primary_platforms": [1, 2, 3, 4],
+      "secondary_platforms": [5, 6],
+      "extra_services": 3,
+      "crowd_distribution": 50
+    },
+    "outcome_metrics": {
+      "delay_minutes": 1,
+      "passenger_satisfaction": "High",
+      "passengers_distributed": 5048,
+      "platform_utilization_after": 58
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_31",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at East Exchange junction. Peak PM. Isolated switch with rapid platform redirection",
+    "resolution_code": "ISOLATE_SWITCH_EAST_PM",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "affected_platforms": [4, 5, 6],
+      "redirected_platforms": [1, 2, 3, 7, 8]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 9,
+      "recovery_time_minutes": 24
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_32",
+    "incident_type": "platform_failure",
+    "semantic_description": "Platform equipment failure at Grove Station. Midday. Bypassed station with controlled skip-stop service",
+    "resolution_code": "BYPASS_GROVE",
+    "primary_station": {
+      "id": "STN_007",
+      "name": "Grove Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 55713,
+      "platforms": 6,
+      "coordinates": [16.96, 25.35]
+    },
+    "affected_segments": [
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5},
+      {"id": "SEG_055", "from_station": "STN_007", "to_station": "STN_008", "type": "loop", "length_km": 95.8}
+    ],
+    "bypass_stations": ["STN_007"],
+    "outcome_metrics": {
+      "delay_minutes": 9,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1589,
+      "recovery_time_minutes": 28
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_33",
+    "incident_type": "track_obstruction",
+    "semantic_description": "Track obstruction on branch line. Early morning. Activated alternate route via neighboring stations",
+    "resolution_code": "ACTIVATE_BRANCH_ALT",
+    "affected_segments": [
+      {"id": "SEG_009", "from_station": "STN_005", "to_station": "STN_009", "type": "branch", "length_km": 29.5}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_016", "from_station": "STN_005", "to_station": "STN_016", "type": "branch", "length_km": 60.4},
+        {"id": "SEG_031", "from_station": "STN_016", "to_station": "STN_031", "type": "branch", "length_km": 43.6}
+      ],
+      "total_distance_km": 104.0
+    },
+    "outcome_metrics": {
+      "delay_minutes": 14,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 8,
+      "recovery_time_minutes": 38
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_34",
+    "incident_type": "power_fault",
+    "semantic_description": "Power system fault at Meadow Station. Late evening. Diverted services to diesel routing via alternate station",
+    "resolution_code": "DIESEL_ROUTE_MEADOW_ALT",
+    "primary_station": {
+      "id": "STN_015",
+      "name": "Meadow Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 34935,
+      "platforms": 6,
+      "electrified": true
+    },
+    "affected_segments": [
+      {"id": "SEG_015", "from_station": "STN_002", "to_station": "STN_015", "type": "branch", "length_km": 22.9},
+      {"id": "SEG_065", "from_station": "STN_010", "to_station": "STN_015", "type": "loop", "length_km": 38.9}
+    ],
+    "resolution": {
+      "action": "diesel_routing",
+      "diesel_trains_deployed": 2,
+      "alternate_station": "STN_020"
+    },
+    "outcome_metrics": {
+      "delay_minutes": 5,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 28
+    },
+    "time_of_day": "late_evening",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_35",
+    "incident_type": "communication_loss",
+    "semantic_description": "Communication system loss at East Exchange. Peak AM. Manual signal authorization with strategic capacity management",
+    "resolution_code": "MANUAL_AUTH_EAST_AM",
+    "primary_station": {
+      "id": "STN_004",
+      "name": "East Exchange",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 91395,
+      "platforms": 8
+    },
+    "affected_segments": [
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "manual_signal_authorization",
+      "dispatcher_staff": 6,
+      "capacity_reduction_percent": 20
+    },
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 42
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_36",
+    "incident_type": "signal_degradation",
+    "semantic_description": "Signal degradation on branch line segment. Midday. Reduced speed limit with spacing adjustments",
+    "resolution_code": "REDUCE_SPEED_BRANCH",
+    "affected_segments": [
+      {"id": "SEG_007", "from_station": "STN_004", "to_station": "STN_007", "type": "branch", "length_km": 42.5, "speed_limit": 120}
+    ],
+    "resolution": {
+      "action": "speed_reduction",
+      "original_speed_limit": 120,
+      "reduced_speed_limit": 80,
+      "spacing_adjustment_seconds": 150
+    },
+    "outcome_metrics": {
+      "delay_minutes": 7,
+      "passenger_satisfaction": "High",
+      "trains_affected": 12,
+      "recovery_time_minutes": 22
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_37",
+    "incident_type": "interlocking_fault",
+    "semantic_description": "Interlocking system fault at South Junction. Peak PM. Emergency manual operations with consolidated arrivals",
+    "resolution_code": "MANUAL_OPS_SOUTH_PM",
+    "primary_station": {
+      "id": "STN_003",
+      "name": "South Junction",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 98289,
+      "platforms": 9
+    },
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_003", "from_station": "STN_003", "to_station": "STN_004", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "consolidated_arrivals",
+      "primary_platform": 5,
+      "consolidated_from_platforms": [1, 2, 3, 4, 6, 7, 8, 9],
+      "manual_controllers": 6
+    },
+    "outcome_metrics": {
+      "delay_minutes": 15,
+      "passenger_satisfaction": "High",
+      "trains_consolidated": 18,
+      "recovery_time_minutes": 44
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_38",
+    "incident_type": "track_maintenance",
+    "semantic_description": "Track maintenance emergency at Heights Station. Early morning. Single-track operation with alternating dispatch",
+    "resolution_code": "SINGLE_TRACK_HEIGHTS",
+    "primary_station": {
+      "id": "STN_008",
+      "name": "Heights Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 20425,
+      "platforms": 5
+    },
+    "affected_segments": [
+      {"id": "SEG_008", "from_station": "STN_003", "to_station": "STN_008", "type": "branch", "length_km": 38.6},
+      {"id": "SEG_055", "from_station": "STN_007", "to_station": "STN_008", "type": "loop", "length_km": 95.8}
+    ],
+    "resolution": {
+      "action": "single_track_operation",
+      "alternating_dispatch_interval_minutes": 14,
+      "maintenance_duration_hours": 2.5
+    },
+    "outcome_metrics": {
+      "delay_minutes": 10,
+      "passenger_satisfaction": "High",
+      "trains_delayed": 8,
+      "recovery_time_hours": 2.8
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_39",
+    "incident_type": "platform_overcrowding",
+    "semantic_description": "Platform overcrowding at Central Station. Peak AM. Split arrivals between multiple platforms with extra service",
+    "resolution_code": "SPLIT_ARRIVALS_CENTER",
+    "primary_station": {
+      "id": "STN_001",
+      "name": "Central Station",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 83278,
+      "platforms": 8
+    },
+    "resolution": {
+      "action": "split_arrivals",
+      "primary_platforms": [1, 2, 3],
+      "secondary_platforms": [4, 5],
+      "extra_services": 2,
+      "crowd_distribution": 48
+    },
+    "outcome_metrics": {
+      "delay_minutes": 2,
+      "passenger_satisfaction": "High",
+      "passengers_distributed": 3988,
+      "platform_utilization_after": 60
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_40",
+    "incident_type": "signal_loss",
+    "semantic_description": "Total signal loss at Garden Station area. Peak PM. Rerouted trains via alternate loop segments",
+    "resolution_code": "REROUTE_GARDEN_LOOP",
+    "primary_station": {
+      "id": "STN_016",
+      "name": "Garden Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 26619,
+      "platforms": 4,
+      "coordinates": [57.18, 0.82]
+    },
+    "affected_segments": [
+      {"id": "SEG_016", "from_station": "STN_005", "to_station": "STN_016", "type": "branch", "length_km": 60.4},
+      {"id": "SEG_022", "from_station": "STN_016", "to_station": "STN_022", "type": "branch", "length_km": 42.1}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_061", "from_station": "STN_009", "to_station": "STN_016", "length_km": 37.2},
+        {"id": "SEG_062", "from_station": "STN_009", "to_station": "STN_019", "length_km": 66.4}
+      ],
+      "total_distance_km": 103.6
+    },
+    "outcome_metrics": {
+      "delay_minutes": 12,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1505,
+      "recovery_time_minutes": 35
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_41",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at South Junction. Peak AM. Isolated faulty switch with effective redirection strategy",
+    "resolution_code": "ISOLATE_SWITCH_SOUTH_AM",
+    "primary_station": {
+      "id": "STN_003",
+      "name": "South Junction",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 98289,
+      "platforms": 9,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_008", "from_station": "STN_003", "to_station": "STN_008", "type": "branch", "length_km": 38.6}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "affected_platforms": [5, 6, 7],
+      "redirected_platforms": [1, 2, 3, 4, 8, 9]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 4,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 10,
+      "recovery_time_minutes": 19
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_42",
+    "incident_type": "platform_failure",
+    "semantic_description": "Platform equipment failure at Cross Station. Midday. Bypassed station with skip-stop service to adjacent hub",
+    "resolution_code": "BYPASS_CROSS",
+    "primary_station": {
+      "id": "STN_020",
+      "name": "Cross Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 56500,
+      "platforms": 6,
+      "coordinates": [69.46, 82.16]
+    },
+    "affected_segments": [
+      {"id": "SEG_020", "from_station": "STN_002", "to_station": "STN_020", "type": "branch", "length_km": 37.4},
+      {"id": "SEG_054", "from_station": "STN_006", "to_station": "STN_020", "type": "loop", "length_km": 62.5}
+    ],
+    "bypass_stations": ["STN_020"],
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "passengers_affected": 1614,
+      "recovery_time_minutes": 26
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_43",
+    "incident_type": "track_obstruction",
+    "semantic_description": "Track obstruction on loop line. Early morning. Activated alternate loop segment with rerouting strategy",
+    "resolution_code": "ACTIVATE_LOOP_ALT",
+    "affected_segments": [
+      {"id": "SEG_051", "from_station": "STN_006", "to_station": "STN_012", "type": "loop", "length_km": 92.2}
+    ],
+    "alternate_route": {
+      "segments": [
+        {"id": "SEG_053", "from_station": "STN_006", "to_station": "STN_015", "length_km": 67.3},
+        {"id": "SEG_065", "from_station": "STN_010", "to_station": "STN_015", "length_km": 38.9}
+      ],
+      "total_distance_km": 106.2
+    },
+    "outcome_metrics": {
+      "delay_minutes": 16,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 14,
+      "recovery_time_minutes": 41
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_44",
+    "incident_type": "power_fault",
+    "semantic_description": "Power system fault at Park Station. Late evening. Diverted services to diesel routing with minimal disruption",
+    "resolution_code": "DIESEL_ROUTE_PARK",
+    "primary_station": {
+      "id": "STN_006",
+      "name": "Park Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 53118,
+      "platforms": 4,
+      "electrified": true
+    },
+    "affected_segments": [
+      {"id": "SEG_006", "from_station": "STN_001", "to_station": "STN_006", "type": "branch", "length_km": 25.8},
+      {"id": "SEG_051", "from_station": "STN_006", "to_station": "STN_012", "type": "loop", "length_km": 92.2}
+    ],
+    "resolution": {
+      "action": "diesel_routing",
+      "diesel_trains_deployed": 2,
+      "alternate_station": "STN_001"
+    },
+    "outcome_metrics": {
+      "delay_minutes": 6,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 25
+    },
+    "time_of_day": "late_evening",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_45",
+    "incident_type": "communication_loss",
+    "semantic_description": "Communication system loss at Central Station. Peak PM. Manual signal coordination with enhanced dispatcher presence",
+    "resolution_code": "MANUAL_AUTH_CENTER_PM",
+    "primary_station": {
+      "id": "STN_001",
+      "name": "Central Station",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 83278,
+      "platforms": 8,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_005", "from_station": "STN_005", "to_station": "STN_001", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "manual_signal_authorization",
+      "dispatcher_staff": 7,
+      "capacity_reduction_percent": 28
+    },
+    "outcome_metrics": {
+      "delay_minutes": 11,
+      "passenger_satisfaction": "High",
+      "recovery_time_minutes": 43
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_46",
+    "incident_type": "signal_degradation",
+    "semantic_description": "Signal degradation on critical segment. Midday. Reduced speed with extended spacing for safety",
+    "resolution_code": "REDUCE_SPEED_CRITICAL",
+    "affected_segments": [
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8, "speed_limit": 160, "is_critical": true}
+    ],
+    "resolution": {
+      "action": "speed_reduction",
+      "original_speed_limit": 160,
+      "reduced_speed_limit": 90,
+      "spacing_adjustment_seconds": 200
+    },
+    "outcome_metrics": {
+      "delay_minutes": 8,
+      "passenger_satisfaction": "High",
+      "trains_affected": 18,
+      "recovery_time_minutes": 24
+    },
+    "time_of_day": "midday",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_47",
+    "incident_type": "interlocking_fault",
+    "semantic_description": "Interlocking system fault at North Terminal. Peak PM. Emergency manual operations with platform consolidation",
+    "resolution_code": "MANUAL_OPS_NORTH_PM",
+    "primary_station": {
+      "id": "STN_002",
+      "name": "North Terminal",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 112098,
+      "platforms": 10
+    },
+    "affected_segments": [
+      {"id": "SEG_001", "from_station": "STN_001", "to_station": "STN_002", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_002", "from_station": "STN_002", "to_station": "STN_003", "type": "main_line", "length_km": 58.8}
+    ],
+    "resolution": {
+      "action": "consolidated_arrivals",
+      "primary_platform": 6,
+      "consolidated_from_platforms": [1, 2, 3, 4, 5, 7, 8, 9, 10],
+      "manual_controllers": 8
+    },
+    "outcome_metrics": {
+      "delay_minutes": 14,
+      "passenger_satisfaction": "High",
+      "trains_consolidated": 22,
+      "recovery_time_minutes": 46
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_48",
+    "incident_type": "track_maintenance",
+    "semantic_description": "Track maintenance emergency at Bridge Station. Early morning. Single-track operation with coordinated dispatch",
+    "resolution_code": "SINGLE_TRACK_BRIDGE",
+    "primary_station": {
+      "id": "STN_009",
+      "name": "Bridge Station",
+      "type": "regional",
+      "zone": "mid",
+      "daily_passengers": 42298,
+      "platforms": 5
+    },
+    "affected_segments": [
+      {"id": "SEG_009", "from_station": "STN_005", "to_station": "STN_009", "type": "branch", "length_km": 29.5},
+      {"id": "SEG_056", "from_station": "STN_007", "to_station": "STN_009", "type": "loop", "length_km": 79.0}
+    ],
+    "resolution": {
+      "action": "single_track_operation",
+      "alternating_dispatch_interval_minutes": 13,
+      "maintenance_duration_hours": 3.5
+    },
+    "outcome_metrics": {
+      "delay_minutes": 12,
+      "passenger_satisfaction": "High",
+      "trains_delayed": 11,
+      "recovery_time_hours": 3.8
+    },
+    "time_of_day": "early_morning",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_49",
+    "incident_type": "platform_overcrowding",
+    "semantic_description": "Platform overcrowding at South Junction. Peak AM. Split arrivals with comprehensive crowd management",
+    "resolution_code": "SPLIT_ARRIVALS_SOUTH_AM",
+    "primary_station": {
+      "id": "STN_003",
+      "name": "South Junction",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 98289,
+      "platforms": 9
+    },
+    "resolution": {
+      "action": "split_arrivals",
+      "primary_platforms": [1, 2, 3, 4, 5],
+      "secondary_platforms": [6, 7],
+      "extra_services": 3,
+      "crowd_distribution": 52
+    },
+    "outcome_metrics": {
+      "delay_minutes": 1,
+      "passenger_satisfaction": "High",
+      "passengers_distributed": 4440,
+      "platform_utilization_after": 56
+    },
+    "time_of_day": "peak_am",
+    "is_golden": true
+  },
+  {
+    "incident_id": "inc_golden_50",
+    "incident_type": "switch_malfunction",
+    "semantic_description": "Switch malfunction at West Hub junction. Peak PM. Isolated switch with efficient platform redirection",
+    "resolution_code": "ISOLATE_SWITCH_WEST_PM",
+    "primary_station": {
+      "id": "STN_005",
+      "name": "West Hub",
+      "type": "major_hub",
+      "zone": "core",
+      "daily_passengers": 135302,
+      "platforms": 12,
+      "has_switches": true
+    },
+    "affected_segments": [
+      {"id": "SEG_004", "from_station": "STN_004", "to_station": "STN_005", "type": "main_line", "length_km": 58.8},
+      {"id": "SEG_009", "from_station": "STN_005", "to_station": "STN_009", "type": "branch", "length_km": 29.5}
+    ],
+    "resolution": {
+      "action": "switch_isolation",
+      "affected_platforms": [7, 8, 9],
+      "redirected_platforms": [1, 2, 3, 4, 5, 6, 10, 11, 12]
+    },
+    "outcome_metrics": {
+      "delay_minutes": 4,
+      "passenger_satisfaction": "High",
+      "trains_rerouted": 11,
+      "recovery_time_minutes": 18
+    },
+    "time_of_day": "peak_pm",
+    "is_golden": true
+  }
+]
