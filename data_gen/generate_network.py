@@ -257,12 +257,21 @@ class NetworkGenerator:
     
     def _create_loop_connections(self):
         """Add redundant paths (loops) for rerouting scenarios"""
-        # Connect some regional stations to each other
+        # Calculate how many loops we need to reach exactly 70 segments
+        # Current: 5 (main) + 45 (branch) = 50
+        # Target: 70
+        # Needed loops: 20
+        
+        current_segments = len(self.segments)
+        target_total = 70
+        max_loops = target_total - current_segments
+        
         regionals = [s for s in self.stations if s.type == "regional"]
+        hubs = [s for s in self.stations if s.type == "major_hub"]
         
         loop_count = 0
-        max_loops = 15
         
+        # Phase 1: Connect regional stations to each other
         for i, reg1 in enumerate(regionals):
             if loop_count >= max_loops:
                 break
@@ -270,8 +279,8 @@ class NetworkGenerator:
             for reg2 in regionals[i+1:]:
                 distance = self._euclidean_distance(reg1, reg2)
                 
-                # Only connect if reasonably close and not too many segments
-                if 15 < distance < 40 and loop_count < max_loops:
+                # Connect if reasonably close
+                if 15 < distance < 45 and loop_count < max_loops:
                     seg = Segment(
                         id=f"SEG_{len(self.segments)+1:03d}",
                         from_station=reg1.id,
@@ -290,6 +299,45 @@ class NetworkGenerator:
                     
                     if loop_count >= max_loops:
                         break
+        
+        # Phase 2: If we still need more, add cross-connections between hubs and regionals
+        if loop_count < max_loops:
+            for hub in hubs:
+                if loop_count >= max_loops:
+                    break
+                    
+                # Find regionals not directly connected to this hub
+                for reg in regionals:
+                    if loop_count >= max_loops:
+                        break
+                    
+                    # Check if not already connected
+                    existing = any(
+                        (seg.from_station == hub.id and seg.to_station == reg.id) or
+                        (seg.from_station == reg.id and seg.to_station == hub.id)
+                        for seg in self.segments
+                    )
+                    
+                    if not existing:
+                        distance = self._euclidean_distance(hub, reg)
+                        if distance < 50:  # Reasonable distance
+                            seg = Segment(
+                                id=f"SEG_{len(self.segments)+1:03d}",
+                                from_station=hub.id,
+                                to_station=reg.id,
+                                length_km=round(distance * 2.0, 1),
+                                speed_limit=120,
+                                capacity=12,
+                                bidirectional=True,
+                                track_type="loop",
+                                has_switches=True,
+                                is_critical=False,
+                                electrified=True
+                            )
+                            self.segments.append(seg)
+                            loop_count += 1
+        
+        print(f"  Added {loop_count} loop/redundant connections")
     
     def _finalize_stations(self):
         """Update station metadata with connected segments"""
@@ -344,8 +392,15 @@ class NetworkGenerator:
     
     def save_to_json(self, output_dir: str = "data/network"):
         """Save network to JSON files"""
-        output_path = Path(output_dir)
+        # Get script's directory, then go up to project root
+        script_dir = Path(__file__).parent.resolve()
+        project_root = script_dir.parent  # Assumes script is in data_gen/
+        
+        # Create absolute path
+        output_path = project_root / output_dir
         output_path.mkdir(parents=True, exist_ok=True)
+        
+        print(f"📁 Output directory: {output_path.absolute()}")
         
         stations_data, segments_data = self.generate()
         
@@ -455,54 +510,28 @@ Lowest priority in network
 
 
 🛤️ Segment Types (70 Total)
+
 Main Line (5 segments)
+- Track Type: "main_line"
+- Connects: Hub → Hub (ring)
+- Length: 40-80 km
+- Speed Limit: 160 km/h (high-speed)
+- Capacity: 20 trains/hour
 
-Track Type: "main_line"
-Connects: Hub → Hub (ring)
-Length: 40-80 km
-Speed Limit: 160 km/h (high-speed)
-Capacity: 20 trains/hour
-Properties:
+Branch Lines (45 segments)
+- Track Type: "branch"
+- Connects: Hub → Regional (15), Hub/Regional → Local (20), Hub/Regional → Minor Halt (10)
+- Length: 15-60 km
+- Speed Limit: 60-120 km/h depending on destination type
+- Capacity: 4-12 trains/hour
 
-bidirectional: true
-is_critical: true
-electrified: true
-has_switches: true
-
-
-
-Branch Lines (~35 segments)
-
-Track Type: "branch"
-Connects: Hub → Regional, Regional → Local
-Length: 15-60 km
-Speed Limit: 80-120 km/h
-Capacity: 8-12 trains/hour
-Properties:
-
-bidirectional: true
-is_critical: false
-Some have switches at junctions
-
-
-
-Loop Connections (~15 segments)
-
-Track Type: "loop"
-Connects: Regional ↔ Regional (alternate routes)
-Length: 25-70 km
-Speed Limit: 100 km/h
-Capacity: 10 trains/hour
-Purpose: Enable rerouting during incidents
-
-Sidings (~15 segments)
-
-Track Type: "siding" (if added)
-Connects: Local ↔ Minor Halt
-Length: 10-35 km
-Speed Limit: 60 km/h
-Capacity: 4 trains/hour
-
+Loop Connections (20 segments)
+- Track Type: "loop"
+- Connects: Regional ↔ Regional, Hub ↔ Regional (alternate routes)
+- Length: 25-70 km
+- Speed Limit: 100-120 km/h
+- Capacity: 10-12 trains/hour
+- Purpose: Enable rerouting during incidents
 
 📤 Output Files
 data/network/stations.json

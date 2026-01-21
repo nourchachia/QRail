@@ -1,0 +1,752 @@
+[
+  {
+    "id": "STN_001",
+    "name": "Central Station",
+    "type": "major_hub",
+    "zone": "core",
+    "platforms": 8,
+    "daily_passengers": 83278,
+    "coordinates": [
+      70.0,
+      50.0
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_002",
+    "name": "North Terminal",
+    "type": "major_hub",
+    "zone": "core",
+    "platforms": 10,
+    "daily_passengers": 112098,
+    "coordinates": [
+      56.180339887498945,
+      69.02113032590307
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_003",
+    "name": "South Junction",
+    "type": "major_hub",
+    "zone": "core",
+    "platforms": 9,
+    "daily_passengers": 98289,
+    "coordinates": [
+      33.819660112501055,
+      61.75570504584947
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_004",
+    "name": "East Exchange",
+    "type": "major_hub",
+    "zone": "core",
+    "platforms": 8,
+    "daily_passengers": 91395,
+    "coordinates": [
+      33.819660112501055,
+      38.24429495415054
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_005",
+    "name": "West Hub",
+    "type": "major_hub",
+    "zone": "core",
+    "platforms": 12,
+    "daily_passengers": 135302,
+    "coordinates": [
+      56.180339887498945,
+      30.978869674096927
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_006",
+    "name": "Park Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 4,
+    "daily_passengers": 53118,
+    "coordinates": [
+      81.2404694547186,
+      56.32288504337956
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_007",
+    "name": "Grove Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 6,
+    "daily_passengers": 55713,
+    "coordinates": [
+      16.95838102233928,
+      25.34753766597312
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_008",
+    "name": "Heights Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 20425,
+    "coordinates": [
+      15.894719837097341,
+      68.88375565018364
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_009",
+    "name": "Bridge Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 42298,
+    "coordinates": [
+      51.83591779254579,
+      16.857624942776717
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_010",
+    "name": "Valley Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 26698,
+    "coordinates": [
+      44.02291730017422,
+      83.78157787004213
+    ],
+    "connected_segments": [],
+    "has_switches": true,
+    "is_junction": true
+  },
+  {
+    "id": "STN_011",
+    "name": "Hill Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 59565,
+    "coordinates": [
+      76.66383184038847,
+      67.57388251943094
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_012",
+    "name": "Lake Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 55142,
+    "coordinates": [
+      47.18750077262557,
+      80.7406173653006
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_013",
+    "name": "River Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 4,
+    "daily_passengers": 56178,
+    "coordinates": [
+      84.29382585014028,
+      84.21899262543928
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_014",
+    "name": "Forest Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 57837,
+    "coordinates": [
+      38.59128419220466,
+      91.0156575226298
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_015",
+    "name": "Meadow Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 6,
+    "daily_passengers": 34935,
+    "coordinates": [
+      61.13496122556392,
+      79.34985493294361
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_016",
+    "name": "Garden Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 4,
+    "daily_passengers": 26619,
+    "coordinates": [
+      57.17909375795666,
+      0.8167608273243587
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_017",
+    "name": "Plaza Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 30659,
+    "coordinates": [
+      21.499301858131805,
+      76.7214320197434
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_018",
+    "name": "Square Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 5,
+    "daily_passengers": 24679,
+    "coordinates": [
+      26.566914017053474,
+      74.89691138713182
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_019",
+    "name": "Market Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 6,
+    "daily_passengers": 36043,
+    "coordinates": [
+      24.131371706905195,
+      28.8364506087887
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_020",
+    "name": "Cross Station",
+    "type": "regional",
+    "zone": "mid",
+    "platforms": 6,
+    "daily_passengers": 56500,
+    "coordinates": [
+      69.45820005108246,
+      82.16083882290741
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_021",
+    "name": "Local Stop A",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 8752,
+    "coordinates": [
+      61.66726386892876,
+      110.36854053447416
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_022",
+    "name": "Local Stop B",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 9386,
+    "coordinates": [
+      80.99998969848981,
+      -13.98703694441511
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_023",
+    "name": "Local Stop C",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 8483,
+    "coordinates": [
+      117.01803288014602,
+      79.59746230001663
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_024",
+    "name": "Local Stop D",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 7340,
+    "coordinates": [
+      14.781402462813887,
+      -2.1310887120336233
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_025",
+    "name": "Local Stop E",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 17239,
+    "coordinates": [
+      44.404775499097866,
+      109.67079713504594
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_026",
+    "name": "Local Stop F",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 10930,
+    "coordinates": [
+      -12.89308340238118,
+      13.025620002565553
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_027",
+    "name": "Local Stop G",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 6489,
+    "coordinates": [
+      64.358450276054,
+      123.56255943418586
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_028",
+    "name": "Local Stop H",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 15280,
+    "coordinates": [
+      52.62327673431595,
+      -22.174400647711792
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_029",
+    "name": "Local Stop I",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 11304,
+    "coordinates": [
+      86.7694258332539,
+      107.9248639735419
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_030",
+    "name": "Local Stop J",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 14064,
+    "coordinates": [
+      -5.135081044217024,
+      100.72960670500422
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_031",
+    "name": "Local Stop K",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 16169,
+    "coordinates": [
+      85.4127399961767,
+      7.617824267938644
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_032",
+    "name": "Local Stop L",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 6827,
+    "coordinates": [
+      102.45935058010892,
+      3.6267891581509843
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_033",
+    "name": "Local Stop M",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 16830,
+    "coordinates": [
+      34.30007347791858,
+      106.00415088958368
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_034",
+    "name": "Local Stop N",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 13317,
+    "coordinates": [
+      92.84352918611174,
+      7.61323985778796
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_035",
+    "name": "Local Stop O",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 15468,
+    "coordinates": [
+      111.77036101902007,
+      12.215288999476606
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_036",
+    "name": "Local Stop P",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 17492,
+    "coordinates": [
+      -8.909874667785921,
+      47.16145440933706
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_037",
+    "name": "Local Stop Q",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 14813,
+    "coordinates": [
+      89.07812973693558,
+      112.92268214730721
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_038",
+    "name": "Local Stop R",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 3,
+    "daily_passengers": 10038,
+    "coordinates": [
+      25.115728411213958,
+      99.48508460275633
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_039",
+    "name": "Local Stop S",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 6403,
+    "coordinates": [
+      53.96138466633762,
+      109.68611718422002
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_040",
+    "name": "Local Stop T",
+    "type": "local",
+    "zone": "peripheral",
+    "platforms": 2,
+    "daily_passengers": 7103,
+    "coordinates": [
+      41.909887479987916,
+      -20.86013559813911
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_041",
+    "name": "Halt 1",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 1176,
+    "coordinates": [
+      -0.5437116515199847,
+      -29.369206189167045
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_042",
+    "name": "Halt 2",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 2233,
+    "coordinates": [
+      41.23091393267781,
+      142.41625854973913
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_043",
+    "name": "Halt 3",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 3593,
+    "coordinates": [
+      141.45009160160063,
+      29.173773032717083
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_044",
+    "name": "Halt 4",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 1776,
+    "coordinates": [
+      39.760437999596796,
+      -30.773123227883687
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_045",
+    "name": "Halt 5",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 2029,
+    "coordinates": [
+      -22.007001919491145,
+      103.01595708805353
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_046",
+    "name": "Halt 6",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 995,
+    "coordinates": [
+      -30.316295184643167,
+      82.91386563962519
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_047",
+    "name": "Halt 7",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 586,
+    "coordinates": [
+      51.04072776207593,
+      129.08159245319624
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_048",
+    "name": "Halt 8",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 1402,
+    "coordinates": [
+      -19.62304305990456,
+      6.84679035945927
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_049",
+    "name": "Halt 9",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 741,
+    "coordinates": [
+      139.9414166937423,
+      54.06644417035101
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  },
+  {
+    "id": "STN_050",
+    "name": "Halt 10",
+    "type": "minor_halt",
+    "zone": "peripheral",
+    "platforms": 1,
+    "daily_passengers": 1853,
+    "coordinates": [
+      62.320940574157575,
+      142.5758406845245
+    ],
+    "connected_segments": [],
+    "has_switches": false,
+    "is_junction": false
+  }
+]
