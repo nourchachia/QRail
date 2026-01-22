@@ -1,70 +1,84 @@
 {
-  "timestamp": "2026-01-22T08:30:00",
-  "day_type": "holiday",
+  "timestamp": "2026-01-22T18:59:00",
+  "day_type": "weekday",
   "active_trains": [
     {
-      "train_id": "EXP_003",
+      "train_id": "EXP_013",
       "cur_pos": {
-        "station": "STN_002",
-        "platform": 3
+        "segment": "SEG_003",
+        "pct": 0.18
       },
-      "cur_delay": 3,
+      "cur_delay": 0,
       "telemetry_window": [
         {
           "t": "-3m",
-          "delay": 3,
-          "pos": 0.0,
-          "segment_id": null,
-          "station_id": "STN_002"
-        },
-        {
-          "t": "-6m",
-          "delay": 2,
-          "pos": 0.86,
-          "segment_id": "SEG_001",
+          "delay": 0,
+          "pos": 0.05,
+          "segment_id": "SEG_003",
           "station_id": null
         },
         {
+          "t": "-6m",
+          "delay": 0,
+          "pos": 0.0,
+          "segment_id": null,
+          "station_id": "STN_003"
+        },
+        {
           "t": "-9m",
-          "delay": 1,
-          "pos": 0.73,
-          "segment_id": "SEG_001",
+          "delay": 0,
+          "pos": 0.91,
+          "segment_id": "SEG_002",
           "station_id": null
         },
         {
           "t": "-12m",
-          "delay": 1,
-          "pos": 0.59,
-          "segment_id": "SEG_001",
+          "delay": 0,
+          "pos": 0.77,
+          "segment_id": "SEG_002",
           "station_id": null
         },
         {
           "t": "-15m",
           "delay": 0,
-          "pos": 0.45,
-          "segment_id": "SEG_001",
+          "pos": 0.64,
+          "segment_id": "SEG_002",
           "station_id": null
         },
         {
           "t": "-18m",
           "delay": 0,
-          "pos": 0.32,
-          "segment_id": "SEG_001",
+          "pos": 0.5,
+          "segment_id": "SEG_002",
           "station_id": null
         },
         {
           "t": "-21m",
           "delay": 0,
-          "pos": 0.18,
-          "segment_id": "SEG_001",
+          "pos": 0.36,
+          "segment_id": "SEG_002",
           "station_id": null
         },
         {
           "t": "-24m",
           "delay": 0,
-          "pos": 0.05,
-          "segment_id": "SEG_001",
+          "pos": 0.23,
+          "segment_id": "SEG_002",
           "station_id": null
+        },
+        {
+          "t": "-27m",
+          "delay": 0,
+          "pos": 0.09,
+          "segment_id": "SEG_002",
+          "station_id": null
+        },
+        {
+          "t": "-30m",
+          "delay": 0,
+          "pos": 0.0,
+          "segment_id": null,
+          "station_id": "STN_002"
         }
       ],
       "signal_aspect": "Green",
@@ -72,31 +86,80 @@
       "route": "Main Line Ring (Clockwise)"
     },
     {
-      "train_id": "EXP_004",
+      "train_id": "EXP_014",
       "cur_pos": {
-        "segment": "SEG_005",
-        "pct": 0.43
+        "segment": "SEG_004",
+        "pct": 0.42
       },
       "cur_delay": 0,
       "telemetry_window": [
         {
           "t": "-3m",
           "delay": 0,
-          "pos": 0.3,
-          "segment_id": "SEG_005",
+          "pos": 0.31,
+          "segment_id": "SEG_004",
           "station_id": null
         },
         {
           "t": "-6m",
           "delay": 0,
-          "pos": 0.17,
-          "segment_id": "SEG_005",
+          "pos": 0.19,
+          "segment_id": "SEG_004",
           "station_id": null
         },
         {
           "t": "-9m",
           "delay": 0,
-          "pos": 0.04,
+          "pos": 0.08,
+          "segment_id": "SEG_004",
+          "station_id": null
+        },
+        {
+          "t": "-12m",
+          "delay": 0,
+          "pos": 0.0,
+          "segment_id": null,
+          "station_id": "STN_005"
+        },
+        {
+          "t": "-15m",
+          "delay": 0,
+          "pos": 0.0,
+          "segment_id": null,
+          "station_id": "STN_005"
+        },
+        {
+          "t": "-18m",
+          "delay": 0,
+          "pos": 0.91,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-21m",
+          "delay": 0,
+          "pos": 0.78,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-24m",
+          "delay": 0,
+          "pos": 0.65,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-27m",
+          "delay": 0,
+          "pos": 0.52,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-30m",
+          "delay": 0,
+          "pos": 0.39,
           "segment_id": "SEG_005",
           "station_id": null
         }
@@ -104,14 +167,235 @@
       "signal_aspect": "Green",
       "service_type": "express",
       "route": "Main Line Ring (Counter-Clockwise)"
+    },
+    {
+      "train_id": "LOC_217",
+      "cur_pos": {
+        "segment": "SEG_039",
+        "pct": 0.81
+      },
+      "cur_delay": 0,
+      "telemetry_window": [
+        {
+          "t": "-3m",
+          "delay": 0,
+          "pos": 0.72,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-6m",
+          "delay": 0,
+          "pos": 0.62,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-9m",
+          "delay": 0,
+          "pos": 0.53,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-12m",
+          "delay": 0,
+          "pos": 0.44,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-15m",
+          "delay": 0,
+          "pos": 0.34,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-18m",
+          "delay": 0,
+          "pos": 0.25,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-21m",
+          "delay": 0,
+          "pos": 0.16,
+          "segment_id": "SEG_039",
+          "station_id": null
+        },
+        {
+          "t": "-24m",
+          "delay": 0,
+          "pos": 0.06,
+          "segment_id": "SEG_039",
+          "station_id": null
+        }
+      ],
+      "signal_aspect": "Green",
+      "service_type": "local",
+      "route": "Forest to Local Stop S"
+    },
+    {
+      "train_id": "HALT_309",
+      "cur_pos": {
+        "segment": "SEG_049",
+        "pct": 0.75
+      },
+      "cur_delay": 0,
+      "telemetry_window": [
+        {
+          "t": "-3m",
+          "delay": 0,
+          "pos": 0.71,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-6m",
+          "delay": 0,
+          "pos": 0.67,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-9m",
+          "delay": 0,
+          "pos": 0.63,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-12m",
+          "delay": 0,
+          "pos": 0.59,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-15m",
+          "delay": 0,
+          "pos": 0.55,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-18m",
+          "delay": 0,
+          "pos": 0.51,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-21m",
+          "delay": 0,
+          "pos": 0.47,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-24m",
+          "delay": 0,
+          "pos": 0.43,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-27m",
+          "delay": 0,
+          "pos": 0.39,
+          "segment_id": "SEG_049",
+          "station_id": null
+        },
+        {
+          "t": "-30m",
+          "delay": 0,
+          "pos": 0.35,
+          "segment_id": "SEG_049",
+          "station_id": null
+        }
+      ],
+      "signal_aspect": "Green",
+      "service_type": "local",
+      "route": "Park to Halt 9"
+    },
+    {
+      "train_id": "HALT_310",
+      "cur_pos": {
+        "segment": "SEG_050",
+        "pct": 0.37
+      },
+      "cur_delay": 0,
+      "telemetry_window": [
+        {
+          "t": "-3m",
+          "delay": 0,
+          "pos": 0.33,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-6m",
+          "delay": 0,
+          "pos": 0.29,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-9m",
+          "delay": 0,
+          "pos": 0.24,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-12m",
+          "delay": 0,
+          "pos": 0.2,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-15m",
+          "delay": 0,
+          "pos": 0.16,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-18m",
+          "delay": 0,
+          "pos": 0.11,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-21m",
+          "delay": 0,
+          "pos": 0.07,
+          "segment_id": "SEG_050",
+          "station_id": null
+        },
+        {
+          "t": "-24m",
+          "delay": 0,
+          "pos": 0.03,
+          "segment_id": "SEG_050",
+          "station_id": null
+        }
+      ],
+      "signal_aspect": "Green",
+      "service_type": "local",
+      "route": "Forest to Halt 10"
     }
   ],
   "weather": {
-    "condition": "fog",
-    "temperature_c": -5,
-    "wind_speed_kmh": 26,
-    "visibility_km": 3.7408122792472285
+    "condition": "snow",
+    "temperature_c": 26,
+    "wind_speed_kmh": 36,
+    "visibility_km": 3.0705840483894646
   },
-  "network_load_pct": 0,
-  "total_active_trains": 2
+  "network_load_pct": 10,
+  "total_active_trains": 5
 }

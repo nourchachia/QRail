@@ -42,13 +42,41 @@ SIGNAL_ASPECTS = ["Green", "Amber", "Red"]
 # Weather conditions
 WEATHER_CONDITIONS = ["clear", "rain", "heavy_rain", "snow", "fog", "storm"]
 
-# Day types
-# Day types (must match timetable.json values)
+# Day types (matching timetable format)
 DAY_TYPES = ["weekday", "weekend", "holiday"]
 
 # ============================================================================
 # UTILITY FUNCTIONS
 # ============================================================================
+
+def get_day_type_from_date(date: datetime) -> str:
+    """
+    Determine day type from a datetime object.
+    Returns: "weekday", "weekend", or "holiday"
+    
+    Note: This is a simplified version. For production, you'd want to check
+    against an actual holiday calendar.
+    """
+    weekday = date.weekday()  # 0=Monday, 6=Sunday
+    
+    # Check for common holidays (simplified - in production use a proper holiday calendar)
+    # New Year's Day, Christmas, etc.
+    month_day = (date.month, date.day)
+    common_holidays = {
+        (1, 1): True,   # New Year's Day
+        (12, 25): True, # Christmas
+        (12, 26): True, # Boxing Day (some regions)
+        (7, 4): True,   # Independence Day (US example)
+    }
+    
+    if month_day in common_holidays:
+        return "holiday"
+    
+    if weekday in [5, 6]:  # Saturday or Sunday
+        return "weekend"
+    else:  # Monday-Friday
+        return "weekday"
+
 
 def parse_time(time_str: str) -> int:
     """
@@ -370,7 +398,7 @@ def calculate_network_load(active_trains: List[Dict], total_segments: int) -> in
     trains_on_segments = sum(1 for t in active_trains if t.get("position_type") == "segment")
     
     # Estimate load (simplified: assume each segment can handle ~10 trains simultaneously)
-    max_capacity = 59
+    max_capacity = 50
     current_load = len(active_trains)
     
     load_pct = min(100, int((current_load / max_capacity) * 100)) if max_capacity > 0 else 0
@@ -388,7 +416,7 @@ def generate_live_status(snapshot_time: Optional[str] = None, day_type: Optional
     
     Args:
         snapshot_time: ISO timestamp or "HH:MM" format. If None, uses current time.
-        day_type: "weekday", "saturday", "sunday", or "holiday". If None, randomly selects.
+        day_type: "weekday", "weekend", or "holiday". If None, automatically detects from current date.
     """
     # Load network data
     stations, segments, timetable = load_network_data()
@@ -410,13 +438,20 @@ def generate_live_status(snapshot_time: Optional[str] = None, day_type: Optional
                 microsecond=0
             )
     else:
-        # Use current time (morning peak for realism)
-        snapshot_datetime = datetime.now().replace(hour=8, minute=30, second=0, microsecond=0)
-        current_time_minutes = 8 * 60 + 30
+        # Use current time (or morning peak if before 8:30)
+        now = datetime.now()
+        if now.hour < 8 or (now.hour == 8 and now.minute < 30):
+            # Use morning peak time but keep today's date
+            snapshot_datetime = now.replace(hour=8, minute=30, second=0, microsecond=0)
+            current_time_minutes = 8 * 60 + 30
+        else:
+            # Use actual current time
+            snapshot_datetime = now.replace(second=0, microsecond=0)
+            current_time_minutes = now.hour * 60 + now.minute
     
-    # Select day type
+    # Determine day type from snapshot date
     if not day_type:
-        day_type = random.choice(DAY_TYPES)
+        day_type = get_day_type_from_date(snapshot_datetime)
     
     print(f"\n🕐 Generating live status for {snapshot_datetime.strftime('%Y-%m-%d %H:%M:%S')} ({day_type})")
     
