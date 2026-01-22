@@ -1,0 +1,2725 @@
+[
+  {
+    "incident_id": "INC_001",
+    "timestamp": "2025-06-15T08:30:00Z",
+    "location": {
+      "segment_id": "SEG_001",
+      "from_station": "STN_001",
+      "to_station": "STN_002",
+      "coordinates": [
+        63.09,
+        59.51
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "critical",
+    "description": "Express train EXP_001 derailed on main line due to track defect",
+    "affected_trains": [
+      "EXP_001",
+      "EXP_003"
+    ],
+    "impact_duration_minutes": 240,
+    "casualties": 8,
+    "affected_passengers": 450,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 145,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 35,
+      "trains_delayed": 12,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 4.0
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_002",
+    "timestamp": "2025-06-22T12:15:00Z",
+    "location": {
+      "segment_id": "SEG_002",
+      "from_station": "STN_002",
+      "to_station": "STN_003",
+      "coordinates": [
+        45.0,
+        65.36
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "critical",
+    "description": "Regional train REG_105 collision with stopped express train",
+    "affected_trains": [
+      "REG_105",
+      "EXP_002"
+    ],
+    "impact_duration_minutes": 180,
+    "casualties": 15,
+    "affected_passengers": 380,
+    "weather_conditions": "clear",
+    "speed_at_incident": 130,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 42,
+      "trains_delayed": 18,
+      "trains_cancelled": 6,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.0
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_003",
+    "timestamp": "2025-07-03T14:45:00Z",
+    "location": {
+      "segment_id": "SEG_003",
+      "from_station": "STN_003",
+      "to_station": "STN_004",
+      "coordinates": [
+        33.82,
+        50.0
+      ]
+    },
+    "accident_type": "signal_failure",
+    "severity": "high",
+    "description": "Multiple signal failures on main line segment blocking trains",
+    "affected_trains": [
+      "EXP_002",
+      "REG_102",
+      "REG_103"
+    ],
+    "impact_duration_minutes": 120,
+    "casualties": 0,
+    "affected_passengers": 520,
+    "weather_conditions": "clear",
+    "speed_at_incident": 160,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 28,
+      "trains_delayed": 15,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.0
+    },
+    "solution": {
+      "description": "Installation of solid-state signal control system with redundant backup power supplies and manual signal operation protocols",
+      "implementation_time_hours": 36,
+      "cost_estimate": 620000,
+      "implementation_steps": [
+        "Activate manual signal override procedures",
+        "Perform immediate inspection of signal electronics",
+        "Replace faulty signal modules with redundant units",
+        "Install uninterruptible power supplies (UPS) for signal boxes",
+        "Conduct signal system diagnostics",
+        "Test all signal aspects before resuming service"
+      ],
+      "preventive_measures": [
+        "Implement dual-channel signaling with automatic failover",
+        "Establish quarterly preventive maintenance schedule",
+        "Deploy condition monitoring on all critical signals",
+        "Create standby signal technician roster for emergencies"
+      ],
+      "estimated_prevention_cost": 890000,
+      "reference_accident_types": [
+        "signal_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_004",
+    "timestamp": "2025-07-10T17:20:00Z",
+    "location": {
+      "segment_id": "SEG_004",
+      "from_station": "STN_004",
+      "to_station": "STN_005",
+      "coordinates": [
+        45.0,
+        34.62
+      ]
+    },
+    "accident_type": "track_obstruction",
+    "severity": "medium",
+    "description": "Debris and fallen object on track blocking service",
+    "affected_trains": [
+      "REG_104",
+      "LOC_217"
+    ],
+    "impact_duration_minutes": 90,
+    "casualties": 2,
+    "affected_passengers": 240,
+    "weather_conditions": "stormy",
+    "speed_at_incident": 110,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 18,
+      "trains_delayed": 8,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 1.5
+    },
+    "solution": {
+      "description": "Immediate debris removal and track inspection, installation of track-side obstacle detection cameras, establishment of rapid response cleanup team",
+      "implementation_time_hours": 2,
+      "cost_estimate": 85000,
+      "implementation_steps": [
+        "Deploy rapid response team with specialized track clearing equipment",
+        "Clear debris and vegetation from track",
+        "Perform visual and tactile track inspection for damage",
+        "Verify track geometry and alignment",
+        "Test train passage at reduced speed before resumption"
+      ],
+      "preventive_measures": [
+        "Install automated obstacle detection system using LIDAR",
+        "Implement quarterly vegetation clearance program",
+        "Establish buffer zones with fencing along sensitive sections",
+        "Deploy drones for monthly track-side condition surveillance"
+      ],
+      "estimated_prevention_cost": 340000,
+      "reference_accident_types": [
+        "track_obstruction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_005",
+    "timestamp": "2025-07-18T09:00:00Z",
+    "location": {
+      "segment_id": "SEG_005",
+      "from_station": "STN_005",
+      "to_station": "STN_001",
+      "coordinates": [
+        63.09,
+        40.49
+      ]
+    },
+    "accident_type": "electrical_failure",
+    "severity": "high",
+    "description": "Overhead catenary damage causing power loss to multiple tracks",
+    "affected_trains": [
+      "EXP_001",
+      "EXP_003",
+      "EXP_005"
+    ],
+    "impact_duration_minutes": 150,
+    "casualties": 0,
+    "affected_passengers": 680,
+    "weather_conditions": "windy",
+    "speed_at_incident": 155,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 38,
+      "trains_delayed": 20,
+      "trains_cancelled": 5,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.5
+    },
+    "solution": {
+      "description": "Replacement of damaged catenary sections with reinforced design, installation of redundant feed points, implementation of automatic sectioning to isolate faults",
+      "implementation_time_hours": 40,
+      "cost_estimate": 720000,
+      "implementation_steps": [
+        "De-energize affected sections of catenary",
+        "Inspect support structures for damage",
+        "Replace damaged catenary wire sections",
+        "Upgrade insulator specifications for wind resistance",
+        "Install additional mechanical supports at 50m intervals",
+        "Test electrical load capacity before resumption"
+      ],
+      "preventive_measures": [
+        "Upgrade to high-strength catenary wire rated for 150 km/h+ winds",
+        "Install automated weather monitoring with wind speed sensors",
+        "Establish speed restrictions when winds exceed 80 km/h",
+        "Implement redundant power feed from secondary substations"
+      ],
+      "estimated_prevention_cost": 950000,
+      "reference_accident_types": [
+        "electrical_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_006",
+    "timestamp": "2025-07-25T11:30:00Z",
+    "location": {
+      "segment_id": "SEG_006",
+      "from_station": "STN_001",
+      "to_station": "STN_006",
+      "coordinates": [
+        75.62,
+        53.16
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "medium",
+    "description": "Regional train REG_101 derailed on branch line near Park Station",
+    "affected_trains": [
+      "REG_101"
+    ],
+    "impact_duration_minutes": 110,
+    "casualties": 5,
+    "affected_passengers": 180,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 95,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 12,
+      "trains_delayed": 6,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 1.83
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_007",
+    "timestamp": "2025-08-02T13:45:00Z",
+    "location": {
+      "segment_id": "SEG_007",
+      "from_station": "STN_004",
+      "to_station": "STN_007",
+      "coordinates": [
+        38.2,
+        49.87
+      ]
+    },
+    "accident_type": "wheel_bearing_failure",
+    "severity": "high",
+    "description": "Train REG_102 suffered wheel bearing failure causing emergency stop",
+    "affected_trains": [
+      "REG_102"
+    ],
+    "impact_duration_minutes": 130,
+    "casualties": 1,
+    "affected_passengers": 220,
+    "weather_conditions": "clear",
+    "speed_at_incident": 105,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 14,
+      "trains_delayed": 7,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.17
+    },
+    "solution": {
+      "description": "Replacement of all wheel bearings with sealed high-grade units, installation of temperature monitoring sensors, establishment of predictive maintenance program",
+      "implementation_time_hours": 24,
+      "cost_estimate": 420000,
+      "implementation_steps": [
+        "Remove train from service and lift on maintenance jacks",
+        "Extract and inspect all wheel bearing assemblies",
+        "Replace all bearings with sealed high-grade units",
+        "Install temperature sensors on critical bearing points",
+        "Perform dynamic balancing of all wheel sets",
+        "Test train on track at increasing speeds"
+      ],
+      "preventive_measures": [
+        "Deploy wireless temperature sensors on all trains",
+        "Establish mandatory bearing replacement at 500,000 km",
+        "Implement daily bearing temperature checks during peak season",
+        "Create predictive model using bearing temperature trends"
+      ],
+      "estimated_prevention_cost": 580000,
+      "reference_accident_types": [
+        "wheel_bearing_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_008",
+    "timestamp": "2025-08-09T16:00:00Z",
+    "location": {
+      "segment_id": "SEG_008",
+      "from_station": "STN_003",
+      "to_station": "STN_008",
+      "coordinates": [
+        25.84,
+        55.19
+      ]
+    },
+    "accident_type": "switch_malfunction",
+    "severity": "medium",
+    "description": "Faulty railway switch preventing trains from changing tracks",
+    "affected_trains": [
+      "REG_103"
+    ],
+    "impact_duration_minutes": 85,
+    "casualties": 0,
+    "affected_passengers": 140,
+    "weather_conditions": "clear",
+    "speed_at_incident": 100,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 10,
+      "trains_delayed": 5,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 1.42
+    },
+    "solution": {
+      "description": "Complete switch mechanism replacement with modern hydraulic actuator system, installation of redundant position detection, implementation of automated switch lubrication",
+      "implementation_time_hours": 18,
+      "cost_estimate": 340000,
+      "implementation_steps": [
+        "Install mechanical lock-out/tag-out (LOTO) procedures",
+        "Remove faulty switch mechanism",
+        "Install new hydraulic-actuated switch system",
+        "Add redundant position sensors for fail-safe operation",
+        "Install automated lubrication system for moving parts",
+        "Perform dynamic switch tests with live trains"
+      ],
+      "preventive_measures": [
+        "Replace all switches >20 years old with modern designs",
+        "Implement automatic lubrication on all switches",
+        "Deploy condition monitoring on switch wear patterns",
+        "Establish weekly switch operation verification tests"
+      ],
+      "estimated_prevention_cost": 520000,
+      "reference_accident_types": [
+        "switch_malfunction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_009",
+    "timestamp": "2025-08-16T10:20:00Z",
+    "location": {
+      "segment_id": "SEG_009",
+      "from_station": "STN_002",
+      "to_station": "STN_010",
+      "coordinates": [
+        50.09,
+        76.34
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "critical",
+    "description": "Head-on collision between two trains on shared track section",
+    "affected_trains": [
+      "REG_105",
+      "LOC_201"
+    ],
+    "impact_duration_minutes": 210,
+    "casualties": 22,
+    "affected_passengers": 410,
+    "weather_conditions": "foggy",
+    "speed_at_incident": 115,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 48,
+      "trains_delayed": 22,
+      "trains_cancelled": 8,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.5
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_010",
+    "timestamp": "2025-08-23T15:30:00Z",
+    "location": {
+      "segment_id": "SEG_010",
+      "from_station": "STN_005",
+      "to_station": "STN_009",
+      "coordinates": [
+        47.93,
+        23.57
+      ]
+    },
+    "accident_type": "track_defect",
+    "severity": "high",
+    "description": "Crack in rail causing speed restrictions on main route",
+    "affected_trains": [
+      "REG_104",
+      "LOC_203"
+    ],
+    "impact_duration_minutes": 160,
+    "casualties": 3,
+    "affected_passengers": 320,
+    "weather_conditions": "clear",
+    "speed_at_incident": 125,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 22,
+      "trains_delayed": 11,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.67
+    },
+    "solution": {
+      "description": "Rail replacement with modern continuous welded rail (CWR), ultrasonic inspection of entire segment, installation of thermal monitoring systems",
+      "implementation_time_hours": 44,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Perform comprehensive ultrasonic scan of entire track section",
+        "Mark all defective sections exceeding threshold",
+        "Replace rail sections with high-strength CWR",
+        "Install stress relief joints at critical points",
+        "Inspect all welds with eddy current testing",
+        "Perform thermal load testing under peak conditions"
+      ],
+      "preventive_measures": [
+        "Implement automated rail flaw detection vehicle surveys monthly",
+        "Deploy thermal imaging to detect stress-induced weak points",
+        "Establish speed restrictions during temperature extremes",
+        "Upgrade to premium rail grade in high-stress areas"
+      ],
+      "estimated_prevention_cost": 750000,
+      "reference_accident_types": [
+        "track_defect"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_011",
+    "timestamp": "2025-08-30T08:45:00Z",
+    "location": {
+      "segment_id": "SEG_011",
+      "from_station": "STN_006",
+      "to_station": "STN_011",
+      "coordinates": [
+        78.95,
+        61.95
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "critical",
+    "description": "Express train high-speed derailment on curved track section",
+    "affected_trains": [
+      "EXP_006"
+    ],
+    "impact_duration_minutes": 240,
+    "casualties": 18,
+    "affected_passengers": 520,
+    "weather_conditions": "stormy",
+    "speed_at_incident": 152,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 44,
+      "trains_delayed": 25,
+      "trains_cancelled": 7,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 4.0
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_012",
+    "timestamp": "2025-09-06T12:00:00Z",
+    "location": {
+      "segment_id": "SEG_012",
+      "from_station": "STN_007",
+      "to_station": "STN_014",
+      "coordinates": [
+        20.73,
+        42.03
+      ]
+    },
+    "accident_type": "signal_failure",
+    "severity": "high",
+    "description": "Red signal failure allowing unauthorized train entry to occupied segment",
+    "affected_trains": [
+      "LOC_214"
+    ],
+    "impact_duration_minutes": 100,
+    "casualties": 6,
+    "affected_passengers": 160,
+    "weather_conditions": "clear",
+    "speed_at_incident": 85,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 16,
+      "trains_delayed": 8,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 1.67
+    },
+    "solution": {
+      "description": "Installation of solid-state signal control system with redundant backup power supplies and manual signal operation protocols",
+      "implementation_time_hours": 36,
+      "cost_estimate": 620000,
+      "implementation_steps": [
+        "Activate manual signal override procedures",
+        "Perform immediate inspection of signal electronics",
+        "Replace faulty signal modules with redundant units",
+        "Install uninterruptible power supplies (UPS) for signal boxes",
+        "Conduct signal system diagnostics",
+        "Test all signal aspects before resuming service"
+      ],
+      "preventive_measures": [
+        "Implement dual-channel signaling with automatic failover",
+        "Establish quarterly preventive maintenance schedule",
+        "Deploy condition monitoring on all critical signals",
+        "Create standby signal technician roster for emergencies"
+      ],
+      "estimated_prevention_cost": 890000,
+      "reference_accident_types": [
+        "signal_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_013",
+    "timestamp": "2025-09-13T14:15:00Z",
+    "location": {
+      "segment_id": "SEG_013",
+      "from_station": "STN_008",
+      "to_station": "STN_017",
+      "coordinates": [
+        18.37,
+        72.28
+      ]
+    },
+    "accident_type": "brake_failure",
+    "severity": "critical",
+    "description": "Local train brake system failure causing uncontrolled descent on grade",
+    "affected_trains": [
+      "LOC_202"
+    ],
+    "impact_duration_minutes": 180,
+    "casualties": 12,
+    "affected_passengers": 240,
+    "weather_conditions": "clear",
+    "speed_at_incident": 95,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 20,
+      "trains_delayed": 10,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.0
+    },
+    "solution": {
+      "description": "Complete brake system overhaul with redundancy emphasis, installation of secondary pneumatic braking system, automatic brake effectiveness testing protocol",
+      "implementation_time_hours": 32,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Conduct comprehensive brake system inspection on all cars",
+        "Replace faulty brake components and cylinders",
+        "Install secondary pneumatic brake system independent of primary",
+        "Install load-sensing valve for automatic brake force adjustment",
+        "Implement automatic brake test before each service",
+        "Establish dynamic braking performance validation"
+      ],
+      "preventive_measures": [
+        "Deploy predictive brake wear monitoring on all trains",
+        "Establish mandatory brake system inspection every 2 weeks",
+        "Implement automatic brake testing before departure",
+        "Create alerting system for brake degradation trends"
+      ],
+      "estimated_prevention_cost": 920000,
+      "reference_accident_types": [
+        "brake_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_014",
+    "timestamp": "2025-09-20T09:30:00Z",
+    "location": {
+      "segment_id": "SEG_014",
+      "from_station": "STN_009",
+      "to_station": "STN_016",
+      "coordinates": [
+        48.01,
+        0.35
+      ]
+    },
+    "accident_type": "electrical_fire",
+    "severity": "high",
+    "description": "Electrical fire in locomotive motor compartment during transit",
+    "affected_trains": [
+      "REG_104"
+    ],
+    "impact_duration_minutes": 120,
+    "casualties": 4,
+    "affected_passengers": 210,
+    "weather_conditions": "clear",
+    "speed_at_incident": 110,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 18,
+      "trains_delayed": 9,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.0
+    },
+    "solution": {
+      "description": "Replacement of all wiring with fire-resistant insulation, installation of automatic fire detection and suppression systems",
+      "implementation_time_hours": 40,
+      "cost_estimate": 580000,
+      "implementation_steps": [
+        "Remove and inspect all electrical wiring and connectors",
+        "Replace wiring with polyimide-insulated cables rated for 200\u00b0C",
+        "Install thermal sensors throughout motor compartment",
+        "Add automatic fire suppression using CO2 system",
+        "Upgrade ventilation fans and air intake filters",
+        "Perform electrical load tests to verify system integrity"
+      ],
+      "preventive_measures": [
+        "Implement monthly electrical compartment inspections",
+        "Deploy thermal imaging cameras during maintenance",
+        "Establish maximum operating temperature limits with automatic shutoff",
+        "Install automatic electrical isolation switches on fault detection"
+      ],
+      "estimated_prevention_cost": 720000,
+      "reference_accident_types": [
+        "electrical_fire"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_015",
+    "timestamp": "2025-09-27T11:45:00Z",
+    "location": {
+      "segment_id": "SEG_015",
+      "from_station": "STN_010",
+      "to_station": "STN_015",
+      "coordinates": [
+        52.58,
+        81.54
+      ]
+    },
+    "accident_type": "track_obstruction",
+    "severity": "medium",
+    "description": "Animals on track forcing emergency stop of multiple trains",
+    "affected_trains": [
+      "LOC_205",
+      "HALT_307"
+    ],
+    "impact_duration_minutes": 75,
+    "casualties": 0,
+    "affected_passengers": 120,
+    "weather_conditions": "clear",
+    "speed_at_incident": 80,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 12,
+      "trains_delayed": 6,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.25
+    },
+    "solution": {
+      "description": "Immediate debris removal and track inspection, installation of track-side obstacle detection cameras, establishment of rapid response cleanup team",
+      "implementation_time_hours": 2,
+      "cost_estimate": 85000,
+      "implementation_steps": [
+        "Deploy rapid response team with specialized track clearing equipment",
+        "Clear debris and vegetation from track",
+        "Perform visual and tactile track inspection for damage",
+        "Verify track geometry and alignment",
+        "Test train passage at reduced speed before resumption"
+      ],
+      "preventive_measures": [
+        "Install automated obstacle detection system using LIDAR",
+        "Implement quarterly vegetation clearance program",
+        "Establish buffer zones with fencing along sensitive sections",
+        "Deploy drones for monthly track-side condition surveillance"
+      ],
+      "estimated_prevention_cost": 340000,
+      "reference_accident_types": [
+        "track_obstruction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_016",
+    "timestamp": "2025-10-04T13:20:00Z",
+    "location": {
+      "segment_id": "SEG_016",
+      "from_station": "STN_011",
+      "to_station": "STN_020",
+      "coordinates": [
+        72.56,
+        74.87
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "high",
+    "description": "Rear-end collision between two regional trains at station junction",
+    "affected_trains": [
+      "REG_106",
+      "REG_115"
+    ],
+    "impact_duration_minutes": 140,
+    "casualties": 9,
+    "affected_passengers": 380,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 95,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 32,
+      "trains_delayed": 14,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.33
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_017",
+    "timestamp": "2025-10-11T15:00:00Z",
+    "location": {
+      "segment_id": "SEG_017",
+      "from_station": "STN_012",
+      "to_station": "STN_020",
+      "coordinates": [
+        47.19,
+        80.74
+      ]
+    },
+    "accident_type": "wheel_bearing_failure",
+    "severity": "medium",
+    "description": "Defective wheel bearing on local train detected after emergency stop",
+    "affected_trains": [
+      "LOC_204"
+    ],
+    "impact_duration_minutes": 95,
+    "casualties": 2,
+    "affected_passengers": 140,
+    "weather_conditions": "clear",
+    "speed_at_incident": 85,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 14,
+      "trains_delayed": 7,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.58
+    },
+    "solution": {
+      "description": "Replacement of all wheel bearings with sealed high-grade units, installation of temperature monitoring sensors, establishment of predictive maintenance program",
+      "implementation_time_hours": 24,
+      "cost_estimate": 420000,
+      "implementation_steps": [
+        "Remove train from service and lift on maintenance jacks",
+        "Extract and inspect all wheel bearing assemblies",
+        "Replace all bearings with sealed high-grade units",
+        "Install temperature sensors on critical bearing points",
+        "Perform dynamic balancing of all wheel sets",
+        "Test train on track at increasing speeds"
+      ],
+      "preventive_measures": [
+        "Deploy wireless temperature sensors on all trains",
+        "Establish mandatory bearing replacement at 500,000 km",
+        "Implement daily bearing temperature checks during peak season",
+        "Create predictive model using bearing temperature trends"
+      ],
+      "estimated_prevention_cost": 580000,
+      "reference_accident_types": [
+        "wheel_bearing_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_018",
+    "timestamp": "2025-10-18T10:30:00Z",
+    "location": {
+      "segment_id": "SEG_018",
+      "from_station": "STN_013",
+      "to_station": "STN_020",
+      "coordinates": [
+        84.29,
+        84.22
+      ]
+    },
+    "accident_type": "switch_malfunction",
+    "severity": "high",
+    "description": "Railway junction switch failure stranding multiple trains",
+    "affected_trains": [
+      "REG_108",
+      "LOC_215"
+    ],
+    "impact_duration_minutes": 110,
+    "casualties": 0,
+    "affected_passengers": 180,
+    "weather_conditions": "clear",
+    "speed_at_incident": 90,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 24,
+      "trains_delayed": 12,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 1.83
+    },
+    "solution": {
+      "description": "Complete switch mechanism replacement with modern hydraulic actuator system, installation of redundant position detection, implementation of automated switch lubrication",
+      "implementation_time_hours": 18,
+      "cost_estimate": 340000,
+      "implementation_steps": [
+        "Install mechanical lock-out/tag-out (LOTO) procedures",
+        "Remove faulty switch mechanism",
+        "Install new hydraulic-actuated switch system",
+        "Add redundant position sensors for fail-safe operation",
+        "Install automated lubrication system for moving parts",
+        "Perform dynamic switch tests with live trains"
+      ],
+      "preventive_measures": [
+        "Replace all switches >20 years old with modern designs",
+        "Implement automatic lubrication on all switches",
+        "Deploy condition monitoring on switch wear patterns",
+        "Establish weekly switch operation verification tests"
+      ],
+      "estimated_prevention_cost": 520000,
+      "reference_accident_types": [
+        "switch_malfunction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_019",
+    "timestamp": "2025-10-25T12:45:00Z",
+    "location": {
+      "segment_id": "SEG_019",
+      "from_station": "STN_014",
+      "to_station": "STN_038",
+      "coordinates": [
+        38.59,
+        91.02
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "high",
+    "description": "Regional train derailment at mountain pass due to ice on tracks",
+    "affected_trains": [
+      "REG_109"
+    ],
+    "impact_duration_minutes": 140,
+    "casualties": 7,
+    "affected_passengers": 260,
+    "weather_conditions": "snowy",
+    "speed_at_incident": 100,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 28,
+      "trains_delayed": 13,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 2.33
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_020",
+    "timestamp": "2025-11-01T14:00:00Z",
+    "location": {
+      "segment_id": "SEG_020",
+      "from_station": "STN_015",
+      "to_station": "STN_025",
+      "coordinates": [
+        52.58,
+        94.51
+      ]
+    },
+    "accident_type": "electrical_failure",
+    "severity": "medium",
+    "description": "Power supply interruption on suburban branch affecting multiple services",
+    "affected_trains": [
+      "LOC_205",
+      "HALT_310"
+    ],
+    "impact_duration_minutes": 105,
+    "casualties": 0,
+    "affected_passengers": 200,
+    "weather_conditions": "clear",
+    "speed_at_incident": 75,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 20,
+      "trains_delayed": 10,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.75
+    },
+    "solution": {
+      "description": "Replacement of damaged catenary sections with reinforced design, installation of redundant feed points, implementation of automatic sectioning to isolate faults",
+      "implementation_time_hours": 40,
+      "cost_estimate": 720000,
+      "implementation_steps": [
+        "De-energize affected sections of catenary",
+        "Inspect support structures for damage",
+        "Replace damaged catenary wire sections",
+        "Upgrade insulator specifications for wind resistance",
+        "Install additional mechanical supports at 50m intervals",
+        "Test electrical load capacity before resumption"
+      ],
+      "preventive_measures": [
+        "Upgrade to high-strength catenary wire rated for 150 km/h+ winds",
+        "Install automated weather monitoring with wind speed sensors",
+        "Establish speed restrictions when winds exceed 80 km/h",
+        "Implement redundant power feed from secondary substations"
+      ],
+      "estimated_prevention_cost": 950000,
+      "reference_accident_types": [
+        "electrical_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_021",
+    "timestamp": "2025-11-08T16:30:00Z",
+    "location": {
+      "segment_id": "SEG_021",
+      "from_station": "STN_016",
+      "to_station": "STN_024",
+      "coordinates": [
+        35.94,
+        -0.16
+      ]
+    },
+    "accident_type": "track_defect",
+    "severity": "high",
+    "description": "Buckled rail requiring immediate track replacement",
+    "affected_trains": [
+      "LOC_206",
+      "HALT_304"
+    ],
+    "impact_duration_minutes": 150,
+    "casualties": 3,
+    "affected_passengers": 240,
+    "weather_conditions": "hot",
+    "speed_at_incident": 80,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 26,
+      "trains_delayed": 12,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.5
+    },
+    "solution": {
+      "description": "Rail replacement with modern continuous welded rail (CWR), ultrasonic inspection of entire segment, installation of thermal monitoring systems",
+      "implementation_time_hours": 44,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Perform comprehensive ultrasonic scan of entire track section",
+        "Mark all defective sections exceeding threshold",
+        "Replace rail sections with high-strength CWR",
+        "Install stress relief joints at critical points",
+        "Inspect all welds with eddy current testing",
+        "Perform thermal load testing under peak conditions"
+      ],
+      "preventive_measures": [
+        "Implement automated rail flaw detection vehicle surveys monthly",
+        "Deploy thermal imaging to detect stress-induced weak points",
+        "Establish speed restrictions during temperature extremes",
+        "Upgrade to premium rail grade in high-stress areas"
+      ],
+      "estimated_prevention_cost": 750000,
+      "reference_accident_types": [
+        "track_defect"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_022",
+    "timestamp": "2025-11-15T09:15:00Z",
+    "location": {
+      "segment_id": "SEG_022",
+      "from_station": "STN_017",
+      "to_station": "STN_045",
+      "coordinates": [
+        21.5,
+        76.72
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "medium",
+    "description": "Minor side-swipe collision between two trains at passing loop",
+    "affected_trains": [
+      "LOC_208"
+    ],
+    "impact_duration_minutes": 85,
+    "casualties": 5,
+    "affected_passengers": 110,
+    "weather_conditions": "clear",
+    "speed_at_incident": 70,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 10,
+      "trains_delayed": 5,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 1.42
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_023",
+    "timestamp": "2025-11-22T11:50:00Z",
+    "location": {
+      "segment_id": "SEG_023",
+      "from_station": "STN_018",
+      "to_station": "STN_046",
+      "coordinates": [
+        26.57,
+        74.9
+      ]
+    },
+    "accident_type": "brake_failure",
+    "severity": "high",
+    "description": "Regional train brake malfunctions during peak service hours",
+    "affected_trains": [
+      "REG_113"
+    ],
+    "impact_duration_minutes": 125,
+    "casualties": 6,
+    "affected_passengers": 190,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 105,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 22,
+      "trains_delayed": 10,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.08
+    },
+    "solution": {
+      "description": "Complete brake system overhaul with redundancy emphasis, installation of secondary pneumatic braking system, automatic brake effectiveness testing protocol",
+      "implementation_time_hours": 32,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Conduct comprehensive brake system inspection on all cars",
+        "Replace faulty brake components and cylinders",
+        "Install secondary pneumatic brake system independent of primary",
+        "Install load-sensing valve for automatic brake force adjustment",
+        "Implement automatic brake test before each service",
+        "Establish dynamic braking performance validation"
+      ],
+      "preventive_measures": [
+        "Deploy predictive brake wear monitoring on all trains",
+        "Establish mandatory brake system inspection every 2 weeks",
+        "Implement automatic brake testing before departure",
+        "Create alerting system for brake degradation trends"
+      ],
+      "estimated_prevention_cost": 920000,
+      "reference_accident_types": [
+        "brake_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_024",
+    "timestamp": "2025-11-29T13:30:00Z",
+    "location": {
+      "segment_id": "SEG_024",
+      "from_station": "STN_019",
+      "to_station": "STN_040",
+      "coordinates": [
+        24.13,
+        28.84
+      ]
+    },
+    "accident_type": "electrical_fire",
+    "severity": "critical",
+    "description": "Major electrical fire in train pantograph system causing line blockage",
+    "affected_trains": [
+      "REG_114"
+    ],
+    "impact_duration_minutes": 200,
+    "casualties": 11,
+    "affected_passengers": 320,
+    "weather_conditions": "clear",
+    "speed_at_incident": 115,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 40,
+      "trains_delayed": 19,
+      "trains_cancelled": 5,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.33
+    },
+    "solution": {
+      "description": "Replacement of all wiring with fire-resistant insulation, installation of automatic fire detection and suppression systems",
+      "implementation_time_hours": 40,
+      "cost_estimate": 580000,
+      "implementation_steps": [
+        "Remove and inspect all electrical wiring and connectors",
+        "Replace wiring with polyimide-insulated cables rated for 200\u00b0C",
+        "Install thermal sensors throughout motor compartment",
+        "Add automatic fire suppression using CO2 system",
+        "Upgrade ventilation fans and air intake filters",
+        "Perform electrical load tests to verify system integrity"
+      ],
+      "preventive_measures": [
+        "Implement monthly electrical compartment inspections",
+        "Deploy thermal imaging cameras during maintenance",
+        "Establish maximum operating temperature limits with automatic shutoff",
+        "Install automatic electrical isolation switches on fault detection"
+      ],
+      "estimated_prevention_cost": 720000,
+      "reference_accident_types": [
+        "electrical_fire"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_025",
+    "timestamp": "2025-12-06T15:45:00Z",
+    "location": {
+      "segment_id": "SEG_025",
+      "from_station": "STN_020",
+      "to_station": "STN_039",
+      "coordinates": [
+        69.46,
+        82.16
+      ]
+    },
+    "accident_type": "signal_failure",
+    "severity": "high",
+    "description": "Complete signal block failure on busy commuter line",
+    "affected_trains": [
+      "EXP_008",
+      "LOC_217"
+    ],
+    "impact_duration_minutes": 135,
+    "casualties": 0,
+    "affected_passengers": 450,
+    "weather_conditions": "clear",
+    "speed_at_incident": 140,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 36,
+      "trains_delayed": 18,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.25
+    },
+    "solution": {
+      "description": "Installation of solid-state signal control system with redundant backup power supplies and manual signal operation protocols",
+      "implementation_time_hours": 36,
+      "cost_estimate": 620000,
+      "implementation_steps": [
+        "Activate manual signal override procedures",
+        "Perform immediate inspection of signal electronics",
+        "Replace faulty signal modules with redundant units",
+        "Install uninterruptible power supplies (UPS) for signal boxes",
+        "Conduct signal system diagnostics",
+        "Test all signal aspects before resuming service"
+      ],
+      "preventive_measures": [
+        "Implement dual-channel signaling with automatic failover",
+        "Establish quarterly preventive maintenance schedule",
+        "Deploy condition monitoring on all critical signals",
+        "Create standby signal technician roster for emergencies"
+      ],
+      "estimated_prevention_cost": 890000,
+      "reference_accident_types": [
+        "signal_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_026",
+    "timestamp": "2025-12-13T10:20:00Z",
+    "location": {
+      "segment_id": "SEG_026",
+      "from_station": "STN_021",
+      "to_station": "STN_027",
+      "coordinates": [
+        62.99,
+        116.96
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "medium",
+    "description": "Local train derailment on peripheral line during poor visibility",
+    "affected_trains": [
+      "LOC_201"
+    ],
+    "impact_duration_minutes": 100,
+    "casualties": 4,
+    "affected_passengers": 95,
+    "weather_conditions": "foggy",
+    "speed_at_incident": 70,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 8,
+      "trains_delayed": 4,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 1.67
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_027",
+    "timestamp": "2025-12-20T12:35:00Z",
+    "location": {
+      "segment_id": "SEG_027",
+      "from_station": "STN_022",
+      "to_station": "STN_028",
+      "coordinates": [
+        66.81,
+        -18.08
+      ]
+    },
+    "accident_type": "wheel_bearing_failure",
+    "severity": "medium",
+    "description": "Overheated wheel bearing detected on passing train",
+    "affected_trains": [
+      "LOC_202"
+    ],
+    "impact_duration_minutes": 90,
+    "casualties": 1,
+    "affected_passengers": 85,
+    "weather_conditions": "clear",
+    "speed_at_incident": 75,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 9,
+      "trains_delayed": 4,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.5
+    },
+    "solution": {
+      "description": "Replacement of all wheel bearings with sealed high-grade units, installation of temperature monitoring sensors, establishment of predictive maintenance program",
+      "implementation_time_hours": 24,
+      "cost_estimate": 420000,
+      "implementation_steps": [
+        "Remove train from service and lift on maintenance jacks",
+        "Extract and inspect all wheel bearing assemblies",
+        "Replace all bearings with sealed high-grade units",
+        "Install temperature sensors on critical bearing points",
+        "Perform dynamic balancing of all wheel sets",
+        "Test train on track at increasing speeds"
+      ],
+      "preventive_measures": [
+        "Deploy wireless temperature sensors on all trains",
+        "Establish mandatory bearing replacement at 500,000 km",
+        "Implement daily bearing temperature checks during peak season",
+        "Create predictive model using bearing temperature trends"
+      ],
+      "estimated_prevention_cost": 580000,
+      "reference_accident_types": [
+        "wheel_bearing_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_028",
+    "timestamp": "2025-12-27T14:50:00Z",
+    "location": {
+      "segment_id": "SEG_028",
+      "from_station": "STN_023",
+      "to_station": "STN_031",
+      "coordinates": [
+        101.64,
+        43.59
+      ]
+    },
+    "accident_type": "track_obstruction",
+    "severity": "medium",
+    "description": "Landslide debris blocking tracks in mountainous region",
+    "affected_trains": [
+      "LOC_203"
+    ],
+    "impact_duration_minutes": 120,
+    "casualties": 0,
+    "affected_passengers": 110,
+    "weather_conditions": "stormy",
+    "speed_at_incident": 80,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 11,
+      "trains_delayed": 5,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 2.0
+    },
+    "solution": {
+      "description": "Immediate debris removal and track inspection, installation of track-side obstacle detection cameras, establishment of rapid response cleanup team",
+      "implementation_time_hours": 2,
+      "cost_estimate": 85000,
+      "implementation_steps": [
+        "Deploy rapid response team with specialized track clearing equipment",
+        "Clear debris and vegetation from track",
+        "Perform visual and tactile track inspection for damage",
+        "Verify track geometry and alignment",
+        "Test train passage at reduced speed before resumption"
+      ],
+      "preventive_measures": [
+        "Install automated obstacle detection system using LIDAR",
+        "Implement quarterly vegetation clearance program",
+        "Establish buffer zones with fencing along sensitive sections",
+        "Deploy drones for monthly track-side condition surveillance"
+      ],
+      "estimated_prevention_cost": 340000,
+      "reference_accident_types": [
+        "track_obstruction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_029",
+    "timestamp": "2026-01-03T08:00:00Z",
+    "location": {
+      "segment_id": "SEG_029",
+      "from_station": "STN_024",
+      "to_station": "STN_044",
+      "coordinates": [
+        27.34,
+        -25.8
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "high",
+    "description": "Level crossing collision between train and vehicle",
+    "affected_trains": [
+      "LOC_204"
+    ],
+    "impact_duration_minutes": 115,
+    "casualties": 8,
+    "affected_passengers": 120,
+    "weather_conditions": "clear",
+    "speed_at_incident": 85,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 18,
+      "trains_delayed": 8,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.92
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_030",
+    "timestamp": "2026-01-10T09:45:00Z",
+    "location": {
+      "segment_id": "SEG_030",
+      "from_station": "STN_025",
+      "to_station": "STN_050",
+      "coordinates": [
+        44.4,
+        109.67
+      ]
+    },
+    "accident_type": "electrical_failure",
+    "severity": "medium",
+    "description": "Catenary wire sagging causing intermittent power loss",
+    "affected_trains": [
+      "LOC_205"
+    ],
+    "impact_duration_minutes": 95,
+    "casualties": 0,
+    "affected_passengers": 145,
+    "weather_conditions": "hot",
+    "speed_at_incident": 75,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 12,
+      "trains_delayed": 6,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.58
+    },
+    "solution": {
+      "description": "Replacement of damaged catenary sections with reinforced design, installation of redundant feed points, implementation of automatic sectioning to isolate faults",
+      "implementation_time_hours": 40,
+      "cost_estimate": 720000,
+      "implementation_steps": [
+        "De-energize affected sections of catenary",
+        "Inspect support structures for damage",
+        "Replace damaged catenary wire sections",
+        "Upgrade insulator specifications for wind resistance",
+        "Install additional mechanical supports at 50m intervals",
+        "Test electrical load capacity before resumption"
+      ],
+      "preventive_measures": [
+        "Upgrade to high-strength catenary wire rated for 150 km/h+ winds",
+        "Install automated weather monitoring with wind speed sensors",
+        "Establish speed restrictions when winds exceed 80 km/h",
+        "Implement redundant power feed from secondary substations"
+      ],
+      "estimated_prevention_cost": 950000,
+      "reference_accident_types": [
+        "electrical_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_031",
+    "timestamp": "2026-01-17T11:15:00Z",
+    "location": {
+      "segment_id": "SEG_031",
+      "from_station": "STN_026",
+      "to_station": "STN_036",
+      "coordinates": [
+        -10.6,
+        30.09
+      ]
+    },
+    "accident_type": "brake_failure",
+    "severity": "high",
+    "description": "Partial brake failure on express train causes speed overrun",
+    "affected_trains": [
+      "HALT_301"
+    ],
+    "impact_duration_minutes": 130,
+    "casualties": 5,
+    "affected_passengers": 165,
+    "weather_conditions": "clear",
+    "speed_at_incident": 110,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 20,
+      "trains_delayed": 9,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.17
+    },
+    "solution": {
+      "description": "Complete brake system overhaul with redundancy emphasis, installation of secondary pneumatic braking system, automatic brake effectiveness testing protocol",
+      "implementation_time_hours": 32,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Conduct comprehensive brake system inspection on all cars",
+        "Replace faulty brake components and cylinders",
+        "Install secondary pneumatic brake system independent of primary",
+        "Install load-sensing valve for automatic brake force adjustment",
+        "Implement automatic brake test before each service",
+        "Establish dynamic braking performance validation"
+      ],
+      "preventive_measures": [
+        "Deploy predictive brake wear monitoring on all trains",
+        "Establish mandatory brake system inspection every 2 weeks",
+        "Implement automatic brake testing before departure",
+        "Create alerting system for brake degradation trends"
+      ],
+      "estimated_prevention_cost": 920000,
+      "reference_accident_types": [
+        "brake_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_032",
+    "timestamp": "2026-01-24T13:50:00Z",
+    "location": {
+      "segment_id": "SEG_032",
+      "from_station": "STN_027",
+      "to_station": "STN_037",
+      "coordinates": [
+        75.18,
+        118.24
+      ]
+    },
+    "accident_type": "switch_malfunction",
+    "severity": "medium",
+    "description": "Frozen switch mechanism at rural station junction",
+    "affected_trains": [
+      "HALT_302"
+    ],
+    "impact_duration_minutes": 100,
+    "casualties": 0,
+    "affected_passengers": 88,
+    "weather_conditions": "snowy",
+    "speed_at_incident": 65,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 7,
+      "trains_delayed": 3,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 1.67
+    },
+    "solution": {
+      "description": "Complete switch mechanism replacement with modern hydraulic actuator system, installation of redundant position detection, implementation of automated switch lubrication",
+      "implementation_time_hours": 18,
+      "cost_estimate": 340000,
+      "implementation_steps": [
+        "Install mechanical lock-out/tag-out (LOTO) procedures",
+        "Remove faulty switch mechanism",
+        "Install new hydraulic-actuated switch system",
+        "Add redundant position sensors for fail-safe operation",
+        "Install automated lubrication system for moving parts",
+        "Perform dynamic switch tests with live trains"
+      ],
+      "preventive_measures": [
+        "Replace all switches >20 years old with modern designs",
+        "Implement automatic lubrication on all switches",
+        "Deploy condition monitoring on switch wear patterns",
+        "Establish weekly switch operation verification tests"
+      ],
+      "estimated_prevention_cost": 520000,
+      "reference_accident_types": [
+        "switch_malfunction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_033",
+    "timestamp": "2026-01-31T15:25:00Z",
+    "location": {
+      "segment_id": "SEG_033",
+      "from_station": "STN_028",
+      "to_station": "STN_041",
+      "coordinates": [
+        27.08,
+        -12.03
+      ]
+    },
+    "accident_type": "track_defect",
+    "severity": "high",
+    "description": "Severe rail corrugation on main line causing vibration damage",
+    "affected_trains": [
+      "EXP_007"
+    ],
+    "impact_duration_minutes": 145,
+    "casualties": 0,
+    "affected_passengers": 380,
+    "weather_conditions": "clear",
+    "speed_at_incident": 135,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 32,
+      "trains_delayed": 16,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.42
+    },
+    "solution": {
+      "description": "Rail replacement with modern continuous welded rail (CWR), ultrasonic inspection of entire segment, installation of thermal monitoring systems",
+      "implementation_time_hours": 44,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Perform comprehensive ultrasonic scan of entire track section",
+        "Mark all defective sections exceeding threshold",
+        "Replace rail sections with high-strength CWR",
+        "Install stress relief joints at critical points",
+        "Inspect all welds with eddy current testing",
+        "Perform thermal load testing under peak conditions"
+      ],
+      "preventive_measures": [
+        "Implement automated rail flaw detection vehicle surveys monthly",
+        "Deploy thermal imaging to detect stress-induced weak points",
+        "Establish speed restrictions during temperature extremes",
+        "Upgrade to premium rail grade in high-stress areas"
+      ],
+      "estimated_prevention_cost": 750000,
+      "reference_accident_types": [
+        "track_defect"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_034",
+    "timestamp": "2026-02-07T10:40:00Z",
+    "location": {
+      "segment_id": "SEG_034",
+      "from_station": "STN_029",
+      "to_station": "STN_043",
+      "coordinates": [
+        99.11,
+        68.28
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "critical",
+    "description": "Multiple train collision at congested interchange junction",
+    "affected_trains": [
+      "EXP_009",
+      "REG_110",
+      "LOC_206"
+    ],
+    "impact_duration_minutes": 220,
+    "casualties": 25,
+    "affected_passengers": 580,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 120,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 52,
+      "trains_delayed": 28,
+      "trains_cancelled": 9,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 3.67
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_035",
+    "timestamp": "2026-02-14T12:30:00Z",
+    "location": {
+      "segment_id": "SEG_035",
+      "from_station": "STN_030",
+      "to_station": "STN_038",
+      "coordinates": [
+        19.68,
+        88.6
+      ]
+    },
+    "accident_type": "electrical_failure",
+    "severity": "high",
+    "description": "Lightning strike damaging catenary system on branch line",
+    "affected_trains": [
+      "LOC_207"
+    ],
+    "impact_duration_minutes": 140,
+    "casualties": 2,
+    "affected_passengers": 175,
+    "weather_conditions": "stormy",
+    "speed_at_incident": 80,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 18,
+      "trains_delayed": 8,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.33
+    },
+    "solution": {
+      "description": "Replacement of damaged catenary sections with reinforced design, installation of redundant feed points, implementation of automatic sectioning to isolate faults",
+      "implementation_time_hours": 40,
+      "cost_estimate": 720000,
+      "implementation_steps": [
+        "De-energize affected sections of catenary",
+        "Inspect support structures for damage",
+        "Replace damaged catenary wire sections",
+        "Upgrade insulator specifications for wind resistance",
+        "Install additional mechanical supports at 50m intervals",
+        "Test electrical load capacity before resumption"
+      ],
+      "preventive_measures": [
+        "Upgrade to high-strength catenary wire rated for 150 km/h+ winds",
+        "Install automated weather monitoring with wind speed sensors",
+        "Establish speed restrictions when winds exceed 80 km/h",
+        "Implement redundant power feed from secondary substations"
+      ],
+      "estimated_prevention_cost": 950000,
+      "reference_accident_types": [
+        "electrical_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_036",
+    "timestamp": "2026-02-21T14:05:00Z",
+    "location": {
+      "segment_id": "SEG_036",
+      "from_station": "STN_031",
+      "to_station": "STN_034",
+      "coordinates": [
+        88.89,
+        7.62
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "medium",
+    "description": "Regional train derailed due to excessive speed on curve",
+    "affected_trains": [
+      "REG_111"
+    ],
+    "impact_duration_minutes": 110,
+    "casualties": 6,
+    "affected_passengers": 210,
+    "weather_conditions": "clear",
+    "speed_at_incident": 108,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 20,
+      "trains_delayed": 9,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.83
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_037",
+    "timestamp": "2026-02-28T16:20:00Z",
+    "location": {
+      "segment_id": "SEG_037",
+      "from_station": "STN_032",
+      "to_station": "STN_035",
+      "coordinates": [
+        106.95,
+        7.81
+      ]
+    },
+    "accident_type": "wheel_bearing_failure",
+    "severity": "high",
+    "description": "Train wheel bearing failure creating dangerous vibrations",
+    "affected_trains": [
+      "LOC_208"
+    ],
+    "impact_duration_minutes": 125,
+    "casualties": 3,
+    "affected_passengers": 140,
+    "weather_conditions": "clear",
+    "speed_at_incident": 90,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 16,
+      "trains_delayed": 7,
+      "trains_cancelled": 2,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.08
+    },
+    "solution": {
+      "description": "Replacement of all wheel bearings with sealed high-grade units, installation of temperature monitoring sensors, establishment of predictive maintenance program",
+      "implementation_time_hours": 24,
+      "cost_estimate": 420000,
+      "implementation_steps": [
+        "Remove train from service and lift on maintenance jacks",
+        "Extract and inspect all wheel bearing assemblies",
+        "Replace all bearings with sealed high-grade units",
+        "Install temperature sensors on critical bearing points",
+        "Perform dynamic balancing of all wheel sets",
+        "Test train on track at increasing speeds"
+      ],
+      "preventive_measures": [
+        "Deploy wireless temperature sensors on all trains",
+        "Establish mandatory bearing replacement at 500,000 km",
+        "Implement daily bearing temperature checks during peak season",
+        "Create predictive model using bearing temperature trends"
+      ],
+      "estimated_prevention_cost": 580000,
+      "reference_accident_types": [
+        "wheel_bearing_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_038",
+    "timestamp": "2026-03-07T09:35:00Z",
+    "location": {
+      "segment_id": "SEG_038",
+      "from_station": "STN_033",
+      "to_station": "STN_049",
+      "coordinates": [
+        61.6,
+        118.03
+      ]
+    },
+    "accident_type": "signal_failure",
+    "severity": "medium",
+    "description": "Defective signal allowing trains to dangerously close in distance",
+    "affected_trains": [
+      "LOC_209"
+    ],
+    "impact_duration_minutes": 105,
+    "casualties": 0,
+    "affected_passengers": 125,
+    "weather_conditions": "clear",
+    "speed_at_incident": 75,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 15,
+      "trains_delayed": 7,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.75
+    },
+    "solution": {
+      "description": "Installation of solid-state signal control system with redundant backup power supplies and manual signal operation protocols",
+      "implementation_time_hours": 36,
+      "cost_estimate": 620000,
+      "implementation_steps": [
+        "Activate manual signal override procedures",
+        "Perform immediate inspection of signal electronics",
+        "Replace faulty signal modules with redundant units",
+        "Install uninterruptible power supplies (UPS) for signal boxes",
+        "Conduct signal system diagnostics",
+        "Test all signal aspects before resuming service"
+      ],
+      "preventive_measures": [
+        "Implement dual-channel signaling with automatic failover",
+        "Establish quarterly preventive maintenance schedule",
+        "Deploy condition monitoring on all critical signals",
+        "Create standby signal technician roster for emergencies"
+      ],
+      "estimated_prevention_cost": 890000,
+      "reference_accident_types": [
+        "signal_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_039",
+    "timestamp": "2026-03-14T11:50:00Z",
+    "location": {
+      "segment_id": "SEG_039",
+      "from_station": "STN_034",
+      "to_station": "STN_043",
+      "coordinates": [
+        92.84,
+        7.61
+      ]
+    },
+    "accident_type": "track_obstruction",
+    "severity": "high",
+    "description": "Vehicle struck on level crossing blocks tracks indefinitely",
+    "affected_trains": [
+      "REG_112"
+    ],
+    "impact_duration_minutes": 150,
+    "casualties": 5,
+    "affected_passengers": 190,
+    "weather_conditions": "clear",
+    "speed_at_incident": 100,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 22,
+      "trains_delayed": 11,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.5
+    },
+    "solution": {
+      "description": "Immediate debris removal and track inspection, installation of track-side obstacle detection cameras, establishment of rapid response cleanup team",
+      "implementation_time_hours": 2,
+      "cost_estimate": 85000,
+      "implementation_steps": [
+        "Deploy rapid response team with specialized track clearing equipment",
+        "Clear debris and vegetation from track",
+        "Perform visual and tactile track inspection for damage",
+        "Verify track geometry and alignment",
+        "Test train passage at reduced speed before resumption"
+      ],
+      "preventive_measures": [
+        "Install automated obstacle detection system using LIDAR",
+        "Implement quarterly vegetation clearance program",
+        "Establish buffer zones with fencing along sensitive sections",
+        "Deploy drones for monthly track-side condition surveillance"
+      ],
+      "estimated_prevention_cost": 340000,
+      "reference_accident_types": [
+        "track_obstruction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_040",
+    "timestamp": "2026-03-21T13:15:00Z",
+    "location": {
+      "segment_id": "SEG_040",
+      "from_station": "STN_035",
+      "to_station": "STN_050",
+      "coordinates": [
+        111.77,
+        12.22
+      ]
+    },
+    "accident_type": "brake_failure",
+    "severity": "critical",
+    "description": "Complete brake system failure on express train on descent",
+    "affected_trains": [
+      "EXP_010"
+    ],
+    "impact_duration_minutes": 200,
+    "casualties": 19,
+    "affected_passengers": 490,
+    "weather_conditions": "foggy",
+    "speed_at_incident": 145,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 45,
+      "trains_delayed": 23,
+      "trains_cancelled": 6,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 3.33
+    },
+    "solution": {
+      "description": "Complete brake system overhaul with redundancy emphasis, installation of secondary pneumatic braking system, automatic brake effectiveness testing protocol",
+      "implementation_time_hours": 32,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Conduct comprehensive brake system inspection on all cars",
+        "Replace faulty brake components and cylinders",
+        "Install secondary pneumatic brake system independent of primary",
+        "Install load-sensing valve for automatic brake force adjustment",
+        "Implement automatic brake test before each service",
+        "Establish dynamic braking performance validation"
+      ],
+      "preventive_measures": [
+        "Deploy predictive brake wear monitoring on all trains",
+        "Establish mandatory brake system inspection every 2 weeks",
+        "Implement automatic brake testing before departure",
+        "Create alerting system for brake degradation trends"
+      ],
+      "estimated_prevention_cost": 920000,
+      "reference_accident_types": [
+        "brake_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_041",
+    "timestamp": "2026-03-28T15:45:00Z",
+    "location": {
+      "segment_id": "SEG_041",
+      "from_station": "STN_036",
+      "to_station": "STN_047",
+      "coordinates": [
+        -9.17,
+        75.04
+      ]
+    },
+    "accident_type": "electrical_fire",
+    "severity": "medium",
+    "description": "Wiring fault causing electrical fire in train carriage",
+    "affected_trains": [
+      "HALT_303"
+    ],
+    "impact_duration_minutes": 100,
+    "casualties": 4,
+    "affected_passengers": 110,
+    "weather_conditions": "clear",
+    "speed_at_incident": 70,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 12,
+      "trains_delayed": 5,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.67
+    },
+    "solution": {
+      "description": "Replacement of all wiring with fire-resistant insulation, installation of automatic fire detection and suppression systems",
+      "implementation_time_hours": 40,
+      "cost_estimate": 580000,
+      "implementation_steps": [
+        "Remove and inspect all electrical wiring and connectors",
+        "Replace wiring with polyimide-insulated cables rated for 200\u00b0C",
+        "Install thermal sensors throughout motor compartment",
+        "Add automatic fire suppression using CO2 system",
+        "Upgrade ventilation fans and air intake filters",
+        "Perform electrical load tests to verify system integrity"
+      ],
+      "preventive_measures": [
+        "Implement monthly electrical compartment inspections",
+        "Deploy thermal imaging cameras during maintenance",
+        "Establish maximum operating temperature limits with automatic shutoff",
+        "Install automatic electrical isolation switches on fault detection"
+      ],
+      "estimated_prevention_cost": 720000,
+      "reference_accident_types": [
+        "electrical_fire"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_042",
+    "timestamp": "2026-04-04T10:10:00Z",
+    "location": {
+      "segment_id": "SEG_042",
+      "from_station": "STN_037",
+      "to_station": "STN_048",
+      "coordinates": [
+        57.42,
+        82.2
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "high",
+    "description": "Sideswipe collision between express and regional trains at junction",
+    "affected_trains": [
+      "EXP_011",
+      "LOC_210"
+    ],
+    "impact_duration_minutes": 135,
+    "casualties": 10,
+    "affected_passengers": 350,
+    "weather_conditions": "rainy",
+    "speed_at_incident": 125,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 30,
+      "trains_delayed": 14,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.25
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_043",
+    "timestamp": "2026-04-11T12:30:00Z",
+    "location": {
+      "segment_id": "SEG_043",
+      "from_station": "STN_038",
+      "to_station": "STN_042",
+      "coordinates": [
+        25.12,
+        99.49
+      ]
+    },
+    "accident_type": "track_defect",
+    "severity": "medium",
+    "description": "Loose bolts on track fasteners causing vibrations and speed restrictions",
+    "affected_trains": [
+      "LOC_211"
+    ],
+    "impact_duration_minutes": 95,
+    "casualties": 1,
+    "affected_passengers": 130,
+    "weather_conditions": "clear",
+    "speed_at_incident": 85,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 14,
+      "trains_delayed": 6,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.58
+    },
+    "solution": {
+      "description": "Rail replacement with modern continuous welded rail (CWR), ultrasonic inspection of entire segment, installation of thermal monitoring systems",
+      "implementation_time_hours": 44,
+      "cost_estimate": 680000,
+      "implementation_steps": [
+        "Perform comprehensive ultrasonic scan of entire track section",
+        "Mark all defective sections exceeding threshold",
+        "Replace rail sections with high-strength CWR",
+        "Install stress relief joints at critical points",
+        "Inspect all welds with eddy current testing",
+        "Perform thermal load testing under peak conditions"
+      ],
+      "preventive_measures": [
+        "Implement automated rail flaw detection vehicle surveys monthly",
+        "Deploy thermal imaging to detect stress-induced weak points",
+        "Establish speed restrictions during temperature extremes",
+        "Upgrade to premium rail grade in high-stress areas"
+      ],
+      "estimated_prevention_cost": 750000,
+      "reference_accident_types": [
+        "track_defect"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_044",
+    "timestamp": "2026-04-18T14:55:00Z",
+    "location": {
+      "segment_id": "SEG_044",
+      "from_station": "STN_039",
+      "to_station": "STN_047",
+      "coordinates": [
+        53.96,
+        109.69
+      ]
+    },
+    "accident_type": "switch_malfunction",
+    "severity": "high",
+    "description": "Mechanical switch jam causing routing failures at major junction",
+    "affected_trains": [
+      "EXP_012",
+      "REG_113"
+    ],
+    "impact_duration_minutes": 140,
+    "casualties": 0,
+    "affected_passengers": 410,
+    "weather_conditions": "clear",
+    "speed_at_incident": 130,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 34,
+      "trains_delayed": 17,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 2,
+      "recovery_time_hours": 2.33
+    },
+    "solution": {
+      "description": "Complete switch mechanism replacement with modern hydraulic actuator system, installation of redundant position detection, implementation of automated switch lubrication",
+      "implementation_time_hours": 18,
+      "cost_estimate": 340000,
+      "implementation_steps": [
+        "Install mechanical lock-out/tag-out (LOTO) procedures",
+        "Remove faulty switch mechanism",
+        "Install new hydraulic-actuated switch system",
+        "Add redundant position sensors for fail-safe operation",
+        "Install automated lubrication system for moving parts",
+        "Perform dynamic switch tests with live trains"
+      ],
+      "preventive_measures": [
+        "Replace all switches >20 years old with modern designs",
+        "Implement automatic lubrication on all switches",
+        "Deploy condition monitoring on switch wear patterns",
+        "Establish weekly switch operation verification tests"
+      ],
+      "estimated_prevention_cost": 520000,
+      "reference_accident_types": [
+        "switch_malfunction"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_045",
+    "timestamp": "2026-04-25T08:20:00Z",
+    "location": {
+      "segment_id": "SEG_045",
+      "from_station": "STN_040",
+      "to_station": "STN_044",
+      "coordinates": [
+        41.91,
+        -20.86
+      ]
+    },
+    "accident_type": "derailment",
+    "severity": "high",
+    "description": "Express train derailment due to track misalignment at level crossing",
+    "affected_trains": [
+      "EXP_013"
+    ],
+    "impact_duration_minutes": 160,
+    "casualties": 14,
+    "affected_passengers": 420,
+    "weather_conditions": "clear",
+    "speed_at_incident": 140,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 36,
+      "trains_delayed": 18,
+      "trains_cancelled": 5,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.67
+    },
+    "solution": {
+      "description": "Complete track realignment with ultrasonic inspection, replacement of affected rail sections, wheel condition assessment and locomotive overhaul",
+      "implementation_time_hours": 48,
+      "cost_estimate": 480000,
+      "implementation_steps": [
+        "Clear debris and secure accident scene",
+        "Perform detailed track geometry survey",
+        "Remove and replace damaged rail sections",
+        "Conduct ultrasonic flaw detection on adjacent track",
+        "Test wheel integrity of all locomotives",
+        "Perform dynamic testing before service resumption"
+      ],
+      "preventive_measures": [
+        "Increase track inspection frequency to weekly for main lines",
+        "Implement accelerometer-based condition monitoring system",
+        "Establish speed reduction zones in wet conditions",
+        "Upgrade drainage systems to prevent water accumulation"
+      ],
+      "estimated_prevention_cost": 250000,
+      "reference_accident_types": [
+        "derailment"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_046",
+    "timestamp": "2026-05-02T10:35:00Z",
+    "location": {
+      "segment_id": "SEG_046",
+      "from_station": "STN_041",
+      "to_station": "STN_048",
+      "coordinates": [
+        15.84,
+        -11.26
+      ]
+    },
+    "accident_type": "electrical_failure",
+    "severity": "high",
+    "description": "Substation transformer failure affecting entire secondary network",
+    "affected_trains": [
+      "LOC_212",
+      "HALT_305",
+      "HALT_308"
+    ],
+    "impact_duration_minutes": 155,
+    "casualties": 0,
+    "affected_passengers": 380,
+    "weather_conditions": "clear",
+    "speed_at_incident": 75,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 28,
+      "trains_delayed": 13,
+      "trains_cancelled": 3,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 2.58
+    },
+    "solution": {
+      "description": "Replacement of damaged catenary sections with reinforced design, installation of redundant feed points, implementation of automatic sectioning to isolate faults",
+      "implementation_time_hours": 40,
+      "cost_estimate": 720000,
+      "implementation_steps": [
+        "De-energize affected sections of catenary",
+        "Inspect support structures for damage",
+        "Replace damaged catenary wire sections",
+        "Upgrade insulator specifications for wind resistance",
+        "Install additional mechanical supports at 50m intervals",
+        "Test electrical load capacity before resumption"
+      ],
+      "preventive_measures": [
+        "Upgrade to high-strength catenary wire rated for 150 km/h+ winds",
+        "Install automated weather monitoring with wind speed sensors",
+        "Establish speed restrictions when winds exceed 80 km/h",
+        "Implement redundant power feed from secondary substations"
+      ],
+      "estimated_prevention_cost": 950000,
+      "reference_accident_types": [
+        "electrical_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_047",
+    "timestamp": "2026-05-09T13:00:00Z",
+    "location": {
+      "segment_id": "SEG_047",
+      "from_station": "STN_042",
+      "to_station": "STN_050",
+      "coordinates": [
+        51.68,
+        71.5
+      ]
+    },
+    "accident_type": "wheel_bearing_failure",
+    "severity": "critical",
+    "description": "Catastrophic wheel bearing failure causing complete locomotive failure",
+    "affected_trains": [
+      "REG_114"
+    ],
+    "impact_duration_minutes": 185,
+    "casualties": 9,
+    "affected_passengers": 290,
+    "weather_conditions": "clear",
+    "speed_at_incident": 105,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 26,
+      "trains_delayed": 12,
+      "trains_cancelled": 4,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.08
+    },
+    "solution": {
+      "description": "Replacement of all wheel bearings with sealed high-grade units, installation of temperature monitoring sensors, establishment of predictive maintenance program",
+      "implementation_time_hours": 24,
+      "cost_estimate": 420000,
+      "implementation_steps": [
+        "Remove train from service and lift on maintenance jacks",
+        "Extract and inspect all wheel bearing assemblies",
+        "Replace all bearings with sealed high-grade units",
+        "Install temperature sensors on critical bearing points",
+        "Perform dynamic balancing of all wheel sets",
+        "Test train on track at increasing speeds"
+      ],
+      "preventive_measures": [
+        "Deploy wireless temperature sensors on all trains",
+        "Establish mandatory bearing replacement at 500,000 km",
+        "Implement daily bearing temperature checks during peak season",
+        "Create predictive model using bearing temperature trends"
+      ],
+      "estimated_prevention_cost": 580000,
+      "reference_accident_types": [
+        "wheel_bearing_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_048",
+    "timestamp": "2026-05-16T15:25:00Z",
+    "location": {
+      "segment_id": "SEG_048",
+      "from_station": "STN_043",
+      "to_station": "STN_049",
+      "coordinates": [
+        115.68,
+        41.88
+      ]
+    },
+    "accident_type": "collision",
+    "severity": "medium",
+    "description": "Buffer stop collision as train control system fails to engage brakes",
+    "affected_trains": [
+      "LOC_213"
+    ],
+    "impact_duration_minutes": 105,
+    "casualties": 4,
+    "affected_passengers": 130,
+    "weather_conditions": "clear",
+    "speed_at_incident": 65,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 10,
+      "trains_delayed": 5,
+      "trains_cancelled": 1,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 1.75
+    },
+    "solution": {
+      "description": "Implementation of predictive collision avoidance system (PCAS) with automatic braking at 80% warning threshold, installation of advanced signaling with 3-section blocks instead of 2-section, retraining of all drivers on emergency procedures",
+      "implementation_time_hours": 72,
+      "cost_estimate": 850000,
+      "implementation_steps": [
+        "Install automatic train protection (ATP) system on all main lines",
+        "Upgrade signal boxes with enhanced detection equipment",
+        "Reduce train spacing by implementing 3-aspect signaling",
+        "Conduct emergency brake testing on all trains",
+        "Provide driver retraining on PCAS operation",
+        "Perform system validation with test trains"
+      ],
+      "preventive_measures": [
+        "Deploy GPS-based real-time train tracking system",
+        "Establish mandatory speed limits before junctions (80 km/h)",
+        "Implement continuous audible warning system",
+        "Create backup communication protocols between signallers"
+      ],
+      "estimated_prevention_cost": 1200000,
+      "reference_accident_types": [
+        "collision"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_049",
+    "timestamp": "2026-05-23T11:40:00Z",
+    "location": {
+      "segment_id": "SEG_049",
+      "from_station": "STN_044",
+      "to_station": "STN_041",
+      "coordinates": [
+        20.49,
+        -30.08
+      ]
+    },
+    "accident_type": "signal_failure",
+    "severity": "critical",
+    "description": "Cascading signal failures across entire corridor during peak hours",
+    "affected_trains": [
+      "EXP_014",
+      "REG_115",
+      "LOC_214",
+      "HALT_306"
+    ],
+    "impact_duration_minutes": 210,
+    "casualties": 0,
+    "affected_passengers": 750,
+    "weather_conditions": "clear",
+    "speed_at_incident": 135,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 50,
+      "trains_delayed": 26,
+      "trains_cancelled": 8,
+      "alternative_routes_available": 1,
+      "recovery_time_hours": 3.5
+    },
+    "solution": {
+      "description": "Installation of solid-state signal control system with redundant backup power supplies and manual signal operation protocols",
+      "implementation_time_hours": 36,
+      "cost_estimate": 620000,
+      "implementation_steps": [
+        "Activate manual signal override procedures",
+        "Perform immediate inspection of signal electronics",
+        "Replace faulty signal modules with redundant units",
+        "Install uninterruptible power supplies (UPS) for signal boxes",
+        "Conduct signal system diagnostics",
+        "Test all signal aspects before resuming service"
+      ],
+      "preventive_measures": [
+        "Implement dual-channel signaling with automatic failover",
+        "Establish quarterly preventive maintenance schedule",
+        "Deploy condition monitoring on all critical signals",
+        "Create standby signal technician roster for emergencies"
+      ],
+      "estimated_prevention_cost": 890000,
+      "reference_accident_types": [
+        "signal_failure"
+      ]
+    }
+  },
+  {
+    "incident_id": "INC_050",
+    "timestamp": "2026-05-30T14:10:00Z",
+    "location": {
+      "segment_id": "SEG_050",
+      "from_station": "STN_045",
+      "to_station": "STN_050",
+      "coordinates": [
+        29.33,
+        123.01
+      ]
+    },
+    "accident_type": "track_obstruction",
+    "severity": "critical",
+    "description": "Bridge collapse following flooding blocks all north-south services",
+    "affected_trains": [
+      "EXP_015",
+      "REG_109",
+      "LOC_215",
+      "HALT_307",
+      "HALT_310"
+    ],
+    "impact_duration_minutes": 300,
+    "casualties": 17,
+    "affected_passengers": 620,
+    "weather_conditions": "flooded",
+    "speed_at_incident": 120,
+    "golden_run_metrics": {
+      "network_disruption_percentage": 58,
+      "trains_delayed": 31,
+      "trains_cancelled": 12,
+      "alternative_routes_available": 0,
+      "recovery_time_hours": 5.0
+    },
+    "solution": {
+      "description": "Immediate debris removal and track inspection, installation of track-side obstacle detection cameras, establishment of rapid response cleanup team",
+      "implementation_time_hours": 2,
+      "cost_estimate": 85000,
+      "implementation_steps": [
+        "Deploy rapid response team with specialized track clearing equipment",
+        "Clear debris and vegetation from track",
+        "Perform visual and tactile track inspection for damage",
+        "Verify track geometry and alignment",
+        "Test train passage at reduced speed before resumption"
+      ],
+      "preventive_measures": [
+        "Install automated obstacle detection system using LIDAR",
+        "Implement quarterly vegetation clearance program",
+        "Establish buffer zones with fencing along sensitive sections",
+        "Deploy drones for monthly track-side condition surveillance"
+      ],
+      "estimated_prevention_cost": 340000,
+      "reference_accident_types": [
+        "track_obstruction"
+      ]
+    }
+  }
+]
