@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-01-22T08:30:00",
+  "day_type": "holiday",
+  "active_trains": [
+    {
+      "train_id": "EXP_003",
+      "cur_pos": {
+        "station": "STN_002",
+        "platform": 3
+      },
+      "cur_delay": 3,
+      "telemetry_window": [
+        {
+          "t": "-3m",
+          "delay": 3,
+          "pos": 0.0,
+          "segment_id": null,
+          "station_id": "STN_002"
+        },
+        {
+          "t": "-6m",
+          "delay": 2,
+          "pos": 0.86,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-9m",
+          "delay": 1,
+          "pos": 0.73,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-12m",
+          "delay": 1,
+          "pos": 0.59,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-15m",
+          "delay": 0,
+          "pos": 0.45,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-18m",
+          "delay": 0,
+          "pos": 0.32,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-21m",
+          "delay": 0,
+          "pos": 0.18,
+          "segment_id": "SEG_001",
+          "station_id": null
+        },
+        {
+          "t": "-24m",
+          "delay": 0,
+          "pos": 0.05,
+          "segment_id": "SEG_001",
+          "station_id": null
+        }
+      ],
+      "signal_aspect": "Green",
+      "service_type": "express",
+      "route": "Main Line Ring (Clockwise)"
+    },
+    {
+      "train_id": "EXP_004",
+      "cur_pos": {
+        "segment": "SEG_005",
+        "pct": 0.43
+      },
+      "cur_delay": 0,
+      "telemetry_window": [
+        {
+          "t": "-3m",
+          "delay": 0,
+          "pos": 0.3,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-6m",
+          "delay": 0,
+          "pos": 0.17,
+          "segment_id": "SEG_005",
+          "station_id": null
+        },
+        {
+          "t": "-9m",
+          "delay": 0,
+          "pos": 0.04,
+          "segment_id": "SEG_005",
+          "station_id": null
+        }
+      ],
+      "signal_aspect": "Green",
+      "service_type": "express",
+      "route": "Main Line Ring (Counter-Clockwise)"
+    }
+  ],
+  "weather": {
+    "condition": "fog",
+    "temperature_c": -5,
+    "wind_speed_kmh": 26,
+    "visibility_km": 3.7408122792472285
+  },
+  "network_load_pct": 0,
+  "total_active_trains": 2
+}
