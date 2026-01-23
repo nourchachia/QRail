@@ -8,3 +8,7 @@ Contains all 5 AI models for the Neural Rail Conductor system:
 - conflict_classifier: Conflict classifier (MLP)
 - outcome_predictor_xgb: Outcome predictor (XGBoost)
 """
+
+from src.models.semantic_encoder import SemanticEncoder
+
+__all__ = ['SemanticEncoder']
