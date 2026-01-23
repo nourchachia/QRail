@@ -309,8 +309,9 @@ class ModelTrainer:
 
 # Example Usage
 if __name__ == "__main__":
-    from lstm_encoder import LSTMEncoder
-    
+
+    from cascade.lstm_encoder import LSTMEncoder
+
     print("=" * 70)
     print("UNIFIED TRAINER TEST - Neural Rail Conductor")
     print("=" * 70)

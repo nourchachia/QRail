@@ -244,29 +244,72 @@ if __name__ == "__main__":
     
     enricher = TelemetryEnricher()
     
-    # Test 1: Live data extraction (if available)
-    print("\n[Test 1] Live Train Telemetry")
+    # Auto-detect available trains
     try:
-        tensor = enricher.get_train_telemetry("EXP_001")
-        print(f"✅ Shape: {tensor.shape}")
-        print(f"   First timestep features: {tensor[0, 0].tolist()}")
+        enricher.load_live_data()
+        available_trains = [
+            t['train_id'] for t in enricher._live_cache.get('active_trains', [])
+        ]
+        
+        if len(available_trains) == 0:
+            print("\n⚠️  No active trains found in live_status.json")
+            print("   Using mock data for testing...\n")
+            available_trains = None
+        else:
+            print(f"\n✅ Found {len(available_trains)} active trains:")
+            for train_id in available_trains[:3]:  # Show first 3
+                print(f"   - {train_id}")
+            print()
+    
     except Exception as e:
-        print(f"⚠️  Live data not available: {e}")
+        print(f"\n⚠️  Could not load live data: {e}")
+        print("   Using mock data for testing...\n")
+        available_trains = None
+    
+    # Test 1: Live data extraction
+    print("[Test 1] Live Train Telemetry")
+    if available_trains:
+        # Use first real train
+        test_train = available_trains[0]
+        tensor = enricher.get_train_telemetry(test_train)
+        print(f"✅ Train {test_train}")
+        print(f"   Shape: {tensor.shape}")
+        print(f"   First timestep features: {tensor[0, 0].tolist()}")
+        print(f"   Last timestep features: {tensor[0, -1].tolist()}")
+        
+        # Show what each feature means
+        print("\n   Feature Breakdown (last timestep):")
+        print(f"   [0] Normalized Delay: {tensor[0, -1, 0].item():.3f} (x60 = {tensor[0, -1, 0].item()*60:.1f} min)")
+        print(f"   [1] Progress: {tensor[0, -1, 1].item():.3f} (0-1 through segment)")
+        print(f"   [2] Speed Limit: {tensor[0, -1, 2].item():.3f} (x160 = {tensor[0, -1, 2].item()*160:.0f} km/h)")
+        print(f"   [3] Is Hub: {tensor[0, -1, 3].item():.0f} (0=no, 1=yes)")
+    else:
+        # Fallback test
+        tensor = enricher.get_train_telemetry("EXP_001")
+        print(f"⚠️  Using fallback (no real data)")
+        print(f"   Shape: {tensor.shape}")
     
     # Test 2: Batch extraction
     print("\n[Test 2] Batch Processing")
-    try:
-        batch = enricher.get_batch_telemetry(["EXP_001", "EXP_002", "REG_05"])
+    if available_trains and len(available_trains) >= 3:
+        batch_trains = available_trains[:3]
+        batch = enricher.get_batch_telemetry(batch_trains)
         print(f"✅ Batch shape: {batch.shape}")
-    except Exception as e:
-        print(f"⚠️  {e}")
+        print(f"   Processing trains: {', '.join(batch_trains)}")
+    else:
+        print("⚠️  Not enough trains for batch test")
     
     # Test 3: Historical incident extraction
     print("\n[Test 3] Training Data Extraction")
     mock_incident = {
         'incident_id': 'TEST_001',
         'telemetry_window': [
-            {'delay': i*2, 'pos': i*0.1, 'segment_id': 'SEG_001', 'station_id': None}
+            {
+                'delay': i*2, 
+                'pos': i*0.1, 
+                'segment_id': 'SEG_001', 
+                'station_id': 'STN_001' if i == 5 else None
+            }
             for i in range(10)
         ],
         'cascade_depth': 3,
@@ -276,7 +319,7 @@ if __name__ == "__main__":
     tensor, metadata = enricher.extract_lstm_sequence(mock_incident)
     print(f"✅ Tensor shape: {tensor.shape}")
     print(f"   Metadata: {metadata}")
-    print(f"   Trend: {'Expanding' if metadata['is_expanding'] else 'Contracting'}")
+    print(f"   Trend: {'Expanding ⬆️' if metadata['is_expanding'] else 'Contracting ⬇️'}")
     
     print("\n" + "=" * 60)
     print("✅ All tests completed!")
