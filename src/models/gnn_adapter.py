@@ -74,7 +74,8 @@ class GraphConverter:
         self.infer_node_types = infer_node_types
     
     def convert(self, graph_dict: Dict[str, Any], 
-                incident: Optional[Dict[str, Any]] = None) -> Data:
+                incident: Optional[Dict[str, Any]] = None,
+                pad_to_gnn_dims: bool = True) -> Data:
         """
         Convert dictionary graph representation to PyG Data object.
         
@@ -84,6 +85,7 @@ class GraphConverter:
                 - 'edges': List of {'from': str, 'to': str, 'features': List[float]}
                 - 'global_features': Optional List[float]
             incident: Optional incident dictionary for additional context.
+            pad_to_gnn_dims: If True, pad features to match GNN encoder expectations (14-dim nodes, 8-dim edges)
         
         Returns:
             PyG Data object ready for GNN encoder.
@@ -174,7 +176,9 @@ class GraphConverter:
         if len(edge_list) == 0:
             # Graph with no edges - create empty edge_index
             edge_index = torch.empty((2, 0), dtype=torch.long)
-            edge_attr = torch.empty((0, len(edge_features[0]) if edge_features else 8), dtype=torch.float32)
+            # Use default edge feature dim or infer from first edge if available
+            default_edge_dim = self.edge_feature_dim if self.edge_feature_dim else 5
+            edge_attr = torch.empty((0, default_edge_dim), dtype=torch.float32)
         else:
             # Convert to tensors
             edge_index = torch.tensor(edge_list, dtype=torch.long).t().contiguous()
@@ -205,6 +209,24 @@ class GraphConverter:
         # Store metadata for debugging
         data.num_nodes = len(nodes)
         data.num_edges = len(edge_list)
+        
+        # Add batch attribute (single graph, batch=0 for all nodes)
+        data.batch = torch.zeros(len(nodes), dtype=torch.long)
+        
+        # Pad features to match GNN encoder expectations if requested
+        if pad_to_gnn_dims:
+            # Pad node features to 14 dimensions (GNN encoder expects 14)
+            if data.x.size(1) < 14:
+                padding = torch.zeros(data.x.size(0), 14 - data.x.size(1), device=data.x.device)
+                data.x = torch.cat([data.x, padding], dim=1)
+            
+            # Pad edge features to 8 dimensions (GNN encoder expects 8)
+            if data.edge_attr.size(0) > 0 and data.edge_attr.size(1) < 8:
+                padding = torch.zeros(data.edge_attr.size(0), 8 - data.edge_attr.size(1), device=data.edge_attr.device)
+                data.edge_attr = torch.cat([data.edge_attr, padding], dim=1)
+            elif data.edge_attr.size(0) == 0:
+                # Update empty edge_attr to have correct dimension
+                data.edge_attr = torch.empty((0, 8), dtype=torch.float32, device=data.x.device)
         
         return data
     
@@ -339,12 +361,13 @@ def example_integration():
             node_feature_dim=10,  # Match DataFuelPipeline output
             edge_feature_dim=5    # Match DataFuelPipeline output
         )
-        data = converter.convert(graph_dict, incident)
+        # pad_to_gnn_dims=True automatically pads to 14-dim nodes and 8-dim edges
+        data = converter.convert(graph_dict, incident, pad_to_gnn_dims=True)
         
         # Step 3: Encode using GNN
         model = HeterogeneousGATEncoder(
-            node_feature_dim=10,  # Match converter output
-            edge_feature_dim=5,
+            node_feature_dim=14,  # GNN encoder expects 14-dim (padded by converter)
+            edge_feature_dim=8,   # GNN encoder expects 8-dim (padded by converter)
             hidden_dim=64,
             output_dim=64
         )
@@ -365,6 +388,20 @@ def example_integration():
 
 
 if __name__ == "__main__":
+    
+    """
+    Test script demonstrating GraphConverter usage.
+    """
+    # Add project root to Python path
+    import sys
+    from pathlib import Path
+    
+    # Get project root (QRail/)
+    project_root = Path(__file__).parent.parent.parent
+    sys.path.insert(0, str(project_root))
+    
+    
+    # ... rest of your test code ...
     """
     Test script demonstrating GraphConverter usage.
     """
@@ -391,7 +428,8 @@ if __name__ == "__main__":
         edge_feature_dim=5     # Match DataFuelPipeline format
     )
     
-    data = converter.convert(mock_graph_dict)
+    # pad_to_gnn_dims=True automatically handles feature padding
+    data = converter.convert(mock_graph_dict, pad_to_gnn_dims=True)
     
     print(f"✅ Conversion successful!")
     print(f"   Nodes: {data.num_nodes}")

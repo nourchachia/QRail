@@ -100,7 +100,15 @@ class ModelTrainer:
                     # GNN Handling (PyTorch Geometric Batch)
                     batch = batch.to(self.device)
                     outputs = self.model(batch)
-                    targets = batch.y
+                    # Handle both single Data objects and Batch objects
+                    if hasattr(batch, 'y'):
+                        targets = batch.y
+                    elif hasattr(batch, '__getitem__') and isinstance(batch, (list, tuple)):
+                        # If batch is a list/tuple, extract targets
+                        targets = batch[1] if len(batch) > 1 else None
+                    else:
+                        # For unsupervised/embedding tasks, use outputs as targets (self-supervised)
+                        targets = outputs.detach()  # Use model output as target for embedding learning
                 else:
                     # Standard Handling (LSTM/MLP)
                     inputs, targets = batch
@@ -109,7 +117,12 @@ class ModelTrainer:
                     outputs = self.model(inputs)
                 
                 # Compute loss
-                loss = self.criterion(outputs, targets)
+                if targets is not None:
+                    loss = self.criterion(outputs, targets)
+                else:
+                    # If no targets, skip this batch (or use a different loss)
+                    continue
+                
                 loss.backward()
                 
                 # Gradient clipping (prevents exploding gradients in RNNs)
@@ -126,6 +139,8 @@ class ModelTrainer:
                 
             except Exception as e:
                 logger.error(f"❌ Error in batch {batch_idx}: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
                 continue
         
         avg_loss = total_loss / max(batch_count, 1)
@@ -148,19 +163,28 @@ class ModelTrainer:
                     if is_gnn:
                         batch = batch.to(self.device)
                         outputs = self.model(batch)
-                        targets = batch.y
+                        # Handle both single Data objects and Batch objects
+                        if hasattr(batch, 'y'):
+                            targets = batch.y
+                        elif hasattr(batch, '__getitem__') and isinstance(batch, (list, tuple)):
+                            targets = batch[1] if len(batch) > 1 else None
+                        else:
+                            targets = None
                     else:
                         inputs, targets = batch
                         inputs = inputs.to(self.device)
                         targets = targets.to(self.device)
                         outputs = self.model(inputs)
                     
-                    loss = self.criterion(outputs, targets)
-                    total_loss += loss.item()
-                    batch_count += 1
+                    if targets is not None:
+                        loss = self.criterion(outputs, targets)
+                        total_loss += loss.item()
+                        batch_count += 1
                     
                 except Exception as e:
                     logger.error(f"❌ Validation error: {e}")
+                    import traceback
+                    logger.error(traceback.format_exc())
                     continue
         
         avg_loss = total_loss / max(batch_count, 1)

@@ -228,7 +228,9 @@ class HeterogeneousGATEncoder(nn.Module):
         if edge_attr.size(0) > 0:
             loop_attr = edge_attr.mean(dim=0, keepdim=True).repeat(num_nodes, 1)
         else:
-            loop_attr = torch.zeros(num_nodes, edge_attr.size(1), device=device)
+            # Handle empty edge_attr case
+            edge_dim = edge_attr.size(1) if edge_attr.size(0) == 0 and edge_attr.size(1) > 0 else 8
+            loop_attr = torch.zeros(num_nodes, edge_dim, device=device)
         
         # Concatenate with existing edges
         edge_index = torch.cat([edge_index, loop_index], dim=1)
