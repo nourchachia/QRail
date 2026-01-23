@@ -1,0 +1,3738 @@
+{
+  "metadata": {
+    "total_golden_runs": 50,
+    "generated_at": "2026-01-23T14:15:33.032348",
+    "generator_version": "2.0_enhanced",
+    "quality_assurance": {
+      "context_aware_solutions": true,
+      "realistic_cost_variance": true,
+      "outcome_differentiation": true,
+      "solution_diversity": 14
+    }
+  },
+  "golden_runs": [
+    {
+      "incident_id": "INC_001",
+      "timestamp": "2025-06-15T08:30:00Z",
+      "location": {
+        "segment_id": "SEG_001",
+        "from_station": "STN_001",
+        "to_station": "STN_002",
+        "coordinates": [
+          63.09,
+          59.51
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "critical",
+      "description": "Express train EXP_001 derailed on main line due to track defect",
+      "affected_trains": [
+        "EXP_001",
+        "EXP_003"
+      ],
+      "impact_duration_minutes": 240,
+      "casualties": 8,
+      "affected_passengers": 450,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 145,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 35,
+        "trains_delayed": 12,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 4.0
+      },
+      "solution": {
+        "description": "Comprehensive track geometry correction with laser alignment and continuous welded rail replacement",
+        "variant": "track_geometry",
+        "implementation_time_hours": 68,
+        "cost_estimate": 1034659,
+        "implementation_steps": [
+          "Deploy emergency response team and secure perimeter",
+          "Conduct laser-based track geometry survey",
+          "Replace damaged sections with continuous welded rail (CWR)",
+          "Install rail stress monitoring sensors at critical points",
+          "Perform ultrasonic flaw detection on 500m radius",
+          "Execute loaded dynamic testing before service resumption"
+        ],
+        "preventive_measures": [
+          "Deploy track geometry measurement train monthly",
+          "Install vibration-based condition monitoring",
+          "Implement weather-adaptive speed restrictions",
+          "Upgrade ballast specifications for high-speed sections"
+        ],
+        "estimated_prevention_cost": 321085,
+        "context_specific_adaptations": [
+          "All-weather traction control systems implemented",
+          "Rain-triggered automatic speed restriction protocols",
+          "High-speed certification process for 145 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.35,
+          "recurrence_prevented_months": 29,
+          "network_reliability_gain_pct": 14,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.031997"
+    },
+    {
+      "incident_id": "INC_002",
+      "timestamp": "2025-06-22T12:15:00Z",
+      "location": {
+        "segment_id": "SEG_002",
+        "from_station": "STN_002",
+        "to_station": "STN_003",
+        "coordinates": [
+          45.0,
+          65.36
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "critical",
+      "description": "Regional train REG_105 collision with stopped express train",
+      "affected_trains": [
+        "REG_105",
+        "EXP_002"
+      ],
+      "impact_duration_minutes": 180,
+      "casualties": 15,
+      "affected_passengers": 380,
+      "weather_conditions": "clear",
+      "speed_at_incident": 130,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 42,
+        "trains_delayed": 18,
+        "trains_cancelled": 6,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.0
+      },
+      "solution": {
+        "description": "Enhanced operational procedures with communication protocol overhaul",
+        "variant": "operational_procedures",
+        "implementation_time_hours": 72,
+        "cost_estimate": 1238487,
+        "implementation_steps": [
+          "Implement CBTC (Communication-Based Train Control)",
+          "Deploy redundant radio communication systems",
+          "Install track occupancy detection grid",
+          "Create automated conflict detection algorithms",
+          "Establish mandatory verbal confirmation protocols",
+          "Train all staff on new procedures with simulator"
+        ],
+        "preventive_measures": [
+          "AI-based train movement prediction",
+          "Mandatory speed restrictions at conflict zones",
+          "Real-time dispatcher workload monitoring",
+          "Automated route locking verification"
+        ],
+        "estimated_prevention_cost": 533818,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 86,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.35,
+          "recurrence_prevented_months": 36,
+          "network_reliability_gain_pct": 17,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032027"
+    },
+    {
+      "incident_id": "INC_003",
+      "timestamp": "2025-07-03T14:45:00Z",
+      "location": {
+        "segment_id": "SEG_003",
+        "from_station": "STN_003",
+        "to_station": "STN_004",
+        "coordinates": [
+          33.82,
+          50.0
+        ]
+      },
+      "accident_type": "signal_failure",
+      "severity": "high",
+      "description": "Multiple signal failures on main line segment blocking trains",
+      "affected_trains": [
+        "EXP_002",
+        "REG_102",
+        "REG_103"
+      ],
+      "impact_duration_minutes": 120,
+      "casualties": 0,
+      "affected_passengers": 520,
+      "weather_conditions": "clear",
+      "speed_at_incident": 160,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 28,
+        "trains_delayed": 15,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.0
+      },
+      "solution": {
+        "description": "Solid-state interlocking with fail-safe architecture and N+2 redundancy",
+        "variant": "modern_interlocking",
+        "implementation_time_hours": 37,
+        "cost_estimate": 751450,
+        "implementation_steps": [
+          "Replace relay-based interlocking with SSI (Solid State Interlocking)",
+          "Install triple-redundant vital processors",
+          "Deploy hot-standby signal control units",
+          "Implement automatic degraded mode fallback",
+          "Add battery backup with 4-hour capacity",
+          "Perform failover testing under load"
+        ],
+        "preventive_measures": [
+          "Predictive maintenance using ML on signal logs",
+          "Remote condition monitoring dashboard",
+          "Automated self-diagnostic routines every 6 hours",
+          "Environmental sensors for humidity/temperature"
+        ],
+        "estimated_prevention_cost": 256822,
+        "context_specific_adaptations": [
+          "High-speed certification process for 160 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 25,
+          "network_reliability_gain_pct": 14,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Awarded 'Excellence in Safety Innovation' by transport authority",
+        "reference_accident_types": [
+          "signal_failure"
+        ],
+        "lessons_learned": [
+          "Environmental factors (humidity) were root cause - now monitored in real-time",
+          "Hot-standby systems eliminated single points of failure"
+        ],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032039"
+    },
+    {
+      "incident_id": "INC_004",
+      "timestamp": "2025-07-10T17:20:00Z",
+      "location": {
+        "segment_id": "SEG_004",
+        "from_station": "STN_004",
+        "to_station": "STN_005",
+        "coordinates": [
+          45.0,
+          34.62
+        ]
+      },
+      "accident_type": "track_obstruction",
+      "severity": "medium",
+      "description": "Debris and fallen object on track blocking service",
+      "affected_trains": [
+        "REG_104",
+        "LOC_217"
+      ],
+      "impact_duration_minutes": 90,
+      "casualties": 2,
+      "affected_passengers": 240,
+      "weather_conditions": "stormy",
+      "speed_at_incident": 110,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 18,
+        "trains_delayed": 8,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 1.5
+      },
+      "solution": {
+        "description": "AI-powered obstacle detection with automated clearance protocols",
+        "variant": "automated_detection",
+        "implementation_time_hours": 24,
+        "cost_estimate": 426561,
+        "implementation_steps": [
+          "Deploy LIDAR-based obstacle detection system",
+          "Install thermal cameras along critical sections",
+          "Implement AI object recognition algorithms",
+          "Create automated alert and train stopping system",
+          "Establish rapid response team protocols",
+          "Test with various obstruction scenarios"
+        ],
+        "preventive_measures": [
+          "24/7 automated surveillance monitoring",
+          "Quarterly vegetation management program",
+          "Perimeter fencing at high-risk zones",
+          "Wildlife crossing structures at known migration paths"
+        ],
+        "estimated_prevention_cost": 169767,
+        "context_specific_adaptations": [
+          "Enhanced weather forecasting integration for preventive actions",
+          "Automated service suspension at 80+ km/h winds",
+          "Medium-speed track quality monitoring systems"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.24,
+          "recurrence_prevented_months": 27,
+          "network_reliability_gain_pct": 26,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Cost recovery achieved through reduced delays in 14 months",
+        "reference_accident_types": [
+          "track_obstruction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032051"
+    },
+    {
+      "incident_id": "INC_005",
+      "timestamp": "2025-07-18T09:00:00Z",
+      "location": {
+        "segment_id": "SEG_005",
+        "from_station": "STN_005",
+        "to_station": "STN_001",
+        "coordinates": [
+          63.09,
+          40.49
+        ]
+      },
+      "accident_type": "electrical_failure",
+      "severity": "high",
+      "description": "Overhead catenary damage causing power loss to multiple tracks",
+      "affected_trains": [
+        "EXP_001",
+        "EXP_003",
+        "EXP_005"
+      ],
+      "impact_duration_minutes": 150,
+      "casualties": 0,
+      "affected_passengers": 680,
+      "weather_conditions": "windy",
+      "speed_at_incident": 155,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 38,
+        "trains_delayed": 20,
+        "trains_cancelled": 5,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.5
+      },
+      "solution": {
+        "description": "High-reliability catenary system with auto-sectioning and weather resistance",
+        "variant": "catenary_upgrade",
+        "implementation_time_hours": 47,
+        "cost_estimate": 890130,
+        "implementation_steps": [
+          "Replace catenary with high-tensile copper alloy",
+          "Install automated section isolators",
+          "Deploy ice detection and prevention system",
+          "Add redundant feeder stations every 5km",
+          "Implement real-time tension monitoring",
+          "Test under simulated extreme weather"
+        ],
+        "preventive_measures": [
+          "Thermal imaging inspections quarterly",
+          "Automated catenary height monitoring",
+          "Weather-based preventive de-icing",
+          "Predictive wear analysis using pantograph data"
+        ],
+        "estimated_prevention_cost": 429527,
+        "context_specific_adaptations": [
+          "High-speed certification process for 155 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 18,
+          "network_reliability_gain_pct": 22,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "electrical_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032058"
+    },
+    {
+      "incident_id": "INC_006",
+      "timestamp": "2025-07-25T11:30:00Z",
+      "location": {
+        "segment_id": "SEG_006",
+        "from_station": "STN_001",
+        "to_station": "STN_006",
+        "coordinates": [
+          75.62,
+          53.16
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "medium",
+      "description": "Regional train REG_101 derailed on branch line near Park Station",
+      "affected_trains": [
+        "REG_101"
+      ],
+      "impact_duration_minutes": 110,
+      "casualties": 5,
+      "affected_passengers": 180,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 95,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 12,
+        "trains_delayed": 6,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 1.83
+      },
+      "solution": {
+        "description": "Comprehensive track geometry correction with laser alignment and continuous welded rail replacement",
+        "variant": "track_geometry",
+        "implementation_time_hours": 55,
+        "cost_estimate": 498151,
+        "implementation_steps": [
+          "Deploy emergency response team and secure perimeter",
+          "Conduct laser-based track geometry survey",
+          "Replace damaged sections with continuous welded rail (CWR)",
+          "Install rail stress monitoring sensors at critical points",
+          "Perform ultrasonic flaw detection on 500m radius",
+          "Execute loaded dynamic testing before service resumption"
+        ],
+        "preventive_measures": [
+          "Deploy track geometry measurement train monthly",
+          "Install vibration-based condition monitoring",
+          "Implement weather-adaptive speed restrictions",
+          "Upgrade ballast specifications for high-speed sections"
+        ],
+        "estimated_prevention_cost": 168896,
+        "context_specific_adaptations": [
+          "Rain-triggered automatic speed restriction protocols",
+          "Enhanced drainage system installed to prevent water accumulation"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 43,
+          "network_reliability_gain_pct": 22,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Reduced similar incident frequency by 89%",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032068"
+    },
+    {
+      "incident_id": "INC_007",
+      "timestamp": "2025-08-02T13:45:00Z",
+      "location": {
+        "segment_id": "SEG_007",
+        "from_station": "STN_004",
+        "to_station": "STN_007",
+        "coordinates": [
+          38.2,
+          49.87
+        ]
+      },
+      "accident_type": "wheel_bearing_failure",
+      "severity": "high",
+      "description": "Train REG_102 suffered wheel bearing failure causing emergency stop",
+      "affected_trains": [
+        "REG_102"
+      ],
+      "impact_duration_minutes": 130,
+      "casualties": 1,
+      "affected_passengers": 220,
+      "weather_conditions": "clear",
+      "speed_at_incident": 105,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 14,
+        "trains_delayed": 7,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.17
+      },
+      "solution": {
+        "description": "Wireless bearing health monitoring with predictive analytics",
+        "variant": "predictive_monitoring",
+        "implementation_time_hours": 25,
+        "cost_estimate": 591208,
+        "implementation_steps": [
+          "Install wireless temperature/vibration sensors on all bearings",
+          "Deploy trackside acoustic monitoring stations",
+          "Implement ML-based failure prediction models",
+          "Replace all bearings with sealed ceramic hybrid units",
+          "Create automated alert system to control center",
+          "Establish condition-based maintenance protocols"
+        ],
+        "preventive_measures": [
+          "Real-time bearing health dashboard",
+          "Automated work order generation for at-risk bearings",
+          "Thermal imaging from passing trains",
+          "Vibration signature analysis every revolution"
+        ],
+        "estimated_prevention_cost": 185777,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.3,
+          "recurrence_prevented_months": 33,
+          "network_reliability_gain_pct": 19,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "wheel_bearing_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032074"
+    },
+    {
+      "incident_id": "INC_008",
+      "timestamp": "2025-08-09T16:00:00Z",
+      "location": {
+        "segment_id": "SEG_008",
+        "from_station": "STN_003",
+        "to_station": "STN_008",
+        "coordinates": [
+          25.84,
+          55.19
+        ]
+      },
+      "accident_type": "switch_malfunction",
+      "severity": "medium",
+      "description": "Faulty railway switch preventing trains from changing tracks",
+      "affected_trains": [
+        "REG_103"
+      ],
+      "impact_duration_minutes": 85,
+      "casualties": 0,
+      "affected_passengers": 140,
+      "weather_conditions": "clear",
+      "speed_at_incident": 100,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 10,
+        "trains_delayed": 5,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 1.42
+      },
+      "solution": {
+        "description": "Electro-hydraulic point machines with self-diagnostic capabilities",
+        "variant": "modern_actuators",
+        "implementation_time_hours": 15,
+        "cost_estimate": 396753,
+        "implementation_steps": [
+          "Replace mechanical points with electro-hydraulic actuators",
+          "Install redundant position detection sensors",
+          "Deploy heated point systems for winter operation",
+          "Implement automated lubrication systems",
+          "Add real-time force monitoring",
+          "Test under extreme temperature conditions"
+        ],
+        "preventive_measures": [
+          "Automated switch exercising every 6 hours",
+          "Predictive maintenance based on operation count",
+          "Weather-triggered preventive actions",
+          "Remote force monitoring dashboard"
+        ],
+        "estimated_prevention_cost": 132788,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 42,
+          "network_reliability_gain_pct": 24,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "switch_malfunction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032081"
+    },
+    {
+      "incident_id": "INC_009",
+      "timestamp": "2025-08-16T10:20:00Z",
+      "location": {
+        "segment_id": "SEG_009",
+        "from_station": "STN_002",
+        "to_station": "STN_010",
+        "coordinates": [
+          50.09,
+          76.34
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "critical",
+      "description": "Head-on collision between two trains on shared track section",
+      "affected_trains": [
+        "REG_105",
+        "LOC_201"
+      ],
+      "impact_duration_minutes": 210,
+      "casualties": 22,
+      "affected_passengers": 410,
+      "weather_conditions": "foggy",
+      "speed_at_incident": 115,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 48,
+        "trains_delayed": 22,
+        "trains_cancelled": 8,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.5
+      },
+      "solution": {
+        "description": "Enhanced operational procedures with communication protocol overhaul",
+        "variant": "operational_procedures",
+        "implementation_time_hours": 80,
+        "cost_estimate": 1400186,
+        "implementation_steps": [
+          "Implement CBTC (Communication-Based Train Control)",
+          "Deploy redundant radio communication systems",
+          "Install track occupancy detection grid",
+          "Create automated conflict detection algorithms",
+          "Establish mandatory verbal confirmation protocols",
+          "Train all staff on new procedures with simulator"
+        ],
+        "preventive_measures": [
+          "AI-based train movement prediction",
+          "Mandatory speed restrictions at conflict zones",
+          "Real-time dispatcher workload monitoring",
+          "Automated route locking verification"
+        ],
+        "estimated_prevention_cost": 556335,
+        "context_specific_adaptations": [
+          "Automatic Train Protection (ATP) activation in low visibility",
+          "Fog-triggered spacing increase protocols",
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.34,
+          "recurrence_prevented_months": 32,
+          "network_reliability_gain_pct": 26,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032089"
+    },
+    {
+      "incident_id": "INC_010",
+      "timestamp": "2025-08-23T15:30:00Z",
+      "location": {
+        "segment_id": "SEG_010",
+        "from_station": "STN_005",
+        "to_station": "STN_009",
+        "coordinates": [
+          47.93,
+          23.57
+        ]
+      },
+      "accident_type": "track_defect",
+      "severity": "high",
+      "description": "Crack in rail causing speed restrictions on main route",
+      "affected_trains": [
+        "REG_104",
+        "LOC_203"
+      ],
+      "impact_duration_minutes": 160,
+      "casualties": 3,
+      "affected_passengers": 320,
+      "weather_conditions": "clear",
+      "speed_at_incident": 125,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 22,
+        "trains_delayed": 11,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.67
+      },
+      "solution": {
+        "description": "Premium-grade rail installation with continuous monitoring",
+        "variant": "rail_replacement",
+        "implementation_time_hours": 51,
+        "cost_estimate": 890000,
+        "implementation_steps": [
+          "Install premium-grade heat-treated rail",
+          "Deploy fiber-optic rail monitoring system",
+          "Implement thermite welding with ultrasonic verification",
+          "Add rail stress analysis sensors",
+          "Perform comprehensive NDT (non-destructive testing)",
+          "Validate with loaded test trains"
+        ],
+        "preventive_measures": [
+          "Distributed acoustic sensing (DAS) for crack detection",
+          "Automated ultrasonic testing vehicle monthly",
+          "Thermal stress monitoring during temperature extremes",
+          "AI-based defect prediction from sensor data"
+        ],
+        "estimated_prevention_cost": 427675,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 94,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 23,
+          "network_reliability_gain_pct": 20,
+          "operational_efficiency_gain_pct": 16
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "track_defect"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032095"
+    },
+    {
+      "incident_id": "INC_011",
+      "timestamp": "2025-08-30T08:45:00Z",
+      "location": {
+        "segment_id": "SEG_011",
+        "from_station": "STN_006",
+        "to_station": "STN_011",
+        "coordinates": [
+          78.95,
+          61.95
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "critical",
+      "description": "Express train high-speed derailment on curved track section",
+      "affected_trains": [
+        "EXP_006"
+      ],
+      "impact_duration_minutes": 240,
+      "casualties": 18,
+      "affected_passengers": 520,
+      "weather_conditions": "stormy",
+      "speed_at_incident": 152,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 44,
+        "trains_delayed": 25,
+        "trains_cancelled": 7,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 4.0
+      },
+      "solution": {
+        "description": "Comprehensive track geometry correction with laser alignment and continuous welded rail replacement",
+        "variant": "track_geometry",
+        "implementation_time_hours": 77,
+        "cost_estimate": 952022,
+        "implementation_steps": [
+          "Deploy emergency response team and secure perimeter",
+          "Conduct laser-based track geometry survey",
+          "Replace damaged sections with continuous welded rail (CWR)",
+          "Install rail stress monitoring sensors at critical points",
+          "Perform ultrasonic flaw detection on 500m radius",
+          "Execute loaded dynamic testing before service resumption"
+        ],
+        "preventive_measures": [
+          "Deploy track geometry measurement train monthly",
+          "Install vibration-based condition monitoring",
+          "Implement weather-adaptive speed restrictions",
+          "Upgrade ballast specifications for high-speed sections"
+        ],
+        "estimated_prevention_cost": 419546,
+        "context_specific_adaptations": [
+          "Automated service suspension at 80+ km/h winds",
+          "Wind speed monitoring integrated with train control",
+          "High-speed certification process for 152 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.26,
+          "recurrence_prevented_months": 28,
+          "network_reliability_gain_pct": 21,
+          "operational_efficiency_gain_pct": 8
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032102"
+    },
+    {
+      "incident_id": "INC_012",
+      "timestamp": "2025-09-06T12:00:00Z",
+      "location": {
+        "segment_id": "SEG_012",
+        "from_station": "STN_007",
+        "to_station": "STN_014",
+        "coordinates": [
+          20.73,
+          42.03
+        ]
+      },
+      "accident_type": "signal_failure",
+      "severity": "high",
+      "description": "Red signal failure allowing unauthorized train entry to occupied segment",
+      "affected_trains": [
+        "LOC_214"
+      ],
+      "impact_duration_minutes": 100,
+      "casualties": 6,
+      "affected_passengers": 160,
+      "weather_conditions": "clear",
+      "speed_at_incident": 85,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 16,
+        "trains_delayed": 8,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 1.67
+      },
+      "solution": {
+        "description": "Solid-state interlocking with fail-safe architecture and N+2 redundancy",
+        "variant": "modern_interlocking",
+        "implementation_time_hours": 39,
+        "cost_estimate": 718121,
+        "implementation_steps": [
+          "Replace relay-based interlocking with SSI (Solid State Interlocking)",
+          "Install triple-redundant vital processors",
+          "Deploy hot-standby signal control units",
+          "Implement automatic degraded mode fallback",
+          "Add battery backup with 4-hour capacity",
+          "Perform failover testing under load"
+        ],
+        "preventive_measures": [
+          "Predictive maintenance using ML on signal logs",
+          "Remote condition monitoring dashboard",
+          "Automated self-diagnostic routines every 6 hours",
+          "Environmental sensors for humidity/temperature"
+        ],
+        "estimated_prevention_cost": 317085,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.24,
+          "recurrence_prevented_months": 26,
+          "network_reliability_gain_pct": 24,
+          "operational_efficiency_gain_pct": 17
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "signal_failure"
+        ],
+        "lessons_learned": [
+          "Environmental factors (humidity) were root cause - now monitored in real-time",
+          "Hot-standby systems eliminated single points of failure"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032109"
+    },
+    {
+      "incident_id": "INC_013",
+      "timestamp": "2025-09-13T14:15:00Z",
+      "location": {
+        "segment_id": "SEG_013",
+        "from_station": "STN_008",
+        "to_station": "STN_017",
+        "coordinates": [
+          18.37,
+          72.28
+        ]
+      },
+      "accident_type": "brake_failure",
+      "severity": "critical",
+      "description": "Local train brake system failure causing uncontrolled descent on grade",
+      "affected_trains": [
+        "LOC_202"
+      ],
+      "impact_duration_minutes": 180,
+      "casualties": 12,
+      "affected_passengers": 240,
+      "weather_conditions": "clear",
+      "speed_at_incident": 95,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 20,
+        "trains_delayed": 10,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.0
+      },
+      "solution": {
+        "description": "Complete brake system modernization with electronic control and redundancy",
+        "variant": "brake_modernization",
+        "implementation_time_hours": 46,
+        "cost_estimate": 1311297,
+        "implementation_steps": [
+          "Install electro-pneumatic brake (EP) system",
+          "Deploy brake force management computers",
+          "Add independent emergency brake circuit",
+          "Install wheel slide protection (WSP) on all axles",
+          "Upgrade to composite brake blocks",
+          "Conduct deceleration testing at maximum load"
+        ],
+        "preventive_measures": [
+          "Continuous brake performance monitoring",
+          "Automated brake pad wear sensors",
+          "Predictive maintenance based on braking events",
+          "Mandatory brake tests before each service"
+        ],
+        "estimated_prevention_cost": 435204,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 89,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.35,
+          "recurrence_prevented_months": 18,
+          "network_reliability_gain_pct": 17,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Awarded 'Excellence in Safety Innovation' by transport authority",
+        "reference_accident_types": [
+          "brake_failure"
+        ],
+        "lessons_learned": [
+          "Predictive maintenance reduced failures by 87% - now core to all systems",
+          "Load-dependent brake force critical for long trains - automatic adjustment implemented"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032114"
+    },
+    {
+      "incident_id": "INC_014",
+      "timestamp": "2025-09-20T09:30:00Z",
+      "location": {
+        "segment_id": "SEG_014",
+        "from_station": "STN_009",
+        "to_station": "STN_016",
+        "coordinates": [
+          48.01,
+          0.35
+        ]
+      },
+      "accident_type": "electrical_fire",
+      "severity": "high",
+      "description": "Electrical fire in locomotive motor compartment during transit",
+      "affected_trains": [
+        "REG_104"
+      ],
+      "impact_duration_minutes": 120,
+      "casualties": 4,
+      "affected_passengers": 210,
+      "weather_conditions": "clear",
+      "speed_at_incident": 110,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 18,
+        "trains_delayed": 9,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.0
+      },
+      "solution": {
+        "description": "Advanced fire detection and suppression with thermal management",
+        "variant": "fire_suppression",
+        "implementation_time_hours": 46,
+        "cost_estimate": 834656,
+        "implementation_steps": [
+          "Install fiber-optic linear heat detection",
+          "Deploy automatic aerosol fire suppression",
+          "Upgrade all wiring to fire-resistant grade",
+          "Implement compartment isolation systems",
+          "Add thermal management with active cooling",
+          "Test suppression system with controlled fire"
+        ],
+        "preventive_measures": [
+          "Thermal imaging inspections monthly",
+          "Predictive overheating detection algorithms",
+          "Automated circuit breaker testing",
+          "Real-time current monitoring on all circuits"
+        ],
+        "estimated_prevention_cost": 330805,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.28,
+          "recurrence_prevented_months": 31,
+          "network_reliability_gain_pct": 14,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Solution published in IEEE Rail Transportation journal",
+        "reference_accident_types": [
+          "electrical_fire"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032120"
+    },
+    {
+      "incident_id": "INC_015",
+      "timestamp": "2025-09-27T11:45:00Z",
+      "location": {
+        "segment_id": "SEG_015",
+        "from_station": "STN_010",
+        "to_station": "STN_015",
+        "coordinates": [
+          52.58,
+          81.54
+        ]
+      },
+      "accident_type": "track_obstruction",
+      "severity": "medium",
+      "description": "Animals on track forcing emergency stop of multiple trains",
+      "affected_trains": [
+        "LOC_205",
+        "HALT_307"
+      ],
+      "impact_duration_minutes": 75,
+      "casualties": 0,
+      "affected_passengers": 120,
+      "weather_conditions": "clear",
+      "speed_at_incident": 80,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 12,
+        "trains_delayed": 6,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.25
+      },
+      "solution": {
+        "description": "AI-powered obstacle detection with automated clearance protocols",
+        "variant": "automated_detection",
+        "implementation_time_hours": 17,
+        "cost_estimate": 348312,
+        "implementation_steps": [
+          "Deploy LIDAR-based obstacle detection system",
+          "Install thermal cameras along critical sections",
+          "Implement AI object recognition algorithms",
+          "Create automated alert and train stopping system",
+          "Establish rapid response team protocols",
+          "Test with various obstruction scenarios"
+        ],
+        "preventive_measures": [
+          "24/7 automated surveillance monitoring",
+          "Quarterly vegetation management program",
+          "Perimeter fencing at high-risk zones",
+          "Wildlife crossing structures at known migration paths"
+        ],
+        "estimated_prevention_cost": 123614,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 97,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.23,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 21,
+          "operational_efficiency_gain_pct": 12
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "track_obstruction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032126"
+    },
+    {
+      "incident_id": "INC_016",
+      "timestamp": "2025-10-04T13:20:00Z",
+      "location": {
+        "segment_id": "SEG_016",
+        "from_station": "STN_011",
+        "to_station": "STN_020",
+        "coordinates": [
+          72.56,
+          74.87
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "high",
+      "description": "Rear-end collision between two regional trains at station junction",
+      "affected_trains": [
+        "REG_106",
+        "REG_115"
+      ],
+      "impact_duration_minutes": 140,
+      "casualties": 9,
+      "affected_passengers": 380,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 95,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 32,
+        "trains_delayed": 14,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.33
+      },
+      "solution": {
+        "description": "ETCS Level 2 signaling implementation with positive train control",
+        "variant": "signaling_upgrade",
+        "implementation_time_hours": 104,
+        "cost_estimate": 1495022,
+        "implementation_steps": [
+          "Install European Train Control System (ETCS) Level 2",
+          "Deploy radio block centers with redundancy",
+          "Equip all trains with onboard ATP units",
+          "Implement automatic brake intervention system",
+          "Create virtual block sections (50% capacity increase)",
+          "Conduct extensive integration testing with live traffic"
+        ],
+        "preventive_measures": [
+          "Real-time train separation monitoring",
+          "Predictive collision risk assessment algorithms",
+          "Driver alertness monitoring system",
+          "Automated speed enforcement at approach zones"
+        ],
+        "estimated_prevention_cost": 456229,
+        "context_specific_adaptations": [
+          "Rain-triggered automatic speed restriction protocols",
+          "All-weather traction control systems implemented",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.3,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 19,
+          "operational_efficiency_gain_pct": 12
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032134"
+    },
+    {
+      "incident_id": "INC_017",
+      "timestamp": "2025-10-11T15:00:00Z",
+      "location": {
+        "segment_id": "SEG_017",
+        "from_station": "STN_012",
+        "to_station": "STN_020",
+        "coordinates": [
+          47.19,
+          80.74
+        ]
+      },
+      "accident_type": "wheel_bearing_failure",
+      "severity": "medium",
+      "description": "Defective wheel bearing on local train detected after emergency stop",
+      "affected_trains": [
+        "LOC_204"
+      ],
+      "impact_duration_minutes": 95,
+      "casualties": 2,
+      "affected_passengers": 140,
+      "weather_conditions": "clear",
+      "speed_at_incident": 85,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 14,
+        "trains_delayed": 7,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.58
+      },
+      "solution": {
+        "description": "Wireless bearing health monitoring with predictive analytics",
+        "variant": "predictive_monitoring",
+        "implementation_time_hours": 25,
+        "cost_estimate": 481206,
+        "implementation_steps": [
+          "Install wireless temperature/vibration sensors on all bearings",
+          "Deploy trackside acoustic monitoring stations",
+          "Implement ML-based failure prediction models",
+          "Replace all bearings with sealed ceramic hybrid units",
+          "Create automated alert system to control center",
+          "Establish condition-based maintenance protocols"
+        ],
+        "preventive_measures": [
+          "Real-time bearing health dashboard",
+          "Automated work order generation for at-risk bearings",
+          "Thermal imaging from passing trains",
+          "Vibration signature analysis every revolution"
+        ],
+        "estimated_prevention_cost": 179699,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 94,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.17,
+          "recurrence_prevented_months": 37,
+          "network_reliability_gain_pct": 20,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Exceeded all performance targets within 3 months",
+        "reference_accident_types": [
+          "wheel_bearing_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032140"
+    },
+    {
+      "incident_id": "INC_018",
+      "timestamp": "2025-10-18T10:30:00Z",
+      "location": {
+        "segment_id": "SEG_018",
+        "from_station": "STN_013",
+        "to_station": "STN_020",
+        "coordinates": [
+          84.29,
+          84.22
+        ]
+      },
+      "accident_type": "switch_malfunction",
+      "severity": "high",
+      "description": "Railway junction switch failure stranding multiple trains",
+      "affected_trains": [
+        "REG_108",
+        "LOC_215"
+      ],
+      "impact_duration_minutes": 110,
+      "casualties": 0,
+      "affected_passengers": 180,
+      "weather_conditions": "clear",
+      "speed_at_incident": 90,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 24,
+        "trains_delayed": 12,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 1.83
+      },
+      "solution": {
+        "description": "Electro-hydraulic point machines with self-diagnostic capabilities",
+        "variant": "modern_actuators",
+        "implementation_time_hours": 20,
+        "cost_estimate": 478109,
+        "implementation_steps": [
+          "Replace mechanical points with electro-hydraulic actuators",
+          "Install redundant position detection sensors",
+          "Deploy heated point systems for winter operation",
+          "Implement automated lubrication systems",
+          "Add real-time force monitoring",
+          "Test under extreme temperature conditions"
+        ],
+        "preventive_measures": [
+          "Automated switch exercising every 6 hours",
+          "Predictive maintenance based on operation count",
+          "Weather-triggered preventive actions",
+          "Remote force monitoring dashboard"
+        ],
+        "estimated_prevention_cost": 197461,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 88,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.29,
+          "recurrence_prevented_months": 27,
+          "network_reliability_gain_pct": 24,
+          "operational_efficiency_gain_pct": 8
+        },
+        "why_golden": "Exceeded all performance targets within 3 months",
+        "reference_accident_types": [
+          "switch_malfunction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032145"
+    },
+    {
+      "incident_id": "INC_019",
+      "timestamp": "2025-10-25T12:45:00Z",
+      "location": {
+        "segment_id": "SEG_019",
+        "from_station": "STN_014",
+        "to_station": "STN_038",
+        "coordinates": [
+          38.59,
+          91.02
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "high",
+      "description": "Regional train derailment at mountain pass due to ice on tracks",
+      "affected_trains": [
+        "REG_109"
+      ],
+      "impact_duration_minutes": 140,
+      "casualties": 7,
+      "affected_passengers": 260,
+      "weather_conditions": "snowy",
+      "speed_at_incident": 100,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 28,
+        "trains_delayed": 13,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 2.33
+      },
+      "solution": {
+        "description": "Wheel-rail interface optimization with rail grinding and wheel profile restoration",
+        "variant": "wheel_rail_interface",
+        "implementation_time_hours": 62,
+        "cost_estimate": 660080,
+        "implementation_steps": [
+          "Immediate site isolation and safety protocols",
+          "Rail grinding to restore optimal profile",
+          "Wheel profile measurement and re-turning",
+          "Install rail lubrication system at curves",
+          "Perform gauge face conditioning",
+          "Validate with instrumented test vehicle"
+        ],
+        "preventive_measures": [
+          "Quarterly wheel profile monitoring program",
+          "Automated rail grinding schedule based on tonnage",
+          "Real-time wheel impact load detection",
+          "Curve speed optimization based on cant deficiency"
+        ],
+        "estimated_prevention_cost": 265559,
+        "context_specific_adaptations": [
+          "Winter operating procedures with reduced service speeds",
+          "Heated track sections installed at critical points",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 32,
+          "network_reliability_gain_pct": 13,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032152"
+    },
+    {
+      "incident_id": "INC_020",
+      "timestamp": "2025-11-01T14:00:00Z",
+      "location": {
+        "segment_id": "SEG_020",
+        "from_station": "STN_015",
+        "to_station": "STN_025",
+        "coordinates": [
+          52.58,
+          94.51
+        ]
+      },
+      "accident_type": "electrical_failure",
+      "severity": "medium",
+      "description": "Power supply interruption on suburban branch affecting multiple services",
+      "affected_trains": [
+        "LOC_205",
+        "HALT_310"
+      ],
+      "impact_duration_minutes": 105,
+      "casualties": 0,
+      "affected_passengers": 200,
+      "weather_conditions": "clear",
+      "speed_at_incident": 75,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 20,
+        "trains_delayed": 10,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.75
+      },
+      "solution": {
+        "description": "Traction power supply modernization with active harmonic filtering",
+        "variant": "power_electronics",
+        "implementation_time_hours": 40,
+        "cost_estimate": 909570,
+        "implementation_steps": [
+          "Install modern traction substations",
+          "Deploy active harmonic filters",
+          "Add SCADA monitoring for all electrical sections",
+          "Implement automatic load balancing",
+          "Upgrade protection relays to digital",
+          "Perform power quality analysis"
+        ],
+        "preventive_measures": [
+          "Real-time power factor monitoring",
+          "Predictive transformer maintenance",
+          "Automated fault location systems",
+          "Temperature monitoring of all critical components"
+        ],
+        "estimated_prevention_cost": 354271,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.2,
+          "recurrence_prevented_months": 31,
+          "network_reliability_gain_pct": 25,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "electrical_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032158"
+    },
+    {
+      "incident_id": "INC_021",
+      "timestamp": "2025-11-08T16:30:00Z",
+      "location": {
+        "segment_id": "SEG_021",
+        "from_station": "STN_016",
+        "to_station": "STN_024",
+        "coordinates": [
+          35.94,
+          -0.16
+        ]
+      },
+      "accident_type": "track_defect",
+      "severity": "high",
+      "description": "Buckled rail requiring immediate track replacement",
+      "affected_trains": [
+        "LOC_206",
+        "HALT_304"
+      ],
+      "impact_duration_minutes": 150,
+      "casualties": 3,
+      "affected_passengers": 240,
+      "weather_conditions": "hot",
+      "speed_at_incident": 80,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 26,
+        "trains_delayed": 12,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.5
+      },
+      "solution": {
+        "description": "Premium-grade rail installation with continuous monitoring",
+        "variant": "rail_replacement",
+        "implementation_time_hours": 53,
+        "cost_estimate": 981797,
+        "implementation_steps": [
+          "Install premium-grade heat-treated rail",
+          "Deploy fiber-optic rail monitoring system",
+          "Implement thermite welding with ultrasonic verification",
+          "Add rail stress analysis sensors",
+          "Perform comprehensive NDT (non-destructive testing)",
+          "Validate with loaded test trains"
+        ],
+        "preventive_measures": [
+          "Distributed acoustic sensing (DAS) for crack detection",
+          "Automated ultrasonic testing vehicle monthly",
+          "Thermal stress monitoring during temperature extremes",
+          "AI-based defect prediction from sensor data"
+        ],
+        "estimated_prevention_cost": 302317,
+        "context_specific_adaptations": [
+          "Rail temperature monitoring with thermal cameras",
+          "Rail stress relief procedures during heat waves",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 28,
+          "network_reliability_gain_pct": 27,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "track_defect"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032165"
+    },
+    {
+      "incident_id": "INC_022",
+      "timestamp": "2025-11-15T09:15:00Z",
+      "location": {
+        "segment_id": "SEG_022",
+        "from_station": "STN_017",
+        "to_station": "STN_045",
+        "coordinates": [
+          21.5,
+          76.72
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "medium",
+      "description": "Minor side-swipe collision between two trains at passing loop",
+      "affected_trains": [
+        "LOC_208"
+      ],
+      "impact_duration_minutes": 85,
+      "casualties": 5,
+      "affected_passengers": 110,
+      "weather_conditions": "clear",
+      "speed_at_incident": 70,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 10,
+        "trains_delayed": 5,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 1.42
+      },
+      "solution": {
+        "description": "Enhanced operational procedures with communication protocol overhaul",
+        "variant": "operational_procedures",
+        "implementation_time_hours": 55,
+        "cost_estimate": 680582,
+        "implementation_steps": [
+          "Implement CBTC (Communication-Based Train Control)",
+          "Deploy redundant radio communication systems",
+          "Install track occupancy detection grid",
+          "Create automated conflict detection algorithms",
+          "Establish mandatory verbal confirmation protocols",
+          "Train all staff on new procedures with simulator"
+        ],
+        "preventive_measures": [
+          "AI-based train movement prediction",
+          "Mandatory speed restrictions at conflict zones",
+          "Real-time dispatcher workload monitoring",
+          "Automated route locking verification"
+        ],
+        "estimated_prevention_cost": 339578,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.17,
+          "recurrence_prevented_months": 43,
+          "network_reliability_gain_pct": 27,
+          "operational_efficiency_gain_pct": 17
+        },
+        "why_golden": "Cost recovery achieved through reduced delays in 14 months",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard"
+        ],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032171"
+    },
+    {
+      "incident_id": "INC_023",
+      "timestamp": "2025-11-22T11:50:00Z",
+      "location": {
+        "segment_id": "SEG_023",
+        "from_station": "STN_018",
+        "to_station": "STN_046",
+        "coordinates": [
+          26.57,
+          74.9
+        ]
+      },
+      "accident_type": "brake_failure",
+      "severity": "high",
+      "description": "Regional train brake malfunctions during peak service hours",
+      "affected_trains": [
+        "REG_113"
+      ],
+      "impact_duration_minutes": 125,
+      "casualties": 6,
+      "affected_passengers": 190,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 105,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 22,
+        "trains_delayed": 10,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.08
+      },
+      "solution": {
+        "description": "Complete brake system modernization with electronic control and redundancy",
+        "variant": "brake_modernization",
+        "implementation_time_hours": 40,
+        "cost_estimate": 1098350,
+        "implementation_steps": [
+          "Install electro-pneumatic brake (EP) system",
+          "Deploy brake force management computers",
+          "Add independent emergency brake circuit",
+          "Install wheel slide protection (WSP) on all axles",
+          "Upgrade to composite brake blocks",
+          "Conduct deceleration testing at maximum load"
+        ],
+        "preventive_measures": [
+          "Continuous brake performance monitoring",
+          "Automated brake pad wear sensors",
+          "Predictive maintenance based on braking events",
+          "Mandatory brake tests before each service"
+        ],
+        "estimated_prevention_cost": 496062,
+        "context_specific_adaptations": [
+          "Rain-triggered automatic speed restriction protocols",
+          "Enhanced drainage system installed to prevent water accumulation",
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.23,
+          "recurrence_prevented_months": 36,
+          "network_reliability_gain_pct": 15,
+          "operational_efficiency_gain_pct": 12
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "brake_failure"
+        ],
+        "lessons_learned": [
+          "Predictive maintenance reduced failures by 87% - now core to all systems",
+          "Load-dependent brake force critical for long trains - automatic adjustment implemented",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032178"
+    },
+    {
+      "incident_id": "INC_024",
+      "timestamp": "2025-11-29T13:30:00Z",
+      "location": {
+        "segment_id": "SEG_024",
+        "from_station": "STN_019",
+        "to_station": "STN_040",
+        "coordinates": [
+          24.13,
+          28.84
+        ]
+      },
+      "accident_type": "electrical_fire",
+      "severity": "critical",
+      "description": "Major electrical fire in train pantograph system causing line blockage",
+      "affected_trains": [
+        "REG_114"
+      ],
+      "impact_duration_minutes": 200,
+      "casualties": 11,
+      "affected_passengers": 320,
+      "weather_conditions": "clear",
+      "speed_at_incident": 115,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 40,
+        "trains_delayed": 19,
+        "trains_cancelled": 5,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.33
+      },
+      "solution": {
+        "description": "Advanced fire detection and suppression with thermal management",
+        "variant": "fire_suppression",
+        "implementation_time_hours": 56,
+        "cost_estimate": 1172736,
+        "implementation_steps": [
+          "Install fiber-optic linear heat detection",
+          "Deploy automatic aerosol fire suppression",
+          "Upgrade all wiring to fire-resistant grade",
+          "Implement compartment isolation systems",
+          "Add thermal management with active cooling",
+          "Test suppression system with controlled fire"
+        ],
+        "preventive_measures": [
+          "Thermal imaging inspections monthly",
+          "Predictive overheating detection algorithms",
+          "Automated circuit breaker testing",
+          "Real-time current monitoring on all circuits"
+        ],
+        "estimated_prevention_cost": 435956,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 85,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.27,
+          "recurrence_prevented_months": 19,
+          "network_reliability_gain_pct": 28,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Solution published in IEEE Rail Transportation journal",
+        "reference_accident_types": [
+          "electrical_fire"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032184"
+    },
+    {
+      "incident_id": "INC_025",
+      "timestamp": "2025-12-06T15:45:00Z",
+      "location": {
+        "segment_id": "SEG_025",
+        "from_station": "STN_020",
+        "to_station": "STN_039",
+        "coordinates": [
+          69.46,
+          82.16
+        ]
+      },
+      "accident_type": "signal_failure",
+      "severity": "high",
+      "description": "Complete signal block failure on busy commuter line",
+      "affected_trains": [
+        "EXP_008",
+        "LOC_217"
+      ],
+      "impact_duration_minutes": 135,
+      "casualties": 0,
+      "affected_passengers": 450,
+      "weather_conditions": "clear",
+      "speed_at_incident": 140,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 36,
+        "trains_delayed": 18,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.25
+      },
+      "solution": {
+        "description": "Solid-state interlocking with fail-safe architecture and N+2 redundancy",
+        "variant": "modern_interlocking",
+        "implementation_time_hours": 42,
+        "cost_estimate": 797836,
+        "implementation_steps": [
+          "Replace relay-based interlocking with SSI (Solid State Interlocking)",
+          "Install triple-redundant vital processors",
+          "Deploy hot-standby signal control units",
+          "Implement automatic degraded mode fallback",
+          "Add battery backup with 4-hour capacity",
+          "Perform failover testing under load"
+        ],
+        "preventive_measures": [
+          "Predictive maintenance using ML on signal logs",
+          "Remote condition monitoring dashboard",
+          "Automated self-diagnostic routines every 6 hours",
+          "Environmental sensors for humidity/temperature"
+        ],
+        "estimated_prevention_cost": 343009,
+        "context_specific_adaptations": [
+          "High-speed certification process for 140 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.28,
+          "recurrence_prevented_months": 28,
+          "network_reliability_gain_pct": 25,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Cost recovery achieved through reduced delays in 14 months",
+        "reference_accident_types": [
+          "signal_failure"
+        ],
+        "lessons_learned": [
+          "Environmental factors (humidity) were root cause - now monitored in real-time",
+          "Hot-standby systems eliminated single points of failure"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032190"
+    },
+    {
+      "incident_id": "INC_026",
+      "timestamp": "2025-12-13T10:20:00Z",
+      "location": {
+        "segment_id": "SEG_026",
+        "from_station": "STN_021",
+        "to_station": "STN_027",
+        "coordinates": [
+          62.99,
+          116.96
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "medium",
+      "description": "Local train derailment on peripheral line during poor visibility",
+      "affected_trains": [
+        "LOC_201"
+      ],
+      "impact_duration_minutes": 100,
+      "casualties": 4,
+      "affected_passengers": 95,
+      "weather_conditions": "foggy",
+      "speed_at_incident": 70,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 8,
+        "trains_delayed": 4,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 1.67
+      },
+      "solution": {
+        "description": "Wheel-rail interface optimization with rail grinding and wheel profile restoration",
+        "variant": "wheel_rail_interface",
+        "implementation_time_hours": 38,
+        "cost_estimate": 405825,
+        "implementation_steps": [
+          "Immediate site isolation and safety protocols",
+          "Rail grinding to restore optimal profile",
+          "Wheel profile measurement and re-turning",
+          "Install rail lubrication system at curves",
+          "Perform gauge face conditioning",
+          "Validate with instrumented test vehicle"
+        ],
+        "preventive_measures": [
+          "Quarterly wheel profile monitoring program",
+          "Automated rail grinding schedule based on tonnage",
+          "Real-time wheel impact load detection",
+          "Curve speed optimization based on cant deficiency"
+        ],
+        "estimated_prevention_cost": 183903,
+        "context_specific_adaptations": [
+          "Enhanced visibility systems with thermal imaging",
+          "Fog-triggered spacing increase protocols"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 25,
+          "network_reliability_gain_pct": 16,
+          "operational_efficiency_gain_pct": 15
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032197"
+    },
+    {
+      "incident_id": "INC_027",
+      "timestamp": "2025-12-20T12:35:00Z",
+      "location": {
+        "segment_id": "SEG_027",
+        "from_station": "STN_022",
+        "to_station": "STN_028",
+        "coordinates": [
+          66.81,
+          -18.08
+        ]
+      },
+      "accident_type": "wheel_bearing_failure",
+      "severity": "medium",
+      "description": "Overheated wheel bearing detected on passing train",
+      "affected_trains": [
+        "LOC_202"
+      ],
+      "impact_duration_minutes": 90,
+      "casualties": 1,
+      "affected_passengers": 85,
+      "weather_conditions": "clear",
+      "speed_at_incident": 75,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 9,
+        "trains_delayed": 4,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.5
+      },
+      "solution": {
+        "description": "Wireless bearing health monitoring with predictive analytics",
+        "variant": "predictive_monitoring",
+        "implementation_time_hours": 21,
+        "cost_estimate": 434269,
+        "implementation_steps": [
+          "Install wireless temperature/vibration sensors on all bearings",
+          "Deploy trackside acoustic monitoring stations",
+          "Implement ML-based failure prediction models",
+          "Replace all bearings with sealed ceramic hybrid units",
+          "Create automated alert system to control center",
+          "Establish condition-based maintenance protocols"
+        ],
+        "preventive_measures": [
+          "Real-time bearing health dashboard",
+          "Automated work order generation for at-risk bearings",
+          "Thermal imaging from passing trains",
+          "Vibration signature analysis every revolution"
+        ],
+        "estimated_prevention_cost": 134917,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 36,
+          "network_reliability_gain_pct": 23,
+          "operational_efficiency_gain_pct": 17
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "wheel_bearing_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032203"
+    },
+    {
+      "incident_id": "INC_028",
+      "timestamp": "2025-12-27T14:50:00Z",
+      "location": {
+        "segment_id": "SEG_028",
+        "from_station": "STN_023",
+        "to_station": "STN_031",
+        "coordinates": [
+          101.64,
+          43.59
+        ]
+      },
+      "accident_type": "track_obstruction",
+      "severity": "medium",
+      "description": "Landslide debris blocking tracks in mountainous region",
+      "affected_trains": [
+        "LOC_203"
+      ],
+      "impact_duration_minutes": 120,
+      "casualties": 0,
+      "affected_passengers": 110,
+      "weather_conditions": "stormy",
+      "speed_at_incident": 80,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 11,
+        "trains_delayed": 5,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 2.0
+      },
+      "solution": {
+        "description": "AI-powered obstacle detection with automated clearance protocols",
+        "variant": "automated_detection",
+        "implementation_time_hours": 23,
+        "cost_estimate": 451842,
+        "implementation_steps": [
+          "Deploy LIDAR-based obstacle detection system",
+          "Install thermal cameras along critical sections",
+          "Implement AI object recognition algorithms",
+          "Create automated alert and train stopping system",
+          "Establish rapid response team protocols",
+          "Test with various obstruction scenarios"
+        ],
+        "preventive_measures": [
+          "24/7 automated surveillance monitoring",
+          "Quarterly vegetation management program",
+          "Perimeter fencing at high-risk zones",
+          "Wildlife crossing structures at known migration paths"
+        ],
+        "estimated_prevention_cost": 202632,
+        "context_specific_adaptations": [
+          "Enhanced weather forecasting integration for preventive actions",
+          "Automated service suspension at 80+ km/h winds"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.18,
+          "recurrence_prevented_months": 31,
+          "network_reliability_gain_pct": 22,
+          "operational_efficiency_gain_pct": 12
+        },
+        "why_golden": "Cost recovery achieved through reduced delays in 14 months",
+        "reference_accident_types": [
+          "track_obstruction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032210"
+    },
+    {
+      "incident_id": "INC_029",
+      "timestamp": "2026-01-03T08:00:00Z",
+      "location": {
+        "segment_id": "SEG_029",
+        "from_station": "STN_024",
+        "to_station": "STN_044",
+        "coordinates": [
+          27.34,
+          -25.8
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "high",
+      "description": "Level crossing collision between train and vehicle",
+      "affected_trains": [
+        "LOC_204"
+      ],
+      "impact_duration_minutes": 115,
+      "casualties": 8,
+      "affected_passengers": 120,
+      "weather_conditions": "clear",
+      "speed_at_incident": 85,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 18,
+        "trains_delayed": 8,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.92
+      },
+      "solution": {
+        "description": "ETCS Level 2 signaling implementation with positive train control",
+        "variant": "signaling_upgrade",
+        "implementation_time_hours": 86,
+        "cost_estimate": 1195612,
+        "implementation_steps": [
+          "Install European Train Control System (ETCS) Level 2",
+          "Deploy radio block centers with redundancy",
+          "Equip all trains with onboard ATP units",
+          "Implement automatic brake intervention system",
+          "Create virtual block sections (50% capacity increase)",
+          "Conduct extensive integration testing with live traffic"
+        ],
+        "preventive_measures": [
+          "Real-time train separation monitoring",
+          "Predictive collision risk assessment algorithms",
+          "Driver alertness monitoring system",
+          "Automated speed enforcement at approach zones"
+        ],
+        "estimated_prevention_cost": 439162,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.21,
+          "recurrence_prevented_months": 29,
+          "network_reliability_gain_pct": 14,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Exceeded all performance targets within 3 months",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032216"
+    },
+    {
+      "incident_id": "INC_030",
+      "timestamp": "2026-01-10T09:45:00Z",
+      "location": {
+        "segment_id": "SEG_030",
+        "from_station": "STN_025",
+        "to_station": "STN_050",
+        "coordinates": [
+          44.4,
+          109.67
+        ]
+      },
+      "accident_type": "electrical_failure",
+      "severity": "medium",
+      "description": "Catenary wire sagging causing intermittent power loss",
+      "affected_trains": [
+        "LOC_205"
+      ],
+      "impact_duration_minutes": 95,
+      "casualties": 0,
+      "affected_passengers": 145,
+      "weather_conditions": "hot",
+      "speed_at_incident": 75,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 12,
+        "trains_delayed": 6,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.58
+      },
+      "solution": {
+        "description": "Traction power supply modernization with active harmonic filtering",
+        "variant": "power_electronics",
+        "implementation_time_hours": 41,
+        "cost_estimate": 841079,
+        "implementation_steps": [
+          "Install modern traction substations",
+          "Deploy active harmonic filters",
+          "Add SCADA monitoring for all electrical sections",
+          "Implement automatic load balancing",
+          "Upgrade protection relays to digital",
+          "Perform power quality analysis"
+        ],
+        "preventive_measures": [
+          "Real-time power factor monitoring",
+          "Predictive transformer maintenance",
+          "Automated fault location systems",
+          "Temperature monitoring of all critical components"
+        ],
+        "estimated_prevention_cost": 268179,
+        "context_specific_adaptations": [
+          "Rail temperature monitoring with thermal cameras",
+          "Heat-triggered speed restrictions (>35\u00b0C)"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.24,
+          "recurrence_prevented_months": 37,
+          "network_reliability_gain_pct": 17,
+          "operational_efficiency_gain_pct": 16
+        },
+        "why_golden": "Solution published in IEEE Rail Transportation journal",
+        "reference_accident_types": [
+          "electrical_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032223"
+    },
+    {
+      "incident_id": "INC_031",
+      "timestamp": "2026-01-17T11:15:00Z",
+      "location": {
+        "segment_id": "SEG_031",
+        "from_station": "STN_026",
+        "to_station": "STN_036",
+        "coordinates": [
+          -10.6,
+          30.09
+        ]
+      },
+      "accident_type": "brake_failure",
+      "severity": "high",
+      "description": "Partial brake failure on express train causes speed overrun",
+      "affected_trains": [
+        "HALT_301"
+      ],
+      "impact_duration_minutes": 130,
+      "casualties": 5,
+      "affected_passengers": 165,
+      "weather_conditions": "clear",
+      "speed_at_incident": 110,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 20,
+        "trains_delayed": 9,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.17
+      },
+      "solution": {
+        "description": "Complete brake system modernization with electronic control and redundancy",
+        "variant": "brake_modernization",
+        "implementation_time_hours": 34,
+        "cost_estimate": 1021242,
+        "implementation_steps": [
+          "Install electro-pneumatic brake (EP) system",
+          "Deploy brake force management computers",
+          "Add independent emergency brake circuit",
+          "Install wheel slide protection (WSP) on all axles",
+          "Upgrade to composite brake blocks",
+          "Conduct deceleration testing at maximum load"
+        ],
+        "preventive_measures": [
+          "Continuous brake performance monitoring",
+          "Automated brake pad wear sensors",
+          "Predictive maintenance based on braking events",
+          "Mandatory brake tests before each service"
+        ],
+        "estimated_prevention_cost": 473501,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.21,
+          "recurrence_prevented_months": 22,
+          "network_reliability_gain_pct": 15,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Solution published in IEEE Rail Transportation journal",
+        "reference_accident_types": [
+          "brake_failure"
+        ],
+        "lessons_learned": [
+          "Predictive maintenance reduced failures by 87% - now core to all systems",
+          "Load-dependent brake force critical for long trains - automatic adjustment implemented"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032229"
+    },
+    {
+      "incident_id": "INC_032",
+      "timestamp": "2026-01-24T13:50:00Z",
+      "location": {
+        "segment_id": "SEG_032",
+        "from_station": "STN_027",
+        "to_station": "STN_037",
+        "coordinates": [
+          75.18,
+          118.24
+        ]
+      },
+      "accident_type": "switch_malfunction",
+      "severity": "medium",
+      "description": "Frozen switch mechanism at rural station junction",
+      "affected_trains": [
+        "HALT_302"
+      ],
+      "impact_duration_minutes": 100,
+      "casualties": 0,
+      "affected_passengers": 88,
+      "weather_conditions": "snowy",
+      "speed_at_incident": 65,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 7,
+        "trains_delayed": 3,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 1.67
+      },
+      "solution": {
+        "description": "Electro-hydraulic point machines with self-diagnostic capabilities",
+        "variant": "modern_actuators",
+        "implementation_time_hours": 21,
+        "cost_estimate": 538122,
+        "implementation_steps": [
+          "Replace mechanical points with electro-hydraulic actuators",
+          "Install redundant position detection sensors",
+          "Deploy heated point systems for winter operation",
+          "Implement automated lubrication systems",
+          "Add real-time force monitoring",
+          "Test under extreme temperature conditions"
+        ],
+        "preventive_measures": [
+          "Automated switch exercising every 6 hours",
+          "Predictive maintenance based on operation count",
+          "Weather-triggered preventive actions",
+          "Remote force monitoring dashboard"
+        ],
+        "estimated_prevention_cost": 234204,
+        "context_specific_adaptations": [
+          "Winter operating procedures with reduced service speeds",
+          "Snow detection sensors integrated with traffic management"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.19,
+          "recurrence_prevented_months": 27,
+          "network_reliability_gain_pct": 27,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "switch_malfunction"
+        ],
+        "lessons_learned": [
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032236"
+    },
+    {
+      "incident_id": "INC_033",
+      "timestamp": "2026-01-31T15:25:00Z",
+      "location": {
+        "segment_id": "SEG_033",
+        "from_station": "STN_028",
+        "to_station": "STN_041",
+        "coordinates": [
+          27.08,
+          -12.03
+        ]
+      },
+      "accident_type": "track_defect",
+      "severity": "high",
+      "description": "Severe rail corrugation on main line causing vibration damage",
+      "affected_trains": [
+        "EXP_007"
+      ],
+      "impact_duration_minutes": 145,
+      "casualties": 0,
+      "affected_passengers": 380,
+      "weather_conditions": "clear",
+      "speed_at_incident": 135,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 32,
+        "trains_delayed": 16,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.42
+      },
+      "solution": {
+        "description": "Premium-grade rail installation with continuous monitoring",
+        "variant": "rail_replacement",
+        "implementation_time_hours": 51,
+        "cost_estimate": 1017468,
+        "implementation_steps": [
+          "Install premium-grade heat-treated rail",
+          "Deploy fiber-optic rail monitoring system",
+          "Implement thermite welding with ultrasonic verification",
+          "Add rail stress analysis sensors",
+          "Perform comprehensive NDT (non-destructive testing)",
+          "Validate with loaded test trains"
+        ],
+        "preventive_measures": [
+          "Distributed acoustic sensing (DAS) for crack detection",
+          "Automated ultrasonic testing vehicle monthly",
+          "Thermal stress monitoring during temperature extremes",
+          "AI-based defect prediction from sensor data"
+        ],
+        "estimated_prevention_cost": 327048,
+        "context_specific_adaptations": [
+          "High-speed certification process for 135 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.27,
+          "recurrence_prevented_months": 33,
+          "network_reliability_gain_pct": 19,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Reduced similar incident frequency by 89%",
+        "reference_accident_types": [
+          "track_defect"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032242"
+    },
+    {
+      "incident_id": "INC_034",
+      "timestamp": "2026-02-07T10:40:00Z",
+      "location": {
+        "segment_id": "SEG_034",
+        "from_station": "STN_029",
+        "to_station": "STN_043",
+        "coordinates": [
+          99.11,
+          68.28
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "critical",
+      "description": "Multiple train collision at congested interchange junction",
+      "affected_trains": [
+        "EXP_009",
+        "REG_110",
+        "LOC_206"
+      ],
+      "impact_duration_minutes": 220,
+      "casualties": 25,
+      "affected_passengers": 580,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 120,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 52,
+        "trains_delayed": 28,
+        "trains_cancelled": 9,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 3.67
+      },
+      "solution": {
+        "description": "ETCS Level 2 signaling implementation with positive train control",
+        "variant": "signaling_upgrade",
+        "implementation_time_hours": 110,
+        "cost_estimate": 2003912,
+        "implementation_steps": [
+          "Install European Train Control System (ETCS) Level 2",
+          "Deploy radio block centers with redundancy",
+          "Equip all trains with onboard ATP units",
+          "Implement automatic brake intervention system",
+          "Create virtual block sections (50% capacity increase)",
+          "Conduct extensive integration testing with live traffic"
+        ],
+        "preventive_measures": [
+          "Real-time train separation monitoring",
+          "Predictive collision risk assessment algorithms",
+          "Driver alertness monitoring system",
+          "Automated speed enforcement at approach zones"
+        ],
+        "estimated_prevention_cost": 895969,
+        "context_specific_adaptations": [
+          "Rain-triggered automatic speed restriction protocols",
+          "Enhanced drainage system installed to prevent water accumulation",
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.28,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 23,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Reduced similar incident frequency by 89%",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032249"
+    },
+    {
+      "incident_id": "INC_035",
+      "timestamp": "2026-02-14T12:30:00Z",
+      "location": {
+        "segment_id": "SEG_035",
+        "from_station": "STN_030",
+        "to_station": "STN_038",
+        "coordinates": [
+          19.68,
+          88.6
+        ]
+      },
+      "accident_type": "electrical_failure",
+      "severity": "high",
+      "description": "Lightning strike damaging catenary system on branch line",
+      "affected_trains": [
+        "LOC_207"
+      ],
+      "impact_duration_minutes": 140,
+      "casualties": 2,
+      "affected_passengers": 175,
+      "weather_conditions": "stormy",
+      "speed_at_incident": 80,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 18,
+        "trains_delayed": 8,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.33
+      },
+      "solution": {
+        "description": "Traction power supply modernization with active harmonic filtering",
+        "variant": "power_electronics",
+        "implementation_time_hours": 65,
+        "cost_estimate": 1284762,
+        "implementation_steps": [
+          "Install modern traction substations",
+          "Deploy active harmonic filters",
+          "Add SCADA monitoring for all electrical sections",
+          "Implement automatic load balancing",
+          "Upgrade protection relays to digital",
+          "Perform power quality analysis"
+        ],
+        "preventive_measures": [
+          "Real-time power factor monitoring",
+          "Predictive transformer maintenance",
+          "Automated fault location systems",
+          "Temperature monitoring of all critical components"
+        ],
+        "estimated_prevention_cost": 476681,
+        "context_specific_adaptations": [
+          "Automated service suspension at 80+ km/h winds",
+          "Enhanced weather forecasting integration for preventive actions",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 26,
+          "network_reliability_gain_pct": 13,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Reduced similar incident frequency by 89%",
+        "reference_accident_types": [
+          "electrical_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032256"
+    },
+    {
+      "incident_id": "INC_036",
+      "timestamp": "2026-02-21T14:05:00Z",
+      "location": {
+        "segment_id": "SEG_036",
+        "from_station": "STN_031",
+        "to_station": "STN_034",
+        "coordinates": [
+          88.89,
+          7.62
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "medium",
+      "description": "Regional train derailed due to excessive speed on curve",
+      "affected_trains": [
+        "REG_111"
+      ],
+      "impact_duration_minutes": 110,
+      "casualties": 6,
+      "affected_passengers": 210,
+      "weather_conditions": "clear",
+      "speed_at_incident": 108,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 20,
+        "trains_delayed": 9,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.83
+      },
+      "solution": {
+        "description": "Comprehensive track geometry correction with laser alignment and continuous welded rail replacement",
+        "variant": "track_geometry",
+        "implementation_time_hours": 49,
+        "cost_estimate": 470116,
+        "implementation_steps": [
+          "Deploy emergency response team and secure perimeter",
+          "Conduct laser-based track geometry survey",
+          "Replace damaged sections with continuous welded rail (CWR)",
+          "Install rail stress monitoring sensors at critical points",
+          "Perform ultrasonic flaw detection on 500m radius",
+          "Execute loaded dynamic testing before service resumption"
+        ],
+        "preventive_measures": [
+          "Deploy track geometry measurement train monthly",
+          "Install vibration-based condition monitoring",
+          "Implement weather-adaptive speed restrictions",
+          "Upgrade ballast specifications for high-speed sections"
+        ],
+        "estimated_prevention_cost": 215731,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 95,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.17,
+          "recurrence_prevented_months": 26,
+          "network_reliability_gain_pct": 26,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Reduced similar incident frequency by 89%",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032262"
+    },
+    {
+      "incident_id": "INC_037",
+      "timestamp": "2026-02-28T16:20:00Z",
+      "location": {
+        "segment_id": "SEG_037",
+        "from_station": "STN_032",
+        "to_station": "STN_035",
+        "coordinates": [
+          106.95,
+          7.81
+        ]
+      },
+      "accident_type": "wheel_bearing_failure",
+      "severity": "high",
+      "description": "Train wheel bearing failure creating dangerous vibrations",
+      "affected_trains": [
+        "LOC_208"
+      ],
+      "impact_duration_minutes": 125,
+      "casualties": 3,
+      "affected_passengers": 140,
+      "weather_conditions": "clear",
+      "speed_at_incident": 90,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 16,
+        "trains_delayed": 7,
+        "trains_cancelled": 2,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.08
+      },
+      "solution": {
+        "description": "Wireless bearing health monitoring with predictive analytics",
+        "variant": "predictive_monitoring",
+        "implementation_time_hours": 28,
+        "cost_estimate": 561928,
+        "implementation_steps": [
+          "Install wireless temperature/vibration sensors on all bearings",
+          "Deploy trackside acoustic monitoring stations",
+          "Implement ML-based failure prediction models",
+          "Replace all bearings with sealed ceramic hybrid units",
+          "Create automated alert system to control center",
+          "Establish condition-based maintenance protocols"
+        ],
+        "preventive_measures": [
+          "Real-time bearing health dashboard",
+          "Automated work order generation for at-risk bearings",
+          "Thermal imaging from passing trains",
+          "Vibration signature analysis every revolution"
+        ],
+        "estimated_prevention_cost": 196724,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 96,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.3,
+          "recurrence_prevented_months": 32,
+          "network_reliability_gain_pct": 12,
+          "operational_efficiency_gain_pct": 9
+        },
+        "why_golden": "Awarded 'Excellence in Safety Innovation' by transport authority",
+        "reference_accident_types": [
+          "wheel_bearing_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032268"
+    },
+    {
+      "incident_id": "INC_038",
+      "timestamp": "2026-03-07T09:35:00Z",
+      "location": {
+        "segment_id": "SEG_038",
+        "from_station": "STN_033",
+        "to_station": "STN_049",
+        "coordinates": [
+          61.6,
+          118.03
+        ]
+      },
+      "accident_type": "signal_failure",
+      "severity": "medium",
+      "description": "Defective signal allowing trains to dangerously close in distance",
+      "affected_trains": [
+        "LOC_209"
+      ],
+      "impact_duration_minutes": 105,
+      "casualties": 0,
+      "affected_passengers": 125,
+      "weather_conditions": "clear",
+      "speed_at_incident": 75,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 15,
+        "trains_delayed": 7,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.75
+      },
+      "solution": {
+        "description": "Enhanced power supply resilience with distributed UPS architecture",
+        "variant": "power_resilience",
+        "implementation_time_hours": 26,
+        "cost_estimate": 458870,
+        "implementation_steps": [
+          "Install distributed UPS modules at each signal",
+          "Deploy dual-feed power supply configuration",
+          "Add solar backup panels for critical signals",
+          "Implement automatic power source switching",
+          "Upgrade to LED signal heads (90% power reduction)",
+          "Test full power failure scenario"
+        ],
+        "preventive_measures": [
+          "Power quality monitoring at all signal locations",
+          "Preventive UPS battery replacement every 3 years",
+          "Lightning protection system upgrades",
+          "Quarterly load testing of backup systems"
+        ],
+        "estimated_prevention_cost": 221683,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 97,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.16,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 20,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "signal_failure"
+        ],
+        "lessons_learned": [
+          "Environmental factors (humidity) were root cause - now monitored in real-time",
+          "Hot-standby systems eliminated single points of failure"
+        ],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032273"
+    },
+    {
+      "incident_id": "INC_039",
+      "timestamp": "2026-03-14T11:50:00Z",
+      "location": {
+        "segment_id": "SEG_039",
+        "from_station": "STN_034",
+        "to_station": "STN_043",
+        "coordinates": [
+          92.84,
+          7.61
+        ]
+      },
+      "accident_type": "track_obstruction",
+      "severity": "high",
+      "description": "Vehicle struck on level crossing blocks tracks indefinitely",
+      "affected_trains": [
+        "REG_112"
+      ],
+      "impact_duration_minutes": 150,
+      "casualties": 5,
+      "affected_passengers": 190,
+      "weather_conditions": "clear",
+      "speed_at_incident": 100,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 22,
+        "trains_delayed": 11,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.5
+      },
+      "solution": {
+        "description": "AI-powered obstacle detection with automated clearance protocols",
+        "variant": "automated_detection",
+        "implementation_time_hours": 24,
+        "cost_estimate": 452028,
+        "implementation_steps": [
+          "Deploy LIDAR-based obstacle detection system",
+          "Install thermal cameras along critical sections",
+          "Implement AI object recognition algorithms",
+          "Create automated alert and train stopping system",
+          "Establish rapid response team protocols",
+          "Test with various obstruction scenarios"
+        ],
+        "preventive_measures": [
+          "24/7 automated surveillance monitoring",
+          "Quarterly vegetation management program",
+          "Perimeter fencing at high-risk zones",
+          "Wildlife crossing structures at known migration paths"
+        ],
+        "estimated_prevention_cost": 218113,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.27,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 22,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "track_obstruction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032279"
+    },
+    {
+      "incident_id": "INC_040",
+      "timestamp": "2026-03-21T13:15:00Z",
+      "location": {
+        "segment_id": "SEG_040",
+        "from_station": "STN_035",
+        "to_station": "STN_050",
+        "coordinates": [
+          111.77,
+          12.22
+        ]
+      },
+      "accident_type": "brake_failure",
+      "severity": "critical",
+      "description": "Complete brake system failure on express train on descent",
+      "affected_trains": [
+        "EXP_010"
+      ],
+      "impact_duration_minutes": 200,
+      "casualties": 19,
+      "affected_passengers": 490,
+      "weather_conditions": "foggy",
+      "speed_at_incident": 145,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 45,
+        "trains_delayed": 23,
+        "trains_cancelled": 6,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 3.33
+      },
+      "solution": {
+        "description": "Complete brake system modernization with electronic control and redundancy",
+        "variant": "brake_modernization",
+        "implementation_time_hours": 42,
+        "cost_estimate": 1541837,
+        "implementation_steps": [
+          "Install electro-pneumatic brake (EP) system",
+          "Deploy brake force management computers",
+          "Add independent emergency brake circuit",
+          "Install wheel slide protection (WSP) on all axles",
+          "Upgrade to composite brake blocks",
+          "Conduct deceleration testing at maximum load"
+        ],
+        "preventive_measures": [
+          "Continuous brake performance monitoring",
+          "Automated brake pad wear sensors",
+          "Predictive maintenance based on braking events",
+          "Mandatory brake tests before each service"
+        ],
+        "estimated_prevention_cost": 701578,
+        "context_specific_adaptations": [
+          "Enhanced visibility systems with thermal imaging",
+          "Fog-triggered spacing increase protocols",
+          "High-speed certification process for 145 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.35,
+          "recurrence_prevented_months": 22,
+          "network_reliability_gain_pct": 13,
+          "operational_efficiency_gain_pct": 16
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "brake_failure"
+        ],
+        "lessons_learned": [
+          "Predictive maintenance reduced failures by 87% - now core to all systems",
+          "Load-dependent brake force critical for long trains - automatic adjustment implemented"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032285"
+    },
+    {
+      "incident_id": "INC_041",
+      "timestamp": "2026-03-28T15:45:00Z",
+      "location": {
+        "segment_id": "SEG_041",
+        "from_station": "STN_036",
+        "to_station": "STN_047",
+        "coordinates": [
+          -9.17,
+          75.04
+        ]
+      },
+      "accident_type": "electrical_fire",
+      "severity": "medium",
+      "description": "Wiring fault causing electrical fire in train carriage",
+      "affected_trains": [
+        "HALT_303"
+      ],
+      "impact_duration_minutes": 100,
+      "casualties": 4,
+      "affected_passengers": 110,
+      "weather_conditions": "clear",
+      "speed_at_incident": 70,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 12,
+        "trains_delayed": 5,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.67
+      },
+      "solution": {
+        "description": "Advanced fire detection and suppression with thermal management",
+        "variant": "fire_suppression",
+        "implementation_time_hours": 38,
+        "cost_estimate": 640520,
+        "implementation_steps": [
+          "Install fiber-optic linear heat detection",
+          "Deploy automatic aerosol fire suppression",
+          "Upgrade all wiring to fire-resistant grade",
+          "Implement compartment isolation systems",
+          "Add thermal management with active cooling",
+          "Test suppression system with controlled fire"
+        ],
+        "preventive_measures": [
+          "Thermal imaging inspections monthly",
+          "Predictive overheating detection algorithms",
+          "Automated circuit breaker testing",
+          "Real-time current monitoring on all circuits"
+        ],
+        "estimated_prevention_cost": 219380,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.2,
+          "recurrence_prevented_months": 43,
+          "network_reliability_gain_pct": 26,
+          "operational_efficiency_gain_pct": 18
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "electrical_fire"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032291"
+    },
+    {
+      "incident_id": "INC_042",
+      "timestamp": "2026-04-04T10:10:00Z",
+      "location": {
+        "segment_id": "SEG_042",
+        "from_station": "STN_037",
+        "to_station": "STN_048",
+        "coordinates": [
+          57.42,
+          82.2
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "high",
+      "description": "Sideswipe collision between express and regional trains at junction",
+      "affected_trains": [
+        "EXP_011",
+        "LOC_210"
+      ],
+      "impact_duration_minutes": 135,
+      "casualties": 10,
+      "affected_passengers": 350,
+      "weather_conditions": "rainy",
+      "speed_at_incident": 125,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 30,
+        "trains_delayed": 14,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.25
+      },
+      "solution": {
+        "description": "Enhanced operational procedures with communication protocol overhaul",
+        "variant": "operational_procedures",
+        "implementation_time_hours": 80,
+        "cost_estimate": 1050849,
+        "implementation_steps": [
+          "Implement CBTC (Communication-Based Train Control)",
+          "Deploy redundant radio communication systems",
+          "Install track occupancy detection grid",
+          "Create automated conflict detection algorithms",
+          "Establish mandatory verbal confirmation protocols",
+          "Train all staff on new procedures with simulator"
+        ],
+        "preventive_measures": [
+          "AI-based train movement prediction",
+          "Mandatory speed restrictions at conflict zones",
+          "Real-time dispatcher workload monitoring",
+          "Automated route locking verification"
+        ],
+        "estimated_prevention_cost": 496958,
+        "context_specific_adaptations": [
+          "Enhanced drainage system installed to prevent water accumulation",
+          "All-weather traction control systems implemented",
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 90,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.22,
+          "recurrence_prevented_months": 29,
+          "network_reliability_gain_pct": 28,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard",
+          "Weather integration into control systems proved essential - now standard practice"
+        ],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032298"
+    },
+    {
+      "incident_id": "INC_043",
+      "timestamp": "2026-04-11T12:30:00Z",
+      "location": {
+        "segment_id": "SEG_043",
+        "from_station": "STN_038",
+        "to_station": "STN_042",
+        "coordinates": [
+          25.12,
+          99.49
+        ]
+      },
+      "accident_type": "track_defect",
+      "severity": "medium",
+      "description": "Loose bolts on track fasteners causing vibrations and speed restrictions",
+      "affected_trains": [
+        "LOC_211"
+      ],
+      "impact_duration_minutes": 95,
+      "casualties": 1,
+      "affected_passengers": 130,
+      "weather_conditions": "clear",
+      "speed_at_incident": 85,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 14,
+        "trains_delayed": 6,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.58
+      },
+      "solution": {
+        "description": "Premium-grade rail installation with continuous monitoring",
+        "variant": "rail_replacement",
+        "implementation_time_hours": 43,
+        "cost_estimate": 792119,
+        "implementation_steps": [
+          "Install premium-grade heat-treated rail",
+          "Deploy fiber-optic rail monitoring system",
+          "Implement thermite welding with ultrasonic verification",
+          "Add rail stress analysis sensors",
+          "Perform comprehensive NDT (non-destructive testing)",
+          "Validate with loaded test trains"
+        ],
+        "preventive_measures": [
+          "Distributed acoustic sensing (DAS) for crack detection",
+          "Automated ultrasonic testing vehicle monthly",
+          "Thermal stress monitoring during temperature extremes",
+          "AI-based defect prediction from sensor data"
+        ],
+        "estimated_prevention_cost": 285812,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 97,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.2,
+          "recurrence_prevented_months": 36,
+          "network_reliability_gain_pct": 19,
+          "operational_efficiency_gain_pct": 11
+        },
+        "why_golden": "Solution published in IEEE Rail Transportation journal",
+        "reference_accident_types": [
+          "track_defect"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Featured as case study in International Railway Safety Conference 2024"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032304"
+    },
+    {
+      "incident_id": "INC_044",
+      "timestamp": "2026-04-18T14:55:00Z",
+      "location": {
+        "segment_id": "SEG_044",
+        "from_station": "STN_039",
+        "to_station": "STN_047",
+        "coordinates": [
+          53.96,
+          109.69
+        ]
+      },
+      "accident_type": "switch_malfunction",
+      "severity": "high",
+      "description": "Mechanical switch jam causing routing failures at major junction",
+      "affected_trains": [
+        "EXP_012",
+        "REG_113"
+      ],
+      "impact_duration_minutes": 140,
+      "casualties": 0,
+      "affected_passengers": 410,
+      "weather_conditions": "clear",
+      "speed_at_incident": 130,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 34,
+        "trains_delayed": 17,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 2,
+        "recovery_time_hours": 2.33
+      },
+      "solution": {
+        "description": "Electro-hydraulic point machines with self-diagnostic capabilities",
+        "variant": "modern_actuators",
+        "implementation_time_hours": 19,
+        "cost_estimate": 528396,
+        "implementation_steps": [
+          "Replace mechanical points with electro-hydraulic actuators",
+          "Install redundant position detection sensors",
+          "Deploy heated point systems for winter operation",
+          "Implement automated lubrication systems",
+          "Add real-time force monitoring",
+          "Test under extreme temperature conditions"
+        ],
+        "preventive_measures": [
+          "Automated switch exercising every 6 hours",
+          "Predictive maintenance based on operation count",
+          "Weather-triggered preventive actions",
+          "Remote force monitoring dashboard"
+        ],
+        "estimated_prevention_cost": 213969,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.23,
+          "recurrence_prevented_months": 22,
+          "network_reliability_gain_pct": 24,
+          "operational_efficiency_gain_pct": 17
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "switch_malfunction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Recognized by regional transport authority as best practice"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032310"
+    },
+    {
+      "incident_id": "INC_045",
+      "timestamp": "2026-04-25T08:20:00Z",
+      "location": {
+        "segment_id": "SEG_045",
+        "from_station": "STN_040",
+        "to_station": "STN_044",
+        "coordinates": [
+          41.91,
+          -20.86
+        ]
+      },
+      "accident_type": "derailment",
+      "severity": "high",
+      "description": "Express train derailment due to track misalignment at level crossing",
+      "affected_trains": [
+        "EXP_013"
+      ],
+      "impact_duration_minutes": 160,
+      "casualties": 14,
+      "affected_passengers": 420,
+      "weather_conditions": "clear",
+      "speed_at_incident": 140,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 36,
+        "trains_delayed": 18,
+        "trains_cancelled": 5,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.67
+      },
+      "solution": {
+        "description": "Comprehensive track geometry correction with laser alignment and continuous welded rail replacement",
+        "variant": "track_geometry",
+        "implementation_time_hours": 55,
+        "cost_estimate": 608914,
+        "implementation_steps": [
+          "Deploy emergency response team and secure perimeter",
+          "Conduct laser-based track geometry survey",
+          "Replace damaged sections with continuous welded rail (CWR)",
+          "Install rail stress monitoring sensors at critical points",
+          "Perform ultrasonic flaw detection on 500m radius",
+          "Execute loaded dynamic testing before service resumption"
+        ],
+        "preventive_measures": [
+          "Deploy track geometry measurement train monthly",
+          "Install vibration-based condition monitoring",
+          "Implement weather-adaptive speed restrictions",
+          "Upgrade ballast specifications for high-speed sections"
+        ],
+        "estimated_prevention_cost": 292851,
+        "context_specific_adaptations": [
+          "High-speed certification process for 140 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 91,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.28,
+          "recurrence_prevented_months": 33,
+          "network_reliability_gain_pct": 24,
+          "operational_efficiency_gain_pct": 14
+        },
+        "why_golden": "Exceeded all performance targets within 3 months",
+        "reference_accident_types": [
+          "derailment"
+        ],
+        "lessons_learned": [
+          "Track geometry degradation accelerates in curves - increase monitoring frequency",
+          "Wheel-rail interface requires integrated monitoring, not isolated component checks"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032316"
+    },
+    {
+      "incident_id": "INC_046",
+      "timestamp": "2026-05-02T10:35:00Z",
+      "location": {
+        "segment_id": "SEG_046",
+        "from_station": "STN_041",
+        "to_station": "STN_048",
+        "coordinates": [
+          15.84,
+          -11.26
+        ]
+      },
+      "accident_type": "electrical_failure",
+      "severity": "high",
+      "description": "Substation transformer failure affecting entire secondary network",
+      "affected_trains": [
+        "LOC_212",
+        "HALT_305",
+        "HALT_308"
+      ],
+      "impact_duration_minutes": 155,
+      "casualties": 0,
+      "affected_passengers": 380,
+      "weather_conditions": "clear",
+      "speed_at_incident": 75,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 28,
+        "trains_delayed": 13,
+        "trains_cancelled": 3,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 2.58
+      },
+      "solution": {
+        "description": "Traction power supply modernization with active harmonic filtering",
+        "variant": "power_electronics",
+        "implementation_time_hours": 49,
+        "cost_estimate": 1148973,
+        "implementation_steps": [
+          "Install modern traction substations",
+          "Deploy active harmonic filters",
+          "Add SCADA monitoring for all electrical sections",
+          "Implement automatic load balancing",
+          "Upgrade protection relays to digital",
+          "Perform power quality analysis"
+        ],
+        "preventive_measures": [
+          "Real-time power factor monitoring",
+          "Predictive transformer maintenance",
+          "Automated fault location systems",
+          "Temperature monitoring of all critical components"
+        ],
+        "estimated_prevention_cost": 373907,
+        "context_specific_adaptations": [
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 93,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.27,
+          "recurrence_prevented_months": 32,
+          "network_reliability_gain_pct": 16,
+          "operational_efficiency_gain_pct": 17
+        },
+        "why_golden": "Awarded 'Excellence in Safety Innovation' by transport authority",
+        "reference_accident_types": [
+          "electrical_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032322"
+    },
+    {
+      "incident_id": "INC_047",
+      "timestamp": "2026-05-09T13:00:00Z",
+      "location": {
+        "segment_id": "SEG_047",
+        "from_station": "STN_042",
+        "to_station": "STN_050",
+        "coordinates": [
+          51.68,
+          71.5
+        ]
+      },
+      "accident_type": "wheel_bearing_failure",
+      "severity": "critical",
+      "description": "Catastrophic wheel bearing failure causing complete locomotive failure",
+      "affected_trains": [
+        "REG_114"
+      ],
+      "impact_duration_minutes": 185,
+      "casualties": 9,
+      "affected_passengers": 290,
+      "weather_conditions": "clear",
+      "speed_at_incident": 105,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 26,
+        "trains_delayed": 12,
+        "trains_cancelled": 4,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.08
+      },
+      "solution": {
+        "description": "Wireless bearing health monitoring with predictive analytics",
+        "variant": "predictive_monitoring",
+        "implementation_time_hours": 29,
+        "cost_estimate": 805632,
+        "implementation_steps": [
+          "Install wireless temperature/vibration sensors on all bearings",
+          "Deploy trackside acoustic monitoring stations",
+          "Implement ML-based failure prediction models",
+          "Replace all bearings with sealed ceramic hybrid units",
+          "Create automated alert system to control center",
+          "Establish condition-based maintenance protocols"
+        ],
+        "preventive_measures": [
+          "Real-time bearing health dashboard",
+          "Automated work order generation for at-risk bearings",
+          "Thermal imaging from passing trains",
+          "Vibration signature analysis every revolution"
+        ],
+        "estimated_prevention_cost": 377118,
+        "context_specific_adaptations": [
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 85,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.29,
+          "recurrence_prevented_months": 25,
+          "network_reliability_gain_pct": 22,
+          "operational_efficiency_gain_pct": 13
+        },
+        "why_golden": "Exceeded all performance targets within 3 months",
+        "reference_accident_types": [
+          "wheel_bearing_failure"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032328"
+    },
+    {
+      "incident_id": "INC_048",
+      "timestamp": "2026-05-16T15:25:00Z",
+      "location": {
+        "segment_id": "SEG_048",
+        "from_station": "STN_043",
+        "to_station": "STN_049",
+        "coordinates": [
+          115.68,
+          41.88
+        ]
+      },
+      "accident_type": "collision",
+      "severity": "medium",
+      "description": "Buffer stop collision as train control system fails to engage brakes",
+      "affected_trains": [
+        "LOC_213"
+      ],
+      "impact_duration_minutes": 105,
+      "casualties": 4,
+      "affected_passengers": 130,
+      "weather_conditions": "clear",
+      "speed_at_incident": 65,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 10,
+        "trains_delayed": 5,
+        "trains_cancelled": 1,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 1.75
+      },
+      "solution": {
+        "description": "Enhanced operational procedures with communication protocol overhaul",
+        "variant": "operational_procedures",
+        "implementation_time_hours": 59,
+        "cost_estimate": 643963,
+        "implementation_steps": [
+          "Implement CBTC (Communication-Based Train Control)",
+          "Deploy redundant radio communication systems",
+          "Install track occupancy detection grid",
+          "Create automated conflict detection algorithms",
+          "Establish mandatory verbal confirmation protocols",
+          "Train all staff on new procedures with simulator"
+        ],
+        "preventive_measures": [
+          "AI-based train movement prediction",
+          "Mandatory speed restrictions at conflict zones",
+          "Real-time dispatcher workload monitoring",
+          "Automated route locking verification"
+        ],
+        "estimated_prevention_cost": 204994,
+        "context_specific_adaptations": [],
+        "actual_outcomes": {
+          "delay_reduction_pct": 92,
+          "passenger_satisfaction": "very_high",
+          "safety_score_improvement": 0.21,
+          "recurrence_prevented_months": 34,
+          "network_reliability_gain_pct": 27,
+          "operational_efficiency_gain_pct": 10
+        },
+        "why_golden": "Became industry benchmark - adopted by 4 regional networks",
+        "reference_accident_types": [
+          "collision"
+        ],
+        "lessons_learned": [
+          "Human factors remain critical - automation must augment, not replace, operator judgment",
+          "Communication redundancy prevented escalation - triple-channel systems now standard"
+        ],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032334"
+    },
+    {
+      "incident_id": "INC_049",
+      "timestamp": "2026-05-23T11:40:00Z",
+      "location": {
+        "segment_id": "SEG_049",
+        "from_station": "STN_044",
+        "to_station": "STN_041",
+        "coordinates": [
+          20.49,
+          -30.08
+        ]
+      },
+      "accident_type": "signal_failure",
+      "severity": "critical",
+      "description": "Cascading signal failures across entire corridor during peak hours",
+      "affected_trains": [
+        "EXP_014",
+        "REG_115",
+        "LOC_214",
+        "HALT_306"
+      ],
+      "impact_duration_minutes": 210,
+      "casualties": 0,
+      "affected_passengers": 750,
+      "weather_conditions": "clear",
+      "speed_at_incident": 135,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 50,
+        "trains_delayed": 26,
+        "trains_cancelled": 8,
+        "alternative_routes_available": 1,
+        "recovery_time_hours": 3.5
+      },
+      "solution": {
+        "description": "Solid-state interlocking with fail-safe architecture and N+2 redundancy",
+        "variant": "modern_interlocking",
+        "implementation_time_hours": 42,
+        "cost_estimate": 1158581,
+        "implementation_steps": [
+          "Replace relay-based interlocking with SSI (Solid State Interlocking)",
+          "Install triple-redundant vital processors",
+          "Deploy hot-standby signal control units",
+          "Implement automatic degraded mode fallback",
+          "Add battery backup with 4-hour capacity",
+          "Perform failover testing under load"
+        ],
+        "preventive_measures": [
+          "Predictive maintenance using ML on signal logs",
+          "Remote condition monitoring dashboard",
+          "Automated self-diagnostic routines every 6 hours",
+          "Environmental sensors for humidity/temperature"
+        ],
+        "estimated_prevention_cost": 377699,
+        "context_specific_adaptations": [
+          "High-speed certification process for 135 km/h operation",
+          "Enhanced track geometry tolerances for high-speed stability",
+          "Independent safety audit by external consultants",
+          "Enhanced staff training program based on incident analysis"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 88,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.31,
+          "recurrence_prevented_months": 23,
+          "network_reliability_gain_pct": 23,
+          "operational_efficiency_gain_pct": 15
+        },
+        "why_golden": "Zero recurrence in 24 months post-implementation",
+        "reference_accident_types": [
+          "signal_failure"
+        ],
+        "lessons_learned": [
+          "Environmental factors (humidity) were root cause - now monitored in real-time",
+          "Hot-standby systems eliminated single points of failure"
+        ],
+        "industry_recognition": "Received National Transportation Safety Excellence Award"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032340"
+    },
+    {
+      "incident_id": "INC_050",
+      "timestamp": "2026-05-30T14:10:00Z",
+      "location": {
+        "segment_id": "SEG_050",
+        "from_station": "STN_045",
+        "to_station": "STN_050",
+        "coordinates": [
+          29.33,
+          123.01
+        ]
+      },
+      "accident_type": "track_obstruction",
+      "severity": "critical",
+      "description": "Bridge collapse following flooding blocks all north-south services",
+      "affected_trains": [
+        "EXP_015",
+        "REG_109",
+        "LOC_215",
+        "HALT_307",
+        "HALT_310"
+      ],
+      "impact_duration_minutes": 300,
+      "casualties": 17,
+      "affected_passengers": 620,
+      "weather_conditions": "flooded",
+      "speed_at_incident": 120,
+      "golden_run_metrics": {
+        "network_disruption_percentage": 58,
+        "trains_delayed": 31,
+        "trains_cancelled": 12,
+        "alternative_routes_available": 0,
+        "recovery_time_hours": 5.0
+      },
+      "solution": {
+        "description": "AI-powered obstacle detection with automated clearance protocols",
+        "variant": "automated_detection",
+        "implementation_time_hours": 42,
+        "cost_estimate": 887410,
+        "implementation_steps": [
+          "Deploy LIDAR-based obstacle detection system",
+          "Install thermal cameras along critical sections",
+          "Implement AI object recognition algorithms",
+          "Create automated alert and train stopping system",
+          "Establish rapid response team protocols",
+          "Test with various obstruction scenarios"
+        ],
+        "preventive_measures": [
+          "24/7 automated surveillance monitoring",
+          "Quarterly vegetation management program",
+          "Perimeter fencing at high-risk zones",
+          "Wildlife crossing structures at known migration paths"
+        ],
+        "estimated_prevention_cost": 417340,
+        "context_specific_adaptations": [
+          "Flood barrier systems at vulnerable locations",
+          "Water level sensors with automatic track closure",
+          "Medium-speed track quality monitoring systems",
+          "Independent safety audit by external consultants"
+        ],
+        "actual_outcomes": {
+          "delay_reduction_pct": 85,
+          "passenger_satisfaction": "high",
+          "safety_score_improvement": 0.25,
+          "recurrence_prevented_months": 35,
+          "network_reliability_gain_pct": 26,
+          "operational_efficiency_gain_pct": 15
+        },
+        "why_golden": "Achieved 98% reliability improvement in affected corridor",
+        "reference_accident_types": [
+          "track_obstruction"
+        ],
+        "lessons_learned": [],
+        "industry_recognition": "Designated as reference implementation by Railway Standards Authority"
+      },
+      "is_golden_run": true,
+      "golden_run_verified_at": "2026-01-23T14:15:33.032347"
+    }
+  ]
+}
