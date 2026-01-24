@@ -81,7 +81,7 @@ def load_module_from_path(module_name, file_path):
 models_dir = Path(project_root) / "src" / "models"
 try:
     gnn_module = load_module_from_path("gnn_encoder", models_dir / "gnn_encoder.py")
-    GNNEncoder = gnn_module.GNNEncoder
+    GNNEncoder = gnn_module.HeterogeneousGATEncoder
     print("✅ Loaded GNNEncoder (Model 1: Topology)")
 except Exception as e:
     print(f"❌ CRITICAL: Failed to load GNNEncoder: {e}")
@@ -278,7 +278,7 @@ class MemoryUploader:
             # For now, uses random graph to test pipeline
             # NEXT STEP: Once graph_builder.py is ready, use real network topology
             dummy_graph = self._create_dummy_graph_input()
-            struct_vec = self.gnn(dummy_graph).detach().numpy()[0].tolist()
+            struct_vec = self.gnn(dummy_graph, return_embedding=True).detach().numpy()[0].tolist()
             
             # === STEP 4E: Generate Temporal Vector (Model 2: LSTM) ===
             # TODO: Replace dummy sequence with real delay history
