@@ -50,6 +50,7 @@ class HeterogeneousGATEncoder(nn.Module):
                  num_heads: int = 4,
                  dropout: float = 0.15,
                  use_attention_pooling: bool = True,
+                 num_classes: int = 4,
                  num_node_types=4):
         super().__init__()
         
@@ -129,7 +130,7 @@ class HeterogeneousGATEncoder(nn.Module):
         nn.Linear(output_dim, hidden_dim),
         nn.ReLU(),
         nn.Dropout(0.2),
-        nn.Linear(hidden_dim, num_node_types)
+        nn.Linear(hidden_dim, num_classes)
     )
 
     def forward(self, data: Data, return_embedding=False) -> torch.Tensor:
@@ -137,15 +138,12 @@ class HeterogeneousGATEncoder(nn.Module):
         Forward pass with advanced graph processing
         
         Args:
-            data: PyG Data object with:
-                - x: [num_nodes, node_feature_dim] node features
-                - node_type: [num_nodes] station type indices
-                - edge_index: [2, num_edges] graph connectivity
-                - edge_attr: [num_edges, edge_feature_dim] segment features
-                - batch: [num_nodes] batch assignment (for batching)
+            data: PyG Data object
+            return_embedding: If True, return embedding instead of logits
         
         Returns:
-            Graph embeddings: [batch_size, output_dim]
+            If return_embedding=False: Classification logits [batch_size, num_classes]
+            If return_embedding=True: Graph embeddings [batch_size, output_dim]
         """
         # Extract inputs
         x = data.x
@@ -155,7 +153,6 @@ class HeterogeneousGATEncoder(nn.Module):
         batch = data.batch if hasattr(data, 'batch') else torch.zeros(x.size(0), dtype=torch.long, device=x.device)
         
         # Encode node types and concatenate with features
-        # This gives the model type-specific parameters
         type_embeddings = self.node_type_embedding(node_type)
         x = torch.cat([x, type_embeddings], dim=1)
         
@@ -174,50 +171,33 @@ class HeterogeneousGATEncoder(nn.Module):
         for layer_idx, (gat, norm, residual_proj) in enumerate(
             zip(self.gat_layers, self.layer_norms, self.residual_projections)
         ):
-            # Store input for residual connection
             identity = x
-            
-            # GAT convolution (message passing)
-            # This is where nodes aggregate information from neighbors
             x = gat(x, edge_index, edge_attr=edge_attr)
-            
-            # Non-linearity
             x = F.relu(x)
             x = self.dropout(x)
-            
-            # Residual connection (helps gradient flow)
             x = x + residual_proj(identity)
-            
-            # Layer normalization (stabilizes training)
             x = norm(x)
         
-        # Global pooling: aggregate node features to graph-level
-        # This is a critical step - we need to summarize all nodes
-        
-        # Strategy 1: Mean pooling (equal weight to all nodes)
+        # Global pooling
         x_mean = global_mean_pool(x, batch)
         
-        # Strategy 2: Attention pooling (learn important nodes)
         if self.use_attention_pooling:
-            # Compute attention scores for each node
-            attention_scores = self.attention_pooling(x)  # [num_nodes, 1]
-            
-            # Softmax over nodes in each graph
+            attention_scores = self.attention_pooling(x)
             attention_weights = self._softmax_per_graph(attention_scores, batch)
-            
-            # Weighted sum of node features
             x_weighted = global_add_pool(x * attention_weights, batch)
         else:
             x_weighted = global_add_pool(x, batch)
         
-        # Concatenate pooling strategies (multi-scale representation)
         x_global = torch.cat([x_mean, x_weighted], dim=1)
         
-        # Final projection to output dimension
-        output = self.output_mlp(x_global)
+        # Output projection (graph embedding)
+        embedding = self.output_mlp(x_global)
         
-        
-        return output
+        # Return embedding or classification logits
+        if return_embedding:
+            return embedding  # [batch_size, output_dim]
+        else:
+            return self.classifier(embedding)  # [batch_size, num_classes]
     
     def _add_weighted_self_loops(self, edge_index, edge_attr, num_nodes, device):
         """

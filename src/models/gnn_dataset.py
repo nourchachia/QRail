@@ -53,7 +53,7 @@ class IncidentGraphDataset(Dataset):
         else:
             self.incidents = all_incidents[split_idx:]
         
-        print(f"✅ Loaded {len(self.incidents)} {split} incidents")
+        print(f"[OK] Loaded {len(self.incidents)} {split} incidents")
         
         # Initialize pipeline and converter
         self.pipeline = DataFuelPipeline(data_dir=data_dir)
@@ -79,16 +79,18 @@ class IncidentGraphDataset(Dataset):
         data = self.converter.convert(graph_dict, incident, pad_to_gnn_dims=True)
         
         # Add target label (for supervised training)
-        # Option 1: Severity classification (0-3)
-        severity_map = {'low': 0, 'medium': 1, 'high': 2, 'critical': 3}
-        severity = incident.get('severity', 'medium')
+        # Severity is stored as numeric 3-5 in the data
+        severity = incident.get('severity_level', 4)  # Default to 4 (medium)
+        
         if isinstance(severity, str):
+            # Handle string format (low/medium/high/critical)
+            severity_map = {'low': 0, 'medium': 1, 'high': 2, 'critical': 3}
             data.y = torch.tensor([severity_map.get(severity, 1)], dtype=torch.long)
         else:
-            data.y = torch.tensor([severity], dtype=torch.long)
-        
-        # Option 2: Outcome score (for regression)
-        # data.y = torch.tensor([incident.get('outcome_score', 0.5)], dtype=torch.float32)
+            # Handle numeric format (3, 4, 5) - normalize to 0, 1, 2
+            # 3 = low/minor (0), 4 = medium (1), 5 = high/severe (2)
+            normalized_severity = max(0, min(2, severity - 3))
+            data.y = torch.tensor([normalized_severity], dtype=torch.long)
         
         return data
 
@@ -121,7 +123,8 @@ def get_dataloaders(batch_size=16, num_workers=0):
         val_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=num_workers
+        num_workers=num_workers,
+        drop_last=False
     )
     
     return train_loader, val_loader

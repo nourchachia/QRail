@@ -28,7 +28,7 @@ def train_gnn():
     
     # Load data
     print("\n📂 Loading data...")
-    train_loader, val_loader = get_dataloaders(batch_size=16)
+    train_loader, val_loader = get_dataloaders(batch_size=4)
     
     # Create model
     print("\n🧠 Initializing model...")
@@ -37,7 +37,7 @@ def train_gnn():
         edge_feature_dim=8,   # After padding
         hidden_dim=64,
         output_dim=64,
-        num_node_types=4  # major_hub, regional, local, minor_halt
+        num_node_types=3  # 3 severity classes: minor(3)->0, medium(4)->1, severe(5)->2
     )
     
     # Setup training
