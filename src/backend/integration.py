@@ -105,7 +105,12 @@ class IncidentPipeline:
         # NEXT STEP: Can parse natural language incidents
         try:
             from src.backend.incident_parser import IncidentParser
-            self.parser = IncidentParser(data_dir=data_dir)
+            gemini_key = os.getenv("GEMINI_API_KEY")
+            if gemini_key:
+                print(f"   ✓ Found GEMINI_API_KEY: {gemini_key[:4]}...****")
+            else:
+                print("   ⚠ GEMINI_API_KEY not found in environment!")
+            self.parser = IncidentParser(data_dir=data_dir, api_key=gemini_key)
             print("   ✓ IncidentParser ready (Gemini)")
         except Exception as e:
             print(f"   ⚠ IncidentParser failed: {e}")
@@ -117,7 +122,7 @@ class IncidentPipeline:
         # NEXT STEP: Can extract GNN, LSTM, and context features
         try:
             from src.backend.feature_extractor import DataFuelPipeline
-            self.feature_pipeline = DataFuelPipeline()
+            self.feature_pipeline = DataFuelPipeline(data_dir=data_dir)
             print("   ✓ DataFuelPipeline ready")
         except Exception as e:
             print(f"   ⚠ DataFuelPipeline failed: {e}")
@@ -148,9 +153,9 @@ class IncidentPipeline:
         # NEXT STEP: Can create 64+64+384 dimensional vectors
         try:
             # Model 1: Topology (GNN)
-            from src.models.gnn_encoder import GNNEncoder
-            self.gnn_encoder = GNNEncoder()
-            print("   ✓ GNNEncoder ready (Model 1: Topology)")
+            from src.models.gnn_encoder import HeterogeneousGATEncoder
+            self.gnn_encoder = HeterogeneousGATEncoder()
+            print("   ✓ HeterogeneousGATEncoder ready (Model 1: Topology)")
             
             # Model 2: Cascade (LSTM)
             from src.models.cascade.lstm_encoder import LSTMEncoder

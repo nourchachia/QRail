@@ -143,12 +143,21 @@ class NeuralSearcher:
         
         try:
             # Primary search using semantic vector (most important)
-            semantic_results = self.client.search(
-                collection_name=self.collection_name,
-                query_vector=("semantic", semantic_vec),
-                query_filter=qdrant_filter,
-                limit=limit * 3  # Get more candidates for re-ranking
-            )
+            # Primary search using semantic vector (most important)
+            try:
+                semantic_results = self.client.search(
+                    collection_name=self.collection_name,
+                    query_vector=("semantic", semantic_vec),
+                    query_filter=qdrant_filter,
+                    limit=limit * 3  # Get more candidates for re-ranking
+                )
+            except AttributeError as e:
+                print(f"❌ CRITICAL QDRANT ERROR: {e}")
+                print(f"   Available methods on client: {[m for m in dir(self.client) if not m.startswith('_')]}")
+                return []
+            except Exception as e:
+                print(f"❌ SEARCH ERROR: {e}")
+                return []
             
             # If we have structural/temporal vectors, do additional searches for fusion
             structural_results = []

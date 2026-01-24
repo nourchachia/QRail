@@ -81,6 +81,8 @@ class IncidentParser:
         """Load live_status.json to get weather and network load"""
         try:
             live_status = self.storage.load_json("live_status.json")
+            if not live_status:
+                raise ValueError("live_status.json is empty or missing")
             
             # Extract weather and load
             weather = live_status.get("weather", {})
@@ -189,6 +191,7 @@ Output ONLY valid JSON, no additional text."""
                 return self._parse_with_gemini(description, context)
             except Exception as e:
                 logger.error(f"Gemini parsing failed: {e}, falling back to rule-based")
+                print(f"\n❌ GEMINI ERROR: {str(e)}\n")  # Force visible log
                 return self._parse_fallback(description, context)
         else:
             return self._parse_fallback(description, context)
@@ -201,11 +204,23 @@ Output ONLY valid JSON, no additional text."""
         """Parse using Gemini AI"""
         import google.generativeai as genai
         
-        prompt = self._create_prompt(description, context)
+        # Try multiple models in order of preference
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
+        response = None
+        last_error = None
         
-        # Use Gemini model
-        model = genai.GenerativeModel('gemini-pro')
-        response = model.generate_content(prompt)
+        for model_name in models_to_try:
+            try:
+                model = genai.GenerativeModel(model_name)
+                response = model.generate_content(prompt)
+                break # Success!
+            except Exception as e:
+                last_error = e
+                logger.warning(f"Model {model_name} failed: {e}")
+                continue
+                
+        if not response:
+            raise last_error or Exception("All Gemini models failed")
         
         # Extract JSON from response
         response_text = response.text.strip()
@@ -296,7 +311,9 @@ Output ONLY valid JSON, no additional text."""
                 "wind_speed_kmh": context["wind_speed_kmh"],
                 "visibility_km": context["visibility_km"]
             },
-            "network_load_pct": context["network_load_pct"]
+            "network_load_pct": context["network_load_pct"],
+            "station_ids": ["STN_001"] if "central" in description_lower else [],
+            "is_junction": False
         }
     
     def parse_incident(
