@@ -49,7 +49,8 @@ class HeterogeneousGATEncoder(nn.Module):
                  num_layers: int = 3,
                  num_heads: int = 4,
                  dropout: float = 0.15,
-                 use_attention_pooling: bool = True):
+                 use_attention_pooling: bool = True,
+                 num_node_types=4):
         super().__init__()
         
         self.num_layers = num_layers
@@ -124,8 +125,14 @@ class HeterogeneousGATEncoder(nn.Module):
         )
         
         self.dropout = nn.Dropout(dropout)
-        
-    def forward(self, data: Data) -> torch.Tensor:
+        self.classifier = nn.Sequential(
+        nn.Linear(output_dim, hidden_dim),
+        nn.ReLU(),
+        nn.Dropout(0.2),
+        nn.Linear(hidden_dim, num_node_types)
+    )
+
+    def forward(self, data: Data, return_embedding=False) -> torch.Tensor:
         """
         Forward pass with advanced graph processing
         
@@ -209,6 +216,7 @@ class HeterogeneousGATEncoder(nn.Module):
         # Final projection to output dimension
         output = self.output_mlp(x_global)
         
+        
         return output
     
     def _add_weighted_self_loops(self, edge_index, edge_attr, num_nodes, device):
@@ -228,9 +236,7 @@ class HeterogeneousGATEncoder(nn.Module):
         if edge_attr.size(0) > 0:
             loop_attr = edge_attr.mean(dim=0, keepdim=True).repeat(num_nodes, 1)
         else:
-            # Handle empty edge_attr case
-            edge_dim = edge_attr.size(1) if edge_attr.size(0) == 0 and edge_attr.size(1) > 0 else 8
-            loop_attr = torch.zeros(num_nodes, edge_dim, device=device)
+            loop_attr = torch.zeros(num_nodes, edge_attr.size(1), device=device)
         
         # Concatenate with existing edges
         edge_index = torch.cat([edge_index, loop_index], dim=1)
@@ -489,7 +495,7 @@ if __name__ == "__main__":
         x=torch.randn(num_nodes, 14),
         node_type=torch.randint(0, 4, (num_nodes,)),
         edge_index=torch.randint(0, num_nodes, (2, num_edges)),
-        edge_attr=torch.randn(num_edges, 8)
+        edge_attr=torch.randn(num_edges,8),
     )
     
     model.eval()
