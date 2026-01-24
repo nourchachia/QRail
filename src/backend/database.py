@@ -1,93 +1,51 @@
 """
-Storage Schema Manager - src/backend/database.py
+Neural Rail Conductor - Storage Manager (Part 4.1)
+Handles JSON data loading and Qdrant Cloud integration.
 
-Purpose:
-    Central storage utility that connects data → AI models → search system.
-    Handles loading JSON files and Qdrant vector database operations.
-
-Core Functionality (Required):
-    1. Load JSON Files:
-       - Automatically finds files in correct directories (data/network/ or data/processed/)
-       - Used by AI models to load infrastructure and operational data
-    
-    2. Qdrant Vector Database:
-       - Creates collections for storing incident embeddings
-       - Uploads incidents with AI-generated embeddings (GNN/LSTM/Semantic vectors)
-       - Searches for similar historical incidents using multi-vector similarity
-
-Optional Functionality:
-    - Save methods (save_stations, save_segments, etc.) are available if you want to use
-      StorageManager in your data generation scripts, but not required if your scripts
-      already save files correctly to data/network/ and data/processed/
-
-How It Fits in the Pipeline:
-    Step 1: Data generators save JSON files (can use StorageManager.save_* methods, or save directly)
-    Step 2: AI models use StorageManager.load_json() to load data, generate embeddings, 
-            then upload to Qdrant via StorageManager.upload_incident_memory()
-    Step 3: Backend API uses StorageManager.search_similar_incidents() when new incidents occur
-
-Usage:
-    cd QRail
-    python src/backend/database.py  # Test script (optional)
-    
-    # In your scripts:
-    from src.backend.database import StorageManager
-    storage = StorageManager(data_dir="data")
-    
-    # Load data (required for AI models)
-    stations = storage.load_json("stations.json")
-    
-    # Qdrant operations (required for search)
-    storage.init_qdrant_collection("operational_memory")
-    storage.upload_incident_memory(incidents_with_embeddings)
-    similar = storage.search_similar_incidents(query_vectors={...})
+This is the central hub for:
+1. Loading static infrastructure (stations, segments)
+2. Loading processed data (incidents, live status)
+3. Connecting to Qdrant Cloud for vector operations
 """
 
 import json
-import sys
+import os
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
+from dotenv import load_dotenv
 
-# Add project root to path
-sys.path.append(str(Path(__file__).parent.parent.parent))
+# Load environment variables from .env file
+load_dotenv()
 
-from qdrant_client import QdrantClient
-from qdrant_client.models import (
-    Distance, VectorParams, PointStruct,
-    FieldCondition, Filter, MatchValue
-)
+# Try to import Qdrant - graceful fallback if not installed
+try:
+    from qdrant_client import QdrantClient
+    from qdrant_client.models import Distance, VectorParams, PointStruct
+    QDRANT_AVAILABLE = True
+except ImportError:
+    QDRANT_AVAILABLE = False
+    print("⚠️ qdrant-client not installed. Vector operations disabled.")
 
 
 class StorageManager:
     """
-    Central storage manager for loading JSON files and Qdrant vector database operations.
+    Central data access layer for Neural Rail Conductor.
     
-    Directory Structure (assumes files are already in these locations):
-    - data/network/: stations.json, segments.json, timetable.json (infrastructure)
-    - data/processed/: incidents.json, live_status.json, golden_run_accidents.json (operational)
-    
-    Core Usage (Required):
-        storage = StorageManager(data_dir="data")
-        
-        # Load data for AI models
-        stations = storage.load_json("stations.json")  # Auto-finds in data/network/
-        incidents = storage.load_json("incidents.json")  # Auto-finds in data/processed/
-        
-        # Setup Qdrant and upload embeddings
-        storage.init_qdrant_collection("operational_memory")
-        storage.upload_incident_memory(incidents_with_embeddings)
-        
-        # Search for similar incidents
-        similar = storage.search_similar_incidents(query_vectors={...}, limit=5)
-    
-    Optional Usage (if you want to use StorageManager in data generation scripts):
-        storage.save_stations([...])  # → data/network/stations.json
-        storage.save_segments([...])  # → data/network/segments.json
-        # Note: Not required if your data generation scripts already save files correctly
+    Handles two storage systems:
+    1. JSON Files (Local): Static infrastructure & historical incidents
+    2. Qdrant Cloud: Vector embeddings for semantic search
     """
     
     def __init__(self, data_dir: str = "data", 
-                 qdrant_url: str = "localhost", qdrant_port: int = 6333):
+                 qdrant_url: str = "localhost", 
+                 qdrant_port: int = 6333,
+                 qdrant_api_key: Optional[str] = None):
+        """
+        Initialize the StorageManager.
+        
+        Args:
+            base_path: Root path to the data folder. Auto-detected if None.
+        """
         # Base data directory
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
@@ -101,307 +59,307 @@ class StorageManager:
         self.processed_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize Qdrant client
-        self.qdrant = QdrantClient(host=qdrant_url, port=qdrant_port)
+        # Fix: Support both local (host/port) and Cloud (url/api_key)
+        self.client = None
+        if QDRANT_AVAILABLE:
+            if "localhost" in qdrant_url or "127.0.0.1" in qdrant_url:
+                 self.client = QdrantClient(host=qdrant_url, port=qdrant_port)
+            else:
+                 # Cloud connection
+                 self.client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
         
-    # ========== JSON Storage (Infrastructure) ==========
+        # Alias for compatibility with some scripts
+        self.qdrant = self.client
+        
+        # Initialize if client exists
+        if self.client:
+            self._init_qdrant()
+        
+        # Cache for frequently accessed data
+        self._cache: Dict[str, Any] = {}
+        
+        # Compat: self.base_path for newer scripts
+        self.base_path = self.data_dir
     
-    def save_stations(self, stations: List[Dict]):
+    def _init_qdrant(self):
         """
-        Save station data to JSON
-        
-        Schema:
-        {
-            "id": "STN_001",
-            "name": "Central Station",
-            "type": "major_hub",
-            "zone": "core",
-            "platforms": 12,
-            "passengers": 150000,
-            "coordinates": [50.0, 50.0],
-            "connected_segments": ["SEG_001", "SEG_002"],
-            "has_switches": true,
-            "is_junction": true
-        }
+        Initialize Qdrant Cloud connection using environment variables.
         """
-        with open(self.network_dir / "stations.json", 'w') as f:
-            json.dump(stations, f, indent=2)
-        print(f"✓ Saved {len(stations)} stations")
+        if not self.client:
+            return
+            
+        try:
+            # Test connection
+            self.client.get_collections()
+            # print(f"✅ Connected to Qdrant")
+        except Exception as e:
+            print(f"❌ Qdrant connection failed: {e}")
+            self.client = None
     
-    def save_segments(self, segments: List[Dict]):
-        """
-        Save segment data to JSON
-        
-        Schema:
-        {
-            "id": "SEG_001",
-            "from_station": "STN_001",
-            "to_station": "STN_002",
-            "length_km": 5.2,
-            "speed_limit": 160,
-            "capacity": 20,
-            "bidirectional": true,
-            "track_type": "main_line",
-            "has_switches": true,
-            "is_critical": true,
-            "electrified": true
-        }
-        """
-        with open(self.network_dir / "segments.json", 'w') as f:
-            json.dump(segments, f, indent=2)
-        print(f"✓ Saved {len(segments)} segments")
+    # ==================== JSON FILE OPERATIONS ====================
     
-    def save_timetable(self, timetable: List[Dict]):
+    def load_json(self, filename: str) -> Optional[Any]:
         """
-        Save timetable data to JSON
+        Load a JSON file from the data directory.
         
-        Schema:
-        {
-            "service_id": "SVC_001",
-            "train_id": "EXP_01",
-            "day_type": "weekday",
-            "stop_sequence": [
-                {
-                    "station_id": "STN_001",
-                    "arrival": "2026-03-22T08:00:00",
-                    "departure": "2026-03-22T08:02:00",
-                    "platform": 4
-                }
-            ]
-        }
+        Args:
+            filename: Relative path like "network/stations.json" or "processed/train.json"
+        
+        Returns:
+            Parsed JSON data or None if not found
         """
-        with open(self.network_dir / "timetable.json", 'w') as f:
-            json.dump(timetable, f, indent=2)
-        print(f"✓ Saved {len(timetable)} schedules")
+        # Check cache first
+        if filename in self._cache:
+            return self._cache[filename]
+        
+        # Try different base paths
+        possible_paths = [
+            self.base_path / filename,
+            self.network_dir / filename,
+            self.processed_dir / filename,
+        ]
+        
+        for path in possible_paths:
+            if path.exists():
+                try:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        self._cache[filename] = data
+                        return data
+                except json.JSONDecodeError as e:
+                    print(f"❌ JSON parse error in {path}: {e}")
+                    return None
+        
+        # print(f"⚠️ File not found: {filename}")
+        return None
     
-    def save_live_status(self, status: Dict):
+    def save_json(self, filename: str, data: Any) -> bool:
         """
-        Save current network state (Digital Twin Pulse)
+        Save data to a JSON file.
         
-        Schema:
-        {
-            "timestamp": "2026-03-22T08:30:00",
-            "day_type": "sunday",
-            "weather": {
-                "condition": "fog",
-                "temperature_c": 5,
-                "wind_speed_kmh": 8,
-                "visibility_km": 4.3
-            },
-            "network_load_pct": 42,
-            "total_active_trains": 12,
-            "active_trains": [...]
-        }
+        Args:
+            filename: Target path like "processed/incidents.json"
+            data: Data to save (must be JSON-serializable)
+        
+        Returns:
+            True if successful
         """
-        with open(self.processed_dir / "live_status.json", 'w') as f:
-            json.dump(status, f, indent=2)
-        print(f"✓ Saved live status at {status['timestamp']}")
-    
-    def load_json(self, filename: str) -> Dict:
-        """Load any JSON file"""
-        # Network files go to network_dir, processed files go to processed_dir
-        network_files = ["stations.json", "segments.json", "timetable.json"]
-        processed_files = ["incidents.json", "live_status.json", "golden_run_accidents.json"]
-        
-        if filename in network_files:
-            path = self.network_dir / filename
-        elif filename in processed_files:
-            path = self.processed_dir / filename
+        if "network" in filename:
+            path = self.network_dir / Path(filename).name
         else:
-            # Fallback: try network first, then processed
-            path = self.network_dir / filename
-            if not path.exists():
-                path = self.processed_dir / filename
+            path = self.processed_dir / Path(filename).name
         
-        if not path.exists():
-            return {}
-        with open(path, 'r') as f:
-            return json.load(f)
+        # Ensure directory exists
+        path.parent.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            # Update cache
+            self._cache[filename] = data
+            return True
+        except Exception as e:
+            print(f"❌ Failed to save {path}: {e}")
+            return False
+            
+    # Compatibility Wrappers
+    def save_stations(self, data): self.save_json("stations.json", data)
+    def save_segments(self, data): self.save_json("segments.json", data)
+    def save_timetable(self, data): self.save_json("timetable.json", data)
+    def save_live_status(self, data): self.save_json("live_status.json", data)
     
-    # ========== Qdrant Storage (Operational Memory) ==========
+    # ==================== CONVENIENCE GETTERS ====================
     
-    def init_qdrant_collection(self, collection_name: str = "operational_memory"):
+    def get_stations(self) -> List[Dict]:
+        """Load stations from network/stations.json"""
+        data = self.load_json("network/stations.json")
+        return data if isinstance(data, list) else []
+    
+    def get_segments(self) -> List[Dict]:
+        """Load segments from network/segments.json"""
+        data = self.load_json("network/segments.json")
+        return data if isinstance(data, list) else []
+    
+    def get_timetable(self) -> List[Dict]:
+        """Load timetable from network/timetable.json"""
+        data = self.load_json("network/timetable.json")
+        return data if isinstance(data, list) else []
+    
+    def get_incidents(self, split: str = "train") -> List[Dict]:
+        """
+        Load incidents from processed folder.
+        
+        Args:
+            split: "train" (800 items) or "test" (200 items)
+        """
+        data = self.load_json(f"processed/{split}.json")
+        return data if isinstance(data, list) else []
+    
+    def get_golden_runs(self) -> List[Dict]:
+        """Load the 50 curated 'perfect resolution' examples"""
+        data = self.load_json("processed/golden_runs.json")
+        return data if isinstance(data, list) else []
+    
+    def get_live_status(self) -> Optional[Dict]:
+        """Load real-time network state from live_status.json"""
+        return self.load_json("processed/live_status.json")
+    
+    # ==================== QDRANT OPERATIONS ====================
+    
+    def init_operational_memory(self) -> bool:
+        """
+        Create the 'operational_memory' collection in Qdrant.
+        """
+        success = self.init_qdrant_collection()
+        if success and self.client:
+             # Ensure index exists for cleanup logic
+             try:
+                 from qdrant_client.models import PayloadSchemaType
+                 self.client.create_payload_index(
+                     collection_name="operational_memory",
+                     field_name="is_dummy",
+                     field_schema=PayloadSchemaType.BOOL
+                 )
+             except Exception:
+                 pass # Index might already exist
+        return success
+
+    def init_qdrant_collection(self, collection_name: str = "operational_memory") -> bool:
         """
         Initialize Qdrant collection with triple-vector configuration
         """
+        if not self.client:
+            print("❌ Qdrant client not initialized")
+            return False
+        
         try:
             # Check if collection exists
-            collections = self.qdrant.get_collections().collections
+            collections = self.client.get_collections().collections
             exists = any(c.name == collection_name for c in collections)
             
             if exists:
-                print(f"Collection '{collection_name}' already exists")
-                return
+                # print(f"ℹ️ Collection '{collection_name}' already exists")
+                return True
             
-            # Create collection with named vectors
-            self.qdrant.create_collection(
+            # Create new collection with triple-vector config
+            self.client.create_collection(
                 collection_name=collection_name,
                 vectors_config={
-                    # GNN topology embedding
-                    "structural": VectorParams(
-                        size=64,
-                        distance=Distance.COSINE
-                    ),
-                    # LSTM cascade embedding
-                    "temporal": VectorParams(
-                        size=64,
-                        distance=Distance.COSINE
-                    ),
-                    # Semantic text embedding
-                    "semantic": VectorParams(
-                        size=384,  # all-MiniLM-L6-v2 dimension
-                        distance=Distance.COSINE
-                    )
+                    # Model 1: GNN (Topology)
+                    "structural": VectorParams(size=64, distance=Distance.COSINE),
+                    # Model 2: LSTM (Cascade)
+                    "temporal": VectorParams(size=64, distance=Distance.COSINE),
+                    # Model 3: Semantic (Transformer)
+                    "semantic": VectorParams(size=384, distance=Distance.COSINE),
                 }
             )
+            print(f"✅ Created collection '{collection_name}' with triple-vector config")
             
-            print(f"✓ Created Qdrant collection: {collection_name}")
+            # Indexing FIX: Create index for 'is_dummy' to allow filtered deletion
+            from qdrant_client.models import PayloadSchemaType
+            self.client.create_payload_index(
+                collection_name=collection_name,
+                field_name="is_dummy",
+                field_schema=PayloadSchemaType.BOOL
+            )
+            return True
             
         except Exception as e:
-            print(f"✗ Error creating collection: {e}")
+            print(f"❌ Failed to create collection: {e}")
+            return False
     
-    def upload_incident_memory(self, 
-                              incidents: List[Dict],
-                              collection_name: str = "operational_memory"):
+    def upload_incident_memory(self, incidents: List[Dict], collection_name: str = "operational_memory", batch_size: int = 50) -> int:
         """
-        Upload historical incidents to Qdrant with embeddings
-        
-        Expected incident structure:
-        {
-            "incident_id": "HIST_001",
-            "timestamp": "2024-11-12T08:15:00Z",
-            "location_id": "SEG_045",
-            "meta": {"day": "Monday", "weather": "Clear", ...},
-            "log": "Alex: 'Track failure at Junction 9...'",
-            "snapshot": {...},
-            "resolution": {...},
-            "embeddings": {
-                "structural": [64-dim vector],
-                "temporal": [64-dim vector],
-                "semantic": [384-dim vector]
-            }
-        }
+        Upload incidents with embeddings to Qdrant using BATCHING to prevent timeouts.
         """
-        points = []
+        if not self.client:
+            print("❌ Qdrant client not initialized")
+            return 0
         
-        for idx, incident in enumerate(incidents):
-            # Extract embeddings (should be pre-computed)
-            embeddings = incident.get('embeddings', {})
-            
-            if not all(k in embeddings for k in ['structural', 'temporal', 'semantic']):
-                print(f"Warning: Incident {incident.get('incident_id')} missing embeddings")
+        import uuid
+        total_uploaded = 0
+        all_points = []
+        
+        for inc in incidents:
+            # Support both 'vectors' and 'embeddings' keys
+            vecs = inc.get("vectors") or inc.get("embeddings")
+            if not vecs:
                 continue
             
-            # Create point with named vectors
-            point = PointStruct(
-                id=idx,
+            point_id = inc.get("incident_id")
+            if point_id is None:
+                point_id = str(uuid.uuid4())
+            
+            payload = inc.copy()
+            if "vectors" in payload: del payload["vectors"]
+            if "embeddings" in payload: del payload["embeddings"]
+            
+            all_points.append(PointStruct(
+                id=point_id,
                 vector={
-                    "structural": embeddings['structural'],
-                    "temporal": embeddings['temporal'],
-                    "semantic": embeddings['semantic']
+                    "structural": vecs.get("structural", [0.0] * 64),
+                    "temporal": vecs.get("temporal", [0.0] * 64),
+                    "semantic": vecs.get("semantic", [0.0] * 384),
                 },
-                payload={
-                    "incident_id": incident['incident_id'],
-                    "timestamp": incident['timestamp'],
-                    "location_id": incident['location_id'],
-                    "incident_type": incident['meta'].get('archetype', 'unknown'),
-                    "weather": incident['meta'].get('weather', 'clear'),
-                    "day_type": incident['meta'].get('day', 'weekday'),
-                    "log": incident['log'],
-                    "resolution": incident['resolution'],
-                    "outcome_score": incident['resolution'].get('outcome_score', 0.0),
-                    "is_golden": incident['resolution'].get('is_golden', False)
-                }
-            )
-            points.append(point)
+                payload=payload
+            ))
         
-        # Batch upload
-        if points:
-            self.qdrant.upsert(
-                collection_name=collection_name,
-                points=points
-            )
-            print(f"✓ Uploaded {len(points)} incidents to Qdrant")
-        else:
-            print("✗ No valid incidents to upload")
-    
-    def search_similar_incidents(self,
-                                query_vectors: Dict[str, List[float]],
-                                filters: Optional[Dict] = None,
-                                limit: int = 5,
-                                collection_name: str = "operational_memory") -> List[Dict]:
-        """
-        Multi-vector search with optional filters
+        if not all_points:
+            print("⚠️ No valid points to upload")
+            return 0
         
-        Args:
-            query_vectors: {"structural": [...], "temporal": [...], "semantic": [...]}
-            filters: {"weather": "rain", "incident_type": "signal_failure"}
-            limit: Number of results
-        
-        Returns:
-            List of similar incidents with scores
-        """
-        # Build filter if provided
-        filter_obj = None
-        if filters:
-            conditions = []
-            for key, value in filters.items():
-                conditions.append(
-                    FieldCondition(key=key, match=MatchValue(value=value))
+        # BATCHING FIX: Upload in smaller chunks
+        print(f"   Batching upload ({len(all_points)} points, {batch_size} per batch)...")
+        for i in range(0, len(all_points), batch_size):
+            batch = all_points[i : i + batch_size]
+            try:
+                self.client.upsert(
+                    collection_name=collection_name,
+                    points=batch
                 )
-            if conditions:
-                filter_obj = Filter(must=conditions)
-        
-        # For multi-vector search, we'll do weighted fusion
-        # Search with semantic vector (primary)
-        results = self.qdrant.search(
-            collection_name=collection_name,
-            query_vector=("semantic", query_vectors["semantic"]),
-            query_filter=filter_obj,
-            limit=limit * 2  # Get more candidates for re-ranking
-        )
-        
-        # Re-rank using all three vectors (simplified)
-        # In production, you'd do proper weighted fusion
-        similar_incidents = []
-        for result in results[:limit]:
-            similar_incidents.append({
-                "id": result.id,
-                "score": result.score,
-                "payload": result.payload
-            })
-        
-        return similar_incidents
+                total_uploaded += len(batch)
+                print(f"   ✓ Uploaded {total_uploaded}/{len(all_points)}...")
+            except Exception as e:
+                print(f"❌ Batch upload failed at index {i}: {e}")
+                break
+                
+        return total_uploaded
 
+    def search_similar_incidents(
+        self,
+        vectors: Dict[str, List[float]],
+        limit: int = 5,
+        filters: Optional[Dict] = None
+    ) -> List[Dict]:
+        """
+        Search for similar historical incidents.
+        """
+        pass # Not implementing full search here, relying on search_engine.py
 
-# ========== Example Usage ==========
+# ==================== STANDALONE TEST ====================
 
 if __name__ == "__main__":
-    # Initialize storage manager
-    storage = StorageManager(data_dir="data")
+    print("=" * 50)
+    print("🚄 Neural Rail Conductor - StorageManager Test")
+    print("=" * 50)
     
-    # Example: Save infrastructure data
-    example_stations = [
-        {
-            "id": "STN_001",
-            "name": "Central Station",
-            "type": "major_hub",
-            "zone": "core",
-            "platforms": 12,
-            "daily_passengers": 150000,
-            "coordinates": [50.0, 50.0],
-            "connected_segments": ["SEG_001", "SEG_002"],
-            "has_switches": True,
-            "is_junction": True
-        }
-    ]
+    # Load credentials for test
+    url = os.getenv("QDRANT_URL")
+    key = os.getenv("QDRANT_API_KEY")
     
-    storage.save_stations(example_stations)
+    # Initialize with cloud creds if available
+    if url and key:
+        print(f"☁️  Testing with Qdrant Cloud: {url[:30]}...")
+        storage = StorageManager(qdrant_url=url, qdrant_api_key=key)
+    else:
+        print("🏠 Testing with Localhost (Default)")
+        storage = StorageManager()
     
-    # Example: Initialize Qdrant
-    storage.init_qdrant_collection("operational_memory")
+    # Test JSON loading
+    stations = storage.get_stations()
+    print(f"\n📍 Stations loaded: {len(stations)}")
     
-    print("\n✓ Storage system ready!")
-    print("Next steps:")
-    print("1. Generate full network with data_gen scripts")
-    print("2. Train AI models to generate embeddings")
-    print("3. Upload incidents with embeddings to Qdrant")
+    if storage.client:
+        print(f"\n✅ Qdrant connected!")
+    else:
+        print(f"\n⚠️ Qdrant not configured")

@@ -8,6 +8,8 @@ __pycache__/
 dist/
 build/
 *.egg
+*.pyc
+.Python
 
 # Virtual Environments
 venv/
@@ -52,9 +54,14 @@ Thumbs.db
 
 # Environment variables
 .env
+*.env
 .env.local
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
+
+
+# Models (large files)
+models/saved/*.pt
