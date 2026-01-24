@@ -41,7 +41,8 @@ How to Run:
 Note on Real-World Usage:
     In real incidents, many stations can be affected (e.g., power outage at a hub affects 10+ stations).
     The extract_gnn_features() method will extract features for ALL stations listed in 
-    incident['location']['station_ids']. So if an incident affects 15 stations, you'll get 15 nodes.
+    incident['location']['station_ids'] or incident['station_ids']. 
+    So if an incident affects 15 stations, you'll get 15 nodes.
 """
 
 import json
@@ -116,7 +117,7 @@ class DataFuelPipeline:
         self.segments = self._load_json("segments.json")
         self.timetable = self._load_json("timetable.json")
         
-    def _load_json(self, filename: str) -> Dict:
+    def _load_json(self, filename: str) -> Any:
         """Load JSON file from correct directory (network or processed)"""
         # Network files
         network_files = ["stations.json", "segments.json", "timetable.json"]
@@ -135,16 +136,25 @@ class DataFuelPipeline:
         
         try:
             with open(path, 'r') as f:
-                return json.load(f)
+                data = json.load(f)
+                # Handle both list and dict returns
+                return data if data else ([] if filename.endswith('s.json') else {})
         except FileNotFoundError:
-            print(f"Warning: {filename} not found at {path}. Using empty dict.")
-            return {}
+            print(f"Warning: {filename} not found at {path}. Using empty structure.")
+            # Return empty list for plural files, empty dict for singular
+            return [] if filename.endswith('s.json') else {}
+        except json.JSONDecodeError as e:
+            print(f"Warning: {filename} is not valid JSON: {e}. Using empty structure.")
+            return [] if filename.endswith('s.json') else {}
     
     def extract_gnn_features(self, incident: Dict) -> Dict[str, Any]:
         """
         Extract graph features for GNN (Model 1)
         
-        Note: Extracts features for ALL affected stations listed in incident['location']['station_ids'].
+        Note: Extracts features for ALL affected stations listed in incident.
+        Handles both old format (incident['location']['station_ids']) and 
+        new format (incident['station_ids']).
+        
         In real incidents, this can be many stations (e.g., power outage at hub affects 10-15 stations).
         The method focuses on the incident area, not the entire network. This is correct behavior - 
         the model needs to focus on the problem area.
@@ -159,7 +169,17 @@ class DataFuelPipeline:
             edges: List of segment connections (all segments connected to affected stations)
             global_features: Network-wide context
         """
-        affected_stations = incident['location']['station_ids']
+        # Handle both old and new incident formats
+        if 'location' in incident and isinstance(incident['location'], dict):
+            # Old format: incident['location']['station_ids']
+            affected_stations = incident['location'].get('station_ids', [])
+        else:
+            # New format: incident['station_ids']
+            affected_stations = incident.get('station_ids', [])
+        
+        # Fallback: if still empty, try to get from location_id
+        if not affected_stations and 'location_id' in incident:
+            affected_stations = [incident['location_id']]
         
         # Node features (10-dim per station)
         nodes = []
@@ -167,14 +187,14 @@ class DataFuelPipeline:
             if station['id'] in affected_stations:
                 feature_vec = [
                     1,  # is_affected
-                    station['platforms'],
-                    station['daily_passengers'] / 100000,  # Normalized
-                    1 if station.get('is_junction') else 0,
-                    1 if station['zone'] == 'core' else 0,
-                    station['coordinates'][0] / 100,  # Normalized x
-                    station['coordinates'][1] / 100,  # Normalized y
+                    station.get('platforms', 0),
+                    station.get('daily_passengers', 0) / 100000,  # Normalized
+                    1 if station.get('is_junction', False) else 0,
+                    1 if station.get('zone') == 'core' else 0,
+                    station.get('coordinates', [0, 0])[0] / 100,  # Normalized x
+                    station.get('coordinates', [0, 0])[1] / 100,  # Normalized y
                     len(station.get('connected_segments', [])),
-                    1 if station.get('has_switches') else 0,
+                    1 if station.get('has_switches', False) else 0,
                     0  # Reserved for sensor health
                 ]
                 nodes.append({
@@ -185,14 +205,14 @@ class DataFuelPipeline:
         # Edge features (segment attributes)
         edges = []
         for segment in self.segments:
-            if (segment['from_station'] in affected_stations or 
-                segment['to_station'] in affected_stations):
+            if (segment.get('from_station') in affected_stations or 
+                segment.get('to_station') in affected_stations):
                 edge_vec = [
-                    segment['speed_limit'] / 200,  # Normalized
-                    segment['capacity'] / 20,
-                    1 if segment['bidirectional'] else 0,
-                    1 if segment.get('is_critical') else 0,
-                    segment['length_km'] / 50  # Normalized
+                    segment.get('speed_limit', 0) / 200,  # Normalized
+                    segment.get('capacity', 0) / 20,
+                    1 if segment.get('bidirectional', True) else 0,
+                    1 if segment.get('is_critical', False) else 0,
+                    segment.get('length_km', 0) / 50  # Normalized
                 ]
                 edges.append({
                     'from': segment['from_station'],
@@ -202,9 +222,9 @@ class DataFuelPipeline:
         
         # Global context
         global_features = [
-            incident['network_load_pct'] / 100,
-            1 if incident['is_peak'] else 0,
-            incident['hour_of_day'] / 24,
+            incident.get('network_load_pct', 0) / 100,
+            1 if incident.get('is_peak', False) else 0,
+            incident.get('hour_of_day', 0) / 24,
             len(affected_stations) / 50
         ]
         
@@ -244,11 +264,24 @@ class DataFuelPipeline:
         Returns:
             text: Operator's description of the incident
         """
-        # Combine structured data into natural language
-        incident_type = incident['type'].replace('_', ' ').title()
-        location = incident['location']['zone']
-        severity = incident['severity']
-        weather = incident.get('weather', 'clear')
+        # Use semantic_description if available (new format)
+        if 'semantic_description' in incident:
+            return incident['semantic_description']
+        
+        # Otherwise, construct from structured data (old format)
+        incident_type = incident.get('type', 'unknown').replace('_', ' ').title()
+        
+        # Handle both old and new location formats
+        if 'location' in incident and isinstance(incident['location'], dict):
+            location = incident['location'].get('zone', 'unknown')
+        else:
+            location = incident.get('zone', 'unknown')
+        
+        # Handle severity (can be int or string)
+        severity = incident.get('severity_level', incident.get('severity', 'unknown'))
+        
+        # Handle weather (new field name: weather_condition)
+        weather = incident.get('weather_condition', incident.get('weather', 'clear'))
         
         description = (
             f"{incident_type} at {location} zone. "
@@ -269,15 +302,26 @@ class DataFuelPipeline:
         # The actual implementation happens after those models run
         # Here we prepare the "context" part
         
+        # Handle weather (new field: weather_condition)
+        weather = incident.get('weather_condition', incident.get('weather', 'clear'))
+        
+        # Handle location (both old and new formats)
+        if 'location' in incident and isinstance(incident['location'], dict):
+            is_junction = incident['location'].get('is_junction', False)
+            station_ids = incident['location'].get('station_ids', [])
+        else:
+            is_junction = incident.get('is_junction', False)
+            station_ids = incident.get('station_ids', [])
+        
         context_features = [
-            incident['network_load_pct'] / 100,
-            1 if incident['is_peak'] else 0,
-            incident['hour_of_day'] / 24,
-            1 if incident['weather'] == 'rain' else 0,
-            1 if incident['weather'] == 'storm' else 0,
+            incident.get('network_load_pct', 0) / 100,
+            1 if incident.get('is_peak', False) else 0,
+            incident.get('hour_of_day', 0) / 24,
+            1 if weather == 'rain' else 0,
+            1 if weather == 'storm' else 0,
             incident.get('cascade_depth', 0) / 5,
-            len(incident['location']['station_ids']) / 10,
-            1 if incident['location']['is_junction'] else 0
+            len(station_ids) / 10,
+            1 if is_junction else 0
         ]
         
         return context_features
@@ -290,26 +334,32 @@ class DataFuelPipeline:
         Returns:
             features: Context + Action vector
         """
+        # Handle weather (new field: weather_condition)
+        weather = incident.get('weather_condition', incident.get('weather', 'clear'))
+        
         # Weather penalty
         weather_penalty = {
             'clear': 0.0,
             'rain': 0.1,
             'storm': 0.3,
             'snow': 0.4
-        }.get(incident.get('weather', 'clear'), 0.0)
+        }.get(weather, 0.0)
         
         # Action complexity
-        action_complexity = len(resolution.get('actions', [])) / 10
+        action_complexity = len(resolution.get('actions', resolution.get('actions_taken', []))) / 10
+        
+        # Get resolution action (handle different field names)
+        action = resolution.get('action', resolution.get('resolution_strategy', '')).lower()
         
         features = [
-            incident['network_load_pct'] / 100,
-            1 if incident['is_peak'] else 0,
+            incident.get('network_load_pct', 0) / 100,
+            1 if incident.get('is_peak', False) else 0,
             weather_penalty,
             action_complexity,
             incident.get('trains_affected_count', 0) / 20,
-            1 if resolution['action'] == 'reroute' else 0,
-            1 if resolution['action'] == 'hold' else 0,
-            1 if resolution['action'] == 'cancel' else 0
+            1 if 'reroute' in action else 0,
+            1 if 'hold' in action or 'dwell' in action else 0,
+            1 if 'cancel' in action else 0
         ]
         
         return features
@@ -336,7 +386,7 @@ if __name__ == "__main__":
                                # Features: [delay, progress, speed, hub_status]
     
     === Semantic Text ===
-    Description: Signal Failure at core zone. Severity: high. Weather: clear. 6 trains affected.
+    Description: Signal Failure at core zone. Severity: 4. Weather: clear. 6 trains affected.
                                # Natural language description for semantic encoder
     
     === Conflict Features ===
@@ -353,20 +403,19 @@ if __name__ == "__main__":
     # Initialize pipeline
     pipeline = DataFuelPipeline(data_dir="data")
     
-    # Mock incident for testing
+    # Mock incident for testing (using NEW format matching actual incident schema)
     test_incident = {
         'type': 'signal_failure',
-        'location': {
-            'station_ids': ['STN_001', 'STN_002'],
-            'is_junction': True,
-            'zone': 'core'
-        },
-        'severity': 'high',
+        'station_ids': ['STN_001', 'STN_002'],  # New format
+        'is_junction': True,
+        'zone': 'core',
+        'severity_level': 4,  # Changed from 'severity': 'high'
         'hour_of_day': 8,
         'is_peak': True,
-        'weather': 'clear',
+        'weather_condition': 'clear',  # Changed from 'weather'
         'network_load_pct': 85,
-        'trains_affected_count': 6
+        'trains_affected_count': 6,
+        'cascade_depth': 0
     }
     
     # Extract features for each model
@@ -386,3 +435,24 @@ if __name__ == "__main__":
     print("\n=== Conflict Features ===")
     conflict_vec = pipeline.extract_conflict_features(test_incident)
     print(f"Feature vector: {conflict_vec}")
+    
+    # Test with actual incident format
+    print("\n=== Testing with Real Incident Format ===")
+    real_incident = {
+        "incident_id": "test-123",
+        "type": "passenger_alarm",
+        "station_ids": ["STN_014"],
+        "zone": "mid",
+        "is_junction": True,
+        "severity_level": 5,
+        "weather_condition": "snow",
+        "network_load_pct": 81,
+        "trains_affected_count": 10,
+        "cascade_depth": 4,
+        "hour_of_day": 7,
+        "is_peak": True,
+        "semantic_description": "Emergency alarm activated on train E682 at Forest Station."
+    }
+    
+    print("\nReal Incident Semantic Text:")
+    print(pipeline.extract_semantic_text(real_incident))
