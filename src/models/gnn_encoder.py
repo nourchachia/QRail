@@ -308,7 +308,7 @@ class DynamicGraphBuilder:
         
         Complexity: O(k * |E|) using BFS
         """
-        affected_stations = set(incident['location']['station_ids'])
+        affected_stations = set(incident.get('station_ids', []))
         
         # BFS for k-hop neighborhood
         frontier = list(affected_stations)
@@ -358,7 +358,7 @@ class DynamicGraphBuilder:
             node_id_map[station_id] = idx
             
             # Is this station the epicenter?
-            is_epicenter = station_id in incident['location']['station_ids']
+            is_epicenter = station_id in incident.get('station_ids', [])
             
             # Normalized features (z-score normalization)
             platforms_norm = (station['platforms'] - self.platform_mean) / self.platform_std
@@ -399,7 +399,7 @@ class DynamicGraphBuilder:
             
             if src is not None and dst is not None:
                 # Is this segment blocked?
-                is_blocked = seg_id == incident['location'].get('segment_id', '')
+                is_blocked = seg_id == incident.get('segment_id', '')
                 
                 # Edge features (8-dimensional)
                 features = [
