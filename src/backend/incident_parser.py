@@ -57,25 +57,18 @@ class IncidentParser:
         data_dir: str = "data",
         api_key: Optional[str] = None
     ):
-        """
-        Initialize incident parser.
-        
-        Args:
-            data_dir: Data directory path
-            api_key: Gemini API key (or set GEMINI_API_KEY env var)
-        """
-        self.storage = StorageManager(data_dir=data_dir)
+        """Initialize incident parser."""
+        self.data_dir = Path(data_dir)
         self.api_key = api_key
+        self.storage = StorageManager(data_dir=data_dir)
         
-        if GEMINI_AVAILABLE:
-            if api_key:
-                genai.configure(api_key=api_key)
-            elif hasattr(genai, 'configure'):
-                # Try to use default API key from environment
-                try:
-                    genai.configure()
-                except Exception as e:
-                    logger.warning(f"Gemini API key not configured: {e}")
+        # Configure Gemini
+        if self.api_key and GEMINI_AVAILABLE:
+            try:
+                genai.configure(api_key=self.api_key)
+                logger.info("GenAI configured successfully")
+            except Exception as e:
+                logger.error(f"Failed to configure GenAI: {e}")
     
     def _load_live_status(self) -> Dict[str, Any]:
         """Load live_status.json to get weather and network load"""
@@ -84,56 +77,63 @@ class IncidentParser:
             if not live_status:
                 raise ValueError("live_status.json is empty or missing")
             
-            # Extract weather and load
+            # Extract weather and load strictly - NO DEFAULTS / GUESSES
             weather = live_status.get("weather", {})
-            network_load = live_status.get("network_load_pct", 50)
+            network_load = live_status.get("network_load_pct") # default None
             
             return {
-                "weather_condition": weather.get("condition", "clear"),
-                "temperature_c": weather.get("temperature_c", 20),
-                "wind_speed_kmh": weather.get("wind_speed_kmh", 10),
-                "visibility_km": weather.get("visibility_km", 10.0),
-                "network_load_pct": network_load
+                "weather_condition": weather.get("condition"),
+                "temperature_c": weather.get("temperature_c"),
+                "wind_speed_kmh": weather.get("wind_speed_kmh"),
+                "visibility_km": weather.get("visibility_km"),
+                "network_load_pct": network_load,
+                "active_trains": live_status.get("active_trains", []),
+                "data_source": "Live status sensors (data/processed/live_status.json)"
             }
         except Exception as e:
             logger.warning(f"Failed to load live_status.json: {e}")
             return {
-                "weather_condition": "clear",
-                "temperature_c": 20,
-                "wind_speed_kmh": 10,
-                "visibility_km": 10.0,
-                "network_load_pct": 50
+                "weather_condition": None,
+                "temperature_c": None,
+                "wind_speed_kmh": None,
+                "visibility_km": None,
+                "network_load_pct": None,
+                "active_trains": [],
+                "data_source": "VERIFICATION FAILED: Data missing from database (No guess allowed)"
             }
     
     def _create_prompt(self, description: str, context: Dict[str, Any]) -> str:
-        """
-        Create Gemini prompt for precise extraction.
+        """Create Gemini prompt with live telemetry context."""
         
-        Args:
-            description: Natural language incident description
-            context: Weather and load context from live_status.json
-        
-        Returns:
-            Formatted prompt string
-        """
-        prompt = f"""You are a railway incident analysis system. Extract precise information from the incident description.
+        # Format active train data for the prompt
+        trains_summary = ""
+        for t in context.get('active_trains', []):
+            pos = t['cur_pos']
+            loc = pos.get('station_id') or pos.get('segment')
+            trains_summary += f"- {t['train_id']} at {loc} ({t['cur_delay']}m delay)\n"
+            
+        prompt = f"""You are a railway incident analysis system. 
+Directly use the LIVE NETWORK STATE below to identify which specific trains are affected.
 
 INCIDENT DESCRIPTION:
 {description}
 
 CURRENT NETWORK CONTEXT:
 - Weather: {context['weather_condition']}
-- Temperature: {context['temperature_c']}°C
-- Wind Speed: {context['wind_speed_kmh']} km/h
-- Visibility: {context['visibility_km']} km
 - Network Load: {context['network_load_pct']}%
+- Visibility: {context['visibility_km']} km
+
+LIVE NETWORK STATE (Active Trains):
+{trains_summary or "No active trains."}
 
 REQUIRED OUTPUT (JSON format):
 {{
     "estimated_delay_minutes": <integer, 0-300>,
     "primary_failure_code": "<standardized code>",
+    "station_names": ["list", "of", "mentioned", "stations"],
+    "train_id": "<ID of the most affected train from the list above>",
     "confidence": <float, 0.0-1.0>,
-    "reasoning": "<brief explanation>"
+    "reasoning": "<explanation identifying specific affected trains from the state above>"
 }}
 
 FAILURE CODE STANDARDS:
@@ -190,11 +190,10 @@ Output ONLY valid JSON, no additional text."""
             try:
                 return self._parse_with_gemini(description, context)
             except Exception as e:
-                logger.error(f"Gemini parsing failed: {e}, falling back to rule-based")
-                print(f"\n❌ GEMINI ERROR: {str(e)}\n")  # Force visible log
-                return self._parse_fallback(description, context)
+                logger.error(f"Gemini parsing failed: {e}")
+                raise RuntimeError(f"AI Reasoning Unavailable. Please provide details manually. (Error: {str(e)})")
         else:
-            return self._parse_fallback(description, context)
+            raise RuntimeError("AI infrastructure unavailable and strictly evidence-based mode enabled (Guesses disabled).")
     
     def _parse_with_gemini(
         self, 
@@ -204,8 +203,16 @@ Output ONLY valid JSON, no additional text."""
         """Parse using Gemini AI"""
         import google.generativeai as genai
         
-        # Try multiple models in order of preference
-        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
+        # Create the prompt 🧠
+        prompt = self._create_prompt(description, context)
+        
+        # Try multiple models in order of preference (prioritizing proven working models)
+        models_to_try = [
+            'gemini-flash-latest',      # PROVEN WORKING ✅
+            'gemini-2.0-flash-lite-preview-02-05',
+            'gemini-2.0-flash',         # Hit rate limits
+            'gemini-1.5-flash'
+        ]
         response = None
         last_error = None
         
@@ -213,10 +220,11 @@ Output ONLY valid JSON, no additional text."""
             try:
                 model = genai.GenerativeModel(model_name)
                 response = model.generate_content(prompt)
+                print(f"   ✓ Used Model: {model_name}")
                 break # Success!
             except Exception as e:
                 last_error = e
-                logger.warning(f"Model {model_name} failed: {e}")
+                # Don't log warning for expected 404s on fallback trial
                 continue
                 
         if not response:
@@ -250,71 +258,7 @@ Output ONLY valid JSON, no additional text."""
         
         return result
     
-    def _parse_fallback(
-        self, 
-        description: str, 
-        context: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-        Fallback rule-based parsing when Gemini is unavailable.
-        
-        Uses keyword matching and heuristics.
-        """
-        description_lower = description.lower()
-        
-        # Determine failure code
-        failure_code = "UNKNOWN"
-        if "signal" in description_lower:
-            failure_code = "SIGNAL_FAIL"
-        elif "breakdown" in description_lower or "mechanical" in description_lower:
-            failure_code = "TRAIN_BREAKDOWN"
-        elif "alarm" in description_lower or "passenger" in description_lower:
-            failure_code = "PASSENGER_ALARM"
-        elif "weather" in description_lower or "storm" in description_lower or "snow" in description_lower:
-            failure_code = "WEATHER_SEVERE"
-        elif "infrastructure" in description_lower or "track" in description_lower:
-            failure_code = "INFRASTRUCTURE_FAULT"
-        elif "power" in description_lower:
-            failure_code = "POWER_OUTAGE"
-        elif "switch" in description_lower:
-            failure_code = "SWITCH_FAILURE"
-        
-        # Estimate delay (heuristic)
-        base_delay = 30
-        if failure_code == "SIGNAL_FAIL":
-            base_delay = 45
-        elif failure_code == "TRAIN_BREAKDOWN":
-            base_delay = 60
-        elif failure_code == "PASSENGER_ALARM":
-            base_delay = 15
-        elif failure_code == "WEATHER_SEVERE":
-            base_delay = 40
-        elif failure_code == "INFRASTRUCTURE_FAULT":
-            base_delay = 90
-        
-        # Adjust for network load
-        load_multiplier = 1.0 + (context["network_load_pct"] / 100) * 0.3
-        estimated_delay = int(base_delay * load_multiplier)
-        
-        # Adjust for weather
-        if context["weather_condition"] in ["storm", "snow"]:
-            estimated_delay = int(estimated_delay * 1.5)
-        
-        return {
-            "estimated_delay_minutes": estimated_delay,
-            "primary_failure_code": failure_code,
-            "confidence": 0.6,  # Lower confidence for rule-based
-            "reasoning": "Rule-based parsing (Gemini unavailable)",
-            "weather": {
-                "condition": context["weather_condition"],
-                "temperature_c": context["temperature_c"],
-                "wind_speed_kmh": context["wind_speed_kmh"],
-                "visibility_km": context["visibility_km"]
-            },
-            "network_load_pct": context["network_load_pct"],
-            "station_ids": ["STN_001"] if "central" in description_lower else [],
-            "is_junction": False
-        }
+    # LEGACY FALLBACK DELETED - ZERO GUESSING POLICY ENFORCED
     
     def parse_incident(
         self, 

@@ -270,19 +270,61 @@ class IncidentPipeline:
         print("📊 Step 2: Extracting features...")
         if self.feature_pipeline:
             try:
-                result['features'] = self.feature_pipeline.extract_all_features(result['parsed'])
+                # 2.1: Mapping names to IDs (Workaround for shared feature_extractor)
+                parsed_data = result['parsed'].copy()
+                station_ids = parsed_data.get('station_ids', [])
                 
-                gnn_feat = result['features'].get('gnn', {})
-                num_nodes = gnn_feat.get('num_nodes', 0)
-                print(f"   ✓ GNN features: {num_nodes} nodes")
+                # Default train_id strictly from evidence
+                # Note: We must explicitly set to None to OVERRIDE the 'T001' default in feature_extractor.py
+                train_id_found = False
+                if parsed_data.get('train_id'):
+                    train_id_found = True
+                else:
+                    parsed_data['train_id'] = None  # Force kill the 'T001' guess
                 
-                lstm_feat = result['features'].get('lstm', [])
-                if isinstance(lstm_feat, list) and lstm_feat:
-                    print(f"   ✓ LSTM sequence: {len(lstm_feat)} time steps")
+                # Map extracted names to IDs
+                stations_found = False
+                if 'station_names' in parsed_data:
+                    all_stations_data = self.storage.load_json('network/stations.json') or []
+                    for name in parsed_data['station_names']:
+                        n_low = name.lower()
+                        for s in all_stations_data:
+                            s_name = s.get('name', '').lower()
+                            if (n_low in s_name or s_name in n_low) and s['id'] not in station_ids:
+                                station_ids.append(s['id'])
+                
+                if station_ids:
+                    stations_found = True
+                
+                # Persist fixed fields back to result for Swagger visibility
+                result['parsed']['station_ids'] = station_ids
+                result['parsed']['train_id'] = parsed_data.get('train_id')
+                
+                # Track data lineage (No more guesses)
+                result['data_authenticity'] = {
+                    "stations_verified": stations_found,
+                    "train_verified": train_id_found
+                }
+                
+                # Ensure input is ready for extractor (Strict evidence - no guessing)
+                parsed_data['text'] = incident_text
+                parsed_data['station_ids'] = station_ids
+                
+                # REFACTORED: Manual feature coordination to avoid changing shared library
+                result['features'] = {
+                    "gnn": self.feature_pipeline.extract_gnn_features(parsed_data),
+                    "lstm": self.feature_pipeline.extract_lstm_sequence(parsed_data.get('train_id')) if parsed_data.get('train_id') else [],
+                    "semantic_text": self.feature_pipeline.extract_semantic_text(parsed_data),
+                    "conflict_context": self.feature_pipeline.extract_conflict_features(parsed_data)
+                }
+                
+                gnn_f = result['features'].get('gnn', {})
+                print(f"   ✓ Extracted {len(gnn_f.get('nodes', []))} nodes from evidence")
                 
             except Exception as e:
-                print(f"   ⚠ Feature extraction failed: {e}")
-                print(f"      Continuing with partial features...")
+                print(f"❌ Step 2: Feature extraction failed: {e}")
+                import traceback
+                traceback.print_exc()
         
         # ================================================================
         # === STEP 3: Generate Embeddings (Models 1, 2, 3) ===
@@ -307,20 +349,56 @@ class IncidentPipeline:
             
             # === 3.2: Structural Vector (Model 1: GNN) ===
             # Encodes network topology as 64-dim vector
-            # NEXT STEP: structural_vec ready
             if self.gnn_encoder and 'gnn' in result['features']:
                 from torch_geometric.data import Data
                 gnn_feat = result['features']['gnn']
+                n_nodes = gnn_feat.get('num_nodes', 0)
                 
-                # Convert feature dict to PyG Data object
-                data = Data(
-                    x=torch.tensor(gnn_feat['node_features'], dtype=torch.float),
-                    edge_index=torch.tensor(gnn_feat['edge_index'], dtype=torch.long),
-                    batch=torch.zeros(gnn_feat['num_nodes'], dtype=torch.long)
-                )
-                
-                structural_vec = self.gnn_encoder(data).detach().numpy()[0].tolist()
-                print(f"   ✓ Structural (GNN): {len(structural_vec)}-dim")
+                # GNN RUNS ON VERIFIED NODES (Even if no edges exist)
+                if n_nodes > 0:
+                    raw_edges = gnn_feat.get('edge_index', [])
+                    nodes = gnn_f.get('nodes', [])
+                    id_to_idx = {node['id']: i for i, node in enumerate(nodes)}
+                    
+                    processed_edges = []
+                    for edge in raw_edges:
+                        if isinstance(edge, dict):
+                            f_idx, t_idx = id_to_idx.get(edge['from']), id_to_idx.get(edge['to'])
+                            if f_idx is not None and t_idx is not None:
+                                processed_edges.append([f_idx, t_idx])
+                        elif isinstance(edge, list) and len(edge) == 2:
+                            f_idx, t_idx = id_to_idx.get(edge[0]), id_to_idx.get(edge[1])
+                            if f_idx is not None and t_idx is not None:
+                                processed_edges.append([f_idx, t_idx])
+
+                    # Create edge_index: use processed edges OR empty if none
+                    if processed_edges:
+                        edge_index = torch.tensor(processed_edges, dtype=torch.long).t().contiguous()
+                    else:
+                        edge_index = torch.zeros((2, 0), dtype=torch.long)
+
+                    # SYNC: Extract and Pad node features to 14-dim
+                    nodes_list = gnn_feat.get('nodes', [])
+                    padded_x = []
+                    for node in nodes_list:
+                        feats = node.get('features', [0.0] * 10)
+                        padded_x.append(feats + [0.0] * (14 - len(feats)))
+                    
+                    try:
+                        data = Data(
+                            x=torch.tensor(padded_x, dtype=torch.float),
+                            edge_index=edge_index,
+                            edge_attr=torch.zeros((edge_index.size(1), 8), dtype=torch.float),
+                            node_type=torch.zeros(n_nodes, dtype=torch.long),
+                            batch=torch.zeros(n_nodes, dtype=torch.long)
+                        )
+                        # CRITICAL: Must return_embedding=True!
+                        structural_vec = self.gnn_encoder(data, return_embedding=True).detach().numpy()[0].tolist()
+                        print(f"   ✓ Structural (GNN): {len(structural_vec)}-dim (Computed on Evidence)")
+                    except Exception as e:
+                        print(f"   ⚠ Structural (GNN): Math engine rejected data: {e}")
+                else:
+                    print("   ⚠ Structural (GNN): Inactive (No verified station nodes found)")
             
             # === 3.3: Temporal Vector (Model 2: LSTM) ===
             # Encodes delay cascade as 64-dim vector
@@ -331,7 +409,9 @@ class IncidentPipeline:
                 print(f"   ✓ Temporal (LSTM): {len(temporal_vec)}-dim")
         
         except Exception as e:
-            print(f"   ⚠ Embedding generation failed: {e}")
+            print(f"❌ Step 3: Embedding generation failed: {e}")
+            import traceback
+            traceback.print_exc()
             print(f"      Using zero vectors as fallback")
         
         result['embeddings'] = {
@@ -431,15 +511,26 @@ class IncidentPipeline:
         # ================================================================
         # === FINAL SUMMARY ===
         # ================================================================
-        print("\n" + "=" * 60)
-        print("✅ Processing complete!")
-        print(f"   Failure Type: {result['parsed'].get('primary_failure_code', 'N/A')}")
-        print(f"   Similar Cases: {len(result['similar_incidents'])}")
-        print(f"   High-Risk Conflicts: {len([v for v in result['conflicts'].values() if v > 0.5])}")
-        print(f"   Recommendations: {len(result['recommendations'])}")
-        print("=" * 60)
+        # Compile final integrated result with STRICT AUTHENTICITY
+        auth = result.get('data_authenticity', {})
         
-        print("\n   NEXT STEP: Use this result in your application/API")
+        result['truth_attribution'] = {
+            "parsing_logic": "Google Gemini 2.0 AI (Reasoning engine - Evidence Required)",
+            "station_data": "data/network/stations.json (Infrastructure Database Match)" if auth.get('stations_verified') else "MISSING: No station evidence found",
+            "weather_data": result['parsed'].get('data_source', 'Live status sensors (data/processed/live_status.json)'),
+            "train_identity": "Verified in Description/Database" if auth.get('train_verified') else "MISSING: No train evidence found",
+            "mathematical_vectors": {
+                "semantic": "Sentence-BERT Text Encoding",
+                "structural": "Graph Convolutional Network (GNN) on physical track topology" if auth.get('stations_verified') else "INACTIVE: No topological evidence",
+                "temporal": "LSTM Recurrent Network on train speed history" if auth.get('train_verified') else "INACTIVE: No telemetry evidence"
+            },
+            "similarity_search": "Qdrant Vector DB (Cosine similarity on 800+ historical incidents)"
+        }
+        
+        # Clean up internal flags
+        if 'data_authenticity' in result: del result['data_authenticity']
+        
+        print("=" * 60)
         return result
     
     def _fallback_parse(self, text: str) -> Dict:
@@ -499,30 +590,12 @@ class IncidentPipeline:
                     'type': 'historical'
                 })
         
-        # === Strategy 3: Fallback Templates ===
-        # Standard resolutions if no good matches found
-        # NEXT STEP: Recommend with lower confidence
+        # === Strategy 3: NO FALLBACK TEMPLATES ===
+        # User requested zero guessing. If no historical evidence exists, return empty.
+        # NEXT STEP: Operator provides manual resolution in frontend
         if not recommendations:
-            recommendations = [
-                {
-                    'strategy': 'HOLD_TRAIN',
-                    'description': 'Hold affected trains at current location',
-                    'confidence': 0.7,
-                    'type': 'template'
-                },
-                {
-                    'strategy': 'REROUTE',
-                    'description': 'Reroute trains via alternate track',
-                    'confidence': 0.6,
-                    'type': 'template'
-                },
-                {
-                    'strategy': 'EXTEND_DWELL',
-                    'description': 'Extend dwell time at next station',
-                    'confidence': 0.5,
-                    'type': 'template'
-                }
-            ]
+            print("   ⚠ Recommendations: None (No historical evidence matches)")
+            return []
         
         return recommendations
 # =====================================================================

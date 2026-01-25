@@ -41,7 +41,7 @@ WHEN MODELS 4/5 READY:
 STEP 1: Open terminal
 STEP 2: cd C:\Users\ASUS\Desktop\projects2025\QRail
 STEP 3: python src/api/main.py
-STEP 4: Open http://localhost:8000/docs
+STEP 4: Open http://localhost:8001/docs
 
 ⚠️ IMPORTANT: The server must be RUNNING before you visit the link!
 
@@ -716,35 +716,32 @@ def check_models():
 
 if __name__ == "__main__":
     import uvicorn
+    print("\n" + "="*60)
+    print("🚀 STARTING FRESH SERVER (VERSION: FINAL FIX)")
+    print("✨ Using Port 8001 to bypass zombie processes")
+    print("="*60 + "\n")
     
     print("\n" + "=" * 70)
     print("🚄 QRail Neural Rail Conductor API Server")
     print("=" * 70)
     print("\n📍 Main Endpoints:")
-    print("   POST http://localhost:8000/api/analyze     ← Main analysis")
-    print("   POST http://localhost:8000/api/search      ← Search similar")
-    print("   GET  http://localhost:8000/api/stations    ← Network data")
-    print("   GET  http://localhost:8000/api/segments    ← Track data")
+    print("   POST http://localhost:8001/api/analyze     ← Main analysis")
+    print("   POST http://localhost:8001/api/search      ← Search similar")
+    print("   GET  http://localhost:8001/api/stations    ← Network data")
+    print("   GET  http://localhost:8001/api/segments    ← Track data")
     print("\n📚 Interactive Docs:")
-    print("   http://localhost:8000/docs                 ← FastAPI Swagger UI")
+    print("   http://localhost:8001/docs                 ← FastAPI Swagger UI")
     print("\n🔧 Debug:")
-    print("   GET  http://localhost:8000/api/debug/models-status")
-    print("   GET  http://localhost:8000/api/debug/qdrant-status")
+    print("   GET  http://localhost:8001/api/debug/models-status")
+    print("   GET  http://localhost:8001/api/debug/qdrant-status")
     print("=" * 70)
-    print("\n⏳ Starting server (this takes ~30 seconds first time)...")
+    print("\n⏳ Starting server...")
     print("=" * 70 + "\n")
-    
-    # === WHY/WHAT/HOW/BEFORE/AFTER ===
-    # WHY: Need HTTP server to handle requests
-    # WHAT: Uvicorn ASGI server runs FastAPI app
-    # HOW: Listens on port 8000, auto-reloads on code changes
-    # BEFORE: API code exists but not accessible
-    # AFTER: API available at http://localhost:8000
     
     uvicorn.run(
         app,
         host="0.0.0.0",  # Listen on all interfaces
-        port=8000,       # Standard development port
+        port=8001,       # Standard development port
         reload=False     # Disabled for direct python execution
     )
 

@@ -14,9 +14,17 @@ print(f"🔑 Key found: {api_key[:5]}...****")
 print(f"📦 Library Version: {genai.__version__}")
 genai.configure(api_key=api_key)
 
-print("\n🚀 Testing Gemini Connectivity...")
+print("\n� Listing Available Models for your Key:")
+try:
+    for m in genai.list_models():
+        if 'generateContent' in m.supported_generation_methods:
+            print(f"   - {m.name}")
+except Exception as e:
+    print(f"❌ Failed to list models: {e}")
 
-models_to_test = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"]
+print("\n�🚀 Testing Gemini Connectivity...")
+
+models_to_test = ["gemini-2.0-flash", "gemini-flash-latest", "gemini-pro-latest"]
 
 for model_name in models_to_test:
     print(f"\nTrying model: {model_name}...")

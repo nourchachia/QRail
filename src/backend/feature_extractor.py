@@ -106,22 +106,6 @@ class DataFuelPipeline:
     def __init__(self, data_dir: str = "data"):
         self.data_dir = Path(data_dir)
         
-        # INTELLIGENT PATH FINDING 🧠
-        # If absolute path doesn't exist, try resolving relative to this script
-        if not self.data_dir.exists() or not (self.data_dir / "network").exists():
-            script_path = Path(__file__).resolve()
-            # Try 1: ../../../data (Standard project structure)
-            candidate_1 = script_path.parent.parent.parent / "data"
-            # Try 2: CW/data (Current working directory)
-            candidate_2 = Path.cwd() / "data"
-            
-            if candidate_1.exists() and (candidate_1 / "network").exists():
-                print(f"   ✓ Auto-corrected data path to: {candidate_1}")
-                self.data_dir = candidate_1
-            elif candidate_2.exists() and (candidate_2 / "network").exists():
-                print(f"   ✓ Auto-corrected data path to: {candidate_2}")
-                self.data_dir = candidate_2
-        
         # Network data directory (infrastructure)
         self.network_dir = self.data_dir / "network"
         
@@ -197,9 +181,6 @@ class DataFuelPipeline:
         if not affected_stations and 'location_id' in incident:
             affected_stations = [incident['location_id']]
         
-        # DEBUG: Print what we are looking for
-        print(f"   🔍 FeatureExtractor: Looking for stations {affected_stations} in {len(self.stations)} loaded stations")
-
         # Node features (10-dim per station)
         nodes = []
         for station in self.stations:
@@ -382,39 +363,6 @@ class DataFuelPipeline:
         ]
         
         return features
-
-    def extract_all_features(self, incident: Dict) -> Dict[str, Any]:
-        """
-        Wrapper to extract all features at once.
-        Called by integration.py
-        """
-        # Extract train_id or use default
-        train_id = incident.get('train_id', 'T001')
-        
-        # 1. GNN Features (Topology)
-        gnn_data = self.extract_gnn_features(incident)
-        # Add num_nodes convenience field for logging
-        gnn_data['num_nodes'] = len(gnn_data['nodes'])
-        
-        # 2. LSTM Features (Temporal)
-        lstm_data = self.extract_lstm_sequence(train_id)
-        
-        # 3. Semantic Text (Content)
-        semantic_text = self.extract_semantic_text(incident)
-        
-        # 4. Conflict Context (Relational)
-        conflict_data = self.extract_conflict_features(incident)
-        
-        return {
-            'gnn': {
-                'node_features': [n['features'] for n in gnn_data['nodes']],
-                'edge_index': [[e['from'], e['to']] for e in gnn_data['edges']], # Simplified for now
-                'num_nodes': len(gnn_data['nodes'])
-            },
-            'lstm': lstm_data,
-            'semantic_text': semantic_text,
-            'conflict': conflict_data
-        }
 
 
 # Example usage
