@@ -114,10 +114,23 @@ results.append(test_endpoint("POST", "/api/search", {
     "limit": 5
 }, "Search: Location Specific"))
 
-# 8. Analyze - Full Pipeline
+# 9. Search - Case C: Specific Golden Run (Should find a Golden Result)
+# Searching for a known Golden Run description (from golden_runs_accidents.json)
+results.append(test_endpoint("POST", "/api/search", {
+    "query_text": "Derailment due to excessive speed at curved track section",
+    "limit": 3
+}, "Search: Target Golden Run"))
+
+# 10. Search - Case D: Weather Impact
+results.append(test_endpoint("POST", "/api/search", {
+    "query_text": "Signal failure caused by heavy snow and freezing temperatures",
+    "limit": 3
+}, "Search: Weather Specific"))
+
+# 11. Analyze - Case B: Complex Cascading Delay
 results.append(test_endpoint("POST", "/api/analyze", {
-    "text": "Severe signal failure at North Terminal causing delays" 
-}, "Analyze: Full AI Pipeline"))
+    "text": "Train EXP_013 stalled at Segment 45 causing 20min delay to following regional trains under heavy rain" 
+}, "Analyze: Complex Scenario"))
 
 # Print Final Summary
 print_table(results, headers=["Method", "Endpoint", "Status", "Time", "Details"])
