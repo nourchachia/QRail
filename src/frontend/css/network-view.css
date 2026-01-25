@@ -1,0 +1,178 @@
+/* ============================================================================
+   Network View Styles
+   ============================================================================ */
+
+.network-view {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+}
+
+#network-svg {
+    width: 100%;
+    height: calc(100% - 60px);
+    display: block;
+}
+
+.network-status {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    padding: var(--space-md);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    gap: var(--space-md);
+}
+
+.network-status span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================================================
+   D3 Network Graph Elements
+   ============================================================================ */
+
+.station-node {
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.station-node:hover .station-circle {
+    stroke-width: 3px;
+}
+
+.station-circle {
+    transition: all 0.3s;
+}
+
+.station-label {
+    font-size: 11px;
+    fill: var(--text-secondary);
+    pointer-events: none;
+    user-select: none;
+}
+
+.segment-line {
+    stroke: var(--border-color);
+    stroke-width: 2;
+    transition: stroke 0.3s;
+}
+
+.segment-line:hover {
+    stroke: var(--accent-blue);
+    stroke-width: 3;
+}
+
+.train-marker {
+    transition: cx 0.5s ease-out, cy 0.5s ease-out, fill 0.3s ease;
+}
+
+/* Station Types */
+.station-major_hub .station-circle {
+    fill: var(--network-hub);
+    stroke: var(--accent-blue);
+}
+
+.station-regional .station-circle {
+    fill: var(--network-regional);
+    stroke: var(--network-regional);
+}
+
+.station-local .station-circle {
+    fill: var(--network-local);
+    stroke: var(--network-local);
+}
+
+.station-minor_halt .station-circle {
+    fill: var(--network-minor);
+    stroke: var(--network-minor);
+}
+
+/* Affected Stations */
+.station-affected .station-circle {
+    fill: var(--status-error) !important;
+    stroke: var(--status-error) !important;
+    animation: incident-pulse 1.5s infinite;
+}
+
+@keyframes incident-pulse {
+
+    0%,
+    100% {
+        stroke-width: 2;
+        opacity: 1;
+    }
+
+    50% {
+        stroke-width: 6;
+        opacity: 0.7;
+    }
+}
+
+/* Recovery Animation */
+.station-recovering .station-circle {
+    fill: var(--status-success) !important;
+    animation: recovery-pulse 1s ease-out;
+}
+
+@keyframes recovery-pulse {
+    0% {
+        stroke-width: 2;
+        opacity: 1;
+    }
+
+    50% {
+        stroke-width: 8;
+        opacity: 0.5;
+    }
+
+    100% {
+        stroke-width: 2;
+        opacity: 1;
+    }
+}
+
+/* Cascade Wave */
+.segment-cascading {
+    animation: cascade-wave 1s ease-out;
+}
+
+@keyframes cascade-wave {
+    0% {
+        stroke: var(--accent-blue);
+        stroke-width: 2;
+    }
+
+    50% {
+        stroke: var(--status-warning);
+        stroke-width: 4;
+    }
+
+    100% {
+        stroke: var(--status-error);
+        stroke-width: 3;
+    }
+}
+
+/* Tooltip */
+.network-tooltip {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm);
+    font-size: 0.75rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+.network-tooltip.visible {
+    opacity: 1;
+}
