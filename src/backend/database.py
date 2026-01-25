@@ -454,7 +454,7 @@ class StorageManager:
         self,
         incidents: List[Dict],
         collection_name: str = "operational_memory",
-        batch_size: int = 50
+        batch_size: int = 10  # REDUCED: Was 50, caused timeouts on Qdrant Cloud
     ) -> int:
         """
         Upload incidents with embeddings to Qdrant.

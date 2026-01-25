@@ -174,6 +174,37 @@ class MemoryUploader:
         self.gnn = GNNEncoder()
         self.lstm = LSTMEncoder()
         self.sem = SemanticEncoder()
+        
+        # === STEP 2.5: Load Trained Checkpoints (CRITICAL FIX) ===
+        # Without this, we upload random-weight embeddings to Qdrant!
+        # NEXT STEP: Models use trained weights for high-quality vectors
+        gnn_ckpt = Path(project_root) / "checkpoints" / "gnn" / "best_model.pt"
+        lstm_ckpt = Path(project_root) / "checkpoints" / "lstm" / "best_model.pt"
+        
+        if gnn_ckpt.exists():
+            checkpoint = torch.load(gnn_ckpt, map_location=torch.device('cpu'))
+            # Handle trainer format (checkpoint dict) vs direct weights
+            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                self.gnn.load_state_dict(checkpoint['model_state_dict'])
+            else:
+                self.gnn.load_state_dict(checkpoint)
+            print(f"   ✓ GNN loaded trained checkpoint: {gnn_ckpt}")
+        else:
+            print(f"   ⚠ GNN checkpoint not found - using RANDOM WEIGHTS")
+            print(f"      Looking for: {gnn_ckpt}")
+            
+        if lstm_ckpt.exists():
+            checkpoint = torch.load(lstm_ckpt, map_location=torch.device('cpu'))
+            # Handle trainer format (checkpoint dict) vs direct weights
+            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                self.lstm.load_state_dict(checkpoint['model_state_dict'])
+            else:
+                self.lstm.load_state_dict(checkpoint)
+            print(f"   ✓ LSTM loaded trained checkpoint: {lstm_ckpt}")
+        else:
+            print(f"   ⚠ LSTM checkpoint not found - using RANDOM WEIGHTS")
+            print(f"      Looking for: {lstm_ckpt}")
+            
         print("   ✓ All models loaded")
         
         # === STEP 3: Ensure Qdrant Collection Exists ===

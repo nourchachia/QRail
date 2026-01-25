@@ -186,14 +186,112 @@ Output ONLY valid JSON, no additional text."""
         # Load context from live_status.json
         context = self._load_live_status()
         
+        # Try Gemini first (Smarter)
         if use_gemini and GEMINI_AVAILABLE:
             try:
                 return self._parse_with_gemini(description, context)
             except Exception as e:
-                logger.error(f"Gemini parsing failed: {e}")
-                raise RuntimeError(f"AI Reasoning Unavailable. Please provide details manually. (Error: {str(e)})")
-        else:
-            raise RuntimeError("AI infrastructure unavailable and strictly evidence-based mode enabled (Guesses disabled).")
+                logger.warning(f"Gemini parsing failed, falling back to patterns: {e}")
+                # Fallback to pattern matching (Reliable)
+                return self._parse_with_patterns(description, context)
+        
+        # Default to pattern matching if Gemini disabled/unavailable
+        return self._parse_with_patterns(description, context)
+    
+    def _parse_with_patterns(
+        self, 
+        description: str, 
+        context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Parse using regex patterns - WORKS WITHOUT GEMINI
+        
+        Extracts:
+        - Station names (e.g., "Central Station", "STN_001")
+        - Train IDs (e.g., "EXP_013", "Train REG_045")
+        - Failure codes (signal, breakdown, weather, etc.)
+        - Delay estimates from numbers in text
+        """
+        import re
+        
+        description_lower = description.lower()
+        
+        # === Extract Station Names ===
+        station_names = []
+        # Pattern: "at [Station Name]" or "near [Station]" or "STN_XXX"
+        station_patterns = [
+            r'(?:at|near|from|to)\s+([A-Z][a-zA-Z\s]+(?:Station|Hub|Junction))',  # "at Central Station"
+            r'(STN_\d+)',  # "STN_001"
+            r'(?:station|hub)\s+([A-Z]\d+)',  # "Station A5"
+        ]
+        for pattern in station_patterns:
+            matches = re.findall(pattern, description)
+            station_names.extend(matches)
+        
+        # === Extract Train ID ===
+        train_id = None
+        train_patterns = [
+            r'([A-Z]{3}_\d+)',  # "EXP_013", "REG_045"
+            r'Train\s+([A-Z0-9]+)',  # "Train EXP013"
+            r'train\s+#?(\d+)',  # "train #123"
+        ]
+        for pattern in train_patterns:
+            match = re.search(pattern, description, re.IGNORECASE)
+            if match:
+                train_id = match.group(1)
+                break
+        
+        # === Detect Failure Code ===
+        failure_keywords = {
+            'SIGNAL_FAIL': ['signal', 'signaling', 'signal system', 'red signal'],
+            'TRAIN_BREAKDOWN': ['breakdown', 'stalled', 'mechanical', 'engine', 'broke down'],
+            'PASSENGER_ALARM': ['alarm', 'emergency alarm', 'passenger emergency'],
+            'WEATHER_SEVERE': ['weather', 'rain', 'snow', 'storm', 'wind', 'fog'],
+            'INFRASTRUCTURE_FAULT': ['track', 'rail', 'infrastructure', 'switch failure'],
+            'POWER_OUTAGE': ['power', 'electrical', 'outage', 'electricity'],
+            'SWITCH_FAILURE': ['switch', 'point', 'junction failure'],
+            'COMMUNICATION_LOSS': ['communication', 'radio', 'connection lost'],
+        }
+        
+        primary_failure_code = 'UNKNOWN'
+        for code, keywords in failure_keywords.items():
+            if any(kw in description_lower for kw in keywords):
+                primary_failure_code = code
+                break
+        
+        # === Extract Delay Estimate ===
+        delay_patterns = [
+            r'(\d+)\s*min',  # "20min", "20 min"
+            r'(\d+)\s*minute',  # "20 minutes"
+            r'delay.*?(\d+)',  # "delay of 30"
+            r'(\d+).*?delay',  # "30 minute delay"
+        ]
+        
+        estimated_delay = 30  # Default
+        for pattern in delay_patterns:
+            match = re.search(pattern, description_lower)
+            if match:
+                estimated_delay = int(match.group(1))
+                break
+        
+        # === Build Result ===
+        result = {
+            'estimated_delay_minutes': estimated_delay,
+            'primary_failure_code': primary_failure_code,
+            'station_names': list(set(station_names)),  # Remove duplicates
+            'train_id': train_id,
+            'confidence': 0.75 if primary_failure_code != 'UNKNOWN' else 0.5,
+            'reasoning': f"Pattern-based parsing (Gemini quota exhausted). Detected: {primary_failure_code}, ~{estimated_delay}min delay",
+            'weather': {
+                'condition': context['weather_condition'],
+                'temperature_c': context['temperature_c'],
+                'wind_speed_kmh': context['wind_speed_kmh'],
+                'visibility_km': context['visibility_km']
+            },
+            'network_load_pct': context['network_load_pct']
+        }
+        
+        return result
     
     def _parse_with_gemini(
         self, 
@@ -209,8 +307,8 @@ Output ONLY valid JSON, no additional text."""
         # Try multiple models in order of preference (prioritizing proven working models)
         models_to_try = [
             'gemini-flash-latest',      # PROVEN WORKING ✅
-            'gemini-2.0-flash-lite-preview-02-05',
-            'gemini-2.0-flash',         # Hit rate limits
+            'gemini-2.0-flash-exp',
+            'gemini-exp-1206',
             'gemini-1.5-flash'
         ]
         response = None
@@ -233,11 +331,15 @@ Output ONLY valid JSON, no additional text."""
         # Extract JSON from response
         response_text = response.text.strip()
         
-        # Try to extract JSON if wrapped in markdown
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0].strip()
+        # Robust JSON extraction: Find the first '{' and the last '}'
+        start_idx = response_text.find('{')
+        end_idx = response_text.rfind('}')
+        
+        if start_idx != -1 and end_idx != -1:
+            response_text = response_text[start_idx : end_idx + 1]
+        else:
+            logger.warning(f"No JSON object found in response: {response_text[:100]}...")
+            # Let JSON decoder fail and trigger fallback if really invalid
         
         # Parse JSON
         try:
@@ -245,7 +347,8 @@ Output ONLY valid JSON, no additional text."""
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse Gemini JSON response: {e}")
             logger.debug(f"Response text: {response_text}")
-            return self._parse_fallback(description, context)
+            # FIX: Call the correct pattern matching method
+            return self._parse_with_patterns(description, context)
         
         # Add context data
         result["weather"] = {

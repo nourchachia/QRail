@@ -56,17 +56,9 @@ def load_data(data_dir="data"):
         # We need to simulate the "Incident Vector" + "Resolution Vector" structure
         # inferred by outcome_predictor_xgb.py logic
         
-        # 1. Context Embedding (Semantic + Structural + Temporal)
-        feats = pipeline.extract_all_features(inc)
+        # Extract features manually (since extract_all_features doesn't exist)
+        # 1. Pipeline Features (Semantic + Structural Features)
         # Note: We simulate the concatenated embedding vector
-        # Real pipeline would use the actual model outputs, but for XGBoost training
-        # we can use the raw features or a simplified representation if models aren't live
-        # For this script, let's assume we can get valid embeddings or fallback
-        
-        # SIMPLIFICATION FOR ROBUSTNESS:
-        # Since we can't easily run GNN/LSTM inference here without loading those models,
-        # we'll extract numeric metadata features as a proxy for the 'Incident Vector'
-        # and 'Resolution Vector'.
         
         # Incident Features (Context)
         f_context = [
@@ -76,10 +68,6 @@ def load_data(data_dir="data"):
             float(inc.get("trains_affected_count", 1)),
             1.0 if inc.get("weather_condition") in ["snow", "storm", "heavy_rain"] else 0.0
         ]
-        
-        # Semantic embedding (Context) - using pure dummy or pipeline if available
-        # Ideally we'd use semantic_encoder here, but let's stick to metadata for speed/stability
-        # unless pipeline has it.
         
         # Resolution Features (Action)
         # We encode the resolution strategy
@@ -93,11 +81,7 @@ def load_data(data_dir="data"):
             1.0 if list(inc.get("actions_taken", [])) else 0.0
         ]
         
-        # Pad to match expected dimensions if needed by the class, 
-        # but OutcomePredictor seems to accept any dimension X as long as consistency holds.
-        # Let's verify outcome_predictor_xgb.py... it takes X (concatenated).
-        # We will create a feature vector of relevant size.
-        
+        # Combine
         combined_features = np.array(f_context + f_action)
         
         X_list.append(combined_features)
@@ -114,7 +98,7 @@ def load_data(data_dir="data"):
 
 def main():
     print("="*60)
-    print("🚀 Training Model 5 (Outcome Predictor)")
+    print("🚀 Training Model 5 (Outcome Predictor - REAL DATA)")
     print("="*60)
     
     # 1. Data Preparation
@@ -129,11 +113,31 @@ def main():
     predictor = OutcomePredictor()
     history = predictor.train(X_train, y_train, X_val, y_val)
     
-    # 4. Save
+    # 4. Save (Manual fix to avoid changing outcome_predictor_xgb.py)
+    # The class .save() method fails on some XGBoost versions due to sklearn wrapper issues
+    # So we save manually here using the native get_booster() method
     save_path = "checkpoints/outcome_predictor/model"
-    predictor.save(save_path)
+    model_json_path = Path(save_path).with_suffix('.json')
+    meta_pkl_path = Path(save_path).with_suffix('.pkl')
     
-    print("\n✅ Model 5 trained and saved to:", save_path + ".json")
+    # Ensure directory exists
+    model_json_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    # Save model binary (native XGBoost format)
+    predictor.model.get_booster().save_model(str(model_json_path))
+    
+    # Save metadata (mimicking what the class would have done)
+    import pickle
+    metadata = {
+        'is_trained': predictor.is_trained,
+        'n_estimators': predictor.model.n_estimators,
+        'max_depth': predictor.model.max_depth,
+        'learning_rate': predictor.model.learning_rate
+    }
+    with open(meta_pkl_path, 'wb') as f:
+        pickle.dump(metadata, f)
+    
+    print("\n✅ Model 5 trained and saved to:", str(model_json_path))
     print(f"   Validation MSE: {history['val_mse']:.4f}")
 
 if __name__ == "__main__":

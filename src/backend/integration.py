@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
 import numpy as np
+import torch  # CRITICAL FIX: Required for model checkpoint loading
 # =====================================================================
 # === STEP 1: Load Environment Variables ===
 # =====================================================================
@@ -155,14 +156,34 @@ class IncidentPipeline:
             # Model 1: Topology (GNN)
             from src.models.gnn_encoder import HeterogeneousGATEncoder
             self.gnn_encoder = HeterogeneousGATEncoder()
-            print("   ✓ HeterogeneousGATEncoder ready (Model 1: Topology)")
+            gnn_ckpt = Path("checkpoints/gnn/best_model.pt")
+            if gnn_ckpt.exists():
+                checkpoint = torch.load(gnn_ckpt, map_location=torch.device('cpu'))
+                # Handle trainer format (checkpoint dict) vs direct weights
+                if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                    self.gnn_encoder.load_state_dict(checkpoint['model_state_dict'])
+                else:
+                    self.gnn_encoder.load_state_dict(checkpoint)
+                print(f"   ✓ HeterogeneousGATEncoder ready (Model 1: Topology) - Loaded checkpoint")
+            else:
+                print(f"   ⚠ HeterogeneousGATEncoder ready (Model 1) - RANDOM WEIGHTS (No checkpoint found)")
             
             # Model 2: Cascade (LSTM)
             from src.models.cascade.lstm_encoder import LSTMEncoder
             self.lstm_encoder = LSTMEncoder()
-            print("   ✓ LSTMEncoder ready (Model 2: Cascade)")
+            lstm_ckpt = Path("checkpoints/lstm/best_model.pt")
+            if lstm_ckpt.exists():
+                checkpoint = torch.load(lstm_ckpt, map_location=torch.device('cpu'))
+                # Handle trainer format (checkpoint dict) vs direct weights
+                if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                    self.lstm_encoder.load_state_dict(checkpoint['model_state_dict'])
+                else:
+                    self.lstm_encoder.load_state_dict(checkpoint)
+                print(f"   ✓ LSTMEncoder ready (Model 2: Cascade) - Loaded checkpoint")
+            else:
+                print(f"   ⚠ LSTMEncoder ready (Model 2) - RANDOM WEIGHTS (No checkpoint found)")
             
-            # Model 3: Semantic (MiniLM)
+            # Model 3: Semantic (MiniLM) - Handles its own loading via HuggingFace
             from src.models.semantic_encoder import SemanticEncoder
             self.semantic_encoder = SemanticEncoder()
             print("   ✓ SemanticEncoder ready (Model 3: Semantic)")
@@ -180,7 +201,14 @@ class IncidentPipeline:
         try:
             from src.models.conflict_classifier import ConflictClassifier
             self.conflict_classifier = ConflictClassifier()
-            print("   ✓ ConflictClassifier ready (Model 4)")
+            conflict_ckpt = Path("checkpoints/conflict_classifier/best_model.pt")
+            if conflict_ckpt.exists():
+                self.conflict_classifier.load_state_dict(torch.load(conflict_ckpt, map_location=torch.device('cpu')))
+                self.conflict_classifier.eval()  # CRITICAL: Set to eval mode
+                print(f"   ✓ ConflictClassifier ready (Model 4) - Loaded checkpoint")
+            else:
+                self.conflict_classifier.eval()  # Set eval mode even with random weights
+                print(f"   ⚠ ConflictClassifier ready (Model 4) - RANDOM WEIGHTS (No checkpoint found)")
         except Exception as e:
             print(f"   ⚠ ConflictClassifier failed: {e}")
             print("      NEXT STEP: Implement conflict_classifier.py")
@@ -191,8 +219,13 @@ class IncidentPipeline:
         # NEXT STEP: Can score different resolution options
         try:
             from src.models.outcome_predictor_xgb import OutcomePredictor
-            self.outcome_predictor = OutcomePredictor()
-            print("   ✓ OutcomePredictor ready (Model 5: XGBoost)")
+            outcome_ckpt = "checkpoints/outcome_predictor/model.json"
+            if os.path.exists(outcome_ckpt):
+                self.outcome_predictor = OutcomePredictor(outcome_ckpt)
+                print(f"   ✓ OutcomePredictor ready (Model 5: XGBoost) - Loaded checkpoint")
+            else:
+                self.outcome_predictor = OutcomePredictor()
+                print(f"   ⚠ OutcomePredictor ready (Model 5) - UNTRAINED (No checkpoint found)")
         except Exception as e:
             print(f"   ⚠ OutcomePredictor failed: {e}")
             print("      NEXT STEP: Implement outcome_predictor_xgb.py")
@@ -430,9 +463,19 @@ class IncidentPipeline:
             # Encodes delay cascade as 64-dim vector
             # NEXT STEP: temporal_vec ready
             if self.lstm_encoder and 'lstm' in result['features']:
-                lstm_feat = torch.tensor(result['features']['lstm'], dtype=torch.float).unsqueeze(0)
-                temporal_vec = self.lstm_encoder(lstm_feat).detach().numpy()[0].tolist()
-                print(f"   ✓ Temporal (LSTM): {len(temporal_vec)}-dim")
+                lstm_data = result['features']['lstm']
+                # FIX: Ensure 3D tensor [batch, sequence, features]
+                if lstm_data:
+                    lstm_feat = torch.tensor(lstm_data, dtype=torch.float)
+                    # Add batch dimension if needed and sequence dimension
+                    if lstm_feat.dim() == 1:
+                        lstm_feat = lstm_feat.unsqueeze(0).unsqueeze(0)  # [1, 1, features]
+                    elif lstm_feat.dim() == 2:
+                        lstm_feat = lstm_feat.unsqueeze(0)  # [1, seq, features]
+                    temporal_vec = self.lstm_encoder(lstm_feat).detach().numpy()[0].tolist()
+                    print(f"   ✓ Temporal (LSTM): {len(temporal_vec)}-dim")
+                else:
+                    print(f"   ⚠ Temporal (LSTM): No sequence data available")
         
         except Exception as e:
             print(f"❌ Step 3: Embedding generation failed: {e}")
@@ -497,9 +540,15 @@ class IncidentPipeline:
                 lstm_vec = np.array(temporal_vec, dtype=np.float32)
                 sem_vec = np.array(semantic_vec, dtype=np.float32)
                 
-                result['conflicts'] = self.conflict_classifier.predict(
-                    gnn_vec, lstm_vec, sem_vec
-                )
+                # PyTorch model - use forward in eval mode
+                with torch.no_grad():
+                    combined = torch.tensor(np.concatenate([gnn_vec, lstm_vec, sem_vec]), dtype=torch.float32)
+                    logits = self.conflict_classifier.forward(combined.unsqueeze(0))
+                    probs = torch.sigmoid(logits)
+                    conflict_names = ['headway_violation', 'platform_oversubscription', 'crew_timeout', 
+                                    'signal_blockage', 'track_capacity', 'power_demand', 
+                                    'safety_margin', 'passenger_overflow']
+                    result['conflicts'] = dict(zip(conflict_names, probs[0].tolist()))
                 
                 # Identify high-risk conflicts (>50% probability)
                 high_conflicts = [k for k, v in result['conflicts'].items() if v > 0.5]
@@ -511,6 +560,7 @@ class IncidentPipeline:
                 
             except Exception as e:
                 print(f"   ⚠ Conflict prediction failed: {e}")
+                result['conflicts'] = {}
         
         # ================================================================
         # === STEP 6: Generate Recommendations (Model 5) ===
@@ -607,7 +657,8 @@ class IncidentPipeline:
         # Use resolutions from high-similarity matches
         # NEXT STEP: Recommend with medium confidence
         for incident in result.get('similar_incidents', [])[:5]:
-            if incident['score'] > 0.8 and not incident.get('is_golden'):
+            # LOWERED threshold to 0.25 for more recommendations (was 0.8, then 0.5)
+            if incident['score'] > 0.25 and not incident.get('is_golden'):
                 recommendations.append({
                     'strategy': 'Similar Incident Resolution',
                     'incident_id': incident['incident_id'],

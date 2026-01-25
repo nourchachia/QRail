@@ -132,5 +132,22 @@ results.append(test_endpoint("POST", "/api/analyze", {
     "text": "Train EXP_013 stalled at Segment 45 causing 20min delay to following regional trains under heavy rain" 
 }, "Analyze: Complex Scenario"))
 
+# 12. Search - Case E: Passenger Emergency (Short delay, high urgency)
+results.append(test_endpoint("POST", "/api/search", {
+    "query_text": "Passenger pressed emergency alarm at North Station due to medical issue",
+    "limit": 3
+}, "Search: Passenger Alarm"))
+
+# 13. Search - Case F: Power Outage (Major infrastructure failure)
+results.append(test_endpoint("POST", "/api/search", {
+    "query_text": "Total loss of electrification on Line B, all trains halted",
+    "limit": 3
+}, "Search: Power Outage"))
+
+# 14. Analyze - Case G: Crowding/Platform Safety (Should trigger 'passenger_overflow' conflict)
+results.append(test_endpoint("POST", "/api/analyze", {
+    "text": "Severe overcrowding at Central Station platform 4 caused by cancelled services. Passengers spilling onto tracks."
+}, "Analyze: Crowding Risk"))
+
 # Print Final Summary
 print_table(results, headers=["Method", "Endpoint", "Status", "Time", "Details"])

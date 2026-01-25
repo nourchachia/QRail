@@ -712,6 +712,177 @@ def check_models():
 
 
 # =====================================================================
+# === ENDPOINT 8: Close Incident (LIVE LEARNING - Part B) ===
+# =====================================================================
+
+class IncidentClosureRequest(BaseModel):
+    """
+    📥 INPUT: Operator closes an incident with results
+    
+    WHY: Add real operational outcomes to knowledge base
+    WHAT: Incident + resolution + actual outcome
+    HOW: Frontend "Close Incident" button
+    """
+    incident_description: str
+    resolution_strategy: str
+    operator_rating: str  # "good", "neutral", "bad"
+    actual_outcome_score: float  # 0.0 to 1.0
+    actual_delay_minutes: Optional[int] = None
+    notes: Optional[str] = ""
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "incident_description": "Signal failure at Central Station resolved by holding upstream trains",
+                "resolution_strategy": "HOLD_UPSTREAM_TRAINS",
+                "operator_rating": "good",
+                "actual_outcome_score": 0.92,
+                "actual_delay_minutes": 15,
+                "notes": "Resolution worked better than expected"
+            }
+        }
+
+
+@app.post("/api/incident/close")
+def close_incident(request: IncidentClosureRequest):
+    """
+    📝 LIVE LEARNING: Add real incident outcome to knowledge base
+    
+    === WHY ===
+    When operator closes an incident, we want to:
+    1. Make it immediately searchable (upload to Qdrant)
+    2. Use it for weekly Model 5 retraining
+    
+    === WHAT ===
+    Two-phase update:
+    - IMMEDIATE: Upload to Qdrant (searchable now!)
+    - WEEKLY: Included in next Model 5 training batch
+    
+    === HOW ===
+    1. Generate embeddings for the incident
+    2. Upload to Qdrant → immediately searchable
+    3. Append to incidents.json → used in next training run
+    
+    === BEFORE ===
+    Operator clicks "Close Incident" in UI
+    
+    === AFTER ===
+    - New incident appears in similarity search results instantly
+    - Next week's Model 5 training includes this outcome
+    
+    === INPUT ===
+    {
+        "incident_description": "Signal failure at Central...",
+        "resolution_strategy": "HOLD_UPSTREAM_TRAINS",
+        "operator_rating": "good",
+        "actual_outcome_score": 0.92,
+        "actual_delay_minutes": 15
+    }
+    
+    === OUTPUT ===
+    {
+        "status": "success",
+        "message": "Incident added to knowledge base",
+        "incident_id": "abc123",
+        "searchable": true,
+        "training_queue": true
+    }
+    
+    === MODELS USED ===
+    - Models 1,2,3: Generate embeddings immediately
+    - Model 5: Will use this data in next weekly training
+    """
+    try:
+        import json
+        import uuid
+        from datetime import datetime
+        
+        # === Step 1: Generate embeddings ===
+        print(f"📝 Processing incident closure...")
+        result = pipeline.process(request.incident_description)
+        
+        # === Step 2: Create incident record ===
+        incident_id = str(uuid.uuid4())
+        new_incident = {
+            "incident_id": incident_id,
+            "timestamp": datetime.now().isoformat(),
+            "semantic_description": request.incident_description,
+            "resolution_strategy": request.resolution_strategy,
+            "operator_rating": request.operator_rating,
+            "outcome_score": request.actual_outcome_score,
+            "actual_delay_minutes": request.actual_delay_minutes,
+            "operator_logs": request.notes,
+            "is_golden_run": request.actual_outcome_score >= 0.9,  # Auto-mark excellent outcomes
+            "created_at": datetime.now().isoformat(),
+            "source": "live_operations",  # Mark as real (not synthetic)
+            
+            # Add embeddings for immediate Qdrant upload
+            "embeddings": result['embeddings']
+        }
+        
+        # === Step 3: Upload to Qdrant (IMMEDIATE - searchable now!) ===
+        try:
+            pipeline.storage.upload_incident_memory([new_incident])
+            searchable = True
+            print(f"   ✅ Uploaded to Qdrant - immediately searchable")
+        except Exception as e:
+            searchable = False
+            print(f"   ⚠ Qdrant upload failed: {e}")
+        
+        # === Step 4: Append to incidents.json (for weekly training) ===
+        try:
+            incidents_path = Path(abs_data_dir) / "processed" / "incidents.json"
+            
+            # Load existing data
+            if incidents_path.exists():
+                with open(incidents_path, 'r') as f:
+                    data = json.load(f)
+                
+                # Append to train set
+                if "train" in data:
+                    data["train"].append(new_incident)
+                    data["metadata"]["train_count"] = len(data["train"])
+                else:
+                    # Fallback if different structure
+                    if isinstance(data, list):
+                        data.append(new_incident)
+                    else:
+                        data = [new_incident]
+                
+                # Save back
+                with open(incidents_path, 'w') as f:
+                    json.dump(data, f, indent=2)
+                
+                training_queue = True
+                print(f"   ✅ Appended to incidents.json - ready for next training")
+            else:
+                # Create new file if doesn't exist
+                with open(incidents_path, 'w') as f:
+                    json.dump({
+                        "metadata": {"train_count": 1, "generated_at": datetime.now().isoformat()},
+                        "train": [new_incident]
+                    }, f, indent=2)
+                training_queue = True
+                print(f"   ✅ Created incidents.json with first live incident")
+                
+        except Exception as e:
+            training_queue = False
+            print(f"   ⚠ Failed to append to incidents.json: {e}")
+        
+        return {
+            "status": "success",
+            "message": "Incident added to knowledge base",
+            "incident_id": incident_id,
+            "searchable": searchable,  # True = findable in search now
+            "training_queue": training_queue,  # True = will be used in next Model 5 training
+            "is_golden": new_incident["is_golden_run"]
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to close incident: {str(e)}")
+
+
+# =====================================================================
 # === SERVER STARTUP ===
 # =====================================================================
 
