@@ -39,7 +39,7 @@ WHEN MODELS 4/5 READY:
 🚀 HOW TO RUN THIS
 ------------------
 STEP 1: Open terminal
-STEP 2: cd C:\Users\ASUS\Desktop\projects2025\QRail
+STEP 2: cd C:\Users\ASUS\Desktop\QRail
 STEP 3: python src/api/main.py
 STEP 4: Open http://localhost:8001/docs
 
@@ -655,11 +655,12 @@ def check_qdrant():
         
         info = pipeline.storage.client.get_collection("operational_memory")
         
+        # Fix: Qdrant's CollectionInfo uses different attributes depending on version
         return {
             "status": "connected",
             "collection": "operational_memory",
             "points_count": info.points_count,
-            "vectors_count": info.vectors_count,
+            "vectors_count": getattr(info, 'vectors_count', getattr(info, 'vector_count', 'N/A')),
             "message": "Qdrant is working correctly"
         }
     except Exception as e:

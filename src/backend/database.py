@@ -315,8 +315,12 @@ class StorageManager:
         
         NEXT STEP: If empty, run: python data_gen/generate_golden_runs.py
         """
-        data = self.load_json("processed/golden_runs.json")
-        return data if isinstance(data, list) else []
+        # Try multiple possible filenames
+        for filename in ["processed/golden_runs_accidents.json", "processed/golden_runs.json"]:
+            data = self.load_json(filename)
+            if data:
+                return data if isinstance(data, list) else []
+        return []
     
     def get_live_status(self) -> Optional[Dict]:
         """

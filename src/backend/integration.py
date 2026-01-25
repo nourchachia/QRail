@@ -270,28 +270,47 @@ class IncidentPipeline:
         print("📊 Step 2: Extracting features...")
         if self.feature_pipeline:
             try:
-                # 2.1: Mapping names to IDs (Workaround for shared feature_extractor)
+                # 2.1: Mapping names to IDs (Enhanced with debug logging)
                 parsed_data = result['parsed'].copy()
                 station_ids = parsed_data.get('station_ids', [])
                 
+                print(f"   → Parsed data before mapping: station_ids={station_ids}, station_names={parsed_data.get('station_names', [])}")
+                
                 # Default train_id strictly from evidence
-                # Note: We must explicitly set to None to OVERRIDE the 'T001' default in feature_extractor.py
                 train_id_found = False
                 if parsed_data.get('train_id'):
                     train_id_found = True
+                    print(f"   → Train ID verified: {parsed_data.get('train_id')}")
                 else:
                     parsed_data['train_id'] = None  # Force kill the 'T001' guess
+                    print(f"   → No train ID found in description")
                 
-                # Map extracted names to IDs
+                # Map extracted names to IDs (ENHANCED fuzzy matching)
                 stations_found = False
                 if 'station_names' in parsed_data:
                     all_stations_data = self.storage.load_json('network/stations.json') or []
+                    print(f"   → Attempting to map {len(parsed_data['station_names'])} station names to IDs...")
+                    
                     for name in parsed_data['station_names']:
-                        n_low = name.lower()
+                        n_low = name.lower().strip()
+                        matched = False
+                        
                         for s in all_stations_data:
-                            s_name = s.get('name', '').lower()
-                            if (n_low in s_name or s_name in n_low) and s['id'] not in station_ids:
-                                station_ids.append(s['id'])
+                            s_name = s.get('name', '').lower().strip()
+                            s_id = s['id']
+                            
+                            # Enhanced matching: exact, contains, or contained
+                            if n_low == s_name or n_low in s_name or s_name in n_low:
+                                if s_id not in station_ids:
+                                    station_ids.append(s_id)
+                                    print(f"   ✓ Mapped \"{name}\" → {s_id} ({s.get('name')})")
+                                    matched = True
+                                    break
+                        
+                        if not matched:
+                            print(f"   ✗ Could not map \"{name}\" to any station ID")
+                    
+                    print(f"   → Final station_ids after mapping: {station_ids}")
                 
                 if station_ids:
                     stations_found = True
@@ -311,15 +330,22 @@ class IncidentPipeline:
                 parsed_data['station_ids'] = station_ids
                 
                 # REFACTORED: Manual feature coordination to avoid changing shared library
+                gnn_raw = self.feature_pipeline.extract_gnn_features(parsed_data)
+                
+                # WORKAROUND: Patch missing fields without modifying feature_extractor.py (teammates working on it)
+                # Add num_nodes and edge_index fields that integration expects
+                gnn_raw['num_nodes'] = len(gnn_raw.get('nodes', []))
+                gnn_raw['edge_index'] = gnn_raw.get('edges', [])  # Alias for compatibility
+                
                 result['features'] = {
-                    "gnn": self.feature_pipeline.extract_gnn_features(parsed_data),
+                    "gnn": gnn_raw,
                     "lstm": self.feature_pipeline.extract_lstm_sequence(parsed_data.get('train_id')) if parsed_data.get('train_id') else [],
                     "semantic_text": self.feature_pipeline.extract_semantic_text(parsed_data),
                     "conflict_context": self.feature_pipeline.extract_conflict_features(parsed_data)
                 }
                 
-                gnn_f = result['features'].get('gnn', {})
-                print(f"   ✓ Extracted {len(gnn_f.get('nodes', []))} nodes from evidence")
+                gnn_features = result['features'].get('gnn', {})
+                print(f"   ✓ Extracted {len(gnn_features.get('nodes', []))} nodes from evidence")
                 
             except Exception as e:
                 print(f"❌ Step 2: Feature extraction failed: {e}")
@@ -357,7 +383,7 @@ class IncidentPipeline:
                 # GNN RUNS ON VERIFIED NODES (Even if no edges exist)
                 if n_nodes > 0:
                     raw_edges = gnn_feat.get('edge_index', [])
-                    nodes = gnn_f.get('nodes', [])
+                    nodes = gnn_feat.get('nodes', [])  # Fixed: use gnn_feat instead of undefined gnn_f
                     id_to_idx = {node['id']: i for i, node in enumerate(nodes)}
                     
                     processed_edges = []
@@ -398,7 +424,7 @@ class IncidentPipeline:
                     except Exception as e:
                         print(f"   ⚠ Structural (GNN): Math engine rejected data: {e}")
                 else:
-                    print("   ⚠ Structural (GNN): Inactive (No verified station nodes found)")
+                    print(f"   ⚠ Structural (GNN): Inactive (No verified station nodes found)")
             
             # === 3.3: Temporal Vector (Model 2: LSTM) ===
             # Encodes delay cascade as 64-dim vector

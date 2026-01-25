@@ -142,15 +142,28 @@ class NeuralSearcher:
         qdrant_filter = self._build_filter(filters) if filters else None
         
         try:
-            # Primary search using semantic vector (most important)
+            # DEBUG: Check collection exists and has data
+            try:
+                collection_info = self.client.get_collection(self.collection_name)
+                print(f"🔍 DEBUG: Collection '{self.collection_name}' exists")
+                print(f"   Points in collection: {collection_info.points_count}")
+            except Exception as e:
+                print(f"❌ DEBUG: Failed to get collection info: {e}")
+                return []
+            
             # Primary search using semantic vector (most important)
             try:
-                semantic_results = self.client.search(
+                print(f"🔍 DEBUG: Executing search with semantic_vec length={len(semantic_vec)}")
+                # UPDATED: Use query_points instead of search
+                response = self.client.query_points(
                     collection_name=self.collection_name,
-                    query_vector=("semantic", semantic_vec),
+                    query=semantic_vec,
+                    using="semantic",
                     query_filter=qdrant_filter,
-                    limit=limit * 3  # Get more candidates for re-ranking
+                    limit=limit * 3
                 )
+                semantic_results = response.points
+                print(f"   ✓ Semantic search returned {len(semantic_results)} results")
             except AttributeError as e:
                 print(f"❌ CRITICAL QDRANT ERROR: {e}")
                 print(f"   Available methods on client: {[m for m in dir(self.client) if not m.startswith('_')]}")
@@ -164,20 +177,30 @@ class NeuralSearcher:
             temporal_results = []
             
             if structural_vec:
-                structural_results = self.client.search(
-                    collection_name=self.collection_name,
-                    query_vector=("structural", structural_vec),
-                    query_filter=qdrant_filter,
-                    limit=limit * 2
-                )
+                try:
+                    resp = self.client.query_points(
+                        collection_name=self.collection_name,
+                        query=structural_vec,
+                        using="structural",
+                        query_filter=qdrant_filter,
+                        limit=limit * 2
+                    )
+                    structural_results = resp.points
+                except Exception:
+                    pass # Ignore secondary errors
             
             if temporal_vec:
-                temporal_results = self.client.search(
-                    collection_name=self.collection_name,
-                    query_vector=("temporal", temporal_vec),
-                    query_filter=qdrant_filter,
-                    limit=limit * 2
-                )
+                try:
+                    resp = self.client.query_points(
+                        collection_name=self.collection_name,
+                        query=temporal_vec,
+                        using="temporal",
+                        query_filter=qdrant_filter,
+                        limit=limit * 2
+                    )
+                    temporal_results = resp.points
+                except Exception:
+                    pass
             
             # Merge and re-rank results
             merged = self._merge_results(

@@ -225,14 +225,32 @@ class MemoryUploader:
             elif "incidents" in incidents:
                 incidents = incidents["incidents"]
                 print("   Extracted 'incidents' key from nested structure")
+            # Single incident or unknown structure
+            elif "incident_id" in incidents:
+                incidents = [incidents]
+                print("   Wrapped single incident in list")
             else:
-                # Single incident or unknown structure
-                if "incident_id" in incidents:
-                    incidents = [incidents]
-                    print("   Wrapped single incident in list")
-                else:
-                    print("⚠️ JSON structure unrecognized (no 'train' or 'incidents' key)")
-                    incidents = []
+                print("⚠️ JSON structure unrecognized (no 'train' or 'incidents' key)")
+                incidents = []
+        
+        # === STEP 2.5: Load Golden Runs ===
+        # Also upload the 50 "Golden Run" examples so they are searchable
+        print("   Loading Golden Runs...")
+        golden_runs = self.storage.get_golden_runs()
+        if golden_runs:
+            print(f"   Found {len(golden_runs)} golden runs")
+            # Mark them explicitly as golden for the uploader logic
+            for gr in golden_runs:
+                gr['is_golden'] = True
+                # Ensure they have a log/description for embedding
+                if 'description' in gr and 'log' not in gr:
+                    gr['log'] = gr['description']
+            
+            # Combine lists
+            incidents.extend(golden_runs)
+            print(f"   Combined total: {len(incidents)} incidents (Training + Golden)")
+        else:
+            print("   ⚠️ No golden runs found")
         
         # === STEP 3: Fallback to Dummy Data ===
         # If no real data exists, generate test data for pipeline verification
