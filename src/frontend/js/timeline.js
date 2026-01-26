@@ -138,7 +138,10 @@ function updateMetricsSummary(liveStatus) {
     document.getElementById('load-value').textContent =
         `${liveStatus.network_load_pct || 0}%`;
 
-    const trainCount = liveStatus.active_trains ? liveStatus.active_trains.length : 0;
+    // Handle both array (from API) and number (from simulation) formats
+    const trainCount = Array.isArray(liveStatus.active_trains) 
+        ? liveStatus.active_trains.length 
+        : (typeof liveStatus.active_trains === 'number' ? liveStatus.active_trains : 0);
     document.getElementById('trains-value').textContent = trainCount;
 
     document.getElementById('incidents-value').textContent =
