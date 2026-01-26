@@ -9,7 +9,7 @@
  * - GET /api/network/status - Get live network status
  */
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'http://localhost:8001';
 
 const api = {
     /**
