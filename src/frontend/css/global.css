@@ -131,7 +131,7 @@ body {
 
 .app-main {
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: 3.5fr 3.5fr 3fr;  /* Expanded network panel from 2fr to 3.5fr */
   gap: 0;
   flex: 1;
   overflow: hidden;

@@ -10,24 +10,84 @@
 
 let networkSvg, xScale, yScale;
 let stationNodes, segmentLines, trainMarkers;
+let trainAnimationInterval = null;
+let trainMarkerGroup = null;
+
+// Global state for train routes (to fix looping issue)
+let trainRouteState = new Map(); // trainId -> { routeSegmentIds: [], currentSegmentIndex: 0, progress: 0, dwellTimeRemaining: 0 }
+
+
+/**
+ * Build complete route from timetable data
+ * Returns array of segment IDs representing the journey
+ */
+function buildTrainRoute(trainId, timetableData, segments, stationMap) {
+    if (!timetableData || !Array.isArray(timetableData)) {
+        console.warn('No timetable data available for route building');
+        return null;
+    }
+
+    const trainData = timetableData.find(t => t.train_id === trainId);
+    if (!trainData || !trainData.stops) return null;
+
+    // Get current day type from live status (default to weekday)
+    const dayType = window.appState?.liveStatus?.day_type || 'weekday';
+
+    // Filter stops by day type and sort by arrival time
+    const relevantStops = trainData.stops
+        .filter(s => s.daytype === dayType)
+        .sort((a, b) => {
+            const timeA = a.arrival_time.split(':').map(Number);
+            const timeB = b.arrival_time.split(':').map(Number);
+            return (timeA[0] * 60 + timeA[1]) - (timeB[0] * 60 + timeB[1]);
+        });
+
+    if (relevantStops.length < 2) return null;
+
+    // Extract station sequence
+    const stationSequence = [...new Set(relevantStops.map(s => s.station_id))]; // Remove duplicates
+
+    // Convert to segment sequence
+    const routeSegmentIds = [];
+    for (let i = 0; i < stationSequence.length - 1; i++) {
+        const from = stationSequence[i];
+        const to = stationSequence[i + 1];
+
+        // Find segment between these stations
+        const segment = segments.find(s =>
+            (s.from_station === from && s.to_station === to) ||
+            (s.bidirectional && s.from_station === to && s.to_station === from)
+        );
+
+        if (segment) {
+            routeSegmentIds.push(segment.id);
+        }
+    }
+
+    return routeSegmentIds.length > 0 ? routeSegmentIds : null;
+}
+
+
 
 function initNetworkView() {
     const container = document.getElementById('network-svg');
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    if (!container) return;
+
+    const width = container.clientWidth || 800;
+    const height = container.clientHeight || 600;
 
     networkSvg = d3.select('#network-svg')
         .attr('width', width)
         .attr('height', height);
 
-    // Create scales for positioning
+    // Create scales for positioning (Expanded domain for better spacing and aesthetics)
     xScale = d3.scaleLinear()
-        .domain([-50, 150])
-        .range([50, width - 50]);
+        .domain([-50, 170]) // Expanded from [-40, 160] for more breathing room
+        .range([80, width - 80]); // Increased padding from 50 to 80
 
     yScale = d3.scaleLinear()
-        .domain([-50, 150])
-        .range([50, height - 50]);
+        .domain([-50, 170]) // Expanded from [-40, 130] for symmetry
+        .range([height - 80, 80]); // Increased padding and inverted for natural orientation
 
     console.log('Network view initialized');
 }
@@ -95,14 +155,18 @@ function renderStations(stations) {
         })
         .attr('stroke-width', 2);
 
-    // Station labels (only for major hubs)
-    groups.filter(d => d.type === 'major_hub')
-        .append('text')
+    // Station labels (for all stations)
+    groups.append('text')
         .attr('class', 'station-label')
         .attr('x', 0)
-        .attr('y', -15)
+        .attr('y', -12) // Slightly above the circle
         .attr('text-anchor', 'middle')
-        .text(d => d.name);
+        .text(d => d.name)
+        .attr('font-size', d => d.type === 'major_hub' ? '12px' : '10px')
+        .attr('font-weight', d => d.type === 'major_hub' ? 'bold' : 'normal')
+        .attr('fill', '#e2e8f0') // Light text for dark theme
+        .attr('pointer-events', 'none')
+        .style('text-shadow', '2px 2px 4px rgba(0,0,0,0.8)'); // Shadow for readability
 
     stationNodes = groups;
 }
@@ -200,28 +264,44 @@ function animateRecovery(affectedNodes, stations) {
     });
 }
 
+/**
+ * Format weather condition from snake_case to Title Case
+ * Example: "heavy_rain" → "Heavy Rain"
+ */
+function formatWeatherCondition(condition) {
+    if (!condition) return 'Clear';
+
+    return condition
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
 function updateNetworkStatus(liveStatus) {
     if (!liveStatus) return;
 
     // Update status bar
     const weather = liveStatus.weather || {};
-    document.getElementById('weather-status').textContent =
-        `🌦️ Weather: ${weather.condition || 'Clear'}`;
+    const weatherEl = document.getElementById('weather-status');
+    if (weatherEl) {
+        weatherEl.textContent = `🌦️ Weather: ${formatWeatherCondition(weather.condition)}`;
+    }
 
-    document.getElementById('load-status').textContent =
-        `📊 Load: ${liveStatus.network_load_pct || 0}%`;
+    const loadEl = document.getElementById('load-status');
+    if (loadEl) {
+        loadEl.textContent = `📊 Load: ${liveStatus.network_load_pct || 0}%`;
+    }
 
     const trainCount = liveStatus.active_trains ? liveStatus.active_trains.length : 0;
-    document.getElementById('trains-status').textContent =
-        `🚂 Trains: ${trainCount}`;
+    const trainsEl = document.getElementById('trains-status');
+    if (trainsEl) {
+        trainsEl.textContent = `🚂 Trains: ${trainCount}`;
+    }
 }
 
 // ============================================================================
 // Train Animation Functions
 // ============================================================================
-
-let trainMarkerGroup = null;
-let trainAnimationInterval = null;
 
 /**
  * Get the position (x, y) on a segment given progress (0 to 1)
@@ -260,17 +340,6 @@ function getTrainRotation(segment, direction, stationMap) {
     return angle;
 }
 
-/**
- * Get train color based on status
- */
-function getTrainColor(status) {
-    switch (status) {
-        case 'moving': return '#3b82f6'; // Blue
-        case 'stopped': return '#f59e0b'; // Orange
-        case 'delayed': return '#ef4444'; // Red
-        default: return '#3b82f6';
-    }
-}
 
 /**
  * Render train markers on the network
@@ -281,7 +350,7 @@ function renderTrains(trains, segments, stations) {
     const stationMap = new Map(stations.map(s => [s.id, s]));
     const segmentMap = new Map(segments.map(s => [s.id, s]));
 
-    // Remove existing train group
+    // Remove existing train group if any (cleanup)
     networkSvg.selectAll('.train-group').remove();
 
     // Create train group layer (on top of everything)
@@ -305,7 +374,7 @@ function renderTrains(trains, segments, stations) {
             // Position based on segment or station
             if (d.segment_id && segmentMap.has(d.segment_id)) {
                 const segment = segmentMap.get(d.segment_id);
-                const pos = getPositionOnSegment(segment, d.progress || 0.5, stationMap);
+                const pos = getPositionOnSegment(segment, d.progress !== undefined ? d.progress : 0.5, stationMap);
                 const rotation = getTrainRotation(segment, d.direction || 'forward', stationMap);
                 return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
             } else if (d.station_id && stationMap.has(d.station_id)) {
@@ -336,7 +405,8 @@ function renderTrains(trains, segments, stations) {
         .attr('stroke-width', 2)
         .attr('opacity', 0.5);
 
-    // Add train ID label (hidden by default, shown on hover via CSS)
+    // Add train ID label (shown on hover via CSS potentially, or always)
+    // Hidden by default to avoid clutter
     trainGroups.append('text')
         .attr('class', 'train-label')
         .attr('x', 0)
@@ -346,7 +416,8 @@ function renderTrains(trains, segments, stations) {
         .attr('font-size', '10px')
         .attr('font-weight', 'bold')
         .attr('pointer-events', 'none')
-        .text(d => d.id);
+        .text(d => d.id)
+        .style('display', 'none'); // Hiding label for now
 
     trainMarkers = trainGroups;
     console.log(`Rendered ${validTrains.length} trains`);
@@ -367,7 +438,7 @@ function updateTrainPositions(trains, segments, stations) {
         // Calculate position based on segment or station
         if (train.segment_id && segmentMap.has(train.segment_id)) {
             const segment = segmentMap.get(train.segment_id);
-            const pos = getPositionOnSegment(segment, train.progress || 0.5, stationMap);
+            const pos = getPositionOnSegment(segment, train.progress !== undefined ? train.progress : 0.5, stationMap);
             const rotation = getTrainRotation(segment, train.direction || 'forward', stationMap);
             if (pos) {
                 transformStr = `translate(${pos.x}, ${pos.y}) rotate(${rotation})`;
@@ -384,45 +455,102 @@ function updateTrainPositions(trains, segments, stations) {
         // Animate to new position
         const trainEl = trainMarkerGroup.select(`[data-train-id="${train.id}"]`);
 
-        trainEl
-            .transition()
-            .duration(900)
-            .ease(d3.easeLinear)
-            .attr('transform', transformStr);
+        if (!trainEl.empty()) {
+            trainEl
+                .transition()
+                .duration(900)
+                .ease(d3.easeLinear)
+                .attr('transform', transformStr);
 
-        trainEl.select('.train-body')
-            .attr('fill', train.color || getTrainColor(train.status));
+            trainEl.select('.train-body')
+                .attr('fill', train.color || getTrainColor(train.status));
+        }
     });
 }
 
 /**
- * Simulate train movement (for demo mode)
+ * Simulate train movement with complete route following and station dwell time
  */
-function simulateTrainMovement(trains) {
+function simulateTrainMovement(trains, timetableData, segments, stations) {
+    if (!trains || !segments) return trains || [];
+
+    const stationMap = new Map(stations.map(s => [s.id, s]));
+
     return trains.map(train => {
+        // Only move moving trains
         if (train.status !== 'moving') return train;
 
-        // Calculate progress increment based on speed
-        const speedFactor = train.speed / 100; // Normalize speed
-        const increment = 0.02 * speedFactor;
+        // Get or initialize route state
+        if (!trainRouteState.has(train.id)) {
+            const route = buildTrainRoute(train.id, timetableData, segments, stationMap);
 
-        let newProgress = train.progress + (train.direction === 'forward' ? increment : -increment);
-
-        // Wrap around or reverse at segment ends
-        if (newProgress >= 1) {
-            newProgress = 0.99;
-            train.direction = 'backward';
-        } else if (newProgress <= 0) {
-            newProgress = 0.01;
-            train.direction = 'forward';
+            if (!route || route.length === 0) {
+                // Fallback: if no route found, just use current segment
+                trainRouteState.set(train.id, {
+                    routeSegmentIds: [train.segment_id],
+                    currentSegmentIndex: 0,
+                    progress: train.progress || 0,
+                    dwellTimeRemaining: 0
+                });
+            } else {
+                // Find current position in route
+                const currentIdx = route.indexOf(train.segment_id);
+                trainRouteState.set(train.id, {
+                    routeSegmentIds: route,
+                    currentSegmentIndex: currentIdx >= 0 ? currentIdx : 0,
+                    progress: train.progress || 0,
+                    dwellTimeRemaining: 0
+                });
+            }
         }
 
-        return { ...train, progress: newProgress };
+        const routeState = trainRouteState.get(train.id);
+
+        // Check if train is dwelling at station
+        if (routeState.dwellTimeRemaining > 0) {
+            routeState.dwellTimeRemaining--;
+            return {
+                ...train,
+                status: 'dwelling', // Show train is at station
+                progress: routeState.progress
+            };
+        }
+
+        // Calculate movement
+        const speedFactor = (train.speed || 80) / 100;
+        const increment = 0.01 * speedFactor; // Slower, more realistic
+        let newProgress = routeState.progress + increment;
+
+        // ✅ FIX: Instead of looping, advance to next segment
+        if (newProgress >= 1.0) {
+            // Reached end of current segment - advance to next station
+            routeState.currentSegmentIndex++;
+
+            // If at end of route, loop back to start (for circular routes like Main Line Ring)
+            if (routeState.currentSegmentIndex >= routeState.routeSegmentIds.length) {
+                routeState.currentSegmentIndex = 0;
+            }
+
+            // Start station dwell (3-5 animation frames = ~1.5-2.5 seconds)
+            routeState.dwellTimeRemaining = Math.floor(Math.random() * 3) + 3;
+            routeState.progress = 0;
+            newProgress = 0;
+        } else {
+            routeState.progress = newProgress;
+        }
+
+        return {
+            ...train,
+            segment_id: routeState.routeSegmentIds[routeState.currentSegmentIndex],
+            progress: newProgress,
+            status: 'moving',
+            direction: 'forward' // Could be enhanced to detect reversals
+        };
     });
 }
 
 /**
- * Start train animation loop
+ * Start train animation loop (INTERNAL loop, optional usage)
  */
 function startTrainAnimation(getTrainsCallback, segments, stations) {
     stopTrainAnimation(); // Clear any existing interval
@@ -467,7 +595,10 @@ window.networkView = {
     updateStatus: updateNetworkStatus,
     renderTrains: renderTrains,
     updateTrains: updateTrainPositions,
+    simulateMovement: simulateTrainMovement, // Exposed for app.js
     startTrainAnimation: startTrainAnimation,
     stopTrainAnimation: stopTrainAnimation,
+    clearHighlights: () => {
+        if (stationNodes) stationNodes.classed('station-affected station-recovering', false);
+    }
 };
-

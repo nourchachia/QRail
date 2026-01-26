@@ -30,6 +30,11 @@ async function initApp() {
         // Load network data
         await loadNetworkData();
 
+        // Start real-time telemetry updates
+        if (window.timeline && window.timeline.startTelemetry) {
+            window.timeline.startTelemetry();
+        }
+
         console.log('✅ Application ready!');
 
     } catch (error) {
@@ -86,51 +91,45 @@ async function loadNetworkData() {
     }
 }
 
+// Clock Ticker
+function startClock() {
+    const clockEl = document.getElementById('app-clock');
+    if (!clockEl) return;
+
+    setInterval(() => {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+    }, 1000);
+}
+
+// Fixed loadDemoData to prioritize local JSON files over random generation
 async function loadDemoData() {
     console.log('Loading demo data...');
+    startClock();
 
     try {
-        // Load from backend API (proper architecture)
-        const [stationsResponse, segmentsResponse] = await Promise.all([
-            fetch('http://localhost:8000/api/stations'),
-            fetch('http://localhost:8000/api/segments')
-        ]);
+        // PRIORITIZE: Static generated data (inserted via script tag)
+        if (window.staticNetworkData) {
+            console.log('✅ Loaded REAL network topology from static-data.js');
+            const { stations, segments } = window.staticNetworkData;
 
-        let stations, segments;
+            window.appState.setState({
+                stations,
+                segments,
+                liveStatus: window.mockData.liveStatus,
+            });
 
-        if (stationsResponse.ok && segmentsResponse.ok) {
-            const stationsData = await stationsResponse.json();
-            const segmentsData = await segmentsResponse.json();
-            stations = stationsData.stations;
-            segments = segmentsData.segments;
-            console.log('✅ Loaded real network from backend API');
-        } else {
-            // Fallback to generated data if backend not running
-            console.warn('Backend API not available, generating mock data');
-            console.warn('To use real data, start backend: python src/api/main.py');
-            stations = generateMockStations(50);
-            segments = generateMockSegments(stations);
+            window.networkView.render(stations, segments);
+            window.networkView.updateStatus(window.mockData.liveStatus);
+            window.timeline.updateMetrics(window.mockData.liveStatus);
+
+            loadTimetableAndStartTrains(stations, segments);
+            return;
         }
 
-        window.appState.setState({
-            stations,
-            segments,
-            liveStatus: window.mockData.liveStatus,
-        });
-
-        window.networkView.render(stations, segments);
-        window.networkView.updateStatus(window.mockData.liveStatus);
-        window.timeline.updateMetrics(window.mockData.liveStatus);
-
-        // Load timetable and initialize train animation
-        loadTimetableAndStartTrains(stations, segments);
-
-        console.log(`✅ Loaded demo network with ${stations.length} stations`);
-
-    } catch (error) {
-        console.error('Error loading network data:', error);
-        // Fallback to generated data
-        const stations = generateMockStations(20);
+        // Fallback to random generation if static data missing
+        console.warn('⚠️ static-data.js not found, falling back to random generator');
+        const stations = generateMockStations(50);
         const segments = generateMockSegments(stations);
 
         window.appState.setState({
@@ -144,14 +143,22 @@ async function loadDemoData() {
         window.timeline.updateMetrics(window.mockData.liveStatus);
 
         loadTimetableAndStartTrains(stations, segments);
-        console.log(`✅ Loaded generated network with ${stations.length} stations`);
+
+    } catch (error) {
+        console.error('Error loading network data:', error);
+        // Emergency fallback
+        const stations = generateMockStations(20);
+        const segments = generateMockSegments(stations);
+        window.appState.setState({ stations, segments, liveStatus: window.mockData.liveStatus });
+        window.networkView.render(stations, segments);
+        loadTimetableAndStartTrains(stations, segments);
     }
 }
 
 async function loadTimetableAndStartTrains(stations, segments) {
     try {
-        // Load timetable.json
-        const response = await fetch('/data/network/timetable.json');
+        // Load timetable.json from backend (not from frontend static server)
+        const response = await fetch('http://localhost:8002/static/timetable.json');
         if (!response.ok) {
             console.warn('Could not load timetable.json, using mock trains');
             renderMockTrains(segments, stations);
@@ -163,7 +170,7 @@ async function loadTimetableAndStartTrains(stations, segments) {
         // Also load real segments if available
         let realSegments = segments;
         try {
-            const segResponse = await fetch('/data/network/segments.json');
+            const segResponse = await fetch('http://localhost:8002/static/segments.json');
             if (segResponse.ok) {
                 realSegments = await segResponse.json();
             }
@@ -209,18 +216,40 @@ function renderMockTrains(segments, stations) {
     window.networkView.renderTrains(mockTrains, segments, stations);
 }
 
+// 🚂 THE MOVING TRAIN ANIMATION YOU SPENT SO LONG ON
 let trainAnimationLoopId = null;
+let currentActiveTrains = []; // Store state for smooth simulation
 
 function startTrainAnimationLoop(segments, stations) {
-    // Update trains every second
-    trainAnimationLoopId = setInterval(() => {
-        if (!window.TimetableEngine || !window.TimetableEngine.timetable.length) return;
+    if (trainAnimationLoopId) clearInterval(trainAnimationLoopId);
 
-        const activeTrains = window.TimetableEngine.getActiveTrains();
-        window.networkView.updateTrains(activeTrains, segments, stations);
+    // Initial load of trains
+    if (window.TimetableEngine) {
+        currentActiveTrains = window.TimetableEngine.getActiveTrains();
+    }
+
+    // Update trains loop (simulation for smooth moving)
+    // Update trains loop (simulation for smooth moving)
+    trainAnimationLoopId = setInterval(() => {
+        // ALWAYS use TimetableEngine to get correct positions based on schedule/time
+        // This ensures trains follow their actual routes and don't just loop on one segment
+        if (window.TimetableEngine) {
+            currentActiveTrains = window.TimetableEngine.getActiveTrains();
+        } else if (window.appState.demoMode) {
+            // Fallback only if engine is missing (unlikely now)
+            currentActiveTrains = window.networkView.simulateMovement(currentActiveTrains);
+        }
+
+        // Smoothly update positions in network-view
+        window.networkView.updateTrains(currentActiveTrains, segments, stations);
 
         // Update train count in status bar
-        document.getElementById('trains-status').textContent = `🚂 Trains: ${activeTrains.length}`;
+        const statusEl = document.getElementById('trains-status');
+        if (statusEl) statusEl.textContent = `🚂 Trains: ${currentActiveTrains.length}`;
+
+        const countEl = document.getElementById('trains-value');
+        if (countEl) countEl.textContent = currentActiveTrains.length;
+
     }, 1000);
 }
 
@@ -251,42 +280,55 @@ function generateMockStations(count) {
 function generateMockSegments(stations) {
     const segments = [];
 
-    // Connect each station to 2-3 nearest neighbors
-    stations.forEach((station, i) => {
-        const nearestCount = Math.floor(Math.random() * 2) + 2;
+    // Ensure we create segments that match the mock data trains (SEG_001, SEG_005...)
+    // Mock trains in state.js use SEG_001..SEG_035
 
-        // Find nearest stations
-        const distances = stations
-            .map((other, j) => ({
-                index: j,
-                distance: Math.hypot(
-                    station.coordinates[0] - other.coordinates[0],
-                    station.coordinates[1] - other.coordinates[1]
-                ),
-            }))
-            .filter(d => d.index !== i)
-            .sort((a, b) => a.distance - b.distance)
-            .slice(0, nearestCount);
+    // First, force create a simple loop/line for the mock trains
+    for (let i = 0; i < stations.length - 1; i++) {
+        const id = `SEG_${String(i * 5 + 1).padStart(3, '0')}`; // SEG_001, SEG_006, etc... close enough
+        // Override for exact matches needed by mockData
+        // Mock data uses: SEG_001, SEG_005, SEG_010, SEG_015, SEG_020, SEG_025, SEG_030, SEG_035
 
-        distances.forEach(({ index }) => {
-            // Avoid duplicate segments
-            const exists = segments.some(s =>
-                (s.from_station === station.id && s.to_station === stations[index].id) ||
-                (s.from_station === stations[index].id && s.to_station === station.id)
-            );
-
-            if (!exists) {
-                segments.push({
-                    id: `SEG_${String(segments.length + 1).padStart(3, '0')}`,
-                    from_station: station.id,
-                    to_station: stations[index].id,
-                    length_km: Math.random() * 10 + 1,
-                    speed_limit: 120,
-                    bidirectional: true,
-                    track_type: 'main_line',
-                });
-            }
+        segments.push({
+            id: id,
+            from_station: stations[i].id,
+            to_station: stations[i + 1].id,
+            length_km: Math.random() * 10 + 5,
+            speed_limit: 120,
+            bidirectional: true,
+            track_type: 'main_line',
         });
+    }
+
+    // Connect some extra randoms
+    stations.forEach((station, i) => {
+        if (Math.random() > 0.5) return;
+        const targetIdx = Math.floor(Math.random() * stations.length);
+        if (targetIdx === i) return;
+
+        segments.push({
+            id: `SEG_R${String(segments.length + 1).padStart(3, '0')}`,
+            from_station: station.id,
+            to_station: stations[targetIdx].id,
+            length_km: Math.random() * 15 + 5,
+            speed_limit: 100,
+            bidirectional: true,
+        });
+    });
+
+    // Ensure specifically used segments exist if not created above
+    const requiredSegments = ['SEG_001', 'SEG_005', 'SEG_010', 'SEG_015', 'SEG_020', 'SEG_025', 'SEG_030', 'SEG_035'];
+    requiredSegments.forEach((reqId, idx) => {
+        if (!segments.find(s => s.id === reqId) && stations.length > 2) {
+            segments.push({
+                id: reqId,
+                from_station: stations[idx % stations.length].id,
+                to_station: stations[(idx + 1) % stations.length].id,
+                length_km: 10,
+                speed_limit: 100,
+                bidirectional: true
+            });
+        }
     });
 
     return segments;
@@ -328,6 +370,7 @@ function resetApp() {
 
     // Clear UI
     document.getElementById('incident-text').value = '';
+    document.getElementById('incidents-value').textContent = '0';
     document.getElementById('search-status').classList.add('hidden');
     document.getElementById('similar-cases').classList.add('hidden');
     document.getElementById('resolution-options').classList.add('hidden');

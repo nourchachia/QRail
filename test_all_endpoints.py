@@ -2,7 +2,7 @@ import requests
 import json
 import time
 
-BASE_URL = "http://localhost:8001"
+BASE_URL = "http://localhost:8002"
 
 # Helper to print table without external dependencies
 def print_table(rows, headers):

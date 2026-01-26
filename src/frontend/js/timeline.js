@@ -27,10 +27,10 @@ function initTelemetryChart() {
         data: {
             labels: telemetryData.map(d => d.t),
             datasets: [{
-                label: 'Network Delay (min)',
-                data: telemetryData.map(d => d.delay),
-                borderColor: '#ef4444',
-                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                label: 'Network Load (%)',
+                data: telemetryData.map(d => d.load),
+                borderColor: '#3b82f6', // Blue for load
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderWidth: 2,
                 tension: 0.4,
                 fill: true,
@@ -49,6 +49,9 @@ function initTelemetryChart() {
             scales: {
                 y: {
                     beginAtZero: true,
+                    suggestedMin: 0,
+                    suggestedMax: 100, // Load percentage
+
                     ticks: { color: '#64748b' },
                     grid: { color: '#334155' }
                 },
@@ -128,8 +131,9 @@ function updateMetricsSummary(liveStatus) {
     if (!liveStatus) return;
 
     const weather = liveStatus.weather || {};
+    const condition = weather.condition || 'Clear';
     document.getElementById('weather-value').textContent =
-        weather.condition || 'Clear';
+        condition.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
     document.getElementById('load-value').textContent =
         `${liveStatus.network_load_pct || 0}%`;
@@ -138,7 +142,7 @@ function updateMetricsSummary(liveStatus) {
     document.getElementById('trains-value').textContent = trainCount;
 
     document.getElementById('incidents-value').textContent =
-        liveStatus.active_incidents || 0;
+        (liveStatus.active_incidents !== undefined) ? liveStatus.active_incidents : 0;
 }
 
 function showComparisonView(incident, resolution) {
@@ -261,7 +265,7 @@ function generateMockTelemetry(points) {
     for (let i = 0; i < points; i++) {
         data.push({
             t: `-${(points - i) * 3}m`,
-            delay: Math.floor(Math.random() * 15) + 5,
+            load: Math.floor(Math.random() * 20) + 70, // Random load 70-90%
         });
     }
     return data;
@@ -274,3 +278,74 @@ window.timeline = {
     showComparison: showComparisonView,
     hideComparison: hideComparisonView,
 };
+
+// ============================================================================
+// Real-Time Telemetry Updates
+// ============================================================================
+
+let networkLoadHistory = Array(30).fill(0);  // Rolling 30-minute window
+let telemetryUpdateInterval = null;
+
+/**
+ * Start polling network status every 30 seconds
+ */
+function startTelemetryPolling() {
+    if (telemetryUpdateInterval) {
+        clearInterval(telemetryUpdateInterval);
+    }
+
+    fetchNetworkTelemetry();
+
+    telemetryUpdateInterval = setInterval(async () => {
+        await fetchNetworkTelemetry();
+    }, 30000);  // 30 seconds
+
+    console.log('✅ Telemetry polling started (30s interval)');
+}
+
+async function fetchNetworkTelemetry() {
+    try {
+        const status = await window.api.getLiveStatus();
+        if (!status) return;
+
+        // Update chart
+        if (status.network_load_pct !== undefined) {
+            updateNetworkLoadChart(status.network_load_pct);
+        }
+
+        // Update summary metrics (the dashboard boxes)
+        updateMetricsSummary(status);
+
+        // Also sync with global appState if needed
+        window.appState.setState({ liveStatus: status });
+
+        // Update top bar in network view
+        if (window.networkView && window.networkView.updateStatus) {
+            window.networkView.updateStatus(status);
+        }
+    } catch (error) {
+        console.warn('Telemetry fetch failed:', error);
+    }
+}
+
+function updateNetworkLoadChart(newLoad) {
+    networkLoadHistory.shift();
+    networkLoadHistory.push(newLoad);
+
+    if (telemetryChart) {
+        telemetryChart.data.labels = networkLoadHistory.map((_, i) => `-${30 - i}m`);
+        telemetryChart.data.datasets[0].data = networkLoadHistory;
+        telemetryChart.update('none');
+    }
+}
+
+function stopTelemetryPolling() {
+    if (telemetryUpdateInterval) {
+        clearInterval(telemetryUpdateInterval);
+        telemetryUpdateInterval = null;
+        console.log('Telemetry polling stopped');
+    }
+}
+
+window.timeline.startTelemetry = startTelemetryPolling;
+window.timeline.stopTelemetry = stopTelemetryPolling;

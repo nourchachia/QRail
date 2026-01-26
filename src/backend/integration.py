@@ -570,13 +570,52 @@ class IncidentPipeline:
         print("💡 Step 6: Generating recommendations...")
         result['recommendations'] = self._generate_recommendations(result)
         
-        # === Optional: Rank by Outcome Predictor (Model 5) ===
-        # If Model 5 is available, re-rank strategies by predicted outcome
-        # NEXT STEP: Recommendations optimally ordered
-        if self.outcome_predictor:
-            print("   (Model 5: Ranking by predicted success...)")
-            # TODO: Call outcome_predictor.predict() on each strategy
-            # For now, use similarity scores as proxy
+        # === Rank by Outcome Predictor (Model 5) ===
+        if self.outcome_predictor and self.outcome_predictor.is_trained:
+            print("   🎯 Model 5: Ranking by predicted success...")
+            try:
+                # Prepare incident context vector (512-dim)
+                incident_context = np.concatenate([
+                    np.array(structural_vec, dtype=np.float32),
+                    np.array(temporal_vec, dtype=np.float32),
+                    np.array(semantic_vec, dtype=np.float32)
+                ])
+                
+                # Score each recommendation
+                for rec in result['recommendations']:
+                    # Generate resolution vector (8-dim)
+                    resolution_vec = np.array([
+                        rec.get('score', 0.5),  # Historical success
+                        rec.get('confidence', 0.5),  # Confidence level
+                        1.0 if rec.get('is_golden') else 0.0,  # Golden run bonus
+                        float(len(rec.get('incident_id', ''))),  # Complexity
+                        0.0, 0.0, 0.0, 0.0  # Padding
+                    ], dtype=np.float32)
+                    
+                    # Predict outcome with Model 5
+                    X_combined = np.concatenate([incident_context, resolution_vec]).reshape(1, -1)
+                    predicted_success = self.outcome_predictor.predict_batch(X_combined)[0]
+                    
+                    # Add prediction to recommendation
+                    rec['predicted_outcome'] = float(predicted_success)
+                
+                # Re-rank by Model 5 predictions
+                result['recommendations'].sort(
+                    key=lambda x: x.get('predicted_outcome', 0),
+                    reverse=True
+                )
+                
+                print(f"   ✅ Ranked {len(result['recommendations'])} recommendations by XGBoost")
+                
+            except Exception as e:
+                print(f"   ⚠️ Model 5 ranking failed: {e}")
+                # Fallback to similarity-based ranking
+                result['recommendations'].sort(
+                    key=lambda x: x.get('score', 0),
+                    reverse=True
+                )
+        else:
+            # Fallback: rank by similarity
             result['recommendations'].sort(
                 key=lambda x: x.get('score', 0),
                 reverse=True
@@ -634,7 +673,7 @@ class IncidentPipeline:
         === STRATEGY ===
         1. Prioritize golden runs (proven resolutions)
         2. Use similar incident strategies
-        3. Fallback to standard templates
+        3. Extract enhanced data (why_golden, actual_outcomes, lessons_learned)
         
         NEXT STEP: Display recommendations to operator in UI
         """
@@ -645,13 +684,40 @@ class IncidentPipeline:
         # NEXT STEP: Recommend with high confidence
         for incident in result.get('similar_incidents', [])[:3]:
             if incident.get('is_golden'):
-                recommendations.append({
-                    'strategy': 'Based on Golden Run',
-                    'incident_id': incident['incident_id'],
-                    'confidence': 0.9,
-                    'score': incident['score'],
-                    'type': 'proven'
-                })
+                # Try to load full incident data from storage to get enhanced fields
+                incident_id = incident['incident_id']
+                try:
+                    # Get all golden runs and find the matching one
+                    golden_runs = self.storage.get_golden_runs()
+                    matching_golden = next((gr for gr in golden_runs if gr.get('incident_id') == incident_id), None)
+                    
+                    rec = {
+                        'strategy': 'Based on Golden Run',
+                        'incident_id': incident_id,
+                        'confidence': 0.9,
+                        'score': incident['score'],
+                        'type': 'proven'
+                    }
+                    
+                    # Add enhanced data if available
+                    if matching_golden and isinstance(matching_golden.get('solution'), dict):
+                        solution = matching_golden['solution']
+                        rec['description'] = solution.get('description', '')
+                        rec['why_golden'] = solution.get('why_golden', '')
+                        rec['actual_outcomes'] = solution.get('actual_outcomes', {})
+                        rec['lessons_learned'] = solution.get('lessons_learned', [])
+                        rec['context_adaptations'] = solution.get('context_specific_adaptations', [])
+                    
+                    recommendations.append(rec)
+                except Exception as e:
+                    # Fallback if enhanced data not available
+                    recommendations.append({
+                        'strategy': 'Based on Golden Run',
+                        'incident_id': incident_id,
+                        'confidence': 0.9,
+                        'score': incident['score'],
+                        'type': 'proven'
+                    })
         
         # === Strategy 2: Learn from Similar Incidents ===
         # Use resolutions from high-similarity matches

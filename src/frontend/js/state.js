@@ -9,7 +9,7 @@ const appState = {
     status: 'idle', // 'idle' | 'detecting' | 'searching' | 'analyzing' | 'resolved'
 
     // Demo mode
-    demoMode: false,
+    demoMode: true,
 
     // Network data (cached)
     stations: [],
@@ -27,6 +27,9 @@ const appState = {
     // Feedback
     feedbackRating: 0,
     feedbackNotes: '',
+
+    // Active incidents counter
+    activeIncidents: 0,
 
     /**
      * Update state and notify listeners
@@ -48,6 +51,7 @@ const appState = {
             selectedResolution: null,
             feedbackRating: 0,
             feedbackNotes: '',
+            activeIncidents: 0,
         });
     },
 
@@ -212,6 +216,18 @@ const mockData = {
             { id: 'TRN_006', segment_id: 'SEG_025', progress: 0.5, speed: 90, direction: 'forward', status: 'moving' },
             { id: 'TRN_007', segment_id: 'SEG_030', progress: 0.7, speed: 70, direction: 'backward', status: 'moving' },
             { id: 'TRN_008', segment_id: 'SEG_035', progress: 0.1, speed: 55, direction: 'forward', status: 'moving' },
+            { id: 'TRN_009', segment_id: 'SEG_001', progress: 0.8, speed: 85, direction: 'backward', status: 'moving' },
+            { id: 'TRN_010', segment_id: 'SEG_005', progress: 0.2, speed: 65, direction: 'backward', status: 'moving' },
+            { id: 'TRN_011', segment_id: 'SEG_R01', progress: 0.5, speed: 75, direction: 'forward', status: 'moving' },
+            { id: 'TRN_012', segment_id: 'SEG_R02', progress: 0.3, speed: 50, direction: 'forward', status: 'moving' },
+            { id: 'TRN_013', segment_id: 'SEG_010', progress: 0.9, speed: 0, direction: 'backward', status: 'stopped' },
+            { id: 'TRN_014', segment_id: 'SEG_020', progress: 0.7, speed: 35, direction: 'backward', status: 'delayed' },
+            { id: 'TRN_015', segment_id: 'SEG_025', progress: 0.2, speed: 95, direction: 'backward', status: 'moving' },
+            { id: 'TRN_016', segment_id: 'SEG_030', progress: 0.4, speed: 72, direction: 'forward', status: 'moving' },
+            { id: 'TRN_017', segment_id: 'SEG_035', progress: 0.9, speed: 58, direction: 'backward', status: 'moving' },
+            { id: 'TRN_018', segment_id: 'SEG_015', progress: 0.1, speed: 48, direction: 'forward', status: 'moving' },
+            { id: 'TRN_019', segment_id: 'SEG_040', progress: 0.5, speed: 82, direction: 'forward', status: 'moving' },
+            { id: 'TRN_020', segment_id: 'SEG_040', progress: 0.2, speed: 80, direction: 'backward', status: 'moving' }
         ],
     },
 };

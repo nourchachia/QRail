@@ -313,13 +313,22 @@ class StorageManager:
         """
         Load the 50 curated 'perfect resolution' examples.
         
+        Supports both formats:
+        - Old: [{incident_id: ...}, ...]  
+        - Enhanced: {metadata: {...}, golden_runs: [...]}
+        
         NEXT STEP: If empty, run: python data_gen/generate_golden_runs.py
         """
-        # Try multiple possible filenames
-        for filename in ["processed/golden_runs_accidents.json", "processed/golden_runs.json"]:
+        # Try multiple possible filenames (enhanced version first)
+        for filename in ["processed/golden_runs_accidents_enhanced.json", "processed/golden_runs_enhanced.json", "processed/golden_runs_accidents.json", "processed/golden_runs.json"]:
             data = self.load_json(filename)
             if data:
-                return data if isinstance(data, list) else []
+                # Handle enhanced format with metadata wrapper
+                if isinstance(data, dict) and "golden_runs" in data:
+                    return data["golden_runs"]
+                # Handle old format (direct array)
+                elif isinstance(data, list):
+                    return data
         return []
     
     def get_live_status(self) -> Optional[Dict]:

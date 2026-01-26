@@ -189,6 +189,8 @@
 
 .similar-cases {
     margin-bottom: var(--space-xl);
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .similar-cases h3 {
@@ -294,6 +296,8 @@
 
 .resolution-options {
     margin-bottom: var(--space-xl);
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .resolution-options h3 {
@@ -384,8 +388,28 @@
 }
 
 .apply-button.applied {
-    background: var(--bg-elevated);
-    color: var(--text-tertiary);
+    background: var(--status-success);
+    color: #fff;
+    cursor: default;
+    border-color: var(--status-success);
+    animation: flashSuccess 1.5s ease-out;
+}
+
+@keyframes flashSuccess {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
 }
 
 /* ============================================================================
