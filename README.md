@@ -1,298 +1,175 @@
-# 🚄 Neural Rail Conductor (QRail)
+# 🚄 QRail: Neural Rail Conductor
 
-AI-powered rail network incident management system using multi-vector similarity search and deep learning.
+**AI-Powered Railway Incident Management & Decision Support System**
 
-## 📋 Table of Contents
+QRail is an intelligent operational dashboard that helps railway dispatchers manage incidents in real-time. It combines **Network Topology Analysis (GNN)**, **Historical Pattern Recognition (LSTM)**, and **Semantic Search (Vector DB)** to recommend optimal resolutions for critical railway failures.
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Setup](#setup)
-- [Usage](#usage)
-- [AI Models](#ai-models)
-- [Data Flow](#data-flow)
-- [Team Workflow](#team-workflow)
+![System Architecture](C:/Users/USER/.gemini/antigravity/brain/28950788-b1fb-4ae1-b5e1-271a34e2cc17/qrail_architecture_diagram_1769463054033.png)
 
-## 🎯 Overview
+---
 
-Neural Rail Conductor is a decision support system for rail network operators. It uses AI to:
-- **Detect** incidents in real-time
-- **Search** historical similar cases using multi-vector similarity
-- **Predict** conflicts and outcomes
-- **Recommend** resolution strategies based on past successes
+## ✨ Key Features
 
-### Key Features
+- **Real-Time Network Visualization**: Live view of 50 stations and 70 segments with animated train movements based on actual timetables.
+- **Instant Incident Analysis**: Type a description (e.g., *"Signal failure at Central Station"*), and the AI pipeline identifies the failure type, location, and severity.
+- **Intelligent Decision Support**:
+  - **Graph Neural Network (GNN)** analyzes network impact.
+  - **Vector Search (Qdrant)** retrieves similar past incidents (800+ historical cases).
+  - **Outcome Predictor** ranks solution strategies by success probability.
+- **Conflict Prediction**: Anticipates downstream operational conflicts (e.g., platform oversubscription, headway violations).
+- **Interactive Simulation**: "Time Travel" mode to simulate network conditions at any time of day (Morning Peak, Off-Peak).
 
-- **Triple-Vector Architecture**: Combines topology (GNN), temporal (LSTM), and semantic (Transformer) embeddings
-- **Multi-Vector Search**: Qdrant vector database for finding similar historical incidents
-- **5 AI Models**: GNN, LSTM, Semantic Encoder, Conflict Classifier, Outcome Predictor
-- **Real-time Processing**: Handles live network status and incident analysis
+---
+
+## 🛠️ Installation
+
+### Prerequisites
+- Python 3.10+
+- Node.js (optional, for advanced frontend dev)
+- Modern Web Browser (Chrome/Edge/Firefox)
+
+### Step 1: Environment Setup
+```bash
+# Clone the repository
+git clone https://github.com/your-org/QRail.git
+cd QRail
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# Mac/Linux:
+source .venv/bin/activate
+```
+
+### Step 2: Install Dependencies
+```bash
+# Install core requirements (FastAPI, PyTorch, Sentence Transformers)
+pip install -r requirements.txt
+
+# Install visualization & vector DB tools
+pip install qdrant-client plotly matplotlib numpy pandas
+```
+
+---
+
+## 🚀 Usage
+
+### 1. Start the Backend API
+The backend handles AI processing, data retrieval, and simulation logic.
+```bash
+# Run from project root
+python src/api/main.py
+```
+> **Note:** The server will start on **http://localhost:8002**.
+
+### 2. Start the Frontend Dashboard
+Open a new terminal window to serve the web interface.
+```bash
+# Run from project root
+python -m http.server 8080
+```
+
+### 3. Open in Browser
+Navigate to:
+👉 **[http://localhost:8080/src/frontend/index.html](http://localhost:8080/src/frontend/index.html)**
+
+---
+
+## 🎮 How to Demo
+
+1. **View Live Network**: Watch trains moving in real-time. Zoom/pan the map.
+2. ** Simulate an Incident**:
+   - Click the "Create Incident" button.
+   - Enter text: *"Power outage at Station 5 affecting traction."*
+   - Click **Analyze**.
+3. **Review AI Recommendations**:
+   - See specific **Conflict Predictions** (e.g., "High risk of platform overcrowding").
+   - Review **Recommended Solutions** from historical "Golden Runs".
+   - Check **Similar Cases** retrieved from the vector database.
+4. **Time Travel**:
+   - Use the slider in the "Simulation Time" panel to jump to 8:00 AM (Rush Hour) and see train density increase.
+
+---
+
+## 📂 Project Structure
+
+```
+d:\QRail
+├── data/
+│   ├── network/            # Static topology (stations.json, segments.json)
+│   ├── processed/          # Generated datasets (incidents.json, golden_runs.json)
+│   └── raw/                # Raw inputs
+├── src/
+│   ├── api/                # FastAPI backend (main.py)
+│   ├── backend/            # Business logic & AI pipelines
+│   ├── frontend/           # Web dashboard (HTML/CSS/JS)
+│   │   ├── css/            # Stylesheets
+│   │   └── js/             # Application logic (D3.js, State Management)
+│   └── models/             # PyTorch AI models (GNN, LSTM, etc.)
+├── data_gen/               # Scripts to generate synthetic data
+└── requirements.txt        # Python dependencies
+```
+
+---
+
+## 🔧 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| **"Address already in use"** | Kill old python processes: `taskkill /IM python.exe /F` |
+| **Trains not appearing** | Ensure Backend API is running on port **8002**. Refresh page. |
+| **404 Error in Browser** | Make sure you run `python -m http.server` from `d:\QRail` root, not inside `src/`. |
+| **Simulation Clock Stuck** | Click the "Play" button in the Time Control panel. |
+
+---
 
 ## 🏗️ Architecture
 
-```
-Raw Data (JSON) → Feature Extraction → AI Models → Embeddings → Qdrant → Search → Recommendations
-```
+QRail uses a **microservices-inspired architecture**:
+- **Frontend**: Lightweight HTML5/JS (D3.js for graphs) communicating via REST.
+- **Backend**: FastAPI aggregator that orchestrates 5 distinct AI models.
+- **Data Layer**: 
+  - **Qdrant**: Vector Similarity Search for 800 detailed operational logs.
+  - **JSON**: Fast static storage for network topology and timetables.
 
-### Components
+---
 
-1. **Data Generation** (`data_gen/`): Creates synthetic network and incident data
-2. **Storage Layer** (`src/backend/database.py`): Manages JSON files and Qdrant operations
-3. **Feature Extraction** (`src/backend/feature_extractor.py`): Converts JSON → model-ready features
-4. **AI Models** (`src/models/`): 5 models for encoding and prediction
-5. **Backend API** (`src/backend/`): FastAPI endpoints for incident analysis
+**Developed by:** QRail Team (Google DeepMind Agentic Coding)  
+**License:** MIT
 
-## 📁 Project Structure
+---
 
-```
-QRail/
-├── data/
-│   ├── network/                    # Infrastructure data
-│   │   ├── stations.json           # 50 stations
-│   │   ├── segments.json           # 70 track segments
-│   │   └── timetable.json          # Train schedules
-│   └── processed/                  # Operational data
-│       ├── incidents.json          # Historical incidents (1000+)
-│       ├── live_status.json        # Real-time network state
-│       └── golden_run_accidents.json # Perfect resolution examples (50)
-│
-├── src/
-│   ├── backend/
-│   │   ├── database.py             # StorageManager: JSON + Qdrant
-│   │   └── feature_extractor.py    # DataFuelPipeline: Feature extraction
-│   └── models/                     # AI Models
-│       ├── gnn_encoder.py          # Model 1: GNN Topology Encoder
-│       ├── lstm_encoder.py         # Model 2: LSTM Cascade Encoder
-│       ├── semantic_encoder.py     # Model 3: Semantic Text Encoder
-│       ├── conflict_classifier.py  # Model 4: Conflict Classifier (MLP)
-│       └── outcome_predictor_xgb.py  # Model 5: Outcome Predictor (XGBoost)
-│
-└── data_gen/                       # Data generation scripts
-    ├── generate_network.py
-    ├── generate_incidents.py
-    └── generate_golden_runs.py
-```
+## 🧠 Model Training
 
-## 🚀 Setup
+QRail's AI models are pre-trained, but you can retrain them on new data using the provided scripts.
 
-### Prerequisites
-
-- Python 3.8+
-- Qdrant (Docker or Cloud)
-
-### Installation
-
+### 1. LSTM Cascade Encoder (Model 2)
+Trains the temporal pattern recognition model on synthetic telemetry sequences.
 ```bash
-# Navigate to project root
-cd QRail
-
-# Install PyTorch (CPU version)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-# Install other dependencies
-pip install torch-geometric
-pip install sentence-transformers
-pip install xgboost
-pip install qdrant-client
-pip install fastapi uvicorn
-pip install pandas numpy
-pip install python-dotenv
-pip install pydantic
+# Train for 50 epochs
+python src/models/train_lstm.py
 ```
+> **Output:** Saves checkpoints to `checkpoints/lstm/` and logs to `runs/lstm_cascade_encoder/`.
 
-### Create Package Structure
-
+### 2. Conflict Classifier (Model 4)
+Trains the multi-label classifier to predict 8 types of operational conflicts.
 ```bash
-# Create __init__.py files
-touch src/__init__.py
-touch src/backend/__init__.py
-touch src/models/__init__.py
-touch data_gen/__init__.py
+# Train for 15 epochs
+python src/models/train_conflict_classifier.py --epochs 15
 ```
+> **Output:** Saves best model to `checkpoints/conflict_classifier/best_model.pt`.
 
-### Start Qdrant
-
+### 3. GNN Encoder (Model 1)
+Trains the Graph Neural Network to understand network topology (stations & segments).
 ```bash
-# Using Docker
-use Qdrant Cloud (free tier available)
+python src/models/train_gnn.py
 ```
 
-## 💻 Usage
-
-### 1. Generate Data
-
+### 4. Outcome Predictor (Model 5)
+Trains the ranking model on "Golden Run" resolution data.
 ```bash
-# Generate network infrastructure
-python data_gen/generate_network.py
-
-# Generate incidents
-python data_gen/generate_incidents.py
-
-# Generate golden runs
-python data_gen/generate_golden_runs.py
-```
-
-### 2. Test Storage System
-
-```bash
-cd QRail
-python src/backend/database.py
-```
-
-**Expected Output:**
-```
-✓ Saved 1 stations
-✓ Created Qdrant collection: operational_memory
-✓ Storage system ready!
-```
-
-### 3. Test Feature Extraction
-
-```bash
-cd QRail
-python src/backend/feature_extractor.py
-```
-
-**Expected Output:**
-```
-=== GNN Features ===
-Nodes: 2                    # Affected stations
-Edges: 11                   # Segments connecting them
-
-=== LSTM Sequence ===
-Sequence shape: [10, 4]     # 10 time steps, 4 features
-
-=== Semantic Text ===
-Description: Signal Failure at core zone...
-
-=== Conflict Features ===
-Feature vector: [0.85, 1.0, 0.33, ...]
-```
-
-### 4. Test AI Models
-
-```bash
-# Test GNN Encoder
-python src/models/gnn_encoder.py
-
-# Test LSTM Encoder
-python src/models/lstm_encoder.py
-
-# Test Semantic Encoder
-python src/models/semantic_encoder.py
-
-# Test Conflict Classifier
-python src/models/conflict_classifier.py
-```
-
-## 🤖 AI Models
-
-### Model 1: GNN Encoder (`gnn_encoder.py`)
-- **Purpose**: Encodes network topology (station relationships)
-- **Input**: Graph structure (nodes=stations, edges=segments)
-- **Output**: 64-dim embedding
-- **Architecture**: Graph Attention Network (GATv2)
-
-### Model 2: LSTM Encoder (`lstm_encoder.py`)
-- **Purpose**: Encodes temporal delay cascades
-- **Input**: Time-series sequence [10, 4] (delay history)
-- **Output**: 64-dim embedding
-- **Architecture**: 2-layer LSTM
-
-### Model 3: Semantic Encoder (`semantic_encoder.py`)
-- **Purpose**: Encodes natural language descriptions
-- **Input**: Text (operator logs, incident descriptions)
-- **Output**: 384-dim embedding
-- **Architecture**: Sentence-Transformer (all-MiniLM-L6-v2)
-
-### Model 4: Conflict Classifier (`conflict_classifier.py`)
-- **Purpose**: Predicts 8 types of operational conflicts
-- **Input**: Combined embeddings (64 + 64 + 384 = 512-dim)
-- **Output**: 8 probabilities (one per conflict type)
-- **Architecture**: MLP with dropout
-
-### Model 5: Outcome Predictor (`outcome_predictor_xgb.py`)
-- **Purpose**: Predicts resolution success probability (0-1)
-- **Input**: Context features + action features
-- **Output**: Success probability
-- **Architecture**: XGBoost Regressor
-
-## 🔄 Data Flow
-
-### Pipeline Overview
-
-```
-1. Data Generation
-   └─→ JSON files saved to data/network/ and data/processed/
-
-2. Feature Extraction
-   └─→ DataFuelPipeline loads JSON → extracts features for each model
-
-3. AI Model Processing
-   └─→ Models generate embeddings:
-       - GNN: 64-dim topology embedding
-       - LSTM: 64-dim temporal embedding
-       - Semantic: 384-dim text embedding
-
-4. Qdrant Storage
-   └─→ StorageManager uploads incidents with embeddings to Qdrant
-
-5. Search & Analysis
-   └─→ When new incident occurs:
-       - Extract features → Generate embeddings
-       - Search Qdrant for similar historical cases
-       - Predict conflicts and outcomes
-       - Recommend resolution strategies
-```
-
-### File Directory Rules
-
-- **Infrastructure files** → `data/network/`:
-  - `stations.json`
-  - `segments.json`
-  - `timetable.json`
-
-- **Operational files** → `data/processed/`:
-  - `incidents.json`
-  - `live_status.json`
-  - `golden_run_accidents.json`
-
-
-## 📝 Key Modules
-
-### `database.py` (StorageManager)
-- **Purpose**: Storage and retrieval layer
-- **Core Functions**:
-  - `load_json()`: Loads files from correct directories
-  - `upload_incident_memory()`: Uploads embeddings to Qdrant
-  - `search_similar_incidents()`: Multi-vector search
-- **Optional**: Save methods (if you want to use StorageManager in data generation)
-
-### `feature_extractor.py` (DataFuelPipeline)
-- **Purpose**: Converts JSON data → model-ready features
-- **Key Methods**:
-  - `extract_gnn_features()`: Graph structure for GNN
-  - `extract_lstm_sequence()`: Time-series for LSTM
-  - `extract_semantic_text()`: Text for Semantic Encoder
-  - `extract_conflict_features()`: Context for Conflict Classifier
-  - `extract_outcome_context()`: Features for Outcome Predictor
-
-## 🧪 Testing
-
-All modules include test scripts. Run from project root:
-
-```bash
-cd QRail
-
-# Test storage
-python src/backend/database.py
-
-# Test feature extraction
-python src/backend/feature_extractor.py
-
-# Test models
-python src/models/gnn_encoder.py
-python src/models/lstm_encoder.py
-python src/models/semantic_encoder.py
-python src/models/conflict_classifier.py
+python src/models/train_outcome_model.py
 ```
