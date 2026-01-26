@@ -16,33 +16,30 @@ function initControlPanel() {
     const simClock = document.getElementById('sim-clock');
 
     if (timeSlider && simClock) {
-        // Update clock display as user drags
+        // Update map immediately as user drags the slider
         timeSlider.addEventListener('input', (e) => {
             const totalMinutes = parseInt(e.target.value);
             const hours = Math.floor(totalMinutes / 60);
             const minutes = totalMinutes % 60;
             const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
-            // Update clock display immediately for visual feedback
+            // Update clock display
             simClock.textContent = timeStr;
-        });
-
-        // Jump to time when user releases slider
-        timeSlider.addEventListener('change', (e) => {
-            const totalMinutes = parseInt(e.target.value);
-            const hours = Math.floor(totalMinutes / 60);
-            const minutes = totalMinutes % 60;
-            const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
             if (window.simulation) {
+                // Stop any running simulation
+                window.simulation.stop();
+
+                // Set time to selected value
                 window.simulation.init(timeStr);
-                // Pause so judges can see the snapshot before hitting play
-                window.simulation.pause();
+
+                // Show trains at this exact time (snapshot)
+                window.simulation.updateTrains();
             }
         });
     }
 
-    // Play/Pause Control
+    // Play/Pause Control - starts time flowing from current slider positions
     const playBtn = document.getElementById('play-pause-btn');
     if (playBtn) {
         playBtn.addEventListener('click', () => {

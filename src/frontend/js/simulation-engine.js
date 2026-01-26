@@ -70,6 +70,12 @@ function initializeSimulation(timeStr) {
  * Start the simulation clock
  */
 function startSimulation() {
+    // Initialize if not already done
+    if (!simulationState.currentTime) {
+        console.log('⚠️ Simulation not initialized, initializing to 08:00');
+        initializeSimulation('08:00');
+    }
+
     if (simulationState.intervalId) {
         stopSimulation(); // Clear any existing interval
     }
@@ -82,7 +88,7 @@ function startSimulation() {
     const tickInterval = 1000 / simulationState.speed;
 
     simulationState.intervalId = setInterval(() => {
-        if (!simulationState.isPaused) {
+        if (!simulationState.isPaused && simulationState.currentTime) {
             // Advance time by 1 SECOND (not 1 minute!)
             simulationState.currentTime.setSeconds(simulationState.currentTime.getSeconds() + 1);
 
@@ -168,6 +174,11 @@ function updateTrainsFromTimetable() {
         return;
     }
 
+    if (!simulationState.currentTime) {
+        console.warn('⚠️ Simulation time not set, cannot update trains');
+        return;
+    }
+
     // Get timetable data (should be loaded globally or fetched)
     const timetable = window.timetableData || [];
     if (timetable.length === 0) {
@@ -186,6 +197,8 @@ function updateTrainsFromTimetable() {
     // Store in simulation state for tracking
     simulationState.activeTrainCount = activeTrains.length;
 
+    console.log(`🎨 Rendering ${activeTrains.length} active trains on network view...`);
+
     // Update network view - CRITICAL: Must re-render trains each tick
     if (window.networkView) {
         // Remove old trains first
@@ -196,9 +209,11 @@ function updateTrainsFromTimetable() {
 
         // Render trains at new positions
         window.networkView.renderTrains(activeTrains, segments, stations);
+    } else {
+        console.warn('⚠️ window.networkView not available');
     }
 
-    // Update metrics
+    // Update metrics - ALWAYS call this to update the count display
     updateTrainCount(activeTrains.length);
     updateNetworkLoad(activeTrains.length);
 }
