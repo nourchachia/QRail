@@ -80,16 +80,17 @@ function initNetworkView() {
         .attr('width', width)
         .attr('height', height);
 
-    // Create scales for positioning (Expanded domain for better spacing and aesthetics)
+    // Create scales for positioning (ZOOMED OUT for better spacing)
+    // Reduced domain to show less area = stations appear more spread out
     xScale = d3.scaleLinear()
-        .domain([-50, 170]) // Expanded from [-40, 160] for more breathing room
-        .range([80, width - 80]); // Increased padding from 50 to 80
+        .domain([0, 120])  // Reduced from [-50, 170] - zooms in on main cluster
+        .range([100, width - 100]); // Increased padding from 80 to 100
 
     yScale = d3.scaleLinear()
-        .domain([-50, 170]) // Expanded from [-40, 130] for symmetry
-        .range([height - 80, 80]); // Increased padding and inverted for natural orientation
+        .domain([0, 120])  // Reduced from [-50, 170] - zooms in on main cluster  
+        .range([height - 100, 100]); // Increased padding and inverted
 
-    console.log('Network view initialized');
+    console.log('Network view initialized (zoomed out for clarity)');
 }
 
 function renderNetwork(stations, segments) {
@@ -159,10 +160,15 @@ function renderStations(stations) {
     groups.append('text')
         .attr('class', 'station-label')
         .attr('x', 0)
-        .attr('y', -12) // Slightly above the circle
+        .attr('y', -14) // Slightly above the circle
         .attr('text-anchor', 'middle')
         .text(d => d.name)
-        .attr('font-size', d => d.type === 'major_hub' ? '12px' : '10px')
+        .attr('font-size', d => {
+            // Reduce font sizes for less clutter
+            if (d.type === 'major_hub') return '11px';
+            if (d.type === 'regional') return '9px';
+            return '0px';  // Hide minor station labels entirely
+        })
         .attr('font-weight', d => d.type === 'major_hub' ? 'bold' : 'normal')
         .attr('fill', '#e2e8f0') // Light text for dark theme
         .attr('pointer-events', 'none')
@@ -363,6 +369,8 @@ function renderTrains(trains, segments, stations) {
         return false;
     });
 
+    console.log(`🎨 Rendering ${validTrains.length} trains on map...`);
+
     // Create train markers
     const trainGroups = trainMarkerGroup.selectAll('.train-marker')
         .data(validTrains, d => d.id)
@@ -376,51 +384,54 @@ function renderTrains(trains, segments, stations) {
                 const segment = segmentMap.get(d.segment_id);
                 const pos = getPositionOnSegment(segment, d.progress !== undefined ? d.progress : 0.5, stationMap);
                 const rotation = getTrainRotation(segment, d.direction || 'forward', stationMap);
+                if (pos) {
+                    console.log(`  ${d.id} on segment ${d.segment_id} at (${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}) progress=${d.progress.toFixed(2)}`);
+                }
                 return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
             } else if (d.station_id && stationMap.has(d.station_id)) {
                 // Train is at a station
                 const station = stationMap.get(d.station_id);
                 const x = xScale(station.coordinates[0]);
                 const y = yScale(station.coordinates[1]) - 20; // Offset above station
+                console.log(`  ${d.id} at station ${d.station_id} (${x.toFixed(1)}, ${y.toFixed(1)})`);
                 return `translate(${x}, ${y})`;
             }
             return 'translate(0, 0)';
         });
 
-    // Train body (arrow/triangle shape pointing in direction)
+    // Train body (larger triangle/arrow for visibility)
     trainGroups.append('polygon')
         .attr('class', 'train-body')
-        .attr('points', '8,0 -6,5 -6,-5')
+        .attr('points', '12,0 -8,6 -8,-6')  // Larger than before (was 8,0 -6,5 -6,-5)
         .attr('fill', d => d.color || getTrainColor(d.status))
         .attr('stroke', '#fff')
-        .attr('stroke-width', 1.5);
+        .attr('stroke-width', 2);
 
-    // Pulsing effect for moving trains
+    // Pulsing effect for moving trains (larger pulse)
     trainGroups.filter(d => d.status === 'moving')
         .append('circle')
         .attr('class', 'train-pulse')
-        .attr('r', 12)
+        .attr('r', 18)  // Larger pulse (was 12)
         .attr('fill', 'none')
         .attr('stroke', d => d.color || getTrainColor(d.status))
         .attr('stroke-width', 2)
         .attr('opacity', 0.5);
 
-    // Add train ID label (shown on hover via CSS potentially, or always)
-    // Hidden by default to avoid clutter
+    // Add train ID label (visible for debugging)
     trainGroups.append('text')
         .attr('class', 'train-label')
         .attr('x', 0)
-        .attr('y', -15)
+        .attr('y', -18)
         .attr('text-anchor', 'middle')
         .attr('fill', '#fff')
-        .attr('font-size', '10px')
+        .attr('font-size', '11px')
         .attr('font-weight', 'bold')
         .attr('pointer-events', 'none')
         .text(d => d.id)
-        .style('display', 'none'); // Hiding label for now
+        .style('display', 'block');  // Show labels for debugging
 
     trainMarkers = trainGroups;
-    console.log(`Rendered ${validTrains.length} trains`);
+    console.log(`✅ Rendered ${validTrains.length} trains with labels visible`);
 }
 
 /**

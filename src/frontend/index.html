@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/network-view.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/control-panel.css">
+    <link rel="stylesheet" href="css/time-slider.css">
 </head>
 
 <body>
@@ -33,9 +34,6 @@
         <header class="app-header">
             <h1>🚄 Neural Rail Conductor</h1>
             <span class="subtitle">Network Operations Center</span>
-            <div class="clock-display" id="app-clock"
-                style="font-family: monospace; font-size: 1.2rem; color: #3b82f6; margin-left: 20px; font-weight: bold;">
-                --:--:--</div>
             <div class="demo-controls">
                 <button id="demo-mode-toggle" class="toggle-btn">
                     <span class="toggle-icon">🎬</span> Demo Mode: <span id="demo-mode-status">OFF</span>
@@ -175,18 +173,23 @@ Examples:
                         <h3>🕐 Simulation Time</h3>
                         <div class="sim-clock-display">
                             <span class="clock-label">Current Time:</span>
-                            <span id="sim-clock" class="sim-clock">--:--</span>
+                            <span id="sim-clock" class="sim-clock">08:00</span>
                         </div>
-                        <div class="time-buttons">
-                            <button class="time-btn" data-time="08:00">8 AM<br><span
-                                    style="font-size:0.8em">Peak</span></button>
-                            <button class="time-btn" data-time="12:00">12 PM<br><span
-                                    style="font-size:0.8em">Midday</span></button>
-                            <button class="time-btn" data-time="17:00">5 PM<br><span
-                                    style="font-size:0.8em">Peak</span></button>
-                            <button class="time-btn" data-time="20:00">8 PM<br><span
-                                    style="font-size:0.8em">Quiet</span></button>
+
+                        <!-- Time Slider (replaces preset buttons) -->
+                        <div class="time-slider-container">
+                            <label for="time-slider" class="slider-label">Drag to any time:</label>
+                            <input type="range" id="time-slider" class="time-slider" min="0" max="1439" value="480"
+                                step="15">
+                            <div class="time-labels">
+                                <span>00:00</span>
+                                <span>06:00</span>
+                                <span>12:00</span>
+                                <span>18:00</span>
+                                <span>23:59</span>
+                            </div>
                         </div>
+
                         <div class="playback-controls">
                             <button id="play-pause-btn" class="play-pause-btn">▶ Play</button>
                             <div class="speed-controls">
@@ -194,6 +197,7 @@ Examples:
                                 <button class="speed-btn active" data-speed="1">1x</button>
                                 <button class="speed-btn" data-speed="2">2x</button>
                                 <button class="speed-btn" data-speed="4">4x</button>
+                                <button class="speed-btn" data-speed="8">8x</button>
                             </div>
                         </div>
                         <div class="day-type-selector">

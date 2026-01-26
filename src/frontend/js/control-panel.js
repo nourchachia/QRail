@@ -11,6 +11,74 @@
  */
 
 function initControlPanel() {
+    // Time Slider (replaces preset buttons)
+    const timeSlider = document.getElementById('time-slider');
+    const simClock = document.getElementById('sim-clock');
+
+    if (timeSlider && simClock) {
+        // Update clock display as user drags
+        timeSlider.addEventListener('input', (e) => {
+            const totalMinutes = parseInt(e.target.value);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+            // Update clock display immediately for visual feedback
+            simClock.textContent = timeStr;
+        });
+
+        // Jump to time when user releases slider
+        timeSlider.addEventListener('change', (e) => {
+            const totalMinutes = parseInt(e.target.value);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+            if (window.simulation) {
+                window.simulation.init(timeStr);
+                // Pause so judges can see the snapshot before hitting play
+                window.simulation.pause();
+            }
+        });
+    }
+
+    // Play/Pause Control
+    const playBtn = document.getElementById('play-pause-btn');
+    if (playBtn) {
+        playBtn.addEventListener('click', () => {
+            if (window.simulation) {
+                const state = window.simulation.getState();
+                if (state.isRunning && !state.isPaused) {
+                    window.simulation.pause();
+                } else if (state.isPaused) {
+                    window.simulation.resume();
+                } else {
+                    window.simulation.start();
+                }
+            }
+        });
+    }
+
+    // Speed Controls
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const speed = parseInt(e.currentTarget.dataset.speed);
+            if (window.simulation) {
+                window.simulation.setSpeed(speed);
+            }
+        });
+    });
+
+    // Day Type Selector
+    document.querySelectorAll('.day-type-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const dayType = e.currentTarget.dataset.day;
+            if (window.simulation) {
+                window.simulation.setDayType(dayType);
+            }
+        });
+    });
+
     // Analyze button
     document.getElementById('analyze-btn').addEventListener('click', handleAnalyzeClick);
 

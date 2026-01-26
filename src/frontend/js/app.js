@@ -91,7 +91,7 @@ async function loadNetworkData() {
     }
 }
 
-// Clock Ticker
+// Real-Time Clock (shows actual wall clock, not simulation time)
 function startClock() {
     const clockEl = document.getElementById('app-clock');
     if (!clockEl) return;
@@ -157,15 +157,20 @@ async function loadDemoData() {
 
 async function loadTimetableAndStartTrains(stations, segments) {
     try {
-        // Load timetable.json from backend (not from frontend static server)
+        // Load timetable.json from backend
         const response = await fetch('http://localhost:8002/static/timetable.json');
+
+        let timetable;
         if (!response.ok) {
             console.warn('Could not load timetable.json, using mock trains');
             renderMockTrains(segments, stations);
             return;
+        } else {
+            timetable = await response.json();
         }
 
-        const timetable = await response.json();
+        // Store globally for simulation-engine.js
+        window.timetableData = timetable;
 
         // Also load real segments if available
         let realSegments = segments;
@@ -173,36 +178,41 @@ async function loadTimetableAndStartTrains(stations, segments) {
             const segResponse = await fetch('http://localhost:8002/static/segments.json');
             if (segResponse.ok) {
                 realSegments = await segResponse.json();
+                // Update global state with real segments
+                window.appState.setState({ segments: realSegments });
+                // Also update staticNetworkData for simulation engine
+                if (!window.staticNetworkData) window.staticNetworkData = {};
+                window.staticNetworkData.segments = realSegments;
+                window.staticNetworkData.stations = stations;
             }
         } catch (e) {
             console.warn('Using generated segments');
         }
 
-        // Initialize timetable engine
-        window.TimetableEngine.init(timetable, realSegments, stations);
-
-        // Detect and log conflicts
-        const conflicts = window.TimetableEngine.getConflictSummary();
-        if (conflicts.hasConflicts) {
-            console.warn('⚠️ Schedule Conflicts Detected:');
-            console.warn(`   Platform conflicts: ${conflicts.totalPlatformConflicts}`);
-            console.warn(`   Segment conflicts: ${conflicts.totalSegmentConflicts}`);
-            conflicts.platformConflicts.forEach(c => {
-                console.warn(`   🔴 ${c.trains.join(' & ')} at ${c.station} Platform ${c.platform} @ ${c.time}`);
-            });
-        } else {
-            console.log('✅ No scheduling conflicts detected');
+        // Initialize timetable engine (helper for conflict detection)
+        if (window.TimetableEngine) {
+            window.TimetableEngine.init(timetable, realSegments, stations);
         }
 
-        // Get current active trains
-        const activeTrains = window.TimetableEngine.getActiveTrains();
-        console.log(`🚂 ${activeTrains.length} trains active now`);
+        console.log(`✅ Timetable loaded: ${timetable.length} trains`);
 
-        // Render trains on network
-        window.networkView.renderTrains(activeTrains, realSegments, stations);
+        // Initialize Simulation (Time Travel)
+        if (window.simulation) {
+            // Default to 8 AM
+            console.log('🕐 Starting simulation at 08:00');
+            window.simulation.init("08:00");
 
-        // Start animation loop
-        startTrainAnimationLoop(realSegments, stations);
+            // Force initial train render
+            window.simulation.updateTrains();
+
+            // Start time flowing
+            window.simulation.start();
+
+            console.log('✅ Simulation engine started');
+        } else {
+            console.error("❌ Simulation engine not found!");
+            renderMockTrains(segments, stations);
+        }
 
     } catch (error) {
         console.error('Error loading timetable:', error);
@@ -216,42 +226,7 @@ function renderMockTrains(segments, stations) {
     window.networkView.renderTrains(mockTrains, segments, stations);
 }
 
-// 🚂 THE MOVING TRAIN ANIMATION YOU SPENT SO LONG ON
-let trainAnimationLoopId = null;
-let currentActiveTrains = []; // Store state for smooth simulation
-
-function startTrainAnimationLoop(segments, stations) {
-    if (trainAnimationLoopId) clearInterval(trainAnimationLoopId);
-
-    // Initial load of trains
-    if (window.TimetableEngine) {
-        currentActiveTrains = window.TimetableEngine.getActiveTrains();
-    }
-
-    // Update trains loop (simulation for smooth moving)
-    // Update trains loop (simulation for smooth moving)
-    trainAnimationLoopId = setInterval(() => {
-        // ALWAYS use TimetableEngine to get correct positions based on schedule/time
-        // This ensures trains follow their actual routes and don't just loop on one segment
-        if (window.TimetableEngine) {
-            currentActiveTrains = window.TimetableEngine.getActiveTrains();
-        } else if (window.appState.demoMode) {
-            // Fallback only if engine is missing (unlikely now)
-            currentActiveTrains = window.networkView.simulateMovement(currentActiveTrains);
-        }
-
-        // Smoothly update positions in network-view
-        window.networkView.updateTrains(currentActiveTrains, segments, stations);
-
-        // Update train count in status bar
-        const statusEl = document.getElementById('trains-status');
-        if (statusEl) statusEl.textContent = `🚂 Trains: ${currentActiveTrains.length}`;
-
-        const countEl = document.getElementById('trains-value');
-        if (countEl) countEl.textContent = currentActiveTrains.length;
-
-    }, 1000);
-}
+// NOTE: Old local animation loop removed in favor of simulation-engine.js
 
 function generateMockStations(count) {
     const stations = [];

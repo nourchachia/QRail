@@ -1,3 +1,4 @@
+
 """
 Neural Rail Conductor - Live Status Generator
 
@@ -528,79 +529,51 @@ def generate_live_status(snapshot_time: Optional[str] = None, day_type: Optional
 def main():
     """
     Main execution: Generate live status snapshot and save to JSON.
-    Supports 'demo' mode to generate multiple snapshots for UI testing.
-    Usage: python live_status_generator.py [demo|time]
     """
-    import sys
-    
     print("\n" + "="*60)
     print("🚂 Neural Rail Conductor - Live Status Generator")
     print("="*60)
     
-    # Parse command-line mode
-    mode = sys.argv[1] if len(sys.argv) > 1 else "default"
-    
-    snapshot_configs = []
-    
-    if mode == "demo":
-        print("🚀 Running in DEMO mode - generating snapshots for UI...")
-        # Generate all demo times for UI
-        snapshot_configs = [
-            {'time': '08:00', 'filename': 'live_status_08am.json', 'label': '8:00 AM (Morning Peak)'},
-            {'time': '12:00', 'filename': 'live_status_12pm.json', 'label': '12:00 PM (Midday)'},
-            {'time': '17:00', 'filename': 'live_status_05pm.json', 'label': '5:00 PM (Evening Peak)'},
-            {'time': '20:00', 'filename': 'live_status_08pm.json', 'label': '8:00 PM (Off-Peak)'},
-        ]
-    elif mode == "default":
-        # Standard behavior: single live_status.json at default time
-        snapshot_configs.append({
-            'time': None, 
-            'filename': 'live_status.json',
-            'label': 'Default Live Status'
-        })
-    else:
-        # Specific time passed as argument (e.g. "14:30")
-        snapshot_configs.append({
-            'time': mode,
-            'filename': 'live_status.json', 
-            'label': f'Live Status at {mode}'
-        })
+    # Generate live status (default: 08:30 weekday)
+    live_status = generate_live_status()
     
     # Create output directory
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     
-    # Generate each snapshot
-    for config in snapshot_configs:
-        print(f"\n{'='*60}")
-        print(f"⏰ Generating: {config['label']}")
-        print(f"{'='*60}")
-        
-        live_status = generate_live_status(snapshot_time=config['time'])
-        
-        output_path = OUTPUT_DIR / config['filename']
-        print(f"\n💾 Saving to: {output_path}")
-        
-        with open(output_path, 'w') as f:
-            json.dump(live_status, f, indent=2)
-        
-        # Print statistics
-        print(f"\n✅ Generated successfully!")
-        print(f"   Active trains: {live_status['total_active_trains']}")
-        print(f"   Network load: {live_status['network_load_pct']}%")
-        print(f"   Weather: {live_status['weather']['condition']}")
-        
-        # Signal aspect distribution
-        signal_counts = {}
-        for train in live_status.get("active_trains", []):
-            aspect = train.get("signal_aspect", "Unknown")
-            signal_counts[aspect] = signal_counts.get(aspect, 0) + 1
-        
-        if signal_counts:
-            print(f"   Signal aspects: ", end="")
-            print(" | ".join(f"{aspect}: {count}" for aspect, count in sorted(signal_counts.items())))
+    # Save to JSON
+    output_path = OUTPUT_DIR / "live_status.json"
     
-    print("\n" + "="*60)
-    print("✨ Generation complete!")
+    print(f"\n💾 Saving live status to: {output_path}")
+    with open(output_path, 'w') as f:
+        json.dump(live_status, f, indent=2)
+    
+    # Print statistics
+    print(f"\n✅ Live status generated successfully!")
+    print(f"\n📊 Statistics:")
+    print(f"   Timestamp: {live_status['timestamp']}")
+    print(f"   Active trains: {live_status['total_active_trains']}")
+    print(f"   Network load: {live_status['network_load_pct']}%")
+    print(f"   Weather: {live_status['weather']['condition']}")
+    
+    # Signal aspect distribution
+    signal_counts = {}
+    for train in live_status["active_trains"]:
+        aspect = train["signal_aspect"]
+        signal_counts[aspect] = signal_counts.get(aspect, 0) + 1
+    
+    print(f"\n   Signal aspects:")
+    for aspect, count in sorted(signal_counts.items()):
+        print(f"      {aspect}: {count}")
+    
+    # Delay distribution
+    delays = [t["cur_delay"] for t in live_status["active_trains"]]
+    if delays:
+        print(f"\n   Delay statistics:")
+        print(f"      Average: {np.mean(delays):.1f} minutes")
+        print(f"      Max: {max(delays)} minutes")
+        print(f"      On-time (0 min): {sum(1 for d in delays if d == 0)} trains")
+    
+    print("\n✨ Generation complete!")
 
 
 if __name__ == "__main__":

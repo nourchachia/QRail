@@ -77,26 +77,27 @@ function startSimulation() {
     simulationState.isRunning = true;
     simulationState.isPaused = false;
 
-    // Update every 1000ms (1 second real time = 1 minute sim time)
-    const tickInterval = 100 / simulationState.speed; //ms per tick
+    // Real-time simulation: 1 real second = 1 sim second
+    // Update every 1000ms and advance by 1 second
+    const tickInterval = 1000 / simulationState.speed;
 
     simulationState.intervalId = setInterval(() => {
         if (!simulationState.isPaused) {
-            // Advance time by 1 minute
-            simulationState.currentTime.setMinutes(simulationState.currentTime.getMinutes() + 1);
+            // Advance time by 1 SECOND (not 1 minute!)
+            simulationState.currentTime.setSeconds(simulationState.currentTime.getSeconds() + 1);
 
             // Update all displays
             updateClockDisplay();
             updateTrainsFromTimetable();
 
-            // Update telemetry every 3 minutes
-            if (simulationState.currentTime.getMinutes() % 3 === 0) {
+            // Update telemetry every 10 seconds
+            if (simulationState.currentTime.getSeconds() % 10 === 0) {
                 updateSimulationMetrics();
             }
         }
     }, tickInterval);
 
-    console.log(`▶️ Simulation started at ${simulationState.speed}x speed`);
+    console.log(`▶️ Real-time simulation started (1s IRL = 1s sim)`);
     updatePlayPauseButton();
 }
 
@@ -182,26 +183,39 @@ function updateTrainsFromTimetable() {
     // Calculate train positions
     const activeTrains = calculateActiveTrains(timetable, currentTime, dayType, segments, stations);
 
-    // Update network view
-    if (window.networkView && window.networkView.updateTrains) {
-        // Update existing train positions (smooth animation)
-        window.networkView.updateTrains(activeTrains, segments, stations);
-    } else if (window.networkView && window.networkView.renderTrains) {
-        // Re-render trains (less smooth but works)
-        window.networkView.clearTrains && window.networkView.clearTrains();
+    // Store in simulation state for tracking
+    simulationState.activeTrainCount = activeTrains.length;
+
+    // Update network view - CRITICAL: Must re-render trains each tick
+    if (window.networkView) {
+        // Remove old trains first
+        const trainGroup = document.querySelector('.train-group');
+        if (trainGroup) {
+            trainGroup.remove();
+        }
+
+        // Render trains at new positions
         window.networkView.renderTrains(activeTrains, segments, stations);
     }
 
     // Update metrics
     updateTrainCount(activeTrains.length);
+    updateNetworkLoad(activeTrains.length);
 }
 
 /**
  * Calculate active trains at a specific time
  */
 function calculateActiveTrains(timetable, currentTime, dayType, segments, stations) {
-    const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+    const currentHours = currentTime.getHours();
+    const currentMinutes = currentTime.getMinutes();
+    const currentSeconds = currentTime.getSeconds();
+
+    // Total seconds since midnight for comparison
+    const currentTotalSeconds = currentHours * 3600 + currentMinutes * 60 + currentSeconds;
+
     const activeTrains = [];
+    let debugCount = 0;
 
     for (const train of timetable) {
         const stops = train.stops.filter(s => s.daytype === dayType);
@@ -217,16 +231,18 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
         const firstStop = sortedStops[0];
         const lastStop = sortedStops[sortedStops.length - 1];
 
+        // Parse first/last times (HH:MM format)
         const [startH, startM] = firstStop.departure_time.split(':').map(Number);
         const [endH, endM] = lastStop.arrival_time.split(':').map(Number);
 
-        const startMinutes = startH * 60 + startM;
-        const endMinutes = endH * 60 + endM;
+        const startTotalSeconds = startH * 3600 + startM * 60;
+        const endTotalSeconds = endH * 3600 + endM * 60;
 
-        // Check if train is active (between departure and arrival)
-        if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
-            // Find current segment
-            const position = calculateTrainPosition(train, sortedStops, currentMinutes, segments, stations);
+        // Check if train is active (between first departure and last arrival)
+        if (currentTotalSeconds >= startTotalSeconds && currentTotalSeconds <= endTotalSeconds) {
+            debugCount++;
+            // Find current segment/position
+            const position = calculateTrainPosition(train, sortedStops, currentTotalSeconds, segments, stations);
 
             if (position) {
                 activeTrains.push({
@@ -238,8 +254,15 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
                     speed: getSpeedForServiceType(train.service_type),
                     color: getColorForServiceType(train.service_type)
                 });
+            } else {
+                console.warn(`⚠️ Train ${train.train_id} is active but position calculation returned null`);
             }
         }
+    }
+
+    console.log(`🚂 Time: ${currentTime.toTimeString().slice(0, 8)} | Active: ${debugCount} trains in timetable, ${activeTrains.length} with valid positions`);
+    if (activeTrains.length > 0) {
+        console.log(`   Train IDs: ${activeTrains.map(t => t.id).slice(0, 5).join(', ')}${activeTrains.length > 5 ? '...' : ''}`);
     }
 
     return activeTrains;
@@ -248,7 +271,7 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
 /**
  * Calculate exact position of a train at current time
  */
-function calculateTrainPosition(train, sortedStops, currentMinutes, segments, stations) {
+function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segments, stations) {
     // Find which leg of the journey we're on
     for (let i = 0; i < sortedStops.length - 1; i++) {
         const fromStop = sortedStops[i];
@@ -257,11 +280,11 @@ function calculateTrainPosition(train, sortedStops, currentMinutes, segments, st
         const [depH, depM] = fromStop.departure_time.split(':').map(Number);
         const [arrH, arrM] = toStop.arrival_time.split(':').map(Number);
 
-        const departureMin = depH * 60 + depM;
-        const arrivalMin = arrH * 60 + arrM;
+        const departureSeconds = depH * 3600 + depM * 60;
+        const arrivalSeconds = arrH * 3600 + arrM * 60;
 
         // Check if we're on this segment
-        if (currentMinutes >= departureMin && currentMinutes <= arrivalMin) {
+        if (currentTotalSeconds >= departureSeconds && currentTotalSeconds <= arrivalSeconds) {
             // Find the segment
             const segment = segments.find(s =>
                 (s.from_station === fromStop.station_id && s.to_station === toStop.station_id) ||
@@ -271,8 +294,8 @@ function calculateTrainPosition(train, sortedStops, currentMinutes, segments, st
             if (!segment) continue;
 
             // Calculate progress along segment
-            const travelTime = arrivalMin - departureMin;
-            const elapsed = currentMinutes - departureMin;
+            const travelTime = arrivalSeconds - departureSeconds;
+            const elapsed = currentTotalSeconds - departureSeconds;
             const progress = travelTime > 0 ? elapsed / travelTime : 0;
 
             return {
@@ -285,7 +308,8 @@ function calculateTrainPosition(train, sortedStops, currentMinutes, segments, st
         }
 
         // Check if at station (dwelling)
-        if (currentMinutes >= arrivalMin && currentMinutes < departureMin) {
+        const arriveSeconds = arrH * 3600 + arrM * 60;
+        if (currentTotalSeconds >= arriveSeconds && currentTotalSeconds < departureSeconds) {
             return {
                 station_id: fromStop.station_id,
                 progress: 0,
@@ -307,7 +331,8 @@ function updateClockDisplay() {
 
     const hours = simulationState.currentTime.getHours().toString().padStart(2, '0');
     const minutes = simulationState.currentTime.getMinutes().toString().padStart(2, '0');
-    clockEl.textContent = `${hours}:${minutes}`;
+    const seconds = simulationState.currentTime.getSeconds().toString().padStart(2, '0');
+    clockEl.textContent = `${hours}:${minutes}:${seconds}`;
 }
 
 function updatePlayPauseButton() {
@@ -339,18 +364,42 @@ function updateTrainCount(count) {
     if (trainValueEl) {
         trainValueEl.textContent = count;
     }
+
+    const trainStatusEl = document.getElementById('trains-status');
+    if (trainStatusEl) {
+        trainStatusEl.textContent = `🚂 Trains: ${count}`;
+    }
+}
+
+function updateNetworkLoad(trainCount) {
+    // Simple heuristic: network load based on train density
+    // Assume max capacity is ~50 trains for the network
+    const loadPct = Math.min(100, Math.round((trainCount / 50) * 100));
+
+    const loadValueEl = document.getElementById('load-value');
+    if (loadValueEl) {
+        loadValueEl.textContent = `${loadPct}%`;
+    }
+
+    const loadStatusEl = document.getElementById('load-status');
+    if (loadStatusEl) {
+        loadStatusEl.textContent = `📊 Load: ${loadPct}%`;
+    }
+
+    // Update telemetry if available
+    if (window.timeline && window.timeline.updateMetrics) {
+        window.timeline.updateMetrics({
+            network_load_pct: loadPct,
+            active_trains: trainCount,
+            weather: { condition: 'clear' }
+        });
+    }
 }
 
 function updateSimulationMetrics() {
-    // Fetch or calculate current network load based on active trains
-    if (window.timeline && window.timeline.updateMetrics) {
-        const mockStatus = {
-            network_load_pct: Math.min(100, simulationState.activeTrainCount * 5),
-            active_trains: simulationState.activeTrainCount || 0,
-            weather: { condition: 'clear' }
-        };
-        window.timeline.updateMetrics(mockStatus);
-    }
+    // This is called periodically to refresh all metrics
+    const trainCount = simulationState.activeTrainCount || 0;
+    updateNetworkLoad(trainCount);
 }
 
 // ============================================================================
