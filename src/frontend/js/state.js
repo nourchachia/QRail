@@ -203,7 +203,16 @@ const mockData = {
             wind_speed_kmh: 25,
             visibility_km: 3.5,
         },
-        active_trains: [],
+        active_trains: [
+            { id: 'TRN_001', segment_id: 'SEG_001', progress: 0.2, speed: 80, direction: 'forward', status: 'moving' },
+            { id: 'TRN_002', segment_id: 'SEG_005', progress: 0.6, speed: 60, direction: 'forward', status: 'moving' },
+            { id: 'TRN_003', segment_id: 'SEG_010', progress: 0.4, speed: 0, direction: 'forward', status: 'stopped' },
+            { id: 'TRN_004', segment_id: 'SEG_015', progress: 0.8, speed: 45, direction: 'backward', status: 'moving' },
+            { id: 'TRN_005', segment_id: 'SEG_020', progress: 0.3, speed: 30, direction: 'forward', status: 'delayed' },
+            { id: 'TRN_006', segment_id: 'SEG_025', progress: 0.5, speed: 90, direction: 'forward', status: 'moving' },
+            { id: 'TRN_007', segment_id: 'SEG_030', progress: 0.7, speed: 70, direction: 'backward', status: 'moving' },
+            { id: 'TRN_008', segment_id: 'SEG_035', progress: 0.1, speed: 55, direction: 'forward', status: 'moving' },
+        ],
     },
 };
 

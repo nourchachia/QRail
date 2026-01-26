@@ -86,24 +86,142 @@ async function loadNetworkData() {
     }
 }
 
-function loadDemoData() {
+async function loadDemoData() {
     console.log('Loading demo data...');
 
-    // Generate mock stations
-    const stations = generateMockStations(20);
-    const segments = generateMockSegments(stations);
+    try {
+        // Load from backend API (proper architecture)
+        const [stationsResponse, segmentsResponse] = await Promise.all([
+            fetch('http://localhost:8000/api/stations'),
+            fetch('http://localhost:8000/api/segments')
+        ]);
 
-    window.appState.setState({
-        stations,
-        segments,
-        liveStatus: window.mockData.liveStatus,
-    });
+        let stations, segments;
 
-    window.networkView.render(stations, segments);
-    window.networkView.updateStatus(window.mockData.liveStatus);
-    window.timeline.updateMetrics(window.mockData.liveStatus);
+        if (stationsResponse.ok && segmentsResponse.ok) {
+            const stationsData = await stationsResponse.json();
+            const segmentsData = await segmentsResponse.json();
+            stations = stationsData.stations;
+            segments = segmentsData.segments;
+            console.log('✅ Loaded real network from backend API');
+        } else {
+            // Fallback to generated data if backend not running
+            console.warn('Backend API not available, generating mock data');
+            console.warn('To use real data, start backend: python src/api/main.py');
+            stations = generateMockStations(50);
+            segments = generateMockSegments(stations);
+        }
 
-    console.log(`✅ Loaded demo network with ${stations.length} stations`);
+        window.appState.setState({
+            stations,
+            segments,
+            liveStatus: window.mockData.liveStatus,
+        });
+
+        window.networkView.render(stations, segments);
+        window.networkView.updateStatus(window.mockData.liveStatus);
+        window.timeline.updateMetrics(window.mockData.liveStatus);
+
+        // Load timetable and initialize train animation
+        loadTimetableAndStartTrains(stations, segments);
+
+        console.log(`✅ Loaded demo network with ${stations.length} stations`);
+
+    } catch (error) {
+        console.error('Error loading network data:', error);
+        // Fallback to generated data
+        const stations = generateMockStations(20);
+        const segments = generateMockSegments(stations);
+
+        window.appState.setState({
+            stations,
+            segments,
+            liveStatus: window.mockData.liveStatus,
+        });
+
+        window.networkView.render(stations, segments);
+        window.networkView.updateStatus(window.mockData.liveStatus);
+        window.timeline.updateMetrics(window.mockData.liveStatus);
+
+        loadTimetableAndStartTrains(stations, segments);
+        console.log(`✅ Loaded generated network with ${stations.length} stations`);
+    }
+}
+
+async function loadTimetableAndStartTrains(stations, segments) {
+    try {
+        // Load timetable.json
+        const response = await fetch('/data/network/timetable.json');
+        if (!response.ok) {
+            console.warn('Could not load timetable.json, using mock trains');
+            renderMockTrains(segments, stations);
+            return;
+        }
+
+        const timetable = await response.json();
+
+        // Also load real segments if available
+        let realSegments = segments;
+        try {
+            const segResponse = await fetch('/data/network/segments.json');
+            if (segResponse.ok) {
+                realSegments = await segResponse.json();
+            }
+        } catch (e) {
+            console.warn('Using generated segments');
+        }
+
+        // Initialize timetable engine
+        window.TimetableEngine.init(timetable, realSegments, stations);
+
+        // Detect and log conflicts
+        const conflicts = window.TimetableEngine.getConflictSummary();
+        if (conflicts.hasConflicts) {
+            console.warn('⚠️ Schedule Conflicts Detected:');
+            console.warn(`   Platform conflicts: ${conflicts.totalPlatformConflicts}`);
+            console.warn(`   Segment conflicts: ${conflicts.totalSegmentConflicts}`);
+            conflicts.platformConflicts.forEach(c => {
+                console.warn(`   🔴 ${c.trains.join(' & ')} at ${c.station} Platform ${c.platform} @ ${c.time}`);
+            });
+        } else {
+            console.log('✅ No scheduling conflicts detected');
+        }
+
+        // Get current active trains
+        const activeTrains = window.TimetableEngine.getActiveTrains();
+        console.log(`🚂 ${activeTrains.length} trains active now`);
+
+        // Render trains on network
+        window.networkView.renderTrains(activeTrains, realSegments, stations);
+
+        // Start animation loop
+        startTrainAnimationLoop(realSegments, stations);
+
+    } catch (error) {
+        console.error('Error loading timetable:', error);
+        renderMockTrains(segments, stations);
+    }
+}
+
+function renderMockTrains(segments, stations) {
+    // Fallback to mock trains from state.js
+    const mockTrains = window.mockData.liveStatus.active_trains || [];
+    window.networkView.renderTrains(mockTrains, segments, stations);
+}
+
+let trainAnimationLoopId = null;
+
+function startTrainAnimationLoop(segments, stations) {
+    // Update trains every second
+    trainAnimationLoopId = setInterval(() => {
+        if (!window.TimetableEngine || !window.TimetableEngine.timetable.length) return;
+
+        const activeTrains = window.TimetableEngine.getActiveTrains();
+        window.networkView.updateTrains(activeTrains, segments, stations);
+
+        // Update train count in status bar
+        document.getElementById('trains-status').textContent = `🚂 Trains: ${activeTrains.length}`;
+    }, 1000);
 }
 
 function generateMockStations(count) {

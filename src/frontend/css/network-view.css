@@ -176,3 +176,83 @@
 .network-tooltip.visible {
     opacity: 1;
 }
+
+/* ============================================================================
+   Train Markers
+   ============================================================================ */
+
+.train-group {
+    pointer-events: none;
+}
+
+.train-marker {
+    transition: transform 0.45s ease-out;
+}
+
+.train-body {
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+    transition: fill 0.3s ease;
+}
+
+/* Train Status Colors */
+.train-moving .train-body {
+    fill: #3b82f6;
+}
+
+.train-stopped .train-body {
+    fill: #f59e0b;
+}
+
+.train-delayed .train-body {
+    fill: #ef4444;
+}
+
+/* Pulse animation for moving trains */
+.train-pulse {
+    animation: train-pulse-anim 1.5s ease-out infinite;
+}
+
+@keyframes train-pulse-anim {
+    0% {
+        r: 8;
+        opacity: 0.6;
+    }
+
+    100% {
+        r: 20;
+        opacity: 0;
+    }
+}
+
+/* Hover effect for train markers */
+.train-marker:hover .train-body {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+}
+
+/* Train ID labels - hidden by default */
+.train-label {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.train-marker:hover .train-label {
+    opacity: 1;
+}
+
+/* Stopped trains at stations */
+.train-stopped .train-body {
+    animation: stopped-pulse 2s ease-in-out infinite;
+}
+
+@keyframes stopped-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}

@@ -913,7 +913,7 @@ if __name__ == "__main__":
     uvicorn.run(
         app,
         host="0.0.0.0",  # Listen on all interfaces
-        port=8001,       # Standard development port
+        port=8002,       # Standard development port
         reload=False     # Disabled for direct python execution
     )
 
