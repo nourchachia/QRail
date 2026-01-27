@@ -83,14 +83,12 @@ function initNetworkView() {
     // Create scales for positioning (ZOOMED OUT for better spacing)
     // Reduced domain to show less area = stations appear more spread out
     xScale = d3.scaleLinear()
-        .domain([0, 120])  // Reduced from [-50, 170] - zooms in on main cluster
-        .range([100, width - 100]); // Increased padding from 80 to 100
+        .domain([-5, 125])  // Moderately expanded to show peripheral stations without over-zooming out
+        .range([100, width - 100]);
 
     yScale = d3.scaleLinear()
-        .domain([0, 120])  // Reduced from [-50, 170] - zooms in on main cluster  
-        .range([height - 100, 100]); // Increased padding and inverted
-
-    console.log('Network view initialized (zoomed out for clarity)');
+        .domain([-5, 125])  // Moderately expanded to show peripheral stations without over-zooming out
+        .range([height - 100, 100]);
 }
 
 function renderNetwork(stations, segments) {
@@ -103,8 +101,6 @@ function renderNetwork(stations, segments) {
 
     // Render stations
     renderStations(stations);
-
-    console.log(`Rendered ${stations.length} stations and ${segments.length} segments`);
 }
 
 function renderSegments(segments, stations) {
@@ -328,20 +324,21 @@ function getPositionOnSegment(segment, progress, stationMap) {
 /**
  * Calculate rotation angle for train direction indicator
  */
-function getTrainRotation(segment, direction, stationMap) {
-    const from = stationMap.get(segment.from_station);
-    const to = stationMap.get(segment.to_station);
+function getTrainRotation(fromStationId, toStationId, stationMap) {
+    const from = stationMap.get(fromStationId);
+    const to = stationMap.get(toStationId);
 
     if (!from || !to) return 0;
 
-    const dx = to.coordinates[0] - from.coordinates[0];
-    const dy = to.coordinates[1] - from.coordinates[1];
-    let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+    // Use pixel coordinates to calculate screen rotation correctly
+    const x1 = xScale(from.coordinates[0]);
+    const y1 = yScale(from.coordinates[1]);
+    const x2 = xScale(to.coordinates[0]);
+    const y2 = yScale(to.coordinates[1]);
 
-    // Reverse angle if going backward
-    if (direction === 'backward') {
-        angle += 180;
-    }
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
     return angle;
 }
@@ -356,69 +353,82 @@ function renderTrains(trains, segments, stations) {
     const stationMap = new Map(stations.map(s => [s.id, s]));
     const segmentMap = new Map(segments.map(s => [s.id, s]));
 
-    // Remove existing train group if any (cleanup)
-    networkSvg.selectAll('.train-group').remove();
+    // Use existing group or create new one
+    trainMarkerGroup = networkSvg.select('.train-group');
+    if (trainMarkerGroup.empty()) {
+        trainMarkerGroup = networkSvg.append('g').attr('class', 'train-group');
+    }
 
-    // Create train group layer (on top of everything)
-    trainMarkerGroup = networkSvg.append('g').attr('class', 'train-group');
-
-    // Filter trains - handle both segment-based and station-based positioning
+    // Filter valid trains
     const validTrains = trains.filter(train => {
         if (train.segment_id && segmentMap.has(train.segment_id)) return true;
         if (train.station_id && stationMap.has(train.station_id)) return true;
         return false;
     });
 
-    console.log(`🎨 Rendering ${validTrains.length} trains on map...`);
+    // Helper to calculate transform
+    const getTransform = (d) => {
+        if (d.segment_id && segmentMap.has(d.segment_id)) {
+            const segment = segmentMap.get(d.segment_id);
+            const pos = getPositionOnSegment(segment, d.progress !== undefined ? d.progress : 0.5, stationMap);
+            // Use the absolute travel endpoints (from/to) for rotation - no more direction flags needed!
+            const rotation = getTrainRotation(d.from_station, d.to_station, stationMap);
+            return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
+        } else if (d.station_id && stationMap.has(d.station_id)) {
+            const station = stationMap.get(d.station_id);
+            const x = xScale(station.coordinates[0]);
+            const y = yScale(station.coordinates[1]);
+            // Still rotate even if dwelling
+            const rotation = getTrainRotation(d.from_station, d.to_station, stationMap);
+            return `translate(${x}, ${y}) rotate(${rotation})`;
+        }
+        return 'translate(0, 0)';
+    };
 
-    // Create train markers
+    // DATA JOIN
     const trainGroups = trainMarkerGroup.selectAll('.train-marker')
-        .data(validTrains, d => d.id)
-        .enter()
+        .data(validTrains, d => d.id);
+
+    // EXIT
+    trainGroups.exit().remove();
+
+    // UPDATE - Smooth transition for existing trains
+    // FIX: At high speeds (>2x), disable transition to prevent interruption locking
+    const transitionDuration = (window.simulationState && window.simulationState.speed > 2) ? 0 : 100;
+
+    trainGroups.transition()
+        .duration(transitionDuration)
+        .ease(d3.easeLinear)
+        .attr('transform', d => getTransform(d));
+
+    // Update status/color
+    trainGroups.select('.train-body')
+        .attr('fill', d => d.color || getTrainColor(d.status));
+
+    // ENTER - Create new trains
+    const enterGroups = trainGroups.enter()
         .append('g')
         .attr('class', d => `train-marker train-${d.status}`)
         .attr('data-train-id', d => d.id)
-        .attr('transform', d => {
-            // Position based on segment or station
-            if (d.segment_id && segmentMap.has(d.segment_id)) {
-                const segment = segmentMap.get(d.segment_id);
-                const pos = getPositionOnSegment(segment, d.progress !== undefined ? d.progress : 0.5, stationMap);
-                const rotation = getTrainRotation(segment, d.direction || 'forward', stationMap);
-                if (pos) {
-                    console.log(`  ${d.id} on segment ${d.segment_id} at (${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}) progress=${d.progress.toFixed(2)}`);
-                }
-                return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
-            } else if (d.station_id && stationMap.has(d.station_id)) {
-                // Train is at a station
-                const station = stationMap.get(d.station_id);
-                const x = xScale(station.coordinates[0]);
-                const y = yScale(station.coordinates[1]) - 20; // Offset above station
-                console.log(`  ${d.id} at station ${d.station_id} (${x.toFixed(1)}, ${y.toFixed(1)})`);
-                return `translate(${x}, ${y})`;
-            }
-            return 'translate(0, 0)';
-        });
+        .attr('transform', d => getTransform(d));
 
-    // Train body (larger triangle/arrow for visibility)
-    trainGroups.append('polygon')
+    enterGroups.append('polygon')
         .attr('class', 'train-body')
-        .attr('points', '12,0 -8,6 -8,-6')  // Larger than before (was 8,0 -6,5 -6,-5)
+        .attr('points', '12,0 -8,6 -8,-6')
         .attr('fill', d => d.color || getTrainColor(d.status))
         .attr('stroke', '#fff')
         .attr('stroke-width', 2);
 
-    // Pulsing effect for moving trains (larger pulse)
-    trainGroups.filter(d => d.status === 'moving')
+    enterGroups.filter(d => d.status === 'moving')
         .append('circle')
         .attr('class', 'train-pulse')
-        .attr('r', 18)  // Larger pulse (was 12)
+        .attr('r', 18)
         .attr('fill', 'none')
         .attr('stroke', d => d.color || getTrainColor(d.status))
         .attr('stroke-width', 2)
         .attr('opacity', 0.5);
 
-    // Add train ID label (visible for debugging)
-    trainGroups.append('text')
+    enterGroups.append('text')
         .attr('class', 'train-label')
         .attr('x', 0)
         .attr('y', -18)
@@ -427,11 +437,7 @@ function renderTrains(trains, segments, stations) {
         .attr('font-size', '11px')
         .attr('font-weight', 'bold')
         .attr('pointer-events', 'none')
-        .text(d => d.id)
-        .style('display', 'block');  // Show labels for debugging
-
-    trainMarkers = trainGroups;
-    console.log(`✅ Rendered ${validTrains.length} trains with labels visible`);
+        .text(d => d.id);
 }
 
 /**
@@ -594,6 +600,20 @@ function stopTrainAnimation() {
         trainAnimationInterval = null;
         console.log('Train animation stopped');
     }
+}
+
+/**
+ * Get color based on train status
+ */
+function getTrainColor(status) {
+    const colors = {
+        moving: '#3b82f6',
+        stopped: '#f59e0b',
+        delayed: '#ef4444',
+        recovering: '#10b981',
+        dwelling: '#3b82f6'
+    };
+    return colors[status] || colors.moving;
 }
 
 //Export functions

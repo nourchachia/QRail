@@ -16,11 +16,14 @@ let simulationState = {
     isRunning: false,
     isPaused: false,
     currentTime: null,  // Date object for current simulation time
-    speed: 1,  // 1x, 2x, 4x multiplier
+    speed: 60,  // Default: 1 real second = 60 sim seconds (1 minute)
     baseTime: null,  // Starting point for simulation
     intervalId: null,
     dayType: 'weekday',  // Current day type: 'weekday', 'weekend', 'holiday'
 };
+
+// Expose generically for other modules
+window.simulationState = simulationState;
 
 /**
  * Set the active day type (weekday/weekend/holiday)
@@ -83,14 +86,32 @@ function startSimulation() {
     simulationState.isRunning = true;
     simulationState.isPaused = false;
 
+    // Remove any existing interval just in case
+    if (simulationState.intervalId) {
+        clearInterval(simulationState.intervalId);
+        simulationState.intervalId = null;
+    }
+
     // Real-time simulation: 1 real second = 1 sim second
     // Update every 1000ms and advance by 1 second
-    const tickInterval = 1000 / simulationState.speed;
+    // Update loop runs every 100ms for smoother animation
+    const tickInterval = 100;
 
     simulationState.intervalId = setInterval(() => {
         if (!simulationState.isPaused && simulationState.currentTime) {
-            // Advance time by 1 SECOND (not 1 minute!)
-            simulationState.currentTime.setSeconds(simulationState.currentTime.getSeconds() + 1);
+            // Advance time based on speed factor (default 60x = 1 min per sec)
+            // We want smooth updates, so we update every 100ms
+
+            // If speed is 60x:
+            // 1 sec real time = 60 sec sim time
+            // 100ms real time = 6 sec sim time
+
+            // Calculate seconds to advance per tick (assuming 100ms interval)
+            const secondsToAdvance = simulationState.speed * 0.1;
+
+            simulationState.currentTime.setSeconds(
+                simulationState.currentTime.getSeconds() + secondsToAdvance
+            );
 
             // Update all displays
             updateClockDisplay();
@@ -103,7 +124,6 @@ function startSimulation() {
         }
     }, tickInterval);
 
-    console.log(`▶️ Real-time simulation started (1s IRL = 1s sim)`);
     updatePlayPauseButton();
 }
 
@@ -112,7 +132,6 @@ function startSimulation() {
  */
 function pauseSimulation() {
     simulationState.isPaused = true;
-    console.log('⏸️ Simulation paused');
     updatePlayPauseButton();
 }
 
@@ -121,7 +140,6 @@ function pauseSimulation() {
  */
 function resumeSimulation() {
     simulationState.isPaused = false;
-    console.log('▶️ Simulation resumed');
     updatePlayPauseButton();
 }
 
@@ -135,7 +153,6 @@ function stopSimulation() {
     }
     simulationState.isRunning = false;
     simulationState.isPaused = false;
-    console.log('⏹️ Simulation stopped');
     updatePlayPauseButton();
 }
 
@@ -151,13 +168,13 @@ function setSimulationSpeed(speed) {
     }
 
     simulationState.speed = speed;
-    console.log(`⏩ Speed set to ${speed}x`);
 
     if (wasRunning) {
         startSimulation();
+    } else {
+        // If it wasn't running, just update the state but don't start the clock
+        updateSpeedButtons();
     }
-
-    updateSpeedButtons();
 }
 
 // ============================================================================
@@ -174,10 +191,7 @@ function updateTrainsFromTimetable() {
         return;
     }
 
-    if (!simulationState.currentTime) {
-        console.warn('⚠️ Simulation time not set, cannot update trains');
-        return;
-    }
+    if (!simulationState.currentTime) return;
 
     // Get timetable data (should be loaded globally or fetched)
     const timetable = window.timetableData || [];
@@ -197,17 +211,9 @@ function updateTrainsFromTimetable() {
     // Store in simulation state for tracking
     simulationState.activeTrainCount = activeTrains.length;
 
-    console.log(`🎨 Rendering ${activeTrains.length} active trains on network view...`);
-
     // Update network view - CRITICAL: Must re-render trains each tick
     if (window.networkView) {
-        // Remove old trains first
-        const trainGroup = document.querySelector('.train-group');
-        if (trainGroup) {
-            trainGroup.remove();
-        }
-
-        // Render trains at new positions
+        // Render trains at new positions (D3 handles enter/update/exit)
         window.networkView.renderTrains(activeTrains, segments, stations);
     } else {
         console.warn('⚠️ window.networkView not available');
@@ -236,11 +242,18 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
         const stops = train.stops.filter(s => s.daytype === dayType);
         if (stops.length < 2) continue;
 
-        // Sort by arrival time
+        // Helper to get total seconds from HH:MM string for sorting
+        const getTimeInSeconds = (timeStr) => {
+            if (!timeStr) return 0;
+            const [h, m] = timeStr.split(':').map(Number);
+            return (h * 3600) + (m * 60);
+        };
+
+        // Sort by first available time (arrival or departure)
         const sortedStops = stops.sort((a, b) => {
-            const [aH, aM] = a.arrival_time.split(':').map(Number);
-            const [bH, bM] = b.arrival_time.split(':').map(Number);
-            return (aH * 60 + aM) - (bH * 60 + bM);
+            const timeA = getTimeInSeconds(a.arrival_time || a.departure_time);
+            const timeB = getTimeInSeconds(b.arrival_time || b.departure_time);
+            return timeA - timeB;
         });
 
         const firstStop = sortedStops[0];
@@ -260,24 +273,37 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
             const position = calculateTrainPosition(train, sortedStops, currentTotalSeconds, segments, stations);
 
             if (position) {
+                // Check if train is affected by current incident
+                let status = (position.station_id) ? 'stopped' : 'moving';
+                const incident = window.appState.analysisResult;
+                const isResolved = window.appState.status === 'resolved';
+
+                if (incident && incident.parsed) {
+                    const affectedStations = incident.parsed.station_ids || [];
+                    const affectedSegments = incident.parsed.segment_ids || [];
+
+                    const isStationAffected = affectedStations.includes(position.from_station) ||
+                        affectedStations.includes(position.to_station) ||
+                        affectedStations.includes(position.station_id);
+
+                    const isSegmentAffected = affectedSegments.includes(position.segment_id);
+
+                    if (isStationAffected || isSegmentAffected) {
+                        status = isResolved ? 'recovering' : 'delayed';
+                    }
+                }
+
                 activeTrains.push({
                     id: train.train_id,
                     ...position,
                     service_type: train.service_type,
                     route: train.route,
-                    status: 'moving',
+                    status: status,
                     speed: getSpeedForServiceType(train.service_type),
                     color: getColorForServiceType(train.service_type)
                 });
-            } else {
-                console.warn(`⚠️ Train ${train.train_id} is active but position calculation returned null`);
             }
         }
-    }
-
-    console.log(`🚂 Time: ${currentTime.toTimeString().slice(0, 8)} | Active: ${debugCount} trains in timetable, ${activeTrains.length} with valid positions`);
-    if (activeTrains.length > 0) {
-        console.log(`   Train IDs: ${activeTrains.map(t => t.id).slice(0, 5).join(', ')}${activeTrains.length > 5 ? '...' : ''}`);
     }
 
     return activeTrains;
@@ -300,25 +326,34 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
 
         // Check if we're on this segment
         if (currentTotalSeconds >= departureSeconds && currentTotalSeconds <= arrivalSeconds) {
-            // Find the segment
+            // Find the segment - be direction-blind
             const segment = segments.find(s =>
                 (s.from_station === fromStop.station_id && s.to_station === toStop.station_id) ||
-                (s.bidirectional && s.from_station === toStop.station_id && s.to_station === fromStop.station_id)
+                (s.from_station === toStop.station_id && s.to_station === fromStop.station_id)
             );
 
             if (!segment) continue;
 
+            // Determine if we're moving along or against the defined segment direction
+            const direction = (segment.from_station === fromStop.station_id) ? 'forward' : 'backward';
+
             // Calculate progress along segment
             const travelTime = arrivalSeconds - departureSeconds;
             const elapsed = currentTotalSeconds - departureSeconds;
-            const progress = travelTime > 0 ? elapsed / travelTime : 0;
+            let progress = travelTime > 0 ? elapsed / travelTime : 0;
+
+            // CRITICAL: If moving backward relative to segment definition, invert progress
+            if (direction === 'backward') {
+                progress = 1 - progress;
+            }
 
             return {
                 segment_id: segment.id,
                 progress: Math.min(1, Math.max(0, progress)),
                 from_station: fromStop.station_id,
                 to_station: toStop.station_id,
-                delay: 0  // TODO: Calculate delay if needed
+                direction: direction,
+                delay: 0
             };
         }
 
@@ -327,10 +362,27 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
         if (currentTotalSeconds >= arriveSeconds && currentTotalSeconds < departureSeconds) {
             return {
                 station_id: fromStop.station_id,
+                from_station: fromStop.station_id, // Keep orientation stations even when stopped
+                to_station: toStop.station_id,
                 progress: 0,
                 delay: 0
             };
         }
+    }
+
+    // Special case: Is this the LAST station of the journey?
+    const lastStop = sortedStops[sortedStops.length - 1];
+    const [lastArrH, lastArrM] = lastStop.arrival_time.split(':').map(Number);
+    const lastArrivalSeconds = lastArrH * 3600 + lastArrM * 60;
+
+    if (currentTotalSeconds >= lastArrivalSeconds) {
+        return {
+            station_id: lastStop.station_id,
+            from_station: sortedStops[sortedStops.length - 2].station_id,
+            to_station: lastStop.station_id,
+            progress: 1, // Stay at the end
+            delay: 0
+        };
     }
 
     return null;

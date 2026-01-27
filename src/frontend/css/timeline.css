@@ -17,25 +17,28 @@
 .metrics-summary {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-sm);
+    /* Reduced gap to give boxes more room */
     margin-bottom: var(--space-lg);
 }
 
 .metric-box {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    padding: var(--space-sm) var(--space-md);
-    /* Reduced vertical padding */
+    padding: var(--space-xs) var(--space-sm);
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    /* Reduced gap */
+    gap: var(--space-xs);
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
 }
 
 .metric-icon {
-    font-size: 1.25rem;
-    /* Reduced from 1.5rem */
+    font-size: 1.15rem;
+    /* Slightly reduced to save horizontal space */
 }
 
 .metric-content {
@@ -45,17 +48,19 @@
 }
 
 .metric-label {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.7rem;
+    /* Reduced from 0.75rem */
+    color: var(--text-secondary);
+    /* Changed from tertiary for better contrast */
+    margin-bottom: 1px;
+    white-space: normal;
+    /* Allow wrapping if necessary, though it should fit now */
+    line-height: 1.1;
 }
 
 .metric-value {
-    font-size: 1.25rem;
-    /* Reduced from 1.5rem to fit 4 columns */
+    font-size: 0.95rem;
+    /* Further reduced to ensure critical numbers like 'Incidents' are never clipped */
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.2;
@@ -76,10 +81,11 @@
 #telemetry-chart {
     width: 100% !important;
     height: 250px !important;
-    /* Enforce height */
     max-height: 250px;
     background: var(--bg-card);
+    backdrop-filter: blur(4px);
     border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
     padding: var(--space-md);
 }
 
@@ -91,8 +97,10 @@
     margin-top: var(--space-md);
     padding: var(--space-md);
     background: var(--bg-card);
+    backdrop-filter: blur(8px);
     border-radius: var(--radius-lg);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
 }
 
 .comparison-view h3 {
@@ -109,8 +117,8 @@
 }
 
 .metric-card {
-    background: var(--bg-primary);
-    border: 2px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     padding: var(--space-md);
     text-align: center;
@@ -159,9 +167,10 @@
     gap: var(--space-md);
     margin-bottom: var(--space-md);
     padding: var(--space-md);
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(59, 130, 246, 0.05));
+    backdrop-filter: blur(4px);
     border-radius: var(--radius-md);
-    border: 1px solid var(--status-success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .savings-item {

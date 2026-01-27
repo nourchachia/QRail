@@ -4,51 +4,57 @@
 
 :root {
   /* Background Colors */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #334155;
-  --bg-elevated: #475569;
-  
+  --bg-primary: #020617;
+  --bg-secondary: rgba(30, 41, 59, 0.7);
+  --bg-card: rgba(51, 65, 85, 0.6);
+  --bg-elevated: rgba(71, 85, 107, 0.5);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(15, 23, 42, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(12px);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
   /* Text Colors */
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-tertiary: #64748b;
-  
+
   /* Status Colors */
   --status-normal: #3b82f6;
   --status-warning: #f59e0b;
   --status-error: #ef4444;
   --status-success: #10b981;
-  
+
   /* Network Colors */
   --network-hub: #3b82f6;
   --network-regional: #6366f1;
   --network-local: #8b5cf6;
   --network-minor: #a78bfa;
-  
+
   /* UI Accents */
   --accent-blue: #3b82f6;
   --accent-green: #10b981;
   --accent-yellow: #f59e0b;
   --accent-orange: #f97316;
   --accent-red: #ef4444;
-  
+
   /* Borders */
   --border-color: #475569;
   --border-light: #64748b;
-  
+
   /* Spacing (8px grid) */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-  
+
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -64,9 +70,16 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background: var(--bg-primary);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.15) 0, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.15) 0, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(249, 115, 22, 0.1) 0, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
   overflow: hidden;
+  min-height: 100vh;
 }
 
 /* ============================================================================
@@ -81,12 +94,16 @@ body {
 }
 
 .app-header {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-md) var(--space-lg);
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 100;
 }
 
 .app-header h1 {
@@ -107,7 +124,8 @@ body {
   gap: var(--space-md);
 }
 
-.toggle-btn, .reset-btn {
+.toggle-btn,
+.reset-btn {
   padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -118,7 +136,8 @@ body {
   transition: all 0.2s;
 }
 
-.toggle-btn:hover, .reset-btn:hover {
+.toggle-btn:hover,
+.reset-btn:hover {
   background: var(--bg-elevated);
   border-color: var(--accent-blue);
 }
@@ -131,7 +150,8 @@ body {
 
 .app-main {
   display: grid;
-  grid-template-columns: 3.5fr 3.5fr 3fr;  /* Expanded network panel from 2fr to 3.5fr */
+  grid-template-columns: 3.5fr 3.5fr 3fr;
+  /* Expanded network panel from 2fr to 3.5fr */
   gap: 0;
   flex: 1;
   overflow: hidden;
@@ -139,7 +159,10 @@ body {
 
 .panel {
   background: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   overflow-y: auto;
   overflow-x: hidden;
 }

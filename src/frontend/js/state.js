@@ -109,6 +109,8 @@ const mockData = {
                 visibility_km: 3.5,
             },
             network_load_pct: 85,
+            station_ids: ['STN_001'], // Central Station
+            segment_ids: ['SEG_001', 'SEG_040'],
         },
         embeddings: {
             semantic: new Array(384).fill(0.5),

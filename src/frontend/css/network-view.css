@@ -207,6 +207,11 @@
     fill: #ef4444;
 }
 
+.train-recovering .train-body {
+    fill: #10b981;
+    animation: recovery-pulse 1s ease-out;
+}
+
 /* Pulse animation for moving trains */
 .train-pulse {
     animation: train-pulse-anim 1.5s ease-out infinite;

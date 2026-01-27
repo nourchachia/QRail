@@ -76,6 +76,42 @@ function initControlPanel() {
         });
     });
 
+    // Time Preset Buttons (8 AM, 12 PM, 5 PM, 8 PM)
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const timeStr = e.currentTarget.dataset.time;
+            if (window.simulation) {
+                // Stop current simulation
+                window.simulation.stop();
+
+                // Jump to selected time
+                window.simulation.init(timeStr);
+
+                // Update slider position
+                const timeSlider = document.getElementById('time-slider');
+                if (timeSlider) {
+                    const [hours, minutes] = timeStr.split(':').map(Number);
+                    timeSlider.value = hours * 60 + minutes;
+                }
+
+                // Update clock display
+                const simClock = document.getElementById('sim-clock');
+                if (simClock) {
+                    simClock.textContent = timeStr;
+                }
+
+                // Render trains at this time
+                window.simulation.updateTrains();
+
+                // Highlight active button
+                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+
+                showToast(`Jumped to ${timeStr}`, 'info');
+            }
+        });
+    });
+
     // Analyze button
     document.getElementById('analyze-btn').addEventListener('click', handleAnalyzeClick);
 
@@ -113,10 +149,10 @@ async function handleQuickScenario(scenarioId) {
     if (!scenario) return;
 
     document.getElementById('incident-text').value = scenario.text;
-    await analyzeIncident(scenario.text);
+    await analyzeIncident(scenario.text, scenario);
 }
 
-async function analyzeIncident(text) {
+async function analyzeIncident(text, scenario = null) {
     try {
         // Update state to searching
         window.appState.setState({
@@ -138,7 +174,13 @@ async function analyzeIncident(text) {
         let result;
         if (window.appState.demoMode) {
             await sleep(2000);
-            result = window.mockData.analysisResult;
+            result = JSON.parse(JSON.stringify(window.mockData.analysisResult));
+
+            // If we have a scenario, use its metadata to override mock result
+            if (scenario) {
+                result.parsed.station_ids = scenario.location.station_ids || [];
+                result.parsed.segment_ids = scenario.location.segment_ids || [];
+            }
         } else {
             result = await window.api.analyzeIncident(text);
         }
@@ -482,7 +524,7 @@ async function handleFeedbackSubmit() {
             await window.api.submitFeedback(feedback);
         }
 
-        alert('✅ Feedback submitted! The AI will learn from this resolution.');
+        showToast('✅ Feedback submitted! The AI will learn from this resolution.', 'success');
 
     } catch (error) {
         console.error('Feedback submission failed:', error);
@@ -501,7 +543,123 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// ============================================================================
+// TOAST NOTIFICATION SYSTEM
+// ============================================================================
+
+/**
+ * Show a beautiful toast notification
+ * @param {string} message - Message to display
+ * @param {string} type - 'success', 'error', 'warning', 'info'
+ */
+function showToast(message, type = 'info') {
+    // Create toast container if it doesn't exist
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        `;
+        document.body.appendChild(container);
+    }
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+
+    // Icon based on type
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
+
+    // Colors based on type
+    const colors = {
+        success: { bg: 'rgba(16, 185, 129, 0.95)', border: '#10b981' },
+        error: { bg: 'rgba(239, 68, 68, 0.95)', border: '#ef4444' },
+        warning: { bg: 'rgba(245, 158, 11, 0.95)', border: '#f59e0b' },
+        info: { bg: 'rgba(59, 130, 246, 0.95)', border: '#3b82f6' }
+    };
+
+    const color = colors[type] || colors.info;
+
+    toast.style.cssText = `
+        background: ${color.bg};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        border-left: 4px solid ${color.border};
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px ${color.border}40;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        max-width: 400px;
+        pointer-events: all;
+        animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+
+    toast.innerHTML = `
+        <span style="font-size: 20px;">${icons[type] || icons.info}</span>
+        <span>${message}</span>
+    `;
+
+    // Add animation keyframes if not already present
+    if (!document.getElementById('toast-animations')) {
+        const style = document.createElement('style');
+        style.id = 'toast-animations';
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    container.appendChild(toast);
+
+    // Auto-remove after 4 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, 4000);
+}
+
 // Export functions
 window.controlPanel = {
     init: initControlPanel,
 };
+
+window.showToast = showToast;

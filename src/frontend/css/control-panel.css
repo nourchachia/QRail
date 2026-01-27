@@ -15,12 +15,22 @@
 }
 
 .incident-input-section h3 {
+    margin-bottom: var(--space-xs);
+}
+
+.input-hint {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
     margin-bottom: var(--space-md);
+    line-height: 1.4;
 }
 
 #incident-text {
     margin-bottom: var(--space-md);
     min-height: 120px;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    border-color: var(--glass-border);
 }
 
 .analyze-btn {
@@ -55,6 +65,11 @@
    ============================================================================ */
 
 .quick-scenarios {
+    background: var(--bg-card);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
     margin-bottom: var(--space-xl);
 }
 
@@ -66,13 +81,14 @@
 .scenario-btn {
     width: 100%;
     padding: var(--space-md);
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     text-align: left;
     font-size: 0.875rem;
     transition: all 0.2s;
+    backdrop-filter: blur(4px);
 }
 
 .scenario-btn:hover {
@@ -86,11 +102,13 @@
    ============================================================================ */
 
 .search-status {
-    background: var(--bg-card);
-    border: 2px solid var(--accent-blue);
-    border-radius: var(--radius-md);
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--accent-blue);
+    border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin-bottom: var(--space-xl);
+    box-shadow: var(--glass-shadow);
 }
 
 .status-header {

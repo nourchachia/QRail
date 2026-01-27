@@ -156,13 +156,11 @@
                 <div id="control-panel" class="control-panel">
                     <!-- Incident Input -->
                     <div class="incident-input-section">
-                        <h3>Report Incident</h3>
-                        <textarea id="incident-text" rows="5" placeholder="Describe what's happening...
-
-Examples:
-• Signal failure at Central Station, heavy rain
-• Train breakdown between North and South Junction
-• Power outage affecting western zone"></textarea>
+                        <h3>Describe the incident</h3>
+                        <p class="input-hint">Include: Station name, Incident type, Weather, and Zone (e.g. "between A
+                            and B" or "on segment S1")</p>
+                        <textarea id="incident-text" rows="5"
+                            placeholder="e.g. Signal failure at Central Station, heavy rain. Or: Breakdown between North and South Junction..."></textarea>
                         <button id="analyze-btn" class="analyze-btn">
                             🔍 Analyze Incident
                         </button>
@@ -194,10 +192,10 @@ Examples:
                             <button id="play-pause-btn" class="play-pause-btn">▶ Play</button>
                             <div class="speed-controls">
                                 <span class="speed-label">Speed:</span>
-                                <button class="speed-btn active" data-speed="1">1x</button>
-                                <button class="speed-btn" data-speed="2">2x</button>
-                                <button class="speed-btn" data-speed="4">4x</button>
-                                <button class="speed-btn" data-speed="8">8x</button>
+                                <button class="speed-btn active" data-speed="60">1x</button>
+                                <button class="speed-btn" data-speed="600">10x</button>
+                                <button class="speed-btn" data-speed="1800">30x</button>
+                                <button class="speed-btn" data-speed="3600">60x</button>
                             </div>
                         </div>
                         <div class="day-type-selector">
