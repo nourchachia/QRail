@@ -4347,5 +4347,1181 @@
         "daytype": "weekend"
       }
     ]
+  },
+  {
+    "train_id": "EXP_003",
+    "service_type": "express",
+    "route": "Main Line Ring (Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "05:00",
+        "departure_time": "05:05",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "05:27",
+        "departure_time": "05:30",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "05:52",
+        "departure_time": "05:55",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "06:17",
+        "departure_time": "06:20",
+        "platform": 4,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "06:43",
+        "departure_time": "06:48",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_004",
+    "service_type": "express",
+    "route": "Main Line Ring (Counter-Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "07:00",
+        "departure_time": "07:05",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "07:28",
+        "departure_time": "07:33",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "07:59",
+        "departure_time": "08:02",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "08:27",
+        "departure_time": "08:30",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "08:55",
+        "departure_time": "09:00",
+        "platform": 4,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_005",
+    "service_type": "express",
+    "route": "Main Line Ring (Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "08:00",
+        "departure_time": "08:05",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "08:27",
+        "departure_time": "08:30",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "08:52",
+        "departure_time": "08:55",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "09:17",
+        "departure_time": "09:20",
+        "platform": 4,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "09:43",
+        "departure_time": "09:48",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_006",
+    "service_type": "express",
+    "route": "Main Line Ring (Counter-Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "09:15",
+        "departure_time": "09:20",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "09:43",
+        "departure_time": "09:48",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "10:14",
+        "departure_time": "10:17",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "10:42",
+        "departure_time": "10:45",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "11:10",
+        "departure_time": "11:15",
+        "platform": 4,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_007",
+    "service_type": "express",
+    "route": "Main Line Ring (Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "17:00",
+        "departure_time": "17:05",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "17:27",
+        "departure_time": "17:30",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "17:52",
+        "departure_time": "17:55",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "18:17",
+        "departure_time": "18:20",
+        "platform": 4,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "18:43",
+        "departure_time": "18:48",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_008",
+    "service_type": "express",
+    "route": "Main Line Ring (Counter-Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "17:30",
+        "departure_time": "17:35",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "17:58",
+        "departure_time": "18:03",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "18:29",
+        "departure_time": "18:32",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "18:57",
+        "departure_time": "19:00",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "19:25",
+        "departure_time": "19:30",
+        "platform": 4,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_009",
+    "service_type": "express",
+    "route": "Main Line Ring (Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "18:30",
+        "departure_time": "18:35",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "18:57",
+        "departure_time": "19:00",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "19:22",
+        "departure_time": "19:25",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "19:47",
+        "departure_time": "19:50",
+        "platform": 4,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "20:13",
+        "departure_time": "20:18",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_010",
+    "service_type": "express",
+    "route": "Main Line Ring (Counter-Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "19:00",
+        "departure_time": "19:05",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "19:28",
+        "departure_time": "19:33",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "19:59",
+        "departure_time": "20:02",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "20:27",
+        "departure_time": "20:30",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "20:55",
+        "departure_time": "21:00",
+        "platform": 4,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_011",
+    "service_type": "express",
+    "route": "Main Line Ring (Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "20:00",
+        "departure_time": "20:05",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "20:27",
+        "departure_time": "20:30",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "20:52",
+        "departure_time": "20:55",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "21:17",
+        "departure_time": "21:20",
+        "platform": 4,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "21:43",
+        "departure_time": "21:48",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "EXP_012",
+    "service_type": "express",
+    "route": "Main Line Ring (Counter-Clockwise)",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "20:30",
+        "departure_time": "20:35",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "20:58",
+        "departure_time": "21:03",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "21:29",
+        "departure_time": "21:32",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "21:57",
+        "departure_time": "22:00",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "22:25",
+        "departure_time": "22:30",
+        "platform": 4,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_106",
+    "service_type": "regional",
+    "route": "Central to Park Branch",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "08:00",
+        "departure_time": "08:05",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "08:18",
+        "departure_time": "08:20",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_107",
+    "service_type": "regional",
+    "route": "Central to Park Branch",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "12:00",
+        "departure_time": "12:05",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "12:18",
+        "departure_time": "12:20",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_108",
+    "service_type": "regional",
+    "route": "Central to Park Branch",
+    "stops": [
+      {
+        "station_id": "STN_001",
+        "station_name": "Central Station",
+        "arrival_time": "16:30",
+        "departure_time": "16:35",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "16:48",
+        "departure_time": "16:50",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_109",
+    "service_type": "regional",
+    "route": "East Exchange to Grove Branch",
+    "stops": [
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "08:15",
+        "departure_time": "08:20",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "08:41",
+        "departure_time": "08:43",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_110",
+    "service_type": "regional",
+    "route": "East Exchange to Grove Branch",
+    "stops": [
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "13:00",
+        "departure_time": "13:05",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "13:26",
+        "departure_time": "13:28",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_111",
+    "service_type": "regional",
+    "route": "East Exchange to Grove Branch",
+    "stops": [
+      {
+        "station_id": "STN_004",
+        "station_name": "East Exchange",
+        "arrival_time": "17:15",
+        "departure_time": "17:20",
+        "platform": 5,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "17:41",
+        "departure_time": "17:43",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_112",
+    "service_type": "regional",
+    "route": "South Junction to Heights Branch",
+    "stops": [
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "08:30",
+        "departure_time": "08:35",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_008",
+        "station_name": "Heights Station",
+        "arrival_time": "08:58",
+        "departure_time": "09:00",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_113",
+    "service_type": "regional",
+    "route": "South Junction to Heights Branch",
+    "stops": [
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "13:30",
+        "departure_time": "13:35",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_008",
+        "station_name": "Heights Station",
+        "arrival_time": "13:58",
+        "departure_time": "14:00",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_114",
+    "service_type": "regional",
+    "route": "South Junction to Heights Branch",
+    "stops": [
+      {
+        "station_id": "STN_003",
+        "station_name": "South Junction",
+        "arrival_time": "17:45",
+        "departure_time": "17:50",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_008",
+        "station_name": "Heights Station",
+        "arrival_time": "18:13",
+        "departure_time": "18:15",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_115",
+    "service_type": "regional",
+    "route": "West Hub to Bridge Branch",
+    "stops": [
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "08:45",
+        "departure_time": "08:50",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_009",
+        "station_name": "Bridge Station",
+        "arrival_time": "09:07",
+        "departure_time": "09:09",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_116",
+    "service_type": "regional",
+    "route": "West Hub to Bridge Branch",
+    "stops": [
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "14:00",
+        "departure_time": "14:05",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_009",
+        "station_name": "Bridge Station",
+        "arrival_time": "14:22",
+        "departure_time": "14:24",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_117",
+    "service_type": "regional",
+    "route": "West Hub to Bridge Branch",
+    "stops": [
+      {
+        "station_id": "STN_005",
+        "station_name": "West Hub",
+        "arrival_time": "18:00",
+        "departure_time": "18:05",
+        "platform": 6,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_009",
+        "station_name": "Bridge Station",
+        "arrival_time": "18:22",
+        "departure_time": "18:24",
+        "platform": 2,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_118",
+    "service_type": "regional",
+    "route": "North Terminal to Valley Branch",
+    "stops": [
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "09:00",
+        "departure_time": "09:05",
+        "platform": 7,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_010",
+        "station_name": "Valley Station",
+        "arrival_time": "09:23",
+        "departure_time": "09:25",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_119",
+    "service_type": "regional",
+    "route": "North Terminal to Valley Branch",
+    "stops": [
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "14:30",
+        "departure_time": "14:35",
+        "platform": 7,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_010",
+        "station_name": "Valley Station",
+        "arrival_time": "14:53",
+        "departure_time": "14:55",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "REG_120",
+    "service_type": "regional",
+    "route": "North Terminal to Valley Branch",
+    "stops": [
+      {
+        "station_id": "STN_002",
+        "station_name": "North Terminal",
+        "arrival_time": "18:15",
+        "departure_time": "18:20",
+        "platform": 7,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_010",
+        "station_name": "Valley Station",
+        "arrival_time": "18:38",
+        "departure_time": "18:40",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_208",
+    "service_type": "local",
+    "route": "Park to Local Stop A",
+    "stops": [
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "05:30",
+        "departure_time": "05:35",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_020",
+        "station_name": "Cross Station",
+        "arrival_time": "05:55",
+        "departure_time": "05:57",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_021",
+        "station_name": "Local Stop A",
+        "arrival_time": "06:18",
+        "departure_time": "06:20",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_209",
+    "service_type": "local",
+    "route": "Garden to Local Stop B",
+    "stops": [
+      {
+        "station_id": "STN_016",
+        "station_name": "Garden Station",
+        "arrival_time": "06:00",
+        "departure_time": "06:03",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_022",
+        "station_name": "Local Stop B",
+        "arrival_time": "06:30",
+        "departure_time": "06:32",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_210",
+    "service_type": "local",
+    "route": "River to Local Stop C",
+    "stops": [
+      {
+        "station_id": "STN_013",
+        "station_name": "River Station",
+        "arrival_time": "06:15",
+        "departure_time": "06:18",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_023",
+        "station_name": "Local Stop C",
+        "arrival_time": "06:53",
+        "departure_time": "06:55",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_211",
+    "service_type": "local",
+    "route": "Grove to Local Stop D",
+    "stops": [
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "06:30",
+        "departure_time": "06:33",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_024",
+        "station_name": "Local Stop D",
+        "arrival_time": "06:58",
+        "departure_time": "07:00",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_212",
+    "service_type": "local",
+    "route": "Forest to Local Stop E",
+    "stops": [
+      {
+        "station_id": "STN_014",
+        "station_name": "Forest Station",
+        "arrival_time": "06:45",
+        "departure_time": "06:48",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_025",
+        "station_name": "Local Stop E",
+        "arrival_time": "07:07",
+        "departure_time": "07:09",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_213",
+    "service_type": "local",
+    "route": "Park to Cross Station",
+    "stops": [
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "11:00",
+        "departure_time": "11:05",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_020",
+        "station_name": "Cross Station",
+        "arrival_time": "11:25",
+        "departure_time": "11:27",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_214",
+    "service_type": "local",
+    "route": "Garden to Local Stop B",
+    "stops": [
+      {
+        "station_id": "STN_016",
+        "station_name": "Garden Station",
+        "arrival_time": "11:30",
+        "departure_time": "11:33",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_022",
+        "station_name": "Local Stop B",
+        "arrival_time": "12:00",
+        "departure_time": "12:02",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_215",
+    "service_type": "local",
+    "route": "River to Local Stop C",
+    "stops": [
+      {
+        "station_id": "STN_013",
+        "station_name": "River Station",
+        "arrival_time": "12:15",
+        "departure_time": "12:18",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_023",
+        "station_name": "Local Stop C",
+        "arrival_time": "12:53",
+        "departure_time": "12:55",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_216",
+    "service_type": "local",
+    "route": "Grove to Local Stop D",
+    "stops": [
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "12:30",
+        "departure_time": "12:33",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_024",
+        "station_name": "Local Stop D",
+        "arrival_time": "12:58",
+        "departure_time": "13:00",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_217",
+    "service_type": "local",
+    "route": "Forest to Local Stop E",
+    "stops": [
+      {
+        "station_id": "STN_014",
+        "station_name": "Forest Station",
+        "arrival_time": "13:00",
+        "departure_time": "13:03",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_025",
+        "station_name": "Local Stop E",
+        "arrival_time": "13:22",
+        "departure_time": "13:24",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_218",
+    "service_type": "local",
+    "route": "Park to Local Stop A",
+    "stops": [
+      {
+        "station_id": "STN_006",
+        "station_name": "Park Station",
+        "arrival_time": "16:00",
+        "departure_time": "16:05",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_020",
+        "station_name": "Cross Station",
+        "arrival_time": "16:25",
+        "departure_time": "16:27",
+        "platform": 1,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_021",
+        "station_name": "Local Stop A",
+        "arrival_time": "16:48",
+        "departure_time": "16:50",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_219",
+    "service_type": "local",
+    "route": "Garden to Local Stop B",
+    "stops": [
+      {
+        "station_id": "STN_016",
+        "station_name": "Garden Station",
+        "arrival_time": "16:30",
+        "departure_time": "16:33",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_022",
+        "station_name": "Local Stop B",
+        "arrival_time": "17:00",
+        "departure_time": "17:02",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_220",
+    "service_type": "local",
+    "route": "River to Local Stop C",
+    "stops": [
+      {
+        "station_id": "STN_013",
+        "station_name": "River Station",
+        "arrival_time": "17:00",
+        "departure_time": "17:03",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_023",
+        "station_name": "Local Stop C",
+        "arrival_time": "17:38",
+        "departure_time": "17:40",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_221",
+    "service_type": "local",
+    "route": "Grove to Local Stop D",
+    "stops": [
+      {
+        "station_id": "STN_007",
+        "station_name": "Grove Station",
+        "arrival_time": "17:30",
+        "departure_time": "17:33",
+        "platform": 3,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_024",
+        "station_name": "Local Stop D",
+        "arrival_time": "17:58",
+        "departure_time": "18:00",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
+  },
+  {
+    "train_id": "LOC_222",
+    "service_type": "local",
+    "route": "Forest to Local Stop E",
+    "stops": [
+      {
+        "station_id": "STN_014",
+        "station_name": "Forest Station",
+        "arrival_time": "18:45",
+        "departure_time": "18:48",
+        "platform": 2,
+        "daytype": "weekday"
+      },
+      {
+        "station_id": "STN_025",
+        "station_name": "Local Stop E",
+        "arrival_time": "19:07",
+        "departure_time": "19:09",
+        "platform": 1,
+        "daytype": "weekday"
+      }
+    ]
   }
 ]
