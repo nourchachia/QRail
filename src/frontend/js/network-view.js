@@ -80,6 +80,27 @@ function initNetworkView() {
         .attr('width', width)
         .attr('height', height);
 
+    // Create zoom container group
+    let zoomContainer = networkSvg.select('.zoom-container');
+    if (zoomContainer.empty()) {
+        zoomContainer = networkSvg.append('g')
+            .attr('class', 'zoom-container');
+    }
+
+    // Create D3 zoom behavior
+    const zoom = d3.zoom()
+        .scaleExtent([0.5, 4])  // Allow zoom from 0.5x to 4x
+        .on('zoom', (event) => {
+            zoomContainer.attr('transform', event.transform);
+        });
+
+    // Apply zoom behavior to SVG
+    networkSvg.call(zoom);
+
+    // Store zoom behavior for external control
+    networkSvg.zoomBehavior = zoom;
+    networkSvg.zoomContainer = zoomContainer;
+
     // Create scales for positioning (ZOOMED OUT for better spacing)
     // Reduced domain to show less area = stations appear more spread out
     xScale = d3.scaleLinear()
@@ -94,7 +115,15 @@ function initNetworkView() {
 function renderNetwork(stations, segments) {
     if (!networkSvg) initNetworkView();
 
-    networkSvg.selectAll('*').remove();
+    // Get or create zoom container
+    let zoomContainer = networkSvg.select('.zoom-container');
+    if (zoomContainer.empty()) {
+        zoomContainer = networkSvg.append('g').attr('class', 'zoom-container');
+        networkSvg.zoomContainer = zoomContainer;
+    }
+
+    // Clear only the zoom container content, not the whole SVG
+    zoomContainer.selectAll('*').remove();
 
     // Render segments first (so they're behind stations)
     renderSegments(segments, stations);
@@ -105,8 +134,9 @@ function renderNetwork(stations, segments) {
 
 function renderSegments(segments, stations) {
     const stationMap = new Map(stations.map(s => [s.id, s]));
+    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
 
-    const lines = networkSvg.selectAll('.segment-line')
+    const lines = zoomContainer.selectAll('.segment-line')
         .data(segments)
         .enter()
         .append('line')
@@ -132,7 +162,9 @@ function renderSegments(segments, stations) {
 }
 
 function renderStations(stations) {
-    const groups = networkSvg.selectAll('.station-node')
+    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
+
+    const groups = zoomContainer.selectAll('.station-node')
         .data(stations)
         .enter()
         .append('g')
@@ -353,10 +385,13 @@ function renderTrains(trains, segments, stations) {
     const stationMap = new Map(stations.map(s => [s.id, s]));
     const segmentMap = new Map(segments.map(s => [s.id, s]));
 
-    // Use existing group or create new one
-    trainMarkerGroup = networkSvg.select('.train-group');
+    // Get zoom container (trains must be inside it to zoom/pan with map)
+    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
+
+    // Use existing group or create new one INSIDE zoom container
+    trainMarkerGroup = zoomContainer.select('.train-group');
     if (trainMarkerGroup.empty()) {
-        trainMarkerGroup = networkSvg.append('g').attr('class', 'train-group');
+        trainMarkerGroup = zoomContainer.append('g').attr('class', 'train-group');
     }
 
     // Filter valid trains
@@ -401,9 +436,51 @@ function renderTrains(trains, segments, stations) {
         .ease(d3.easeLinear)
         .attr('transform', d => getTransform(d));
 
-    // Update status/color
+    // Update status/color with delay severity
     trainGroups.select('.train-body')
-        .attr('fill', d => d.color || getTrainColor(d.status));
+        .attr('fill', d => getTrainColor(d.status, d.delay))
+        .attr('class', d => `train-body ${d.status === 'delayed' ? 'train-delayed' : ''}`);
+
+    // Update or add pulsing animation for delayed trains
+    trainGroups.each(function (d) {
+        const group = d3.select(this);
+
+        if (d.status === 'delayed') {
+            // Add or update pulse circle
+            let pulse = group.select('.train-pulse-delay');
+            if (pulse.empty()) {
+                pulse = group.append('circle')
+                    .attr('class', 'train-pulse-delay')
+                    .attr('r', 18)
+                    .attr('fill', 'none')
+                    .attr('stroke-width', 2);
+            }
+            pulse.attr('stroke', getTrainColor(d.status, d.delay))
+                .attr('opacity', 0.8);
+        } else {
+            // Remove pulse if not delayed
+            group.select('.train-pulse-delay').remove();
+        }
+
+        // Update or add delay badge
+        if (d.delay > 0 && d.status === 'delayed') {
+            let delayBadge = group.select('.delay-badge');
+            if (delayBadge.empty()) {
+                delayBadge = group.append('text')
+                    .attr('class', 'delay-badge')
+                    .attr('x', 20)
+                    .attr('y', 5)
+                    .attr('text-anchor', 'start')
+                    .attr('fill', '#fff')
+                    .attr('font-size', '10px')
+                    .attr('font-weight', 'bold')
+                    .attr('pointer-events', 'none');
+            }
+            delayBadge.text(`+${Math.round(d.delay)}'`);
+        } else {
+            group.select('.delay-badge').remove();
+        }
+    });
 
     // ENTER - Create new trains
     const enterGroups = trainGroups.enter()
@@ -415,18 +492,19 @@ function renderTrains(trains, segments, stations) {
     enterGroups.append('polygon')
         .attr('class', 'train-body')
         .attr('points', '12,0 -8,6 -8,-6')
-        .attr('fill', d => d.color || getTrainColor(d.status))
+        .attr('fill', d => getTrainColor(d.status, d.delay))
         .attr('stroke', '#fff')
         .attr('stroke-width', 2);
 
-    enterGroups.filter(d => d.status === 'moving')
+    // Add pulse for delayed trains
+    enterGroups.filter(d => d.status === 'delayed')
         .append('circle')
-        .attr('class', 'train-pulse')
+        .attr('class', 'train-pulse-delay')
         .attr('r', 18)
         .attr('fill', 'none')
-        .attr('stroke', d => d.color || getTrainColor(d.status))
+        .attr('stroke', d => getTrainColor(d.status, d.delay))
         .attr('stroke-width', 2)
-        .attr('opacity', 0.5);
+        .attr('opacity', 0.8);
 
     enterGroups.append('text')
         .attr('class', 'train-label')
@@ -438,6 +516,19 @@ function renderTrains(trains, segments, stations) {
         .attr('font-weight', 'bold')
         .attr('pointer-events', 'none')
         .text(d => d.id);
+
+    // Add delay badge for new delayed trains
+    enterGroups.filter(d => d.delay > 0 && d.status === 'delayed')
+        .append('text')
+        .attr('class', 'delay-badge')
+        .attr('x', 20)
+        .attr('y', 5)
+        .attr('text-anchor', 'start')
+        .attr('fill', '#fff')
+        .attr('font-size', '10px')
+        .attr('font-weight', 'bold')
+        .attr('pointer-events', 'none')
+        .text(d => `+${Math.round(d.delay)}'`);
 }
 
 /**
@@ -603,9 +694,17 @@ function stopTrainAnimation() {
 }
 
 /**
- * Get color based on train status
+ * Get color based on train status and delay severity
  */
-function getTrainColor(status) {
+function getTrainColor(status, delay = 0) {
+    // Delay severity colors
+    if (status === 'delayed') {
+        if (delay > 15) return '#dc2626';  // Critical - darker red
+        if (delay > 8) return '#ef4444';   // Major - red
+        if (delay > 3) return '#fb923c';   // Minor - orange
+        return '#ef4444';  // Default delayed
+    }
+
     const colors = {
         moving: '#3b82f6',
         stopped: '#f59e0b',
@@ -615,6 +714,92 @@ function getTrainColor(status) {
     };
     return colors[status] || colors.moving;
 }
+
+// ============================================================================
+// ZOOM CONTROLS
+// ============================================================================
+
+/**
+ * Zoom in programmatically
+ */
+function zoomIn() {
+    if (!networkSvg || !networkSvg.zoomBehavior) return;
+
+    networkSvg.transition()
+        .duration(350)
+        .call(networkSvg.zoomBehavior.scaleBy, 1.3);
+}
+
+/**
+ * Zoom out programmatically
+ */
+function zoomOut() {
+    if (!networkSvg || !networkSvg.zoomBehavior) return;
+
+    networkSvg.transition()
+        .duration(350)
+        .call(networkSvg.zoomBehavior.scaleBy, 0.77);
+}
+
+/**
+ * Reset zoom to default view
+ */
+function zoomReset() {
+    if (!networkSvg || !networkSvg.zoomBehavior) return;
+
+    networkSvg.transition()
+        .duration(500)
+        .call(networkSvg.zoomBehavior.transform, d3.zoomIdentity);
+}
+
+/**
+ * Zoom to incident epicenter
+ */
+function zoomToIncident() {
+    if (!networkSvg || !networkSvg.zoomBehavior) return;
+
+    // Get current incident from global state
+    const incident = window.appState && window.appState.analysisResult;
+    if (!incident || !incident.parsed || !incident.parsed.station_ids || incident.parsed.station_ids.length === 0) {
+        console.log('No incident location to zoom to');
+        return;
+    }
+
+    const affectedStationIds = incident.parsed.station_ids;
+    const stations = window.appState.stations || window.staticNetworkData?.stations || [];
+
+    // Find affected stations
+    const affectedStations = stations.filter(s => affectedStationIds.includes(s.id));
+
+    if (affectedStations.length === 0) {
+        console.log('No valid stations found for incident');
+        return;
+    }
+
+    // Calculate center of affected area
+    const avgX = affectedStations.reduce((sum, s) => sum + s.coordinates[0], 0) / affectedStations.length;
+    const avgY = affectedStations.reduce((sum, s) => sum + s.coordinates[1], 0) / affectedStations.length;
+
+    // Convert to SVG coordinates
+    const svgX = xScale(avgX);
+    const svgY = yScale(avgY);
+
+    // Calculate zoom transform to center on this point
+    const width = networkSvg.attr('width') || 800;
+    const height = networkSvg.attr('height') || 600;
+    const scale = 2.5; // Zoom in 2.5x
+
+    const transform = d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(scale)
+        .translate(-svgX, -svgY);
+
+    // Smoothly transition to the incident location
+    networkSvg.transition()
+        .duration(750)
+        .call(networkSvg.zoomBehavior.transform, transform);
+}
+
 
 //Export functions
 window.networkView = {
@@ -629,6 +814,10 @@ window.networkView = {
     simulateMovement: simulateTrainMovement, // Exposed for app.js
     startTrainAnimation: startTrainAnimation,
     stopTrainAnimation: stopTrainAnimation,
+    zoomIn: zoomIn,
+    zoomOut: zoomOut,
+    zoomReset: zoomReset,
+    zoomToIncident: zoomToIncident,
     clearHighlights: () => {
         if (stationNodes) stationNodes.classed('station-affected station-recovering', false);
     }

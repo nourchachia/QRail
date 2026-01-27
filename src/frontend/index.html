@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/control-panel.css">
     <link rel="stylesheet" href="css/time-slider.css">
+    <link rel="stylesheet" href="css/future-comparison.css">
+    <link rel="stylesheet" href="css/zoom-controls.css">
 </head>
 
 <body>
@@ -48,6 +50,13 @@
             <div class="panel network-panel">
                 <div id="network-view" class="network-view">
                     <svg id="network-svg"></svg>
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" onclick="window.networkView.zoomIn()" title="Zoom In">+</button>
+                        <button class="zoom-btn" onclick="window.networkView.zoomOut()" title="Zoom Out">−</button>
+                        <button class="zoom-btn" onclick="window.networkView.zoomReset()" title="Reset Zoom">↻</button>
+                        <button class="zoom-btn zoom-to-incident" onclick="window.networkView.zoomToIncident()"
+                            title="Zoom to Incident">🎯</button>
+                    </div>
                     <div class="network-status">
                         <span id="weather-status">🌦️ Weather: Loading...</span>
                         <span id="load-status">📊 Load: --%</span>
@@ -287,6 +296,7 @@
     <script src="js/control-panel.js?v=2"></script>
     <script src="js/simulation-engine.js?v=2"></script>
     <script src="js/timetable-engine.js?v=2"></script>
+    <script src="js/future-comparison.js?v=2"></script>
     <script src="js/app.js?v=2"></script>
 </body>
 

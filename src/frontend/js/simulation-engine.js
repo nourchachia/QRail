@@ -20,6 +20,11 @@ let simulationState = {
     baseTime: null,  // Starting point for simulation
     intervalId: null,
     dayType: 'weekday',  // Current day type: 'weekday', 'weekend', 'holiday'
+
+    // Incident tracking
+    incidentStartTime: null,  // When incident was triggered
+    activeIncident: null,     // Current incident data
+    baselineTrains: null,     // Trains state before incident
 };
 
 // Expose generically for other modules
@@ -275,8 +280,10 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
             if (position) {
                 // Check if train is affected by current incident
                 let status = (position.station_id) ? 'stopped' : 'moving';
-                const incident = window.appState.analysisResult;
-                const isResolved = window.appState.status === 'resolved';
+                let delay = 0;
+
+                const incident = window.appState && window.appState.analysisResult;
+                const isResolved = window.appState && window.appState.status === 'resolved';
 
                 if (incident && incident.parsed) {
                     const affectedStations = incident.parsed.station_ids || [];
@@ -289,6 +296,9 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
                     const isSegmentAffected = affectedSegments.includes(position.segment_id);
 
                     if (isStationAffected || isSegmentAffected) {
+                        // Get current delay from incident progression
+                        const progression = simulateIncidentProgression();
+                        delay = progression.delayMinutes;
                         status = isResolved ? 'recovering' : 'delayed';
                     }
                 }
@@ -299,6 +309,7 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
                     service_type: train.service_type,
                     route: train.route,
                     status: status,
+                    delay: delay,
                     speed: getSpeedForServiceType(train.service_type),
                     color: getColorForServiceType(train.service_type)
                 });
@@ -386,6 +397,96 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
     }
 
     return null;
+}
+
+// ============================================================================
+// INCIDENT PROGRESSION SIMULATION
+// ============================================================================
+
+/**
+ * Simulate incident impact over time
+ * Returns delay multiplier and affected train states
+ */
+function simulateIncidentProgression() {
+    if (!simulationState.incidentStartTime || !simulationState.activeIncident) {
+        return {
+            delayMinutes: 0,
+            severity: 'none',
+            affectedTrainCount: 0
+        };
+    }
+
+    // Calculate elapsed time since incident start
+    const elapsedMs = simulationState.currentTime - simulationState.incidentStartTime;
+    const elapsedMinutes = elapsedMs / 1000 / 60;
+
+    // Get incident severity parameters
+    const incident = simulationState.activeIncident;
+    const isResolved = window.appState && window.appState.status === 'resolved';
+
+    // Delay progression parameters based on severity
+    const severityParams = {
+        high: { peakDelay: 25, peakTime: 15, growthRate: 0.3, decayRate: 0.05 },
+        medium: { peakDelay: 15, peakTime: 12, growthRate: 0.25, decayRate: 0.06 },
+        low: { peakDelay: 8, peakTime: 10, growthRate: 0.2, decayRate: 0.08 }
+    };
+
+    const params = severityParams[incident.severity] || severityParams.medium;
+
+    let delayMinutes = 0;
+    let severity = 'none';
+
+    if (isResolved) {
+        // Faster recovery after resolution
+        const recoveryRate = 0.15; // Faster decay
+        delayMinutes = params.peakDelay * Math.exp(-recoveryRate * elapsedMinutes);
+    } else {
+        // Normal cascade progression
+        if (elapsedMinutes <= params.peakTime) {
+            // Growing phase - exponential growth to peak
+            delayMinutes = params.peakDelay * (1 - Math.exp(-params.growthRate * elapsedMinutes));
+        } else {
+            // Decay phase - exponential decay from peak
+            delayMinutes = params.peakDelay * Math.exp(-params.decayRate * (elapsedMinutes - params.peakTime));
+        }
+    }
+
+    // Determine severity level based on current delay
+    if (delayMinutes > 15) severity = 'critical';
+    else if (delayMinutes > 8) severity = 'major';
+    else if (delayMinutes > 3) severity = 'minor';
+
+    return {
+        delayMinutes: Math.round(delayMinutes * 10) / 10, // Round to 1 decimal
+        severity,
+        elapsedMinutes: Math.round(elapsedMinutes),
+        isResolved
+    };
+}
+
+/**
+ * Trigger an incident in the simulation
+ */
+function triggerIncident(incident) {
+    simulationState.incidentStartTime = new Date(simulationState.currentTime);
+    simulationState.activeIncident = incident;
+
+    console.log(`🚨 Incident triggered at ${simulationState.currentTime.toLocaleTimeString()}`);
+
+    // Store baseline for comparison
+    if (window.networkView && window.networkView.getTrains) {
+        simulationState.baselineTrains = window.networkView.getTrains();
+    }
+}
+
+/**
+ * Clear active incident
+ */
+function clearIncident() {
+    simulationState.incidentStartTime = null;
+    simulationState.activeIncident = null;
+    simulationState.baselineTrains = null;
+    console.log('✅ Incident cleared');
 }
 
 // ============================================================================
@@ -511,5 +612,8 @@ window.simulation = {
     setSpeed: setSimulationSpeed,
     setDayType: setDayType,
     getState: () => simulationState,
-    updateTrains: updateTrainsFromTimetable
+    updateTrains: updateTrainsFromTimetable,
+    triggerIncident: triggerIncident,
+    clearIncident: clearIncident,
+    getIncidentProgression: simulateIncidentProgression
 };

@@ -441,14 +441,42 @@ function createResolutionCard(option) {
       `).join('')}
       ${actions.length > 3 ? `<div class="action-item">+${actions.length - 3} more steps</div>` : ''}
     </div>
-    <button class="apply-button" data-option-id="${option.strategy}">
-      ▶ Apply This Resolution
-    </button>
+    <div class="button-group" style="display: flex; gap: 8px; margin-top: 16px;">
+      <button class="apply-button" data-option-id="${option.strategy}" style="flex: 1;">
+        ▶ Apply This Resolution
+      </button>
+      <button class="compare-button" data-option-id="${option.strategy}" 
+              style="flex: 0 0 auto; background: linear-gradient(135deg, #6366f1, #8b5cf6); 
+                     color: white; border: none; padding: 12px 20px; border-radius: 8px; 
+                     cursor: pointer; font-weight: 600; font-size: 0.875rem; transition: all 0.3s;
+                     white-space: nowrap;">
+        🔮 Compare
+      </button>
+    </div>
   `;
 
     // Add click handler for apply button
     card.querySelector('.apply-button').addEventListener('click', () => {
         handleApplyResolution(option);
+    });
+
+    // Add click handler for compare button
+    card.querySelector('.compare-button').addEventListener('click', () => {
+        // Trigger comparison view with this resolution and 2 alternatives
+        if (window.appState.analysisResult && window.appState.analysisResult.recommendations) {
+            const allResolutions = window.appState.analysisResult.recommendations;
+
+            // Trigger simulation incident if not already triggered
+            if (window.simulation && window.appState.currentIncident) {
+                window.simulation.triggerIncident(window.appState.currentIncident);
+            }
+
+            // Activate future comparison
+            window.futureComparison.activate(
+                window.appState.currentIncident,
+                allResolutions
+            );
+        }
     });
 
     return card;

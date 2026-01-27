@@ -229,6 +229,35 @@
     }
 }
 
+/* Pulsing animation for delayed trains */
+.train-pulse-delay {
+    animation: train-delay-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes train-delay-pulse {
+
+    0%,
+    100% {
+        r: 18;
+        opacity: 0.8;
+    }
+
+    50% {
+        r: 24;
+        opacity: 0.3;
+    }
+}
+
+/* Delay badge styling */
+.delay-badge {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Delayed trains get enhanced filter */
+.train-delayed .train-body {
+    filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.6));
+}
+
 /* Hover effect for train markers */
 .train-marker:hover .train-body {
     filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
