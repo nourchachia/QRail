@@ -21,9 +21,11 @@ Usage:
     
     searcher = NeuralSearcher()
     results = searcher.search(
-        semantic_vec=[...],   # 384-dim from Sentence-Transformer
+    results = searcher.search(
+        semantic_text="Signal failure at Central Station",  # Raw text
         structural_vec=[...], # 64-dim from GNN
         temporal_vec=[...]    # 64-dim from LSTM
+    )
     )
 """
 
@@ -103,6 +105,12 @@ class NeuralSearcher:
         if url and api_key:
             try:
                 self.client = QdrantClient(url=url, api_key=api_key)
+                
+                # OPTIMIZATION: Use FastEmbed (CPU) instead of heavy torch models
+                # This automatically downloads and uses the model for vector generation
+                print("⚡ Enabling FastEmbed (CPU Optimized)...")
+                self.client.set_model("sentence-transformers/all-MiniLM-L6-v2")
+                
                 # Test connection
                 self.client.get_collections()
                 print(f"✅ Connected to Qdrant Cloud: {url[:40]}...")
@@ -115,17 +123,17 @@ class NeuralSearcher:
     
     def search(
         self,
-        semantic_vec: List[float],
+        semantic_text: str,
         structural_vec: Optional[List[float]] = None,
         temporal_vec: Optional[List[float]] = None,
         limit: int = 5,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
         """
-        Execute weighted triple-vector search.
+        Execute weighted triple-vector search using FastEmbed.
         
         Args:
-            semantic_vec: 384-dim semantic embedding (REQUIRED)
+            semantic_text: Natural language description (REQUIRED)
             structural_vec: 64-dim GNN embedding (optional)
             temporal_vec: 64-dim LSTM embedding (optional)
             limit: Max results to return
@@ -151,18 +159,19 @@ class NeuralSearcher:
                 print(f"❌ DEBUG: Failed to get collection info: {e}")
                 return []
             
-            # Primary search using semantic vector (most important)
+            # Primary search using semantic TEXT to FastEmbed (most important)
             try:
-                print(f"🔍 DEBUG: Executing search with semantic_vec length={len(semantic_vec)}")
-                # UPDATED: Use query_points instead of search
-                response = self.client.query_points(
+                print(f"🔍 DEBUG: Executing search with semantic_text='{semantic_text[:30]}...'")
+                # UPDATED: Use query() instead of query_points() for FastEmbed
+                # The client will automatically embed the text using set_model()
+                response = self.client.query(
                     collection_name=self.collection_name,
-                    query=semantic_vec,
+                    query_text=semantic_text,
                     using="semantic",
                     query_filter=qdrant_filter,
                     limit=limit * 3
                 )
-                semantic_results = response.points
+                semantic_results = response
                 print(f"   ✓ Semantic search returned {len(semantic_results)} results")
             except AttributeError as e:
                 print(f"❌ CRITICAL QDRANT ERROR: {e}")
@@ -363,12 +372,12 @@ if __name__ == "__main__":
         print("✅ Connected to Qdrant")
         
         # Test search with dummy vectors
-        test_semantic = [0.1] * 384
+        test_semantic = "Signal failure at Kapiolani Blvd"
         test_structural = [0.1] * 64
         test_temporal = [0.1] * 64
         
         results = searcher.search(
-            semantic_vec=test_semantic,
+            semantic_text=test_semantic,
             structural_vec=test_structural,
             temporal_vec=test_temporal,
             limit=3
