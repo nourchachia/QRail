@@ -1,0 +1,128 @@
+/* ============================================================================
+   Anomaly Warning - Expert Review
+   ============================================================================ */
+
+.anomaly-warning {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    border-left: 5px solid #ff0000;
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+    display: flex;
+    gap: var(--space-md);
+    animation: pulseWarning 2s ease-in-out infinite;
+}
+
+@keyframes pulseWarning {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 30px rgba(255, 0, 0, 0.6);
+    }
+}
+
+.anomaly-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.anomaly-content {
+    flex: 1;
+}
+
+.anomaly-content h3 {
+    color: white;
+    margin: 0 0 var(--space-sm) 0;
+    font-size: 1.1rem;
+}
+
+.anomaly-content p {
+    color: rgba(255, 255, 255, 0.95);
+    margin: var(--space-sm) 0;
+    line-height: 1.5;
+}
+
+.anomaly-stats {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: var(--space-sm);
+}
+
+.anomaly-advice {
+    font-style: italic;
+    margin-top: var(--space-md);
+}
+
+/* Feedback buttons */
+.feedback-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.feedback-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid white;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.feedback-btn.btn-valid {
+    background: #10b981;
+    color: white;
+}
+
+.feedback-btn.btn-valid:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+.feedback-btn.btn-invalid {
+    background: #ef4444;
+    color: write;
+}
+
+.feedback-btn.btn-invalid:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.feedback-btn.btn-dismiss {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.feedback-btn.btn-dismiss:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Feedback success states */
+.anomaly-warning.feedback-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-left-color: #10b981;
+    animation: none;
+}
+
+.anomaly-warning.feedback-invalid {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-left-color: #ef4444;
+    animation: none;
+}
+
+.anomaly-warning.feedback-dismissed {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    border-left-color: #6b7280;
+    animation: none;
+}
