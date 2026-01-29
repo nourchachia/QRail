@@ -41,27 +41,39 @@ function initTelemetryChart() {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    labels: {
-                        color: '#94a3b8'
-                    }
+                    position: 'top',
+                    align: 'end',
+                    labels: { color: '#94a3b8', boxWidth: 10 }
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#e2e8f0',
+                    bodyColor: '#cbd5e1',
+                    borderColor: '#334155',
+                    borderWidth: 1
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMin: 0,
-                    suggestedMax: 100, // Load percentage
-
-                    ticks: { color: '#64748b' },
+                    min: 0,
+                    max: 100, // Fixed percentage scale
+                    title: { display: true, text: 'Load (%)', color: '#64748b' },
+                    ticks: { color: '#64748b', stepSize: 20 },
                     grid: { color: '#334155' }
                 },
                 x: {
-                    ticks: { color: '#64748b' },
-                    grid: { color: '#334155' }
+                    ticks: { color: '#64748b', maxTicksLimit: 6 },
+                    grid: { display: false }
                 }
             }
         }
     });
+    // Set fixed height for container
+    ctx.parentNode.style.height = '180px';
 }
 
 function initComparisonChart() {
@@ -135,12 +147,17 @@ function updateMetricsSummary(liveStatus) {
     document.getElementById('weather-value').textContent =
         condition.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
-    document.getElementById('load-value').textContent =
-        `${liveStatus.network_load_pct || 0}%`;
+    const loadVal = liveStatus.network_load_pct !== undefined ? liveStatus.network_load_pct : 0;
+    document.getElementById('load-value').textContent = `${loadVal}%`;
+
+    // Update Chart if it exists
+    if (window.timeline && window.timeline.updateLoadChart) {
+        window.timeline.updateLoadChart(loadVal);
+    }
 
     // Handle both array (from API) and number (from simulation) formats
-    const trainCount = Array.isArray(liveStatus.active_trains) 
-        ? liveStatus.active_trains.length 
+    const trainCount = Array.isArray(liveStatus.active_trains)
+        ? liveStatus.active_trains.length
         : (typeof liveStatus.active_trains === 'number' ? liveStatus.active_trains : 0);
     document.getElementById('trains-value').textContent = trainCount;
 

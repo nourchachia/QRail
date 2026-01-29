@@ -7,9 +7,11 @@
  * - GET /api/stations - Get all stations
  * - GET /api/segments - Get all segments
  * - GET /api/network/status - Get live network status
+ * - GET /api/network-data - Get combined network data
+ * - POST /api/feedback - Submit feedback
  */
 
-const API_BASE = 'http://localhost:8002';  // Updated to match backend port
+const API_BASE = 'http://localhost:8002';
 
 const api = {
     /**
@@ -86,6 +88,16 @@ const api = {
     },
 
     /**
+     * Get combined network data (Stations + Segments + Status)
+     * @returns {Promise<Object>} Combined data
+     */
+    async getCombinedNetworkData() {
+        const response = await fetch(`${API_BASE}/api/network-data`);
+        if (!response.ok) throw new Error('Failed to fetch combined network data');
+        return response.json();
+    },
+
+    /**
      * Get live network status
      * @returns {Promise<Object>} Live status data
      */
@@ -100,9 +112,9 @@ const api = {
     },
 
     /**
-     * Submit feedback for learning loop
+     * Submit user feedback
      * @param {Object} feedback - Feedback data
-     * @returns {Promise<Object>} Confirmation
+     * @returns {Promise<Object>} Response
      */
     async submitFeedback(feedback) {
         const response = await fetch(`${API_BASE}/api/feedback`, {
@@ -121,5 +133,6 @@ const api = {
     },
 };
 
-// Export for use in other modules
+// Export base for dynamic use
+api.base = API_BASE;
 window.api = api;

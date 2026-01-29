@@ -21,6 +21,7 @@ const TimetableEngine = {
         this.stations = stations;
         this.dayType = this.getDayType(new Date());
         this.generateTrainColors();
+        this.buildGraph(); // Build initial graph
         console.log(`Timetable engine initialized: ${this.dayType} schedule, ${timetable.length} trains`);
     },
 
@@ -78,11 +79,19 @@ const TimetableEngine = {
     },
 
     /**
-     * Get current time as minutes since midnight
+     * Get current time as minutes since midnight (with fractional seconds)
      */
     getCurrentMinutes() {
         const now = new Date();
-        return now.getHours() * 60 + now.getMinutes();
+        return now.getHours() * 60 + now.getMinutes() + (now.getSeconds() / 60);
+    },
+
+    /**
+     * Get current seconds since midnight
+     */
+    getCurrentSeconds() {
+        const now = new Date();
+        return now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
     },
 
     /**
@@ -135,6 +144,9 @@ const TimetableEngine = {
                         station_name: currentStop.station_name,
                         platform: currentStop.platform,
                         status: 'stopped',
+                        // Context for rotation: Face the NEXT station
+                        from_station: currentStop.station_id,
+                        to_station: nextStop.station_id,
                         progress: 0,
                         segment_id: null,
                         color: this.getTrainColor(train.train_id),
@@ -144,23 +156,72 @@ const TimetableEngine = {
 
                 // Check if train is between stations (moving)
                 if (currentMinutes >= departureTime && currentMinutes <= arrivalTime) {
-                    const segment = this.findSegment(currentStop.station_id, nextStop.station_id);
+                    let segment = this.findSegment(currentStop.station_id, nextStop.station_id);
+                    let segmentId = segment ? segment.id : null;
+                    let segmentDirection = segment && segment.from_station === currentStop.station_id ? 'forward' : 'backward';
+
                     const totalTime = arrivalTime - departureTime;
                     const elapsed = currentMinutes - departureTime;
-                    const progress = totalTime > 0 ? elapsed / totalTime : 0;
+                    // Global progress for the entire trip leg (A->C)
+                    let globalProgress = totalTime > 0 ? elapsed / totalTime : 0;
+                    globalProgress = Math.min(1, Math.max(0, globalProgress));
 
-                    // Determine direction
-                    const direction = segment && segment.from_station === currentStop.station_id
-                        ? 'forward' : 'backward';
+                    let localProgress = globalProgress;
+
+                    // PATHFINDING LOGIC: If no direct segment, find multi-segment path
+                    if (!segment) {
+                        const path = this.findPath(currentStop.station_id, nextStop.station_id);
+
+                        if (path && path.length > 0) {
+                            // Calculate total length of the path
+                            // Note: We use length_km from segments. If missing, assume 1.
+                            const totalPathLen = path.reduce((sum, item) => sum + (item.segment.length_km || 1), 0);
+                            const distanceTraveled = globalProgress * totalPathLen;
+
+                            let distanceCoveredSoFar = 0;
+
+                            // Find which segment we are currently on
+                            for (const item of path) {
+                                const segLen = item.segment.length_km || 1;
+
+                                if (distanceTraveled >= distanceCoveredSoFar && distanceTraveled <= distanceCoveredSoFar + segLen) {
+                                    // Found the active segment
+                                    segment = item.segment;
+                                    segmentId = segment.id;
+                                    segmentDirection = item.direction; // 'forward' or 'backward' determined by BFS
+
+                                    // Calculate progress relative to THIS segment only
+                                    const distOnSegment = distanceTraveled - distanceCoveredSoFar;
+                                    localProgress = distOnSegment / segLen;
+                                    localProgress = Math.min(1, Math.max(0, localProgress));
+                                    break;
+                                }
+
+                                distanceCoveredSoFar += segLen;
+                            }
+
+                            // Edge case: if loop finished (e.g. progress=1), snap to last segment
+                            if (!segmentId && path.length > 0) {
+                                const lastItem = path[path.length - 1];
+                                segment = lastItem.segment;
+                                segmentId = segment.id;
+                                segmentDirection = lastItem.direction;
+                                localProgress = 1;
+                            }
+                        } else {
+                            // Still no path? Log warning (only occasionally)
+                            if (Math.random() < 0.001) console.warn(`No path found: ${currentStop.station_id} -> ${nextStop.station_id}`);
+                        }
+                    }
 
                     activeTrains.push({
                         id: train.train_id,
                         service_type: train.service_type,
                         from_station: currentStop.station_id,
                         to_station: nextStop.station_id,
-                        segment_id: segment ? segment.id : null,
-                        progress: Math.min(1, Math.max(0, progress)),
-                        direction: direction,
+                        segment_id: segmentId,
+                        progress: localProgress,
+                        direction: segmentDirection,
                         status: 'moving',
                         color: this.getTrainColor(train.train_id),
                     });
@@ -250,6 +311,76 @@ const TimetableEngine = {
             hasConflicts: conflicts.platform.length > 0 || conflicts.segment.length > 0,
         };
     },
+
+    // --- PATHFINDING & GRAPH UTILS ---
+
+    graph: null, // Adjacency list: { stationId: [ { segment, to } ] }
+    pathCache: new Map(), // Cache for BFS results: "from-to" -> [segments]
+
+    /**
+     * Build the network graph for pathfinding
+     */
+    buildGraph() {
+        this.graph = {};
+        this.pathCache.clear();
+
+        if (!this.segments) return;
+
+        this.segments.forEach(seg => {
+            // Forward link
+            if (!this.graph[seg.from_station]) this.graph[seg.from_station] = [];
+            this.graph[seg.from_station].push({ segment: seg, to: seg.to_station });
+
+            // Backward link (assuming tracks are traversable unless one-way, but segments says bidirectional)
+            if (seg.bidirectional) {
+                if (!this.graph[seg.to_station]) this.graph[seg.to_station] = [];
+                this.graph[seg.to_station].push({ segment: seg, to: seg.from_station });
+            }
+        });
+        console.log('Network graph built for pathfinding.');
+    },
+
+    /**
+     * Find shortest path between two stations (BFS)
+     * Returns array of segments
+     */
+    findPath(fromId, toId) {
+        if (!this.graph) this.buildGraph();
+
+        const cacheKey = `${fromId}-${toId}`;
+        if (this.pathCache.has(cacheKey)) return this.pathCache.get(cacheKey);
+
+        const queue = [{ id: fromId, path: [] }];
+        const visited = new Set([fromId]);
+
+        while (queue.length > 0) {
+            const { id, path } = queue.shift();
+
+            if (id === toId) {
+                this.pathCache.set(cacheKey, path);
+                return path;
+            }
+
+            const neighbors = this.graph[id] || [];
+            for (const neighbor of neighbors) {
+                if (!visited.has(neighbor.to)) {
+                    visited.add(neighbor.to);
+                    // Append segment to path
+                    queue.push({
+                        id: neighbor.to,
+                        path: [...path, {
+                            segment: neighbor.segment,
+                            direction: neighbor.to === neighbor.segment.to_station ? 'forward' : 'backward'
+                        }]
+                    });
+                }
+            }
+        }
+
+        // No path found
+        this.pathCache.set(cacheKey, null);
+        return null;
+    }
 };
 
 // Export for use in other modules

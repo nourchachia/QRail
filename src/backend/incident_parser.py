@@ -129,23 +129,23 @@ LIVE NETWORK STATE (Active Trains):
 REQUIRED OUTPUT (JSON format):
 {{
     "estimated_delay_minutes": <integer, 0-300>,
-    "primary_failure_code": "<standardized code>",
+    "segment_ids": ["list", "of", "segment_ids", "e.g.", "S1"],
+    "primary_failure_code": "<one of the 8 codes below>",
     "station_names": ["list", "of", "mentioned", "stations"],
-    "train_id": "<ID of the most affected train from the list above>",
+    "train_id": "<ID of the most affected train>",
     "confidence": <float, 0.0-1.0>,
-    "reasoning": "<explanation identifying specific affected trains from the state above>"
+    "reasoning": "<explanation>"
 }}
 
-FAILURE CODE STANDARDS:
-- SIGNAL_FAIL: Signal system failure
-- TRAIN_BREAKDOWN: Train mechanical failure
-- PASSENGER_ALARM: Passenger emergency alarm
-- WEATHER_SEVERE: Severe weather conditions
-- INFRASTRUCTURE_FAULT: Track/infrastructure fault
-- POWER_OUTAGE: Electrical power failure
-- SWITCH_FAILURE: Point/switch mechanism failure
-- COMMUNICATION_LOSS: Communication system failure
-- UNKNOWN: Unable to determine
+FAILURE CODE STANDARDS (Choose one):
+- HEADWAY_VIOLATION
+- PLATFORM_OVERSUBSCRIPTION
+- CREW_SHORTAGE
+- SIGNAL_QUEUE
+- POWER_SUPPLY
+- TRACK_CAPACITY
+- WEATHER_SAFETY
+- EQUIPMENT_FAILURE
 
 DELAY ESTIMATION GUIDELINES:
 - Signal failure: 15-60 minutes (depending on severity)
@@ -304,12 +304,11 @@ Output ONLY valid JSON, no additional text."""
         # Create the prompt 🧠
         prompt = self._create_prompt(description, context)
         
-        # Try multiple models in order of preference (prioritizing proven working models)
+        # Try multiple models in order of preference (using models confirmed in API)
         models_to_try = [
-            'gemini-flash-latest',      # PROVEN WORKING ✅
-            'gemini-2.0-flash-exp',
-            'gemini-exp-1206',
-            'gemini-1.5-flash'
+            'gemini-flash-latest',      # Primary - confirmed working in user's test
+            'gemini-2.5-flash',         # Newer alternative
+            'gemini-pro-latest',        # More capable fallback
         ]
         response = None
         last_error = None

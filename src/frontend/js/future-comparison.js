@@ -42,6 +42,9 @@ class FutureComparison {
         // Initialize all 4 simulations
         this.initializeSimulations();
 
+        // Initialize charts
+        this.initDelayEvolutionChart();
+
         // Start timeline playback
         this.startPlayback();
 
@@ -440,7 +443,8 @@ class FutureComparison {
             }
 
             this.updateAllMaps();
-        }, 500); // Update every 500ms (2x speed)
+            this.updateAllMaps();
+        }, 1200); // Slower animation (1.2s per step) for better visibility
 
         const btn = document.getElementById('play-pause-comparison');
         if (btn) btn.textContent = '⏸ Pause';
@@ -492,6 +496,174 @@ class FutureComparison {
         }
 
         console.log('✅ Future Comparison deactivated');
+    }
+    /**
+     * Initialize the exponential delay evolution chart
+     */
+    initDelayEvolutionChart() {
+        const ctx = document.getElementById('delay-evolution-chart');
+        if (!ctx) return;
+
+        // Destroy existing chart if any
+        if (this.delayChart) {
+            this.delayChart.destroy();
+        }
+
+        // Generate time labels (0 to maxFutureTime)
+        const labels = Array.from({ length: this.maxFutureTime + 1 }, (_, i) => `T+${i}`);
+
+        this.delayChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Baseline (Do Nothing)',
+                        data: [], // Filled dynamically
+                        borderColor: '#ef4444', // Red
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4, // Smooth exponential curve
+                        fill: true
+                    },
+                    {
+                        label: 'Resolution A',
+                        data: [],
+                        borderColor: '#3b82f6', // Blue
+                        borderWidth: 2,
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    },
+                    {
+                        label: 'Resolution B',
+                        data: [],
+                        borderColor: '#10b981', // Green
+                        borderWidth: 2,
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false, // Disable chart animation for performance during update
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8', maxTicksLimit: 10 }
+                    },
+                    y: {
+                        title: { display: true, text: 'Avg Delay (min)', color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' },
+                        beginAtZero: true,
+                        suggestedMax: 20 // Keep scale reasonable for visualization
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                elements: {
+                    point: { radius: 0, hoverRadius: 6 } // Hide points for clean line
+                }
+            }
+        });
+
+        // Fix container height to be compact (user request)
+        ctx.parentNode.style.height = '200px';
+
+        // Pre-calculate data for the whole timeline
+        this.updateDelayEvolutionChart();
+    }
+
+    /**
+     * Update the delay chart with calculated data
+     */
+    updateDelayEvolutionChart() {
+        if (!this.delayChart) return;
+
+        const timeSteps = this.maxFutureTime + 1;
+
+        // Initialize time labels if not set
+        if (!this.delayChart.data.labels || this.delayChart.data.labels.length === 0) {
+            this.delayChart.data.labels = Array.from({ length: timeSteps }, (_, i) => `T+${i}`);
+        }
+
+        // Add 4th dataset if missing
+        if (this.delayChart.data.datasets.length < 4) {
+            this.delayChart.data.datasets.push({
+                label: 'Resolution C',
+                data: [],
+                borderColor: '#f59e0b', // Amber/Orange
+                borderWidth: 2,
+                tension: 0.4,
+                borderDash: [5, 5]
+            });
+        }
+
+        // Calculate series for each scenario
+        const baselineData = [];
+        const resAData = [];
+        const resBData = [];
+        const resCData = [];
+
+        for (let t = 0; t < timeSteps; t++) {
+            baselineData.push(this.calculateSimulationState('baseline', t).avgDelay);
+            resAData.push(this.calculateSimulationState('resolutionA', t).avgDelay);
+            resBData.push(this.calculateSimulationState('resolutionB', t).avgDelay);
+            resCData.push(this.calculateSimulationState('resolutionC', t).avgDelay);
+        }
+
+        this.delayChart.data.datasets[0].data = baselineData;
+        this.delayChart.data.datasets[1].data = resAData;
+        this.delayChart.data.datasets[2].data = resBData;
+        this.delayChart.data.datasets[3].data = resCData;
+
+        this.delayChart.update();
+    }
+
+    /**
+     * Render trains on the map (FIX: Ensure trains don't disappear)
+     */
+    renderTrains(sim, activeTrains) {
+        const { svg, xScale, yScale } = sim;
+
+        // Join data
+        const trains = svg.select('.trains')
+            .selectAll('.train-marker')
+            .data(activeTrains, d => d.train_id);
+
+        // EXIT
+        trains.exit().remove();
+
+        // UPDATE
+        trains.transition().duration(200)
+            .attr('transform', d => `translate(${xScale(d.coords[0])}, ${yScale(d.coords[1])})`);
+
+        // ENTER
+        const enter = trains.enter()
+            .append('g')
+            .attr('class', 'train-marker')
+            .attr('transform', d => `translate(${xScale(d.coords[0])}, ${yScale(d.coords[1])})`);
+
+        // Train body
+        enter.append('rect')
+            .attr('x', -6).attr('y', -3)
+            .attr('width', 12).attr('height', 6)
+            .attr('rx', 2)
+            .attr('fill', d => d.color || '#fbbf24')
+            .attr('stroke', '#000')
+            .attr('stroke-width', 1);
+
+        // Train label (optional, can be toggled)
+        enter.append('text')
+            .attr('y', -6)
+            .attr('text-anchor', 'middle')
+            .attr('fill', '#fff')
+            .attr('font-size', '8px')
+            .text(d => d.train_id);
     }
 }
 

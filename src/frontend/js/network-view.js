@@ -113,30 +113,31 @@ function initNetworkView() {
 }
 
 function renderNetwork(stations, segments) {
-    if (!networkSvg) initNetworkView();
-
-    // Get or create zoom container
-    let zoomContainer = networkSvg.select('.zoom-container');
-    if (zoomContainer.empty()) {
-        zoomContainer = networkSvg.append('g').attr('class', 'zoom-container');
-        networkSvg.zoomContainer = zoomContainer;
+    if (!networkSvg) {
+        initNetworkView();
+        if (!networkSvg) return;
     }
 
-    // Clear only the zoom container content, not the whole SVG
-    zoomContainer.selectAll('*').remove();
+    // Get or create zoom container
+    let zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
 
-    // Render segments first (so they're behind stations)
-    renderSegments(segments, stations);
-
-    // Render stations
-    renderStations(stations);
+    // Check if static layer already exists (CRITICAL for anti-flicker)
+    let staticLayer = zoomContainer.select('.static-layer');
+    if (staticLayer.empty()) {
+        console.log("🏙️ Rendering Static Network Layer (First Time Only)");
+        staticLayer = zoomContainer.insert('g', ':first-child').attr('class', 'static-layer');
+        // Render segments mapping directly to staticLayer
+        renderSegments(segments, stations, staticLayer);
+        // Render stations mapping directly to staticLayer
+        renderStations(stations, staticLayer);
+    }
 }
 
-function renderSegments(segments, stations) {
+function renderSegments(segments, stations, container) {
+    const parent = container || networkSvg.zoomContainer || networkSvg.select('.zoom-container');
     const stationMap = new Map(stations.map(s => [s.id, s]));
-    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
 
-    const lines = zoomContainer.selectAll('.segment-line')
+    const lines = parent.selectAll('.segment-line')
         .data(segments)
         .enter()
         .append('line')
@@ -161,10 +162,10 @@ function renderSegments(segments, stations) {
     segmentLines = lines;
 }
 
-function renderStations(stations) {
-    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
+function renderStations(stations, container) {
+    const parent = container || networkSvg.zoomContainer || networkSvg.select('.zoom-container');
 
-    const groups = zoomContainer.selectAll('.station-node')
+    const groups = parent.selectAll('.station-node')
         .data(stations)
         .enter()
         .append('g')
@@ -205,19 +206,32 @@ function renderStations(stations) {
     stationNodes = groups;
 }
 
-function highlightAffectedNodes(nodeIds) {
+function highlightAffectedNodes(nodeIds, segmentIds = []) {
     if (!stationNodes) return;
 
-    // Reset all stations first
+    // Reset all stations and segments first
     stationNodes.classed('station-affected', false);
+    if (segmentLines) segmentLines.attr('stroke', '#374151').attr('stroke-width', 1.5).classed('segment-affected', false);
 
     // Highlight affected stations
-    nodeIds.forEach(nodeId => {
-        stationNodes.filter(d => d.id === nodeId)
-            .classed('station-affected', true);
-    });
+    if (nodeIds && nodeIds.length > 0) {
+        nodeIds.forEach(nodeId => {
+            stationNodes.filter(d => d.id === nodeId)
+                .classed('station-affected', true);
+        });
+    }
 
-    console.log(`Highlighted ${nodeIds.length} affected stations`);
+    // Highlight affected segments
+    if (segmentIds && segmentIds.length > 0 && segmentLines) {
+        segmentIds.forEach(segId => {
+            segmentLines.filter(d => d.id === segId)
+                .attr('stroke', '#ef4444') // Red color for affected segments
+                .attr('stroke-width', 4)
+                .classed('segment-affected', true);
+        });
+    }
+
+    console.log(`Highlighted ${nodeIds ? nodeIds.length : 0} affected stations and ${segmentIds ? segmentIds.length : 0} segments`);
 }
 
 function animateCascadeWave(affectedNodes, stations) {
@@ -331,7 +345,49 @@ function updateNetworkStatus(liveStatus) {
     if (trainsEl) {
         trainsEl.textContent = `🚂 Trains: ${trainCount}`;
     }
+
+    // Force animation frame if trains exist
+    if (trainCount > 0) {
+        // CONFLICT FIX: Disable internal loop if Simulation Engine is driving
+        // The Simulation Engine calls renderTrains directly on its own tick.
+        // We only enable this internal loop if we are in pure "Live Mode" without local simulation.
+
+        // Ensure strictly ONE animation loop is running
+        /* 
+        if (window.animationLoopId) {
+            cancelAnimationFrame(window.animationLoopId);
+            window.animationLoopId = null;
+        }
+
+        window.animationLoopStarted = true;
+        window.animationLoopId = requestAnimationFrame(animateTrainsLoop);
+        */
+    }
 }
+
+// Global animation loop for trains
+let lastFrameTime = 0;
+function animateTrainsLoop(timestamp) {
+    // Re-request immediately to keep loop alive
+    window.animationLoopId = requestAnimationFrame(animateTrainsLoop);
+
+    if (!lastFrameTime) lastFrameTime = timestamp;
+    const deltaTime = timestamp - lastFrameTime;
+
+    // Cap updates to ~30fps (33ms) to prevent excessive CPU usage
+    if (deltaTime >= 33) {
+        if (window.networkView && window.networkView.renderTrains && window.appState.liveStatus) {
+            const trains = window.appState.liveStatus.active_trains || [];
+            // SAFETY CHECK: Ensure networkData exists before rendering trains
+            if (trains.length > 0 && window.networkData && window.networkData.segments) {
+                window.networkView.renderTrains(trains, window.networkData.segments, window.networkData.stations);
+            }
+        }
+        lastFrameTime = timestamp;
+    }
+}
+
+
 
 // ============================================================================
 // Train Animation Functions
@@ -380,13 +436,25 @@ function getTrainRotation(fromStationId, toStationId, stationMap) {
  * Render train markers on the network
  */
 function renderTrains(trains, segments, stations) {
-    if (!networkSvg) return;
+    // Safety check - if SVG is gone, stop
+    if (!networkSvg || networkSvg.empty()) {
+        // Try to re-init if possible, or just return
+        networkSvg = d3.select('#network-svg');
+        if (networkSvg.empty()) return;
+    }
 
     const stationMap = new Map(stations.map(s => [s.id, s]));
     const segmentMap = new Map(segments.map(s => [s.id, s]));
 
     // Get zoom container (trains must be inside it to zoom/pan with map)
-    const zoomContainer = networkSvg.zoomContainer || networkSvg.select('.zoom-container');
+    let zoomContainer = networkSvg.zoomContainer;
+    if (!zoomContainer || zoomContainer.empty()) {
+        zoomContainer = networkSvg.select('.zoom-container');
+        networkSvg.zoomContainer = zoomContainer;
+    }
+
+    // Explicitly check again - if still empty, we can't render
+    if (zoomContainer.empty()) return;
 
     // Use existing group or create new one INSIDE zoom container
     trainMarkerGroup = zoomContainer.select('.train-group');
@@ -396,27 +464,68 @@ function renderTrains(trains, segments, stations) {
 
     // Filter valid trains
     const validTrains = trains.filter(train => {
+        if (!train) return false;
+        // Case 1: On a known segment
         if (train.segment_id && segmentMap.has(train.segment_id)) return true;
+        // Case 2: At a known station
         if (train.station_id && stationMap.has(train.station_id)) return true;
+        // Case 3: Moving between known stations (Virtual Segment)
+        if (train.from_station && train.to_station &&
+            stationMap.has(train.from_station) && stationMap.has(train.to_station)) return true;
+
         return false;
     });
 
     // Helper to calculate transform
     const getTransform = (d) => {
+        // CASE 1: Standard Segment Travel
         if (d.segment_id && segmentMap.has(d.segment_id)) {
             const segment = segmentMap.get(d.segment_id);
-            const pos = getPositionOnSegment(segment, d.progress !== undefined ? d.progress : 0.5, stationMap);
-            // Use the absolute travel endpoints (from/to) for rotation - no more direction flags needed!
+
+            // DIRECTION FIX: If train is moving backwards along the segment, flip the progress
+            let effectiveProgress = d.progress !== undefined ? d.progress : 0.5;
+            if (d.direction === 'backward') {
+                effectiveProgress = 1 - effectiveProgress;
+            }
+
+            const pos = getPositionOnSegment(segment, effectiveProgress, stationMap);
             const rotation = getTrainRotation(d.from_station, d.to_station, stationMap);
             return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
-        } else if (d.station_id && stationMap.has(d.station_id)) {
+        }
+
+        // CASE 2: Stopped at Station
+        else if (d.station_id && stationMap.has(d.station_id)) {
             const station = stationMap.get(d.station_id);
             const x = xScale(station.coordinates[0]);
             const y = yScale(station.coordinates[1]);
-            // Still rotate even if dwelling
-            const rotation = getTrainRotation(d.from_station, d.to_station, stationMap);
+
+            // Rotation: Face the next station if known (using from/to from timetable engine upgrade)
+            // If unknown, default to 0
+            const rotation = (d.from_station && d.to_station)
+                ? getTrainRotation(d.from_station, d.to_station, stationMap)
+                : 0;
+
             return `translate(${x}, ${y}) rotate(${rotation})`;
         }
+
+        // CASE 3: Virtual Segment (Missing Topology)
+        // Train is moving between known stations, but no segment exists in map data.
+        // Fallback: Interpolate straight line "As the Crow Flies"
+        else if (d.from_station && d.to_station && stationMap.has(d.from_station) && stationMap.has(d.to_station)) {
+            const from = stationMap.get(d.from_station);
+            const to = stationMap.get(d.to_station);
+
+            // Synthesize a virtual segment for calculation
+            // We assume 'forward' (0->1) since we defined from/to based on the trip leg
+            const virtualSegment = { from_station: d.from_station, to_station: d.to_station };
+
+            // Progress is always 0->1 relative to A->B leg
+            const pos = getPositionOnSegment(virtualSegment, d.progress || 0, stationMap);
+            const rotation = getTrainRotation(d.from_station, d.to_station, stationMap);
+
+            return pos ? `translate(${pos.x}, ${pos.y}) rotate(${rotation})` : 'translate(0, 0)';
+        }
+
         return 'translate(0, 0)';
     };
 

@@ -9,7 +9,7 @@ const appState = {
     status: 'idle', // 'idle' | 'detecting' | 'searching' | 'analyzing' | 'resolved'
 
     // Demo mode
-    demoMode: true,
+    demoMode: false,
 
     // Network data (cached)
     stations: [],

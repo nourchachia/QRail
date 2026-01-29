@@ -21,9 +21,6 @@ async function initApp() {
         window.timeline.init();
         window.controlPanel.init();
 
-        // Setup demo mode toggle
-        setupDemoMode();
-
         // Setup reset button
         document.getElementById('reset-btn').addEventListener('click', resetApp);
 
@@ -47,47 +44,98 @@ async function loadNetworkData() {
     try {
         console.log('Loading network data...');
 
-        // Try to load from API
-        if (!window.appState.demoMode) {
+        // Always try to load from API first (Real Mode)
+        try {
+            // Attempt to fetch combined network data if available, otherwise individual components
+            let data;
             try {
+                // Attempt to fetch combined network data if available
+                if (window.api && window.api.getCombinedNetworkData) {
+                    data = await window.api.getCombinedNetworkData();
+                } else {
+                    const response = await fetch(`${window.api?.base || 'http://localhost:8002'}/api/network-data`);
+                    if (!response.ok) throw new Error('Combined network data endpoint not found or failed');
+                    data = await response.json();
+                }
+                console.log('✅ Loaded combined network data from API');
+            } catch (e) {
+                console.warn('Combined network data endpoint failed, falling back to individual API calls:', e);
                 const [stations, segments, liveStatus] = await Promise.all([
                     window.api.getStations(),
                     window.api.getSegments(),
                     window.api.getLiveStatus(),
                 ]);
-
-                window.appState.setState({
-                    stations,
-                    segments,
-                    liveStatus,
-                });
-
+                data = { stations, segments, liveStatus };
                 console.log(`✅ Loaded ${stations.length} stations and ${segments.length} segments from API`);
-
-            } catch (apiError) {
-                console.warn('⚠️ API not available, using demo mode:', apiError);
-                window.appState.setState({ demoMode: true });
-                updateDemoModeUI();
-                loadDemoData();
-                return;
             }
-        } else {
+
+            // CRITICAL: Set global data variables expected by other modules (network-view.js, future-comparison.js)
+            window.networkData = { stations: data.stations, segments: data.segments };
+            window.staticNetworkData = { stations: data.stations, segments: data.segments };
+
+            // Update global state
+            window.appState.setState({
+                stations: data.stations,
+                segments: data.segments,
+                liveStatus: data.liveStatus || window.appState.liveStatus,
+                demoMode: false
+            });
+
+            // Render STATIC topology only once here
+            if (window.networkView) {
+                window.networkView.render(data.stations, data.segments);
+            }
+
+            console.log(`✅ Loaded ${data.stations.length} stations and ${data.segments.length} segments from API`);
+
+            // Initialize Timetable & Start Simulation (Real Mode)
+            loadTimetableAndStartTrains(data.stations, data.segments);
+
+        } catch (apiError) {
+            console.warn('⚠️ API not available, falling back to static data:', apiError);
+            // Fallback to static/generated data if API fails
             loadDemoData();
+            return;
         }
 
-        // Render network
-        window.networkView.render(window.appState.stations, window.appState.segments);
 
-        // Update status displays
-        window.networkView.updateStatus(window.appState.liveStatus);
-        window.timeline.updateMetrics(window.appState.liveStatus);
+
+        // Update status displays (Force update)
+        if (window.appState.liveStatus) {
+            console.log('🔄 Updating live status UI:', window.appState.liveStatus);
+            window.networkView.updateStatus(window.appState.liveStatus);
+            if (window.timeline && window.timeline.updateMetrics) {
+                window.timeline.updateMetrics(window.appState.liveStatus);
+            }
+        }
 
     } catch (error) {
         console.error('Failed to load network data:', error);
-        showError('Failed to load network data. Using demo mode.');
-        window.appState.setState({ demoMode: true });
-        updateDemoModeUI();
+        showError('Failed to load network data. Falling back to local mode.');
         loadDemoData();
+    }
+}
+
+async function fetchLiveData() {
+    try {
+        if (!window.api) return;
+        const status = await window.api.getLiveStatus();
+
+        if (status) {
+            window.appState.setState({ liveStatus: status });
+
+            // Update Top Bar Metrics
+            if (window.networkView && window.networkView.updateStatus) {
+                window.networkView.updateStatus(status);
+            }
+
+            // Update Timeline/Graphs
+            if (window.timeline && window.timeline.updateMetrics) {
+                window.timeline.updateMetrics(status);
+            }
+        }
+    } catch (e) {
+        console.warn('Live data fetch error:', e);
     }
 }
 
@@ -309,33 +357,7 @@ function generateMockSegments(stations) {
     return segments;
 }
 
-function setupDemoMode() {
-    const toggleBtn = document.getElementById('demo-mode-toggle');
 
-    toggleBtn.addEventListener('click', () => {
-        window.appState.setState({
-            demoMode: !window.appState.demoMode,
-        });
-
-        updateDemoModeUI();
-
-        // Reload network data
-        loadNetworkData();
-    });
-}
-
-function updateDemoModeUI() {
-    const toggleBtn = document.getElementById('demo-mode-toggle');
-    const status = document.getElementById('demo-mode-status');
-
-    if (window.appState.demoMode) {
-        toggleBtn.classList.add('active');
-        status.textContent = 'ON';
-    } else {
-        toggleBtn.classList.remove('active');
-        status.textContent = 'OFF';
-    }
-}
 
 function resetApp() {
     console.log('Resetting application...');

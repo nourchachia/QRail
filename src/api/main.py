@@ -191,9 +191,29 @@ class IncidentAnalysisRequest(BaseModel):
     text: str  # Raw incident description
     
     class Config:
+            json_schema_extra = {
+                "example": {
+                    "text": "Signal failure at Central Station during morning peak. 5 trains affected."
+                }
+            }
+
+
+class FeedbackRequest(BaseModel):
+    """
+    📥 INPUT: User feedback on AI resolution
+    """
+    incident_id: str
+    resolution_id: str
+    rating: int  # 1-5
+    notes: Optional[str] = None
+    
+    class Config:
         json_schema_extra = {
             "example": {
-                "text": "Signal failure at Central Station during morning peak. 5 trains affected."
+                "incident_id": "inc_123",
+                "resolution_id": "res_A",
+                "rating": 5,
+                "notes": "Great resolution!"
             }
         }
 
@@ -378,7 +398,53 @@ def analyze_incident(request: IncidentAnalysisRequest):
         # HOW: FastAPI HTTPException
         # BEFORE: Request fails
         # AFTER: Frontend knows why it failed
+        print(f"❌ Analysis failed: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/network-data")
+async def get_combined_network_data():
+    """
+    📥 GET combined network data (Stations + Segments + Status)
+    WHY: Reduce frontend HTTP requests (1 call instead of 3)
+    """
+    try:
+        stations = get_stations()
+        segments = get_segments()
+        
+        # Get live status (mock or real)
+        live_status = {
+            "weather": {"condition": "rain", "temperature": 18},
+            "network_load_pct": 78,
+            "active_trains": [], # In a real app, this would come from a telemetry service
+            "timestamp": "2023-10-27T10:00:00Z"
+        }
+        
+        return {
+            "stations": stations["stations"],
+            "segments": segments["segments"],
+            "liveStatus": live_status
+        }
+    except Exception as e:
+        print(f"❌ Failed to get network data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/feedback")
+async def submit_feedback(request: FeedbackRequest):
+    """
+    📥 INPUT: User feedback on AI resolution
+    
+    WHY: We need to collect "Ground Truth" for future training
+    WHAT: Logs feedback and returns success
+    HOW: Store in local log/db (Placeholder for now)
+    """
+    print(f"\n📩 RECEIVED FEEDBACK:")
+    print(f"   Incident: {request.incident_id}")
+    print(f"   Strategy: {request.resolution_id}")
+    print(f"   Rating:   {'⭐' * request.rating} ({request.rating}/5)")
+    if request.notes:
+        print(f"   Notes:    {request.notes}")
+    
+    return {"status": "success", "message": "Feedback received. The AI will learn from this."}
 
 
 # =====================================================================

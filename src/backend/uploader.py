@@ -323,18 +323,13 @@ class MemoryUploader:
             sem_vec = self.sem.encode(text).tolist()
             
             # === STEP 4D: Generate Structural Vector (Model 1: GNN) ===
-            # TODO: Replace dummy graph with real topology from incident
-            # For now, uses random graph to test pipeline
-            # NEXT STEP: Once graph_builder.py is ready, use real network topology
-            dummy_graph = self._create_dummy_graph_input()
-            struct_vec = self.gnn(dummy_graph, return_embedding=True).detach().numpy()[0].tolist()
+            # Uses REAL topology from stations.json and segments.json
+            real_graph = self._create_real_graph_input(inc)
+            struct_vec = self.gnn(real_graph, return_embedding=True).detach().numpy()[0].tolist()
             
             # === STEP 4E: Generate Temporal Vector (Model 2: LSTM) ===
-            # TODO: Replace dummy sequence with real delay history
-            # For now, uses random sequence to test pipeline
-            # NEXT STEP: Once LSTM is trained, use real telemetry data
-            dummy_seq = torch.randn(1, 10, 4)  # [batch=1, seq_len=10, features=4]
-            temp_vec = self.lstm(dummy_seq).detach().numpy()[0].tolist()
+            # Uses zero-vector placeholder (real telemetry integration pending)
+            temp_vec = [0.0] * 64
             
             # === STEP 4F: Add Embeddings to Incident ===
             # Keeps all original data + adds embeddings
@@ -359,50 +354,102 @@ class MemoryUploader:
         print(f"   NEXT STEP: Upload to Qdrant using upload() method")
         return processed_incidents
     
-    def _create_dummy_graph_input(self):
+    def _create_real_graph_input(self, incident: Dict):
         """
-        Create dummy graph input for GNN (temporary until graph builder is ready).
+        Create REAL graph input for GNN from actual infrastructure data.
         
-        === TEMPORARY PLACEHOLDER ===
-        - Real implementation should build graph from incident's affected stations
-        - For now, generates random graph to test the pipeline
+        Extracts:
+        - station_ids from incident (parsed by Gemini or patterns)
+        - Real station features from stations.json
+        - Real segment connections from segments.json
         
-        === GRAPH STRUCTURE ===
-        - 10 nodes (stations)
-        - 20 edges (track segments)
-        - Node features: 14-dim (from blueprint)
-        - Edge features: 8-dim
-        
-        NEXT STEP: Replace this with real graph_builder.py output
-        
-        TODO (For Team):
-            1. Implement src/backend/graph_builder.py
-            2. Use incident['station_ids'] to extract subgraph
-            3. Replace this dummy with real topology
+        Returns:
+            torch_geometric.data.Data object for GNN encoder
         """
         from torch_geometric.data import Data
+        import re
         
-        # Random node features (14-dim per node)
-        x = torch.randn(10, 14)
+        # Extract affected stations from incident
+        station_ids = []
+        if 'station_ids' in incident:
+            station_ids = incident['station_ids']
+        elif 'location' in incident and isinstance(incident['location'], dict):
+            station_ids = incident['location'].get('station_ids', [])
+        elif 'location_id' in incident:
+            station_ids = [incident['location_id']]
         
-        # Random edge connections
-        edge_index = torch.randint(0, 10, (2, 20))
+        # Fallback: extract STN_XXX from text
+        if not station_ids and 'log' in incident:
+            matches = re.findall(r'STN_\d+', incident['log'])
+            station_ids = list(set(matches))
         
-        # Batch indicator (all nodes in same graph)
-        batch = torch.zeros(10, dtype=torch.long)
+        # Load real data
+        all_stations = self.storage.load_json('network/stations.json') or []
+        all_segments = self.storage.load_json('network/segments.json') or []
         
-        # Node type (0 = station, 1 = junction, etc.)
-        node_type = torch.zeros(10, dtype=torch.long)
+        # Build node features
+        nodes = []
+        id_to_idx = {}
         
-        # Edge features (8-dim per edge)
-        edge_attr = torch.randn(20, 8)
+        for station in all_stations:
+            if station['id'] in station_ids:
+                feature_vec = [
+                    1.0,
+                    float(station.get('platforms', 2)),
+                    float(station.get('daily_passengers', 0)) / 100000,
+                    1.0 if station.get('is_junction', False) else 0.0,
+                    1.0 if station.get('zone') == 'core' else 0.0,
+                    float(station.get('coordinates', [0, 0])[0]) / 100,
+                    float(station.get('coordinates', [0, 0])[1]) / 100,
+                    float(len(station.get('connected_segments', []))),
+                    1.0 if station.get('has_switches', False) else 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0  # padding to 14-dim
+                ]
+                nodes.append(feature_vec)
+                id_to_idx[station['id']] = len(nodes) - 1
+        
+        # Build edges from real segments
+        edges = []
+        edge_features = []
+        
+        for segment in all_segments:
+            from_id = segment.get('from_station')
+            to_id = segment.get('to_station')
+            
+            if from_id in id_to_idx and to_id in id_to_idx:
+                edges.append([id_to_idx[from_id], id_to_idx[to_id]])
+                
+                edge_vec = [
+                    float(segment.get('speed_limit', 120)) / 200,
+                    float(segment.get('capacity', 10)) / 20,
+                    1.0 if segment.get('bidirectional', True) else 0.0,
+                    1.0 if segment.get('is_critical', False) else 0.0,
+                    float(segment.get('length_km', 5)) / 50,
+                    0.0, 0.0, 0.0  # padding to 8-dim
+                ]
+                edge_features.append(edge_vec)
+        
+        # Fallback to single-node graph if no data
+        if not nodes:
+            nodes = [[0.0] * 14]
+        
+        x = torch.tensor(nodes, dtype=torch.float)
+        
+        if edges:
+            edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
+            edge_attr = torch.tensor(edge_features, dtype=torch.float)
+        else:
+            edge_index = torch.zeros((2, 0), dtype=torch.long)
+            edge_attr = torch.zeros((0, 8), dtype=torch.float)
+        
+        n_nodes = x.size(0)
         
         return Data(
             x=x,
             edge_index=edge_index,
-            batch=batch,
-            node_type=node_type,
-            edge_attr=edge_attr
+            edge_attr=edge_attr,
+            node_type=torch.zeros(n_nodes, dtype=torch.long),
+            batch=torch.zeros(n_nodes, dtype=torch.long)
         )
     
     def _generate_dummy_data(self, count: int) -> List[Dict]:

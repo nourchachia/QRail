@@ -97,39 +97,61 @@ function startSimulation() {
         simulationState.intervalId = null;
     }
 
-    // Real-time simulation: 1 real second = 1 sim second
-    // Update every 1000ms and advance by 1 second
-    // Update loop runs every 100ms for smoother animation
-    const tickInterval = 100;
-
-    simulationState.intervalId = setInterval(() => {
-        if (!simulationState.isPaused && simulationState.currentTime) {
-            // Advance time based on speed factor (default 60x = 1 min per sec)
-            // We want smooth updates, so we update every 100ms
-
-            // If speed is 60x:
-            // 1 sec real time = 60 sec sim time
-            // 100ms real time = 6 sec sim time
-
-            // Calculate seconds to advance per tick (assuming 100ms interval)
-            const secondsToAdvance = simulationState.speed * 0.1;
-
-            simulationState.currentTime.setSeconds(
-                simulationState.currentTime.getSeconds() + secondsToAdvance
-            );
-
-            // Update all displays
-            updateClockDisplay();
-            updateTrainsFromTimetable();
-
-            // Update telemetry every 10 seconds
-            if (simulationState.currentTime.getSeconds() % 10 === 0) {
-                updateSimulationMetrics();
-            }
-        }
-    }, tickInterval);
+    // Start animation loop
+    simulationState.lastFrameTime = 0;
+    simulationState.animationId = requestAnimationFrame(simulationLoop);
 
     updatePlayPauseButton();
+}
+
+/**
+ * Main Simulation Loop (60fps)
+ */
+function simulationLoop(timestamp) {
+    if (!simulationState.isRunning) return;
+
+    // Loop callback
+    simulationState.animationId = requestAnimationFrame(simulationLoop);
+
+    if (simulationState.isPaused) {
+        simulationState.lastFrameTime = timestamp;
+        return;
+    }
+
+    if (!simulationState.lastFrameTime) {
+        simulationState.lastFrameTime = timestamp;
+        return;
+    }
+
+    // Calculate time delta in seconds
+    const deltaTime = (timestamp - simulationState.lastFrameTime) / 1000;
+    simulationState.lastFrameTime = timestamp;
+
+    // Safety cap: Don't advance more than 1 second of real time per frame (e.g. if tab was hidden)
+    if (deltaTime > 1.0) return;
+
+    // Advance simulation time
+    // speed 60 = 1 minute sim time per 1 second real time
+    const secondsToAdvance = simulationState.speed * deltaTime;
+
+    simulationState.currentTime.setSeconds(
+        simulationState.currentTime.getSeconds() + secondsToAdvance
+    );
+
+    // Update displays
+    updateClockDisplay();
+    updateTrainsFromTimetable();
+
+    // Update telemetry occasionally (every ~10 sim seconds)
+    // We can do this based on modulus of current time
+    if (Math.floor(simulationState.currentTime.getSeconds()) % 10 === 0) {
+        // Debounce slightly to avoid multiple calls in same second
+        if (!simulationState.lastTelemetryUpdate ||
+            Math.abs(simulationState.currentTime - simulationState.lastTelemetryUpdate) > 2000) {
+            updateSimulationMetrics();
+            simulationState.lastTelemetryUpdate = new Date(simulationState.currentTime);
+        }
+    }
 }
 
 /**
@@ -211,6 +233,8 @@ function updateTrainsFromTimetable() {
     const dayType = simulationState.dayType;  // Use user-selected day type
 
     // Calculate train positions
+    // FIX: Pass fractional minutes (time.getTime() derived) or calculate in-situ
+    // For now, we update calculateActiveTrains to accept the date object and do high-res math
     const activeTrains = calculateActiveTrains(timetable, currentTime, dayType, segments, stations);
 
     // Store in simulation state for tracking
@@ -239,6 +263,10 @@ function calculateActiveTrains(timetable, currentTime, dayType, segments, statio
 
     // Total seconds since midnight for comparison
     const currentTotalSeconds = currentHours * 3600 + currentMinutes * 60 + currentSeconds;
+
+    // High-precision minutes for smooth interpolation
+    // e.g., 08:30:30 becomes 510.5 minutes
+    const currentFractionalMinutes = currentTotalSeconds / 60;
 
     const activeTrains = [];
     let debugCount = 0;
@@ -471,7 +499,8 @@ function triggerIncident(incident) {
     simulationState.incidentStartTime = new Date(simulationState.currentTime);
     simulationState.activeIncident = incident;
 
-    console.log(`🚨 Incident triggered at ${simulationState.currentTime.toLocaleTimeString()}`);
+    const timeStr = simulationState.currentTime ? simulationState.currentTime.toLocaleTimeString() : 'Unknown';
+    console.log(`🚨 Incident triggered at ${timeStr}`);
 
     // Store baseline for comparison
     if (window.networkView && window.networkView.getTrains) {
