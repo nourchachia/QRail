@@ -373,7 +373,16 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
 
             if (!segment) {
                 // CRITICAL: Segment not found - log this for debugging
-                console.warn(`⚠️ No segment found between ${fromStop.station_id} and ${toStop.station_id} for train ${train.train_id}`);
+                console.warn(`⚠️ SEGMENT MISSING for ${train.train_id}: ${fromStop.station_id} → ${toStop.station_id}`);
+                
+                // DEBUG: Show what segments DO exist between nearby stations
+                const availableSegments = segments.filter(s => 
+                    (s.from_station === fromStop.station_id || s.to_station === fromStop.station_id)
+                );
+                if (availableSegments.length > 0) {
+                    console.log(`   Available segments from ${fromStop.station_id}:`, 
+                        availableSegments.map(s => `${s.from_station}→${s.to_station}`).join(', '));
+                }
                 
                 // FALLBACK: Return virtual segment to prevent train disappearing
                 return {
