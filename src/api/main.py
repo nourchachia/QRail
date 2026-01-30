@@ -244,6 +244,7 @@ class IncidentAnalysisResponse(BaseModel):
     similar_incidents: List[Dict]
     conflicts: Dict
     recommendations: List[Dict]
+    anomaly: Optional[Dict] = None
 
 
 class SearchRequest(BaseModel):
@@ -391,7 +392,8 @@ def analyze_incident(request: IncidentAnalysisRequest):
             # 📌 These fields work NOW even if Models 4/5 not ready
             # Integration.py returns empty/default values gracefully
             "conflicts": result.get('conflicts', {}),
-            "recommendations": result.get('recommendations', [])
+            "recommendations": result.get('recommendations', []),
+            "anomaly": result.get('anomaly')
         }
         
     except Exception as e:

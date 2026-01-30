@@ -196,7 +196,11 @@ Output ONLY valid JSON, no additional text."""
                 return self._parse_with_patterns(description, context)
         
         # Default to pattern matching if Gemini disabled/unavailable
-        return self._parse_with_patterns(description, context)
+        result = self._parse_with_patterns(description, context)
+        
+        # CRITICAL: Preserve original description for Semantic Encoder
+        result['semantic_description'] = description
+        return result
     
     def _parse_with_patterns(
         self, 
@@ -288,7 +292,8 @@ Output ONLY valid JSON, no additional text."""
                 'wind_speed_kmh': context['wind_speed_kmh'],
                 'visibility_km': context['visibility_km']
             },
-            'network_load_pct': context['network_load_pct']
+            'network_load_pct': context['network_load_pct'],
+            'semantic_description': description  # CRITICAL: Preserve for embedding
         }
         
         return result
@@ -304,11 +309,13 @@ Output ONLY valid JSON, no additional text."""
         # Create the prompt 🧠
         prompt = self._create_prompt(description, context)
         
-        # Try multiple models in order of preference (using models confirmed in API)
+        # Try multiple models in order of preference (using ONLY free tier models)
+        # NOTE: gemini-2.5-pro causes quota exceeded; use flash models instead
         models_to_try = [
-            'gemini-flash-latest',      # Primary - confirmed working in user's test
-            'gemini-2.5-flash',         # Newer alternative
-            'gemini-pro-latest',        # More capable fallback
+            'gemini-2.0-flash',         # Primary - Latest free tier, high speed
+            'gemini-2.0-flash-latest',  # Alternative naming
+            'gemini-1.5-flash',         # Fallback - High speed, lower cost
+            'gemini-1.5-pro',           # More capable fallback (may have limits)
         ]
         response = None
         last_error = None
@@ -357,6 +364,7 @@ Output ONLY valid JSON, no additional text."""
             "visibility_km": context["visibility_km"]
         }
         result["network_load_pct"] = context["network_load_pct"]
+        result["semantic_description"] = description # CRITICAL: Preserve for embedding
         
         return result
     

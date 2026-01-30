@@ -214,9 +214,6 @@ class IncidentPipeline:
             print("      NEXT STEP: Implement conflict_classifier.py")
             self.conflict_classifier = None
         
-        # === COMPONENT 7: Outcome Predictor (Model 5) ===
-        # Ranks resolution strategies by predicted success
-        # NEXT STEP: Can score different resolution options
         try:
             from src.models.outcome_predictor_xgb import OutcomePredictor
             outcome_ckpt = "checkpoints/outcome_predictor/model.json"
@@ -231,6 +228,33 @@ class IncidentPipeline:
             print("      NEXT STEP: Implement outcome_predictor_xgb.py")
             self.outcome_predictor = None
         
+        # === COMPONENT 8: Anomaly Detector (Isolation Forest) ===
+        # Detects "Black Swan" events (unknown unknowns)
+        # NEXT STEP: Flags unprecedented incidents
+        try:
+            import pickle
+            import warnings
+            anomaly_ckpt = Path("checkpoints/anomaly_detector/model.pkl")
+            if anomaly_ckpt.exists():
+                # Suppress version warnings
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore", category=UserWarning)
+                    with open(anomaly_ckpt, "rb") as f:
+                        self.anomaly_detector = pickle.load(f)
+                print(f"   ✓ AnomalyDetector ready (Isolation Forest) - Loaded checkpoint")
+                # Verify model works with 384-dim semantic embeddings
+                test_input = np.zeros((1, 384), dtype=np.float32)
+                _ = self.anomaly_detector.predict(test_input)
+                print(f"      Verified: 384-dim semantic embeddings, ready for production")
+            else:
+                print(f"   ⚠ AnomalyDetector ready - UNTRAINED (No checkpoint found)")
+                self.anomaly_detector = None
+        except Exception as e:
+            print(f"   ⚠ AnomalyDetector failed to load: {type(e).__name__}: {e}")
+            import traceback
+            traceback.print_exc()
+            self.anomaly_detector = None
+
         print("=" * 60)
         print("✅ Pipeline initialization complete!")
         print("   NEXT STEP: Call process(incident_text) to analyze")
@@ -646,6 +670,52 @@ class IncidentPipeline:
             )
         
         print(f"   ✓ Generated {len(result['recommendations'])} recommendations")
+        
+        # ================================================================
+        # === STEP 7: Detect Anomalies (Isolation Forest) ===
+        # ================================================================
+        # Flag "Black Swan" events that deviate from training data
+        print("🦢 Step 7: Checking for anomalies...")
+        if self.anomaly_detector:
+            try:
+                # Use ONLY semantic embedding (384-dim) as trained
+                # Model was trained with train_anomaly_bert.py on 384-dim BERT embeddings
+                incident_embedding = np.array(semantic_vec, dtype=np.float32)
+                
+                # IsolationForest expects 2D array [n_samples, n_features]
+                prediction = self.anomaly_detector.predict([incident_embedding])[0] # -1 for anomaly, 1 for normal
+                score = self.anomaly_detector.decision_function([incident_embedding])[0] # Lower = more anomalous
+                
+                is_anomaly = bool(prediction == -1)
+                
+                result['anomaly'] = {
+                    "is_anomaly": is_anomaly,
+                    "anomaly_score": float(score),
+                    "severity": "CRITICAL - Unprecedented incident, exercise extreme caution" if is_anomaly else "NORMAL - Similar incidents found in history",
+                    "confidence": abs(float(score))
+                }
+                
+                if is_anomaly:
+                    print(f"   ⚠️ ANOMALY DETECTED! Score: {score:.4f} (Black Swan Event)")
+                else:
+                    print(f"   ✓ Pattern matches normal distribution (Score: {score:.4f})")
+                    
+            except Exception as e:
+                print(f"   ⚠ Anomaly detection failed: {e}")
+                result['anomaly'] = {
+                    "is_anomaly": False,
+                    "anomaly_score": 0.0,
+                    "severity": "UNKNOWN - Anomaly detector unavailable",
+                    "confidence": 0.0
+                }
+        else:
+             print("   ⚠ Anomaly detector not loaded")
+             result['anomaly'] = {
+                "is_anomaly": False,
+                "anomaly_score": 0.0,
+                "severity": "UNKNOWN - Anomaly detector unavailable",
+                "confidence": 0.0
+            }
         
         # ================================================================
         # === FINAL SUMMARY ===

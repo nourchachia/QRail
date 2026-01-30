@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/time-slider.css">
     <link rel="stylesheet" href="css/future-comparison.css">
     <link rel="stylesheet" href="css/zoom-controls.css">
+    <link rel="stylesheet" href="css/anomaly.css">
 </head>
 
 <body>
@@ -225,7 +226,7 @@ Example: 'Signal failure at Central Station during heavy rain. Express train EXP
                             <span class="day-label">Schedule:</span>
                             <button class="day-type-btn active" data-day="weekday">📅 Weekday</button>
                             <button class="day-type-btn" data-day="weekend">🏖️ Weekend</button>
-                            <button class="day-type-btn" data-day="holiday">🎄 Holiday</button>
+                            <button class="day-type-btn" data-day="holiday">📅 Holiday</button>
                         </div>
                     </div>
                     <!-- Search Status (Animated) -->
@@ -255,6 +256,9 @@ Example: 'Signal failure at Central Station during heavy rain. Express train EXP
                             Encoding current situation...
                         </p>
                     </div>
+
+                    <!-- Anomaly Warning Banner -->
+                    <div id="anomaly-warning" class="hidden"></div>
 
                     <!-- Similar Cases -->
                     <div id="similar-cases" class="similar-cases hidden"></div>
@@ -296,6 +300,7 @@ Example: 'Signal failure at Central Station during heavy rain. Express train EXP
     <script src="js/timeline.js?v=4"></script>
     <script src="js/control-panel.js?v=4"></script>
     <script src="js/future-comparison.js?v=4"></script>
+    <script src="js/anomaly-feedback.js?v=4"></script>
     <script src="js/app.js?v=4"></script>
 </body>
 

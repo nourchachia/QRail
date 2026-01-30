@@ -271,6 +271,16 @@ async function analyzeIncident(text, scenario = null) {
         displaySimilarCases(result.similar_incidents || []);
         displayResolutionOptions(result.recommendations || []);
 
+        // Show Anomaly Warning if detected
+        console.log("🦢 Anomaly Check:", result.anomaly);
+        if (result.anomaly && result.anomaly.is_anomaly) {
+            console.log("⚠️ SHOWING ANOMALY WARNING");
+            showAnomalyWarning(result.anomaly);
+        } else {
+            console.log("✓ Hiding anomaly warning");
+            hideAnomalyWarning();
+        }
+
         // Highlight affected nodes if available
         if (window.networkView && result.parsed) {
             window.networkView.highlightNodes(result.parsed.station_ids, result.parsed.segment_ids);
@@ -651,8 +661,78 @@ function hideResults() {
     document.getElementById('similar-cases').classList.add('hidden');
     document.getElementById('resolution-options').classList.add('hidden');
     document.getElementById('feedback-form').classList.add('hidden');
+    hideAnomalyWarning();
     window.timeline.hideComparison();
 }
+
+/**
+ * Show Black Swan Anomaly Warning
+ * @param {Object} anomaly - Anomaly data from backend
+ */
+function showAnomalyWarning(anomaly) {
+    const container = document.getElementById('anomaly-warning');
+    if (!container) return;
+
+    container.className = 'anomaly-warning'; // Use correct class name
+    container.innerHTML = `
+        <div class="anomaly-icon">⚠️</div>
+        <div class="anomaly-content">
+            <h3>
+                Unprecedented Incident Pattern
+                <span class="anomaly-score">Score: ${anomaly.anomaly_score.toFixed(3)}</span>
+            </h3>
+            <p>
+                This incident deviates significantly from historical data (Isolation Forest). 
+                The AI has low confidence in standard resolutions.
+            </p>
+            <div style="margin-top: 8px; display: flex; gap: 8px;">
+                <button onclick="submitFeedback('valid', document.getElementById('incident-text').value)" 
+                        style="background:transparent; border:1px solid #fca5a5; color:#fca5a5; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">
+                    Confirm valid
+                </button>
+                <button onclick="submitFeedback('invalid', document.getElementById('incident-text').value)"
+                        style="background:transparent; border:1px solid #fca5a5; color:#fca5a5; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">
+                    Mark invalid
+                </button>
+            </div>
+        </div>
+    `;
+    container.classList.remove('hidden');
+}
+
+function hideAnomalyWarning() {
+    const container = document.getElementById('anomaly-warning');
+    if (container) {
+        container.classList.add('hidden');
+        container.innerHTML = ''; // Clean up
+    }
+}
+
+/**
+ * Submit feedback on anomaly detection accuracy
+ * Called from anomaly warning buttons
+ */
+async function submitFeedback(feedbackType, incidentText) {
+    const feedback = {
+        incident_id: (incidentText || "").substring(0, 100),
+        resolution_id: "ANOMALY_" + feedbackType.toUpperCase(),
+        operator_rating: feedbackType === 'valid' ? 5 : 1,
+        execution_success: feedbackType === 'valid',
+        notes: `Anomaly detection feedback: ${feedbackType === 'valid' ? 'Valid anomaly detection' : 'Invalid anomaly flag'}`,
+    };
+
+    try {
+        await window.api.submitFeedback(feedback);
+        showToast(`Anomaly feedback submitted (${feedbackType})`, 'success');
+        hideAnomalyWarning();
+    } catch (error) {
+        console.error('Anomaly feedback failed:', error);
+        showToast('Failed to submit feedback. Please try again.', 'error');
+    }
+}
+
+// Make globally available for anomaly-feedback.js
+window.hideAnomalyWarning = hideAnomalyWarning;
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
