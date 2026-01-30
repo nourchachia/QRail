@@ -371,7 +371,20 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
                 (s.from_station === toStop.station_id && s.to_station === fromStop.station_id)
             );
 
-            if (!segment) continue;
+            if (!segment) {
+                // CRITICAL: Segment not found - log this for debugging
+                console.warn(`⚠️ No segment found between ${fromStop.station_id} and ${toStop.station_id} for train ${train.train_id}`);
+                
+                // FALLBACK: Return virtual segment to prevent train disappearing
+                return {
+                    segment_id: null,  // No physical segment
+                    from_station: fromStop.station_id,
+                    to_station: toStop.station_id,
+                    progress: Math.min(1, Math.max(0, (currentTotalSeconds - departureSeconds) / (arrivalSeconds - departureSeconds))),
+                    direction: 'forward',
+                    delay: 0
+                };
+            }
 
             // Determine if we're moving along or against the defined segment direction
             const direction = (segment.from_station === fromStop.station_id) ? 'forward' : 'backward';
@@ -401,7 +414,7 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
         if (currentTotalSeconds >= arriveSeconds && currentTotalSeconds < departureSeconds) {
             return {
                 station_id: fromStop.station_id,
-                from_station: fromStop.station_id, // Keep orientation stations even when stopped
+                from_station: fromStop.station_id,
                 to_station: toStop.station_id,
                 progress: 0,
                 delay: 0
@@ -419,7 +432,7 @@ function calculateTrainPosition(train, sortedStops, currentTotalSeconds, segment
             station_id: lastStop.station_id,
             from_station: sortedStops[sortedStops.length - 2].station_id,
             to_station: lastStop.station_id,
-            progress: 1, // Stay at the end
+            progress: 1,
             delay: 0
         };
     }

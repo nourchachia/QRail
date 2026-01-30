@@ -441,17 +441,23 @@ async def submit_feedback(request: FeedbackRequest):
     WHAT: Logs feedback and returns success
     HOW: Store in local log/db (Placeholder for now)
     """
-    print(f"\n📩 RECEIVED FEEDBACK:")
-    print(f"   Incident: {request.incident_id}")
-    print(f"   Strategy: {request.resolution_id}")
-    print(f"   Rating:   {'⭐' * request.operator_rating} ({request.operator_rating}/5)")
-    print(f"   Success:  {'✅' if request.execution_success else '❌'}")
-    if request.notes:
-        print(f"   Notes:    {request.notes}")
-    
-    # TODO: Persist to database/file for model training
-    
-    return {"status": "success", "message": "Feedback received. The AI will learn from this."}
+    try:
+        print(f"\n📩 RECEIVED FEEDBACK:")
+        print(f"   Incident: {request.incident_id}")
+        print(f"   Strategy: {request.resolution_id}")
+        print(f"   Rating:   {'⭐' * request.operator_rating} ({request.operator_rating}/5)")
+        print(f"   Success:  {'✅' if request.execution_success else '❌'}")
+        if request.notes:
+            print(f"   Notes:    {request.notes}")
+        
+        # TODO: Persist to database/file for model training
+        
+        return {"status": "success", "message": "Feedback received. The AI will learn from this."}
+    except Exception as e:
+        print(f"❌ Feedback submission error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=f"Feedback submission failed: {str(e)}")
 
 
 # =====================================================================

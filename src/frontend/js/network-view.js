@@ -465,13 +465,28 @@ function renderTrains(trains, segments, stations) {
     // Filter valid trains
     const validTrains = trains.filter(train => {
         if (!train) return false;
-        // Case 1: On a known segment
+        // Case 1: On a known segment (segment_id is set and exists)
         if (train.segment_id && segmentMap.has(train.segment_id)) return true;
         // Case 2: At a known station
         if (train.station_id && stationMap.has(train.station_id)) return true;
-        // Case 3: Moving between known stations (Virtual Segment)
+        // Case 3: Moving between known stations (Virtual Segment - may have segment_id: null)
+        // This handles both missing segments and explicit virtual segments
         if (train.from_station && train.to_station &&
             stationMap.has(train.from_station) && stationMap.has(train.to_station)) return true;
+
+        // Invalid train - log for debugging
+        if (train.id) {
+            console.warn(`⚠️ Train ${train.id} has invalid position:`, {
+                segment_id: train.segment_id,
+                station_id: train.station_id,
+                from_station: train.from_station,
+                to_station: train.to_station,
+                segmentExists: train.segment_id ? segmentMap.has(train.segment_id) : 'N/A (no segment_id)',
+                stationExists: train.station_id ? stationMap.has(train.station_id) : false,
+                fromStationExists: train.from_station ? stationMap.has(train.from_station) : false,
+                toStationExists: train.to_station ? stationMap.has(train.to_station) : false,
+            });
+        }
 
         return false;
     });
@@ -776,8 +791,11 @@ function startTrainAnimation(getTrainsCallback, segments, stations) {
         let trains = getTrainsCallback();
         if (!trains || trains.length === 0) return;
 
-        // Simulate movement
-        trains = simulateTrainMovement(trains);
+        // Get timetable data from app state
+        const timetableData = window.appState?.timetable || window.mockData?.timetable || [];
+
+        // Simulate movement WITH all required parameters
+        trains = simulateTrainMovement(trains, timetableData, segments, stations);
 
         // Update state with new positions
         if (window.mockData && window.mockData.liveStatus) {

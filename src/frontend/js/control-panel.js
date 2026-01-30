@@ -673,26 +673,29 @@ function showAnomalyWarning(anomaly) {
     const container = document.getElementById('anomaly-warning');
     if (!container) return;
 
-    container.className = 'anomaly-warning'; // Use correct class name
+    container.className = 'anomaly-warning modal-show'; // Modal style
     container.innerHTML = `
+        <button class="anomaly-close-btn" onclick="hideAnomalyWarning()">✕</button>
         <div class="anomaly-icon">⚠️</div>
         <div class="anomaly-content">
             <h3>
-                Unprecedented Incident Pattern
-                <span class="anomaly-score">Score: ${anomaly.anomaly_score.toFixed(3)}</span>
+                ⚡ UNPRECEDENTED INCIDENT DETECTED
+                <span class="anomaly-score">Anomaly Score: ${Math.abs(anomaly.anomaly_score).toFixed(3)}</span>
             </h3>
             <p>
-                This incident deviates significantly from historical data (Isolation Forest). 
-                The AI has low confidence in standard resolutions.
+                This incident pattern deviates significantly from historical data. 
+                The isolation forest algorithm has flagged this as anomalous.
             </p>
-            <div style="margin-top: 8px; display: flex; gap: 8px;">
-                <button onclick="submitFeedback('valid', document.getElementById('incident-text').value)" 
-                        style="background:transparent; border:1px solid #fca5a5; color:#fca5a5; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">
-                    Confirm valid
+            <div class="anomaly-advice">
+                🔍 This may represent a novel scenario not seen before in the training data. 
+                Standard resolution strategies may not apply.
+            </div>
+            <div class="anomaly-actions">
+                <button onclick="submitFeedback('valid', document.getElementById('incident-text').value)">
+                    ✓ Confirm Anomaly
                 </button>
-                <button onclick="submitFeedback('invalid', document.getElementById('incident-text').value)"
-                        style="background:transparent; border:1px solid #fca5a5; color:#fca5a5; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">
-                    Mark invalid
+                <button onclick="submitFeedback('invalid', document.getElementById('incident-text').value)">
+                    ✗ Mark Invalid
                 </button>
             </div>
         </div>
@@ -713,6 +716,8 @@ function hideAnomalyWarning() {
  * Called from anomaly warning buttons
  */
 async function submitFeedback(feedbackType, incidentText) {
+    console.log('📤 Submitting feedback:', feedbackType, 'for:', incidentText?.substring(0, 50));
+    
     const feedback = {
         incident_id: (incidentText || "").substring(0, 100),
         resolution_id: "ANOMALY_" + feedbackType.toUpperCase(),
@@ -721,13 +726,25 @@ async function submitFeedback(feedbackType, incidentText) {
         notes: `Anomaly detection feedback: ${feedbackType === 'valid' ? 'Valid anomaly detection' : 'Invalid anomaly flag'}`,
     };
 
+    console.log('📋 Feedback object:', JSON.stringify(feedback, null, 2));
+    console.log('🌐 API Base URL:', window.api.base);
+
     try {
-        await window.api.submitFeedback(feedback);
-        showToast(`Anomaly feedback submitted (${feedbackType})`, 'success');
+        const response = await window.api.submitFeedback(feedback);
+        console.log('✅ Feedback response:', response);
+        showToast('Anomaly feedback submitted! The AI will learn from this.', 'success');
         hideAnomalyWarning();
     } catch (error) {
-        console.error('Anomaly feedback failed:', error);
-        showToast('Failed to submit feedback. Please try again.', 'error');
+        console.error('❌ Anomaly feedback failed:', error);
+        console.error('Error details:', error.message, error.stack);
+        // Show specific error type
+        if (error.message.includes('API error')) {
+            showToast(`API Error: ${error.message}. Is the backend running on ${window.api.base}?`, 'error');
+        } else if (error.message.includes('Failed to fetch')) {
+            showToast(`Connection Error: Cannot reach ${window.api.base}. Is the backend running?`, 'error');
+        } else {
+            showToast(`Failed to submit feedback: ${error.message}`, 'error');
+        }
     }
 }
 
