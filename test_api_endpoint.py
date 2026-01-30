@@ -2,13 +2,12 @@
 Test the actual API endpoint to see what's being returned
 """
 import requests
-import json
 
-# Test with the same incident we used before
-incident_text = "Signal failure at South Junction (STN_003) causing delays on the main line. Multiple trains affected including express services."
+# EXACT text user entered in UI
+incident_text = "Express train EXP_001 derailed at Central Station in rainy conditions"
 
 print("="*70)
-print("TESTING ACTUAL API ENDPOINT")
+print("TESTING API ENDPOINT WITH EXACT UI TEXT")
 print("="*70)
 print(f"\nIncident: {incident_text}\n")
 

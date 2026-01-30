@@ -123,126 +123,6 @@
         "departure_time": "07:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:00",
-        "departure_time": "12:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:00",
-        "departure_time": "12:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:00",
-        "departure_time": "12:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "12:27",
-        "departure_time": "12:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "12:27",
-        "departure_time": "12:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "12:27",
-        "departure_time": "12:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "12:52",
-        "departure_time": "12:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "12:52",
-        "departure_time": "12:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "12:52",
-        "departure_time": "12:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:17",
-        "departure_time": "13:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:17",
-        "departure_time": "13:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:17",
-        "departure_time": "13:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "13:43",
-        "departure_time": "13:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "13:43",
-        "departure_time": "13:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "13:43",
-        "departure_time": "13:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -370,126 +250,6 @@
         "departure_time": "08:15",
         "platform": 4,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:15",
-        "departure_time": "12:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:15",
-        "departure_time": "12:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "12:15",
-        "departure_time": "12:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "12:43",
-        "departure_time": "12:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "12:43",
-        "departure_time": "12:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "12:43",
-        "departure_time": "12:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:14",
-        "departure_time": "13:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:14",
-        "departure_time": "13:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:14",
-        "departure_time": "13:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "13:42",
-        "departure_time": "13:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "13:42",
-        "departure_time": "13:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "13:42",
-        "departure_time": "13:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:10",
-        "departure_time": "14:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:10",
-        "departure_time": "14:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:10",
-        "departure_time": "14:15",
-        "platform": 4,
-        "daytype": "holiday"
       }
     ]
   },
@@ -543,54 +303,6 @@
         "station_name": "Park Station",
         "arrival_time": "06:48",
         "departure_time": "06:50",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:35",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:35",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:35",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -648,54 +360,6 @@
         "departure_time": "07:13",
         "platform": 2,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "14:45",
-        "departure_time": "14:50",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "14:45",
-        "departure_time": "14:50",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "14:45",
-        "departure_time": "14:50",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:11",
-        "departure_time": "15:13",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:11",
-        "departure_time": "15:13",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:11",
-        "departure_time": "15:13",
-        "platform": 2,
-        "daytype": "holiday"
       }
     ]
   },
@@ -749,54 +413,6 @@
         "station_name": "Heights Station",
         "arrival_time": "07:28",
         "departure_time": "07:30",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:00",
-        "departure_time": "15:05",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:00",
-        "departure_time": "15:05",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:00",
-        "departure_time": "15:05",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "15:28",
-        "departure_time": "15:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "15:28",
-        "departure_time": "15:30",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "15:28",
-        "departure_time": "15:30",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -854,54 +470,6 @@
         "departure_time": "07:39",
         "platform": 2,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:15",
-        "departure_time": "15:20",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:15",
-        "departure_time": "15:20",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:15",
-        "departure_time": "15:20",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "15:37",
-        "departure_time": "15:39",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "15:37",
-        "departure_time": "15:39",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "15:37",
-        "departure_time": "15:39",
-        "platform": 2,
-        "daytype": "holiday"
       }
     ]
   },
@@ -955,54 +523,6 @@
         "station_name": "Valley Station",
         "arrival_time": "07:53",
         "departure_time": "07:55",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "15:30",
-        "departure_time": "15:35",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "15:30",
-        "departure_time": "15:35",
-        "platform": 7,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "15:30",
-        "departure_time": "15:35",
-        "platform": 7,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "15:53",
-        "departure_time": "15:55",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "15:53",
-        "departure_time": "15:55",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "15:53",
-        "departure_time": "15:55",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -1076,70 +596,6 @@
         "departure_time": "07:50",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "14:25",
-        "departure_time": "14:27",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "14:25",
-        "departure_time": "14:27",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_021",
-        "station_name": "Local Stop A",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_021",
-        "station_name": "Local Stop A",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_021",
-        "station_name": "Local Stop A",
-        "arrival_time": "14:48",
-        "departure_time": "14:50",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -1193,54 +649,6 @@
         "station_name": "Local Stop B",
         "arrival_time": "07:45",
         "departure_time": "07:47",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:18",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:18",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:18",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "14:45",
-        "departure_time": "14:47",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "14:45",
-        "departure_time": "14:47",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "14:45",
-        "departure_time": "14:47",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -1298,54 +706,6 @@
         "departure_time": "08:10",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:33",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "14:30",
-        "departure_time": "14:33",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "15:08",
-        "departure_time": "15:10",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "15:08",
-        "departure_time": "15:10",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "15:08",
-        "departure_time": "15:10",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -1401,54 +761,6 @@
         "departure_time": "09:16",
         "platform": 1,
         "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:00",
-        "departure_time": "15:03",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:00",
-        "departure_time": "15:03",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "15:00",
-        "departure_time": "15:03",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_024",
-        "station_name": "Local Stop D",
-        "arrival_time": "15:28",
-        "departure_time": "15:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_041",
-        "station_name": "Halt 1",
-        "arrival_time": "16:14",
-        "departure_time": "16:16",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_041",
-        "station_name": "Halt 1",
-        "arrival_time": "16:14",
-        "departure_time": "16:16",
-        "platform": 1,
-        "daytype": "weekend"
       }
     ]
   },
@@ -1502,54 +814,6 @@
         "station_name": "Halt 2",
         "arrival_time": "09:32",
         "departure_time": "09:34",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "15:15",
-        "departure_time": "15:18",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "15:15",
-        "departure_time": "15:18",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "15:15",
-        "departure_time": "15:18",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_025",
-        "station_name": "Local Stop E",
-        "arrival_time": "15:37",
-        "departure_time": "15:39",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_042",
-        "station_name": "Halt 2",
-        "arrival_time": "16:32",
-        "departure_time": "16:34",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_042",
-        "station_name": "Halt 2",
-        "arrival_time": "16:32",
-        "departure_time": "16:34",
         "platform": 1,
         "daytype": "weekend"
       }
@@ -1679,126 +943,6 @@
         "departure_time": "09:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:27",
-        "departure_time": "14:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:27",
-        "departure_time": "14:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:27",
-        "departure_time": "14:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "14:52",
-        "departure_time": "14:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "14:52",
-        "departure_time": "14:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "14:52",
-        "departure_time": "14:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:17",
-        "departure_time": "15:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:17",
-        "departure_time": "15:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:17",
-        "departure_time": "15:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:43",
-        "departure_time": "15:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:43",
-        "departure_time": "15:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:43",
-        "departure_time": "15:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -1926,126 +1070,6 @@
         "departure_time": "10:15",
         "platform": 4,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:15",
-        "departure_time": "14:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "14:43",
-        "departure_time": "14:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "14:43",
-        "departure_time": "14:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "14:43",
-        "departure_time": "14:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:14",
-        "departure_time": "15:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:14",
-        "departure_time": "15:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:14",
-        "departure_time": "15:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:42",
-        "departure_time": "15:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:42",
-        "departure_time": "15:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "15:42",
-        "departure_time": "15:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:10",
-        "departure_time": "16:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:10",
-        "departure_time": "16:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:10",
-        "departure_time": "16:15",
-        "platform": 4,
-        "daytype": "holiday"
       }
     ]
   },
@@ -2099,54 +1123,6 @@
         "station_name": "Hill Station",
         "arrival_time": "09:05",
         "departure_time": "09:07",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:30",
-        "departure_time": "16:35",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:30",
-        "departure_time": "16:35",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:30",
-        "departure_time": "16:35",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_011",
-        "station_name": "Hill Station",
-        "arrival_time": "17:05",
-        "departure_time": "17:07",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_011",
-        "station_name": "Hill Station",
-        "arrival_time": "17:05",
-        "departure_time": "17:07",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_011",
-        "station_name": "Hill Station",
-        "arrival_time": "17:05",
-        "departure_time": "17:07",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -2204,54 +1180,6 @@
         "departure_time": "09:10",
         "platform": 2,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:45",
-        "departure_time": "16:50",
-        "platform": 8,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:45",
-        "departure_time": "16:50",
-        "platform": 8,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:45",
-        "departure_time": "16:50",
-        "platform": 8,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:08",
-        "departure_time": "17:10",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:08",
-        "departure_time": "17:10",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:08",
-        "departure_time": "17:10",
-        "platform": 2,
-        "daytype": "holiday"
       }
     ]
   },
@@ -2305,54 +1233,6 @@
         "station_name": "River Station",
         "arrival_time": "09:42",
         "departure_time": "09:44",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 9,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 9,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 9,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:42",
-        "departure_time": "17:44",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:42",
-        "departure_time": "17:44",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:42",
-        "departure_time": "17:44",
         "platform": 3,
         "daytype": "holiday"
       }
@@ -2410,54 +1290,6 @@
         "departure_time": "09:52",
         "platform": 3,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 10,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 10,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 10,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:50",
-        "departure_time": "17:52",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:50",
-        "departure_time": "17:52",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:50",
-        "departure_time": "17:52",
-        "platform": 3,
-        "daytype": "holiday"
       }
     ]
   },
@@ -2511,54 +1343,6 @@
         "station_name": "Meadow Station",
         "arrival_time": "09:48",
         "departure_time": "09:50",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_015",
-        "station_name": "Meadow Station",
-        "arrival_time": "17:48",
-        "departure_time": "17:50",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_015",
-        "station_name": "Meadow Station",
-        "arrival_time": "17:48",
-        "departure_time": "17:50",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_015",
-        "station_name": "Meadow Station",
-        "arrival_time": "17:48",
-        "departure_time": "17:50",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -2616,54 +1400,6 @@
         "departure_time": "10:07",
         "platform": 3,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 7,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 7,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "18:05",
-        "departure_time": "18:07",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "18:05",
-        "departure_time": "18:07",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "18:05",
-        "departure_time": "18:07",
-        "platform": 3,
-        "daytype": "holiday"
       }
     ]
   },
@@ -2717,54 +1453,6 @@
         "station_name": "Plaza Station",
         "arrival_time": "09:43",
         "departure_time": "09:45",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 7,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:15",
-        "departure_time": "17:20",
-        "platform": 7,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "17:43",
-        "departure_time": "17:45",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "17:43",
-        "departure_time": "17:45",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "17:43",
-        "departure_time": "17:45",
         "platform": 2,
         "daytype": "holiday"
       }
@@ -2822,54 +1510,6 @@
         "departure_time": "09:57",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 8,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 8,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:30",
-        "departure_time": "17:35",
-        "platform": 8,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_018",
-        "station_name": "Square Station",
-        "arrival_time": "17:55",
-        "departure_time": "17:57",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_018",
-        "station_name": "Square Station",
-        "arrival_time": "17:55",
-        "departure_time": "17:57",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_018",
-        "station_name": "Square Station",
-        "arrival_time": "17:55",
-        "departure_time": "17:57",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -2925,54 +1565,6 @@
         "departure_time": "10:04",
         "platform": 2,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_019",
-        "station_name": "Market Station",
-        "arrival_time": "18:02",
-        "departure_time": "18:04",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_019",
-        "station_name": "Market Station",
-        "arrival_time": "18:02",
-        "departure_time": "18:04",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_019",
-        "station_name": "Market Station",
-        "arrival_time": "18:02",
-        "departure_time": "18:04",
-        "platform": 2,
-        "daytype": "holiday"
       }
     ]
   },
@@ -3026,54 +1618,6 @@
         "station_name": "Cross Station",
         "arrival_time": "10:08",
         "departure_time": "10:10",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:45",
-        "departure_time": "17:50",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "18:08",
-        "departure_time": "18:10",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "18:08",
-        "departure_time": "18:10",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "18:08",
-        "departure_time": "18:10",
         "platform": 3,
         "daytype": "holiday"
       }
@@ -3203,126 +1747,6 @@
         "departure_time": "11:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:00",
-        "departure_time": "16:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:00",
-        "departure_time": "16:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:00",
-        "departure_time": "16:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:27",
-        "departure_time": "16:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:27",
-        "departure_time": "16:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "16:27",
-        "departure_time": "16:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "16:52",
-        "departure_time": "16:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "16:52",
-        "departure_time": "16:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "16:52",
-        "departure_time": "16:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:17",
-        "departure_time": "17:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:17",
-        "departure_time": "17:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:17",
-        "departure_time": "17:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:43",
-        "departure_time": "17:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:43",
-        "departure_time": "17:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "17:43",
-        "departure_time": "17:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -3450,126 +1874,6 @@
         "departure_time": "12:15",
         "platform": 4,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:15",
-        "departure_time": "16:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:15",
-        "departure_time": "16:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:15",
-        "departure_time": "16:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "16:43",
-        "departure_time": "16:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "16:43",
-        "departure_time": "16:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "16:43",
-        "departure_time": "16:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:14",
-        "departure_time": "17:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:14",
-        "departure_time": "17:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "17:14",
-        "departure_time": "17:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:42",
-        "departure_time": "17:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:42",
-        "departure_time": "17:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "17:42",
-        "departure_time": "17:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:10",
-        "departure_time": "18:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:10",
-        "departure_time": "18:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:10",
-        "departure_time": "18:15",
-        "platform": 4,
-        "daytype": "holiday"
       }
     ]
   },
@@ -3623,54 +1927,6 @@
         "station_name": "Local Stop F",
         "arrival_time": "10:35",
         "departure_time": "10:37",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:00",
-        "departure_time": "17:03",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:00",
-        "departure_time": "17:03",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_012",
-        "station_name": "Lake Station",
-        "arrival_time": "17:00",
-        "departure_time": "17:03",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_026",
-        "station_name": "Local Stop F",
-        "arrival_time": "17:35",
-        "departure_time": "17:37",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_026",
-        "station_name": "Local Stop F",
-        "arrival_time": "17:35",
-        "departure_time": "17:37",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_026",
-        "station_name": "Local Stop F",
-        "arrival_time": "17:35",
-        "departure_time": "17:37",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -3728,54 +1984,6 @@
         "departure_time": "11:02",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:15",
-        "departure_time": "17:18",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:15",
-        "departure_time": "17:18",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "17:15",
-        "departure_time": "17:18",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_027",
-        "station_name": "Local Stop G",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_027",
-        "station_name": "Local Stop G",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_027",
-        "station_name": "Local Stop G",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -3829,54 +2037,6 @@
         "station_name": "Local Stop H",
         "arrival_time": "11:00",
         "departure_time": "11:02",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "17:30",
-        "departure_time": "17:33",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "17:30",
-        "departure_time": "17:33",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "17:30",
-        "departure_time": "17:33",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_028",
-        "station_name": "Local Stop H",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_028",
-        "station_name": "Local Stop H",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_028",
-        "station_name": "Local Stop H",
-        "arrival_time": "18:00",
-        "departure_time": "18:02",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -3934,54 +2094,6 @@
         "departure_time": "11:22",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:45",
-        "departure_time": "17:48",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:45",
-        "departure_time": "17:48",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "17:45",
-        "departure_time": "17:48",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_029",
-        "station_name": "Local Stop I",
-        "arrival_time": "18:20",
-        "departure_time": "18:22",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_029",
-        "station_name": "Local Stop I",
-        "arrival_time": "18:20",
-        "departure_time": "18:22",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_029",
-        "station_name": "Local Stop I",
-        "arrival_time": "18:20",
-        "departure_time": "18:22",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -4035,54 +2147,6 @@
         "station_name": "Local Stop J",
         "arrival_time": "11:42",
         "departure_time": "11:44",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:03",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:03",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:03",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_030",
-        "station_name": "Local Stop J",
-        "arrival_time": "18:42",
-        "departure_time": "18:44",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_030",
-        "station_name": "Local Stop J",
-        "arrival_time": "18:42",
-        "departure_time": "18:44",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_030",
-        "station_name": "Local Stop J",
-        "arrival_time": "18:42",
-        "departure_time": "18:44",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -4212,126 +2276,6 @@
         "departure_time": "13:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:27",
-        "departure_time": "18:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:27",
-        "departure_time": "18:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "18:27",
-        "departure_time": "18:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "18:52",
-        "departure_time": "18:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "18:52",
-        "departure_time": "18:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "18:52",
-        "departure_time": "18:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:17",
-        "departure_time": "19:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:17",
-        "departure_time": "19:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:17",
-        "departure_time": "19:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "19:43",
-        "departure_time": "19:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "19:43",
-        "departure_time": "19:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "19:43",
-        "departure_time": "19:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -4457,126 +2401,6 @@
         "station_name": "North Terminal",
         "arrival_time": "14:10",
         "departure_time": "14:15",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:15",
-        "departure_time": "18:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:15",
-        "departure_time": "18:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "18:15",
-        "departure_time": "18:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "18:43",
-        "departure_time": "18:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "18:43",
-        "departure_time": "18:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "18:43",
-        "departure_time": "18:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:14",
-        "departure_time": "19:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:14",
-        "departure_time": "19:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "19:14",
-        "departure_time": "19:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "19:42",
-        "departure_time": "19:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "19:42",
-        "departure_time": "19:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "19:42",
-        "departure_time": "19:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:10",
-        "departure_time": "20:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:10",
-        "departure_time": "20:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:10",
-        "departure_time": "20:15",
         "platform": 4,
         "daytype": "holiday"
       }
@@ -4706,126 +2530,6 @@
         "departure_time": "15:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:00",
-        "departure_time": "20:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:00",
-        "departure_time": "20:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:00",
-        "departure_time": "20:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:27",
-        "departure_time": "20:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:27",
-        "departure_time": "20:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "20:27",
-        "departure_time": "20:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "20:52",
-        "departure_time": "20:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "20:52",
-        "departure_time": "20:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "20:52",
-        "departure_time": "20:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:17",
-        "departure_time": "21:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:17",
-        "departure_time": "21:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:17",
-        "departure_time": "21:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "21:43",
-        "departure_time": "21:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "21:43",
-        "departure_time": "21:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "21:43",
-        "departure_time": "21:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -4951,126 +2655,6 @@
         "station_name": "North Terminal",
         "arrival_time": "16:10",
         "departure_time": "16:15",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:15",
-        "departure_time": "20:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:15",
-        "departure_time": "20:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:15",
-        "departure_time": "20:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "20:43",
-        "departure_time": "20:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "20:43",
-        "departure_time": "20:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "20:43",
-        "departure_time": "20:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:14",
-        "departure_time": "21:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:14",
-        "departure_time": "21:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:14",
-        "departure_time": "21:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "21:42",
-        "departure_time": "21:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "21:42",
-        "departure_time": "21:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "21:42",
-        "departure_time": "21:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:10",
-        "departure_time": "22:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:10",
-        "departure_time": "22:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:10",
-        "departure_time": "22:15",
         "platform": 4,
         "daytype": "holiday"
       }
@@ -5200,126 +2784,6 @@
         "departure_time": "17:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:27",
-        "departure_time": "22:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:27",
-        "departure_time": "22:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:27",
-        "departure_time": "22:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "22:52",
-        "departure_time": "22:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "22:52",
-        "departure_time": "22:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "22:52",
-        "departure_time": "22:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:17",
-        "departure_time": "23:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:17",
-        "departure_time": "23:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:17",
-        "departure_time": "23:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "23:43",
-        "departure_time": "23:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "23:43",
-        "departure_time": "23:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "23:43",
-        "departure_time": "23:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -5445,126 +2909,6 @@
         "station_name": "North Terminal",
         "arrival_time": "18:10",
         "departure_time": "18:15",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:15",
-        "departure_time": "22:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:15",
-        "departure_time": "22:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "22:15",
-        "departure_time": "22:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "22:43",
-        "departure_time": "22:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "22:43",
-        "departure_time": "22:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "22:43",
-        "departure_time": "22:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:14",
-        "departure_time": "23:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:14",
-        "departure_time": "23:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "23:14",
-        "departure_time": "23:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "23:42",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "23:42",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "23:42",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:10",
-        "departure_time": "00:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:10",
-        "departure_time": "00:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:10",
-        "departure_time": "00:15",
         "platform": 4,
         "daytype": "holiday"
       }
@@ -5694,126 +3038,6 @@
         "departure_time": "19:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:27",
-        "departure_time": "00:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:27",
-        "departure_time": "00:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:27",
-        "departure_time": "00:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "00:52",
-        "departure_time": "00:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "00:52",
-        "departure_time": "00:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "00:52",
-        "departure_time": "00:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:17",
-        "departure_time": "01:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:17",
-        "departure_time": "01:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:17",
-        "departure_time": "01:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "01:43",
-        "departure_time": "01:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "01:43",
-        "departure_time": "01:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "01:43",
-        "departure_time": "01:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -5939,126 +3163,6 @@
         "station_name": "North Terminal",
         "arrival_time": "20:10",
         "departure_time": "20:15",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:15",
-        "departure_time": "00:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:15",
-        "departure_time": "00:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:15",
-        "departure_time": "00:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "00:43",
-        "departure_time": "00:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "00:43",
-        "departure_time": "00:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "00:43",
-        "departure_time": "00:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:14",
-        "departure_time": "01:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:14",
-        "departure_time": "01:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:14",
-        "departure_time": "01:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "01:42",
-        "departure_time": "01:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "01:42",
-        "departure_time": "01:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "01:42",
-        "departure_time": "01:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:10",
-        "departure_time": "02:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:10",
-        "departure_time": "02:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:10",
-        "departure_time": "02:15",
         "platform": 4,
         "daytype": "holiday"
       }
@@ -6188,126 +3292,6 @@
         "departure_time": "21:48",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:05",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:05",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:27",
-        "departure_time": "02:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:27",
-        "departure_time": "02:30",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:27",
-        "departure_time": "02:30",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "02:52",
-        "departure_time": "02:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "02:52",
-        "departure_time": "02:55",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "02:52",
-        "departure_time": "02:55",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:17",
-        "departure_time": "03:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:17",
-        "departure_time": "03:20",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:17",
-        "departure_time": "03:20",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "03:43",
-        "departure_time": "03:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "03:43",
-        "departure_time": "03:48",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "03:43",
-        "departure_time": "03:48",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -6435,126 +3419,6 @@
         "departure_time": "22:15",
         "platform": 4,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:15",
-        "departure_time": "02:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:15",
-        "departure_time": "02:20",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:15",
-        "departure_time": "02:20",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:43",
-        "departure_time": "02:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:43",
-        "departure_time": "02:48",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:43",
-        "departure_time": "02:48",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:14",
-        "departure_time": "03:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:14",
-        "departure_time": "03:17",
-        "platform": 3,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:14",
-        "departure_time": "03:17",
-        "platform": 3,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "03:42",
-        "departure_time": "03:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "03:42",
-        "departure_time": "03:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "03:42",
-        "departure_time": "03:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "04:10",
-        "departure_time": "04:15",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "04:10",
-        "departure_time": "04:15",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "04:10",
-        "departure_time": "04:15",
-        "platform": 4,
-        "daytype": "holiday"
       }
     ]
   },
@@ -6608,54 +3472,6 @@
         "station_name": "Local Stop K",
         "arrival_time": "14:43",
         "departure_time": "14:45",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:00",
-        "departure_time": "21:03",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:00",
-        "departure_time": "21:03",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:00",
-        "departure_time": "21:03",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_031",
-        "station_name": "Local Stop K",
-        "arrival_time": "21:43",
-        "departure_time": "21:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_031",
-        "station_name": "Local Stop K",
-        "arrival_time": "21:43",
-        "departure_time": "21:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_031",
-        "station_name": "Local Stop K",
-        "arrival_time": "21:43",
-        "departure_time": "21:45",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -6713,54 +3529,6 @@
         "departure_time": "15:28",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:30",
-        "departure_time": "21:33",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:30",
-        "departure_time": "21:33",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "21:30",
-        "departure_time": "21:33",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_032",
-        "station_name": "Local Stop L",
-        "arrival_time": "22:26",
-        "departure_time": "22:28",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_032",
-        "station_name": "Local Stop L",
-        "arrival_time": "22:26",
-        "departure_time": "22:28",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_032",
-        "station_name": "Local Stop L",
-        "arrival_time": "22:26",
-        "departure_time": "22:28",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -6814,54 +3582,6 @@
         "station_name": "Local Stop M",
         "arrival_time": "15:28",
         "departure_time": "15:30",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_033",
-        "station_name": "Local Stop M",
-        "arrival_time": "22:28",
-        "departure_time": "22:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_033",
-        "station_name": "Local Stop M",
-        "arrival_time": "22:28",
-        "departure_time": "22:30",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_033",
-        "station_name": "Local Stop M",
-        "arrival_time": "22:28",
-        "departure_time": "22:30",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -6919,54 +3639,6 @@
         "departure_time": "16:45",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 7,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 7,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_034",
-        "station_name": "Local Stop N",
-        "arrival_time": "23:43",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_034",
-        "station_name": "Local Stop N",
-        "arrival_time": "23:43",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_034",
-        "station_name": "Local Stop N",
-        "arrival_time": "23:43",
-        "departure_time": "23:45",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -7020,54 +3692,6 @@
         "station_name": "Local Stop O",
         "arrival_time": "17:18",
         "departure_time": "17:20",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 8,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 8,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 8,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_035",
-        "station_name": "Local Stop O",
-        "arrival_time": "00:18",
-        "departure_time": "00:20",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_035",
-        "station_name": "Local Stop O",
-        "arrival_time": "00:18",
-        "departure_time": "00:20",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_035",
-        "station_name": "Local Stop O",
-        "arrival_time": "00:18",
-        "departure_time": "00:20",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -7125,54 +3749,6 @@
         "departure_time": "17:37",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_036",
-        "station_name": "Local Stop P",
-        "arrival_time": "00:35",
-        "departure_time": "00:37",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_036",
-        "station_name": "Local Stop P",
-        "arrival_time": "00:35",
-        "departure_time": "00:37",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_036",
-        "station_name": "Local Stop P",
-        "arrival_time": "00:35",
-        "departure_time": "00:37",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -7226,54 +3802,6 @@
         "station_name": "Local Stop Q",
         "arrival_time": "18:13",
         "departure_time": "18:15",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_037",
-        "station_name": "Local Stop Q",
-        "arrival_time": "01:13",
-        "departure_time": "01:15",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_037",
-        "station_name": "Local Stop Q",
-        "arrival_time": "01:13",
-        "departure_time": "01:15",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_037",
-        "station_name": "Local Stop Q",
-        "arrival_time": "01:13",
-        "departure_time": "01:15",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -7331,54 +3859,6 @@
         "departure_time": "18:30",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 6,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 6,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_038",
-        "station_name": "Local Stop R",
-        "arrival_time": "01:28",
-        "departure_time": "01:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_038",
-        "station_name": "Local Stop R",
-        "arrival_time": "01:28",
-        "departure_time": "01:30",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_038",
-        "station_name": "Local Stop R",
-        "arrival_time": "01:28",
-        "departure_time": "01:30",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -7432,54 +3912,6 @@
         "station_name": "Local Stop S",
         "arrival_time": "19:05",
         "departure_time": "19:07",
-        "platform": 1,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 7,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 7,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_039",
-        "station_name": "Local Stop S",
-        "arrival_time": "02:05",
-        "departure_time": "02:07",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_039",
-        "station_name": "Local Stop S",
-        "arrival_time": "02:05",
-        "departure_time": "02:07",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_039",
-        "station_name": "Local Stop S",
-        "arrival_time": "02:05",
-        "departure_time": "02:07",
         "platform": 1,
         "daytype": "holiday"
       }
@@ -7537,54 +3969,6 @@
         "departure_time": "19:42",
         "platform": 1,
         "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:03",
-        "platform": 9,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:03",
-        "platform": 9,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:03",
-        "platform": 9,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_040",
-        "station_name": "Local Stop T",
-        "arrival_time": "02:40",
-        "departure_time": "02:42",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_040",
-        "station_name": "Local Stop T",
-        "arrival_time": "02:40",
-        "departure_time": "02:42",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_040",
-        "station_name": "Local Stop T",
-        "arrival_time": "02:40",
-        "departure_time": "02:42",
-        "platform": 1,
-        "daytype": "holiday"
       }
     ]
   },
@@ -7630,46 +4014,6 @@
         "station_name": "Halt 3",
         "arrival_time": "16:38",
         "departure_time": "16:40",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "22:00",
-        "departure_time": "22:03",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_043",
-        "station_name": "Halt 3",
-        "arrival_time": "23:38",
-        "departure_time": "23:40",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_043",
-        "station_name": "Halt 3",
-        "arrival_time": "23:38",
-        "departure_time": "23:40",
         "platform": 1,
         "daytype": "weekend"
       }
@@ -7719,46 +4063,6 @@
         "departure_time": "16:12",
         "platform": 1,
         "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "22:30",
-        "departure_time": "22:33",
-        "platform": 10,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "22:30",
-        "departure_time": "22:33",
-        "platform": 10,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "22:30",
-        "departure_time": "22:33",
-        "platform": 10,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_044",
-        "station_name": "Halt 4",
-        "arrival_time": "23:10",
-        "departure_time": "23:12",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_044",
-        "station_name": "Halt 4",
-        "arrival_time": "23:10",
-        "departure_time": "23:12",
-        "platform": 1,
-        "daytype": "weekend"
       }
     ]
   },
@@ -7804,46 +4108,6 @@
         "station_name": "Halt 5",
         "arrival_time": "17:15",
         "departure_time": "17:17",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 4,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_017",
-        "station_name": "Plaza Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:03",
-        "platform": 4,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_045",
-        "station_name": "Halt 5",
-        "arrival_time": "00:15",
-        "departure_time": "00:17",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_045",
-        "station_name": "Halt 5",
-        "arrival_time": "00:15",
-        "departure_time": "00:17",
         "platform": 1,
         "daytype": "weekend"
       }
@@ -7893,46 +4157,6 @@
         "departure_time": "17:45",
         "platform": 1,
         "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 2,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 2,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_046",
-        "station_name": "Halt 6",
-        "arrival_time": "00:43",
-        "departure_time": "00:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_046",
-        "station_name": "Halt 6",
-        "arrival_time": "00:43",
-        "departure_time": "00:45",
-        "platform": 1,
-        "daytype": "weekend"
       }
     ]
   },
@@ -7978,46 +4202,6 @@
         "station_name": "Halt 7",
         "arrival_time": "18:02",
         "departure_time": "18:04",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 8,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 8,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 8,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_047",
-        "station_name": "Halt 7",
-        "arrival_time": "01:02",
-        "departure_time": "01:04",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_047",
-        "station_name": "Halt 7",
-        "arrival_time": "01:02",
-        "departure_time": "01:04",
         "platform": 1,
         "daytype": "weekend"
       }
@@ -8067,46 +4251,6 @@
         "departure_time": "18:34",
         "platform": 1,
         "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_048",
-        "station_name": "Halt 8",
-        "arrival_time": "01:32",
-        "departure_time": "01:34",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_048",
-        "station_name": "Halt 8",
-        "arrival_time": "01:32",
-        "departure_time": "01:34",
-        "platform": 1,
-        "daytype": "weekend"
       }
     ]
   },
@@ -8152,46 +4296,6 @@
         "station_name": "Halt 9",
         "arrival_time": "19:18",
         "departure_time": "19:20",
-        "platform": 1,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 5,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:03",
-        "platform": 5,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_049",
-        "station_name": "Halt 9",
-        "arrival_time": "02:18",
-        "departure_time": "02:20",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_049",
-        "station_name": "Halt 9",
-        "arrival_time": "02:18",
-        "departure_time": "02:20",
         "platform": 1,
         "daytype": "weekend"
       }
@@ -8241,46 +4345,6 @@
         "departure_time": "19:45",
         "platform": 1,
         "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 9,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 9,
-        "daytype": "weekend"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:30",
-        "departure_time": "01:33",
-        "platform": 9,
-        "daytype": "holiday"
-      },
-      {
-        "station_id": "STN_050",
-        "station_name": "Halt 10",
-        "arrival_time": "02:43",
-        "departure_time": "02:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_050",
-        "station_name": "Halt 10",
-        "arrival_time": "02:43",
-        "departure_time": "02:45",
-        "platform": 1,
-        "daytype": "weekend"
       }
     ]
   },
@@ -8326,46 +4390,6 @@
         "station_name": "West Hub",
         "arrival_time": "06:43",
         "departure_time": "06:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "11:00",
-        "departure_time": "11:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "11:27",
-        "departure_time": "11:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "11:52",
-        "departure_time": "11:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "12:17",
-        "departure_time": "12:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "12:43",
-        "departure_time": "12:48",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -8415,46 +4439,6 @@
         "departure_time": "09:00",
         "platform": 4,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "13:00",
-        "departure_time": "13:05",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "13:28",
-        "departure_time": "13:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "13:59",
-        "departure_time": "14:02",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "14:27",
-        "departure_time": "14:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:55",
-        "departure_time": "15:00",
-        "platform": 4,
-        "daytype": "weekday"
       }
     ]
   },
@@ -8500,46 +4484,6 @@
         "station_name": "West Hub",
         "arrival_time": "09:43",
         "departure_time": "09:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "14:00",
-        "departure_time": "14:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "14:27",
-        "departure_time": "14:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "14:52",
-        "departure_time": "14:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "15:17",
-        "departure_time": "15:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:43",
-        "departure_time": "15:48",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -8589,46 +4533,6 @@
         "departure_time": "11:15",
         "platform": 4,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "15:15",
-        "departure_time": "15:20",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "15:43",
-        "departure_time": "15:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "16:14",
-        "departure_time": "16:17",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "16:42",
-        "departure_time": "16:45",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:10",
-        "departure_time": "17:15",
-        "platform": 4,
-        "daytype": "weekday"
       }
     ]
   },
@@ -8674,46 +4578,6 @@
         "station_name": "West Hub",
         "arrival_time": "18:43",
         "departure_time": "18:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "23:27",
-        "departure_time": "23:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "23:52",
-        "departure_time": "23:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "00:17",
-        "departure_time": "00:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "00:43",
-        "departure_time": "00:48",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -8763,46 +4627,6 @@
         "departure_time": "19:30",
         "platform": 4,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:35",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "23:58",
-        "departure_time": "00:03",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "00:29",
-        "departure_time": "00:32",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "00:57",
-        "departure_time": "01:00",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "01:25",
-        "departure_time": "01:30",
-        "platform": 4,
-        "daytype": "weekday"
       }
     ]
   },
@@ -8848,46 +4672,6 @@
         "station_name": "West Hub",
         "arrival_time": "20:13",
         "departure_time": "20:18",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:35",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "00:57",
-        "departure_time": "01:00",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "01:22",
-        "departure_time": "01:25",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:47",
-        "departure_time": "01:50",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:13",
-        "departure_time": "02:18",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -8937,46 +4721,6 @@
         "departure_time": "21:00",
         "platform": 4,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "01:00",
-        "departure_time": "01:05",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "01:28",
-        "departure_time": "01:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:59",
-        "departure_time": "02:02",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "02:27",
-        "departure_time": "02:30",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:55",
-        "departure_time": "03:00",
-        "platform": 4,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9022,46 +4766,6 @@
         "station_name": "West Hub",
         "arrival_time": "21:43",
         "departure_time": "21:48",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:00",
-        "departure_time": "02:05",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:27",
-        "departure_time": "02:30",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "02:52",
-        "departure_time": "02:55",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:17",
-        "departure_time": "03:20",
-        "platform": 4,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "03:43",
-        "departure_time": "03:48",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9111,46 +4815,6 @@
         "departure_time": "22:30",
         "platform": 4,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "02:30",
-        "departure_time": "02:35",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:58",
-        "departure_time": "03:03",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "03:29",
-        "departure_time": "03:32",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "03:57",
-        "departure_time": "04:00",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "04:25",
-        "departure_time": "04:30",
-        "platform": 4,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9172,22 +4836,6 @@
         "station_name": "Park Station",
         "arrival_time": "08:18",
         "departure_time": "08:20",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "16:00",
-        "departure_time": "16:05",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "16:18",
-        "departure_time": "16:20",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9213,22 +4861,6 @@
         "departure_time": "12:20",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "20:00",
-        "departure_time": "20:05",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "20:18",
-        "departure_time": "20:20",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9250,22 +4882,6 @@
         "station_name": "Park Station",
         "arrival_time": "16:48",
         "departure_time": "16:50",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_001",
-        "station_name": "Central Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:35",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "00:48",
-        "departure_time": "00:50",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9291,22 +4907,6 @@
         "departure_time": "08:43",
         "platform": 2,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "16:15",
-        "departure_time": "16:20",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "16:41",
-        "departure_time": "16:43",
-        "platform": 2,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9328,22 +4928,6 @@
         "station_name": "Grove Station",
         "arrival_time": "13:26",
         "departure_time": "13:28",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "21:00",
-        "departure_time": "21:05",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "21:26",
-        "departure_time": "21:28",
         "platform": 2,
         "daytype": "weekday"
       }
@@ -9369,22 +4953,6 @@
         "departure_time": "17:43",
         "platform": 2,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_004",
-        "station_name": "East Exchange",
-        "arrival_time": "01:15",
-        "departure_time": "01:20",
-        "platform": 5,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "01:41",
-        "departure_time": "01:43",
-        "platform": 2,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9406,22 +4974,6 @@
         "station_name": "Heights Station",
         "arrival_time": "08:58",
         "departure_time": "09:00",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "16:30",
-        "departure_time": "16:35",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "16:58",
-        "departure_time": "17:00",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9447,22 +4999,6 @@
         "departure_time": "14:00",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "21:30",
-        "departure_time": "21:35",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "21:58",
-        "departure_time": "22:00",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9484,22 +5020,6 @@
         "station_name": "Heights Station",
         "arrival_time": "18:13",
         "departure_time": "18:15",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_003",
-        "station_name": "South Junction",
-        "arrival_time": "01:45",
-        "departure_time": "01:50",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_008",
-        "station_name": "Heights Station",
-        "arrival_time": "02:13",
-        "departure_time": "02:15",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9525,22 +5045,6 @@
         "departure_time": "09:09",
         "platform": 2,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "16:45",
-        "departure_time": "16:50",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "17:07",
-        "departure_time": "17:09",
-        "platform": 2,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9562,22 +5066,6 @@
         "station_name": "Bridge Station",
         "arrival_time": "14:22",
         "departure_time": "14:24",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "22:00",
-        "departure_time": "22:05",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "22:22",
-        "departure_time": "22:24",
         "platform": 2,
         "daytype": "weekday"
       }
@@ -9603,22 +5091,6 @@
         "departure_time": "18:24",
         "platform": 2,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_005",
-        "station_name": "West Hub",
-        "arrival_time": "02:00",
-        "departure_time": "02:05",
-        "platform": 6,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_009",
-        "station_name": "Bridge Station",
-        "arrival_time": "02:22",
-        "departure_time": "02:24",
-        "platform": 2,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9640,22 +5112,6 @@
         "station_name": "Valley Station",
         "arrival_time": "09:23",
         "departure_time": "09:25",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "17:00",
-        "departure_time": "17:05",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "17:23",
-        "departure_time": "17:25",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9681,22 +5137,6 @@
         "departure_time": "14:55",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "22:30",
-        "departure_time": "22:35",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "22:53",
-        "departure_time": "22:55",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9718,22 +5158,6 @@
         "station_name": "Valley Station",
         "arrival_time": "18:38",
         "departure_time": "18:40",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_002",
-        "station_name": "North Terminal",
-        "arrival_time": "02:15",
-        "departure_time": "02:20",
-        "platform": 7,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_010",
-        "station_name": "Valley Station",
-        "arrival_time": "02:38",
-        "departure_time": "02:40",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9767,30 +5191,6 @@
         "departure_time": "06:20",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "12:30",
-        "departure_time": "12:35",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "12:55",
-        "departure_time": "12:57",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_021",
-        "station_name": "Local Stop A",
-        "arrival_time": "13:18",
-        "departure_time": "13:20",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9812,22 +5212,6 @@
         "station_name": "Local Stop B",
         "arrival_time": "06:30",
         "departure_time": "06:32",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "13:00",
-        "departure_time": "13:03",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "13:30",
-        "departure_time": "13:32",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9853,22 +5237,6 @@
         "departure_time": "06:55",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "13:15",
-        "departure_time": "13:18",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "13:53",
-        "departure_time": "13:55",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9890,22 +5258,6 @@
         "station_name": "Local Stop D",
         "arrival_time": "06:58",
         "departure_time": "07:00",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "13:30",
-        "departure_time": "13:33",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_024",
-        "station_name": "Local Stop D",
-        "arrival_time": "13:58",
-        "departure_time": "14:00",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -9931,22 +5283,6 @@
         "departure_time": "07:09",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "13:45",
-        "departure_time": "13:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_025",
-        "station_name": "Local Stop E",
-        "arrival_time": "14:07",
-        "departure_time": "14:09",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -9968,22 +5304,6 @@
         "station_name": "Cross Station",
         "arrival_time": "11:25",
         "departure_time": "11:27",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "18:00",
-        "departure_time": "18:05",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "18:25",
-        "departure_time": "18:27",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -10009,22 +5329,6 @@
         "departure_time": "12:02",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "18:30",
-        "departure_time": "18:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "19:00",
-        "departure_time": "19:02",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -10046,22 +5350,6 @@
         "station_name": "Local Stop C",
         "arrival_time": "12:53",
         "departure_time": "12:55",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "19:15",
-        "departure_time": "19:18",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "19:53",
-        "departure_time": "19:55",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -10087,22 +5375,6 @@
         "departure_time": "13:00",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "19:30",
-        "departure_time": "19:33",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_024",
-        "station_name": "Local Stop D",
-        "arrival_time": "19:58",
-        "departure_time": "20:00",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -10124,22 +5396,6 @@
         "station_name": "Local Stop E",
         "arrival_time": "13:22",
         "departure_time": "13:24",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "20:00",
-        "departure_time": "20:03",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_025",
-        "station_name": "Local Stop E",
-        "arrival_time": "20:22",
-        "departure_time": "20:24",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -10173,30 +5429,6 @@
         "departure_time": "16:50",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_006",
-        "station_name": "Park Station",
-        "arrival_time": "23:00",
-        "departure_time": "23:05",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_020",
-        "station_name": "Cross Station",
-        "arrival_time": "23:25",
-        "departure_time": "23:27",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_021",
-        "station_name": "Local Stop A",
-        "arrival_time": "23:48",
-        "departure_time": "23:50",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -10218,22 +5450,6 @@
         "station_name": "Local Stop B",
         "arrival_time": "17:00",
         "departure_time": "17:02",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_016",
-        "station_name": "Garden Station",
-        "arrival_time": "23:30",
-        "departure_time": "23:33",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_022",
-        "station_name": "Local Stop B",
-        "arrival_time": "00:00",
-        "departure_time": "00:02",
         "platform": 1,
         "daytype": "weekday"
       }
@@ -10259,22 +5475,6 @@
         "departure_time": "17:40",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_013",
-        "station_name": "River Station",
-        "arrival_time": "00:00",
-        "departure_time": "00:03",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_023",
-        "station_name": "Local Stop C",
-        "arrival_time": "00:38",
-        "departure_time": "00:40",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -10298,22 +5498,6 @@
         "departure_time": "18:00",
         "platform": 1,
         "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_007",
-        "station_name": "Grove Station",
-        "arrival_time": "00:30",
-        "departure_time": "00:33",
-        "platform": 3,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_024",
-        "station_name": "Local Stop D",
-        "arrival_time": "00:58",
-        "departure_time": "01:00",
-        "platform": 1,
-        "daytype": "weekday"
       }
     ]
   },
@@ -10335,22 +5519,6 @@
         "station_name": "Local Stop E",
         "arrival_time": "19:07",
         "departure_time": "19:09",
-        "platform": 1,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_014",
-        "station_name": "Forest Station",
-        "arrival_time": "01:45",
-        "departure_time": "01:48",
-        "platform": 2,
-        "daytype": "weekday"
-      },
-      {
-        "station_id": "STN_025",
-        "station_name": "Local Stop E",
-        "arrival_time": "02:07",
-        "departure_time": "02:09",
         "platform": 1,
         "daytype": "weekday"
       }
