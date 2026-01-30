@@ -33,7 +33,8 @@ from src.backend.feature_extractor import DataFuelPipeline
 from src.models.conflict_classifier import ConflictClassifier
 from src.models.gnn_encoder import HeterogeneousGATEncoder, DynamicGraphBuilder
 from src.models.cascade.lstm_encoder import LSTMEncoder
-from src.models.semantic_encoder import SemanticEncoder
+from src.models.cascade.lstm_encoder import LSTMEncoder
+from fastembed import TextEmbedding
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -97,7 +98,7 @@ class ConflictPredictionPipeline:
             use_attention=True
         ).to(self.device).eval()
         
-        self.semantic_encoder = SemanticEncoder()  # Singleton, already initialized
+        self.semantic_encoder = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
         
         # Initialize conflict classifier
         self.classifier = ConflictClassifier(
@@ -220,7 +221,9 @@ class ConflictPredictionPipeline:
             embedding: [384] numpy array
         """
         try:
-            embedding = self.semantic_encoder.encode(text, normalize=True)
+            # FastEmbed expects list, returns generator
+            embeddings = list(self.semantic_encoder.embed([text]))
+            embedding = np.array(embeddings[0])
             return embedding
         except Exception as e:
             logger.error(f"Semantic embedding failed: {e}, returning zeros")

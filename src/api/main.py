@@ -56,6 +56,13 @@ import os
 import random
 from datetime import datetime
 from pathlib import Path
+import sys
+
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
 
 # =====================================================================
 # === STEP 1: Setup Project Root Path ===
@@ -74,13 +81,6 @@ if project_root not in sys.path:
 # =====================================================================
 # === STEP 2: Import AI Pipeline ===
 # =====================================================================
-# WHY: This is the "brain" that processes incidents
-# WHAT: Import IncidentPipeline from integration.py
-# HOW: IncidentPipeline already handles Models 1-5
-# BEFORE: No AI processing capability
-# AFTER: Can analyze incidents end-to-end
-#
-# 📌 NOTE ON MODELS 4/5:
 # - IncidentPipeline tries to load all 5 models
 # - If Model 4/5 not found: returns empty conflicts/recommendations
 # - If Model 4/5 ready: returns AI predictions
@@ -222,6 +222,7 @@ class IncidentAnalysisResponse(BaseModel):
     similar_incidents: List[Dict]
     conflicts: Dict
     recommendations: List[Dict]
+    anomaly: Optional[Dict] = None
 
 
 class SearchRequest(BaseModel):
@@ -369,7 +370,8 @@ def analyze_incident(request: IncidentAnalysisRequest):
             # 📌 These fields work NOW even if Models 4/5 not ready
             # Integration.py returns empty/default values gracefully
             "conflicts": result.get('conflicts', {}),
-            "recommendations": result.get('recommendations', [])
+            "recommendations": result.get('recommendations', []),
+            "anomaly": result.get('anomaly')
         }
         
     except Exception as e:
@@ -739,7 +741,7 @@ def check_models():
         "models_loaded": {
             "model_1_gnn": pipeline.gnn_encoder is not None,
             "model_2_lstm": pipeline.lstm_encoder is not None,
-            "model_3_semantic": pipeline.semantic_encoder is not None,
+            "model_3_semantic": pipeline.searcher is not None, # FastEmbed managed by proper Searcher
             "model_4_conflict": pipeline.conflict_classifier is not None,
             "model_5_outcome": pipeline.outcome_predictor is not None,
         },

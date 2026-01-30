@@ -432,16 +432,17 @@ class StorageManager:
             
             # === STEP 2: Create New Collection ===
             # Uses cosine distance for all three vector types
+            # NOTE: 'fast-all-minilm-l6-v2' matches FastEmbed's automatic naming when using query()
             # NEXT STEP: Collection ready for data upload
             self.client.create_collection(
                 collection_name=collection_name,
                 vectors_config={
                     "structural": VectorParams(size=64, distance=Distance.COSINE),
                     "temporal": VectorParams(size=64, distance=Distance.COSINE),
-                    "semantic": VectorParams(size=384, distance=Distance.COSINE),
+                    "fast-all-minilm-l6-v2": VectorParams(size=384, distance=Distance.COSINE),  # FastEmbed model name
                 }
             )
-            print(f"✅ Created collection '{collection_name}' with triple-vector config")
+            print(f"✅ Created collection '{collection_name}' with triple-vector config (FastEmbed compatible)")
             
             # === STEP 3: Create is_dummy Index for Cleanup ===
             # Allows selective deletion of test data
@@ -529,14 +530,15 @@ class StorageManager:
             if "incident_id" not in payload:
                 payload["incident_id"] = point_id
             
-            # === STEP 1D: Create Qdrant Point ===
+            # === STEP 1D: Create Qdrant Point ==
+            # NOTE: Using 'fast-all-minilm-l6-v2' to match FastEmbed's automatic vector naming
             # NEXT STEP: Point added to batch
             all_points.append(PointStruct(
                 id=point_id,
                 vector={
                     "structural": vecs.get("structural", [0.0] * 64),
                     "temporal": vecs.get("temporal", [0.0] * 64),
-                    "semantic": vecs.get("semantic", [0.0] * 384),
+                    "fast-all-minilm-l6-v2": vecs.get("semantic", [0.0] * 384),  # Maps 'semantic' to FastEmbed name
                 },
                 payload=payload
             ))

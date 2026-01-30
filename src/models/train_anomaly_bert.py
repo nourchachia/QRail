@@ -17,7 +17,7 @@ import json
 from sklearn.ensemble import IsolationForest
 
 # Import ONLY the semantic encoder (avoids Qdrant unicode issues)
-from src.models.semantic_encoder import SemanticEncoder
+from fastembed import TextEmbedding
 
 def train_with_bert():
     """Train using real BERT embeddings from golden runs."""
@@ -38,8 +38,8 @@ def train_with_bert():
     print(f"[INFO] Found {len(golden_runs)} golden runs")
     
     # Initialize BERT encoder
-    print("[INFO] Loading BERT semantic encoder...")
-    encoder = SemanticEncoder()
+    print("[INFO] Loading BERT semantic encoder (FastEmbed)...")
+    encoder = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
     print("[SUCCESS] Encoder ready")
     
     # Generate REAL embeddings
@@ -56,13 +56,18 @@ def train_with_bert():
             continue
         
         # Generate REAL semantic embedding (384-dim)
-        semantic_vec = encoder.encode(text).tolist()
+        # FastEmbed expects list, returns generator of numpy arrays
+        semantic_vec = list(encoder.embed([text]))[0].tolist()
         
-        # Use ONLY semantic embedding (384-dim)
-        # We ignore structural/temporal because they may be missing in production
-        # and we want to detect "unprecedented incident TYPES" primarily.
+        # For now, use zeros for structural and temporal
+        # (In production, you'd use GNN + LSTM)
+        structural_vec = [0.0] * 64
+        temporal_vec = [0.0] * 64
         
-        X_train.append(semantic_vec)
+        # Combine to 512-dim vector (same as production)
+        combined_vec = semantic_vec + structural_vec + temporal_vec
+        
+        X_train.append(combined_vec)
         
         if i % 10 == 0:
             print(f"  Processed {i}/{len(golden_runs)}...")

@@ -19,7 +19,7 @@ import json
 from sklearn.ensemble import IsolationForest
 
 # Import individual components (avoids Qdrant/Unicode issues)
-from src.models.semantic_encoder import SemanticEncoder
+from fastembed import TextEmbedding
 from src.models.heterogeneous_gat import HeterogeneousGATEncoder
 from src.models.lstm_encoder import LSTMEncoder
 from src.backend.data_fuel import DataFuelPipeline
@@ -42,8 +42,8 @@ def train_production_model():
     
     # Initialize encoders
     print("\n[INFO] Loading encoders...")
-    print("  [1/4] Semantic encoder (BERT)...")
-    semantic_encoder = SemanticEncoder()
+    print("  [1/4] Semantic encoder (FastEmbed)...")
+    semantic_encoder = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
     
     print("  [2/4] GNN encoder (topology)...")
     gnn_encoder = HeterogeneousGATEncoder()
@@ -67,8 +67,9 @@ def train_production_model():
             continue
         
         try:
-            # 1. Semantic embedding (BERT)
-            semantic_vec = semantic_encoder.encode(text).tolist()
+            # 1. Semantic embedding (FastEmbed)
+            # FastEmbed expects list, returns generator of numpy arrays
+            semantic_vec = list(semantic_encoder.embed([text]))[0].tolist()
             
             # 2. Structural embedding (GNN)
             # Extract features for GNN

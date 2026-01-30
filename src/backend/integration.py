@@ -25,6 +25,7 @@ from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
 import numpy as np
 import torch  # CRITICAL FIX: Required for model checkpoint loading
+from fastembed import TextEmbedding
 # =====================================================================
 # === STEP 1: Load Environment Variables ===
 # =====================================================================
@@ -185,9 +186,10 @@ class IncidentPipeline:
             else:
                 print(f"   ⚠ LSTMEncoder ready (Model 2) - RANDOM WEIGHTS (No checkpoint found)")
             
-            # Model 3: Semantic (MiniLM) - NOW HANDLED INTERNALLY BY FASTEMBED IN SEARCH_ENGINE
-            # self.semantic_encoder = SemanticEncoder()
-            print("   ✓ SemanticEncoder (FastEmbed) managed by NeuralSearcher")
+            # Model 3: Semantic (MiniLM) - Re-enabled for Model 4 input
+            print("   ⬇ Initializing FastEmbed for Model 4 inputs...")
+            self.semantic_encoder = TextEmbedding("sentence-transformers/all-MiniLM-L6-v2")
+            print("   ✓ SemanticEncoder (FastEmbed) ready")
             
         except Exception as e:
             print(f"   ⚠ Encoders failed to load: {e}")
@@ -428,8 +430,11 @@ class IncidentPipeline:
             # I will leave semantic_vec as zeros for Model 4 or try to use the searcher client if it exposes 'encode'. 
             # QdrantClient doesn't expose 'encode' easily for ad-hoc vectors without search.
             # EXCEPT: set_model enables it for queries.
-            # Let's just use placeholder zeros for Model 4 to avoid loading the heavy model again.
-            semantic_vec = [0.0] * 384
+            # GENERATE REAL VECTORS FOR MODEL 4 (Conflict Classifier)
+            # Uses the same lightweight "ninja" engine as Qdrant
+            # FastEmbed returns a generator, so we wrap in list() and take the first item
+            semantic_vec = list(self.semantic_encoder.embed([text]))[0].tolist()
+            print(f"   ✓ Semantic: Generated 384-dim vector with FastEmbed")
             
             # === 3.2: Structural Vector (Model 1: GNN) ===
             # Encodes network topology as 64-dim vector
@@ -621,7 +626,9 @@ class IncidentPipeline:
                     ], dtype=np.float32)
                     
                     # Predict outcome with Model 5
-                    X_combined = np.concatenate([incident_context, resolution_vec]).reshape(1, -1)
+                    # Fix: Model was trained only on resolution features (8 dims), not full context (520 dims)
+                    # We pass only resolution_vec to match the checkpoint's expectation
+                    X_combined = resolution_vec.reshape(1, -1)
                     predicted_success = self.outcome_predictor.predict_batch(X_combined)[0]
                     
                     # Add prediction to recommendation
@@ -770,67 +777,109 @@ class IncidentPipeline:
         
         return recommendations
 # =====================================================================
-# === STANDALONE TEST (Run this file directly) ===
+# === CLI Interface (Run pipeline from command line) ===
 # =====================================================================
 if __name__ == "__main__":
-    print("\n" + "=" * 70)
-    print("🚄 Neural Rail Conductor - Integration Pipeline Test")
-    print("=" * 70)
+    import argparse
+    import json
     
-    # === STEP 1: Initialize Pipeline ===
-    # NEXT STEP: All components loaded
+    # Fix Windows console encoding for emoji support
+    if sys.platform == 'win32':
+        import codecs
+        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+        sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+    
+    parser = argparse.ArgumentParser(
+        description="Neural Rail Conductor - Integration Pipeline CLI",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python src/backend/integration.py --text "Signal failure at Central Station"
+  python src/backend/integration.py --text "Track blocked by debris" --json
+  python src/backend/integration.py --demo
+        """
+    )
+    
+    parser.add_argument(
+        '--text',
+        type=str,
+        help='Incident description text to process'
+    )
+    
+    parser.add_argument(
+        '--json',
+        action='store_true',
+        help='Output results as JSON'
+    )
+    
+    parser.add_argument(
+        '--demo',
+        action='store_true',
+        help='Run demo with sample incident'
+    )
+    
+    args = parser.parse_args()
+    
+    # Initialize pipeline
+    print("\n" + "=" * 70)
+    print("🚄 Neural Rail Conductor - Integration Pipeline")
+    print("=" * 70)
     print("\n📦 Initializing pipeline...\n")
     pipeline = IncidentPipeline()
     
-    # === STEP 2: Test with Sample Incident ===
-    # NEXT STEP: Full pipeline execution
-    test_text = """
-    Signal failure at Central Station during morning peak.
-    Heavy rain conditions. 5 trains affected with cascade delays.
-    Platform 3 and 4 blocked. Estimated 25 minute delay.
-    """
-    
-    print("\n" + "=" * 70)
-    print("📋 Processing Test Incident")
-    print("=" * 70)
-    print(f"Input: {test_text.strip()}")
-    
-    # Run the full pipeline
-    result = pipeline.process(test_text)
-    
-    # === STEP 3: Display Results ===
-    # NEXT STEP: Integrate this into your application
-    print("\n" + "=" * 70)
-    print("📊 Results Summary")
-    print("=" * 70)
-    
-    print(f"\n1. PARSED INCIDENT:")
-    print(f"   Failure Code: {result['parsed'].get('primary_failure_code', 'N/A')}")
-    print(f"   Confidence: {result['parsed'].get('confidence', 0):.1%}")
-    
-    print(f"\n2. SIMILAR HISTORICAL CASES:")
-    for i, inc in enumerate(result['similar_incidents'][:3], 1):
-        print(f"   {i}. Match {inc['score']:.1%} {'⭐ (Golden)' if inc['is_golden'] else ''}")
-    
-    print(f"\n3. DETECTED CONFLICTS:")
-    high_conflicts = {k: v for k, v in result['conflicts'].items() if v > 0.5}
-    if high_conflicts:
-        for name, prob in high_conflicts.items():
-            print(f"   ⚠ {name}: {prob:.1%}")
+    # Determine incident text
+    if args.demo or not args.text:
+        incident_text = """
+        Signal failure at Central Station during morning peak.
+        Heavy rain conditions. 5 trains affected with cascade delays.
+        Platform 3 and 4 blocked. Estimated 25 minute delay.
+        """
+        print("📋 Running DEMO mode with sample incident")
     else:
-        print(f"   ✓ No high-risk conflicts")
+        incident_text = args.text
+        print(f"📋 Processing incident: {incident_text[:50]}...")
     
-    print(f"\n4. RECOMMENDED RESOLUTIONS:")
-    for i, rec in enumerate(result['recommendations'][:3], 1):
-        print(f"   {i}. {rec['strategy']} (confidence: {rec['confidence']:.1%})")
-    
+    # Process incident
     print("\n" + "=" * 70)
-    print("✅ Test complete!")
-    print("\nNEXT STEPS:")
-    print("1. Integrate this pipeline into your FastAPI backend")
-    print("2. Create endpoint: POST /api/analyze_incident")
-    print("3. Return this result dict as JSON response")
+    result = pipeline.process(incident_text)
     print("=" * 70)
+    
+    # Output results
+    if args.json:
+        # JSON output mode
+        print("\n" + json.dumps(result, indent=2))
+    else:
+        # Human-readable output
+        print("\n📊 Results Summary")
+        print("=" * 70)
+        
+        print(f"\n1. PARSED INCIDENT:")
+        print(f"   Failure Code: {result['parsed'].get('primary_failure_code', 'N/A')}")
+        print(f"   Confidence: {result['parsed'].get('confidence', 0):.1%}")
+        
+        print(f"\n2. SIMILAR HISTORICAL CASES:")
+        if result['similar_incidents']:
+            for i, inc in enumerate(result['similar_incidents'][:3], 1):
+                print(f"   {i}. Match {inc['score']:.1%} {'⭐ (Golden)' if inc['is_golden'] else ''}")
+        else:
+            print("   No matches found")
+        
+        print(f"\n3. DETECTED CONFLICTS:")
+        high_conflicts = {k: v for k, v in result['conflicts'].items() if v > 0.5}
+        if high_conflicts:
+            for name, prob in high_conflicts.items():
+                print(f"   ⚠ {name}: {prob:.1%}")
+        else:
+            print(f"   ✓ No high-risk conflicts")
+        
+        print(f"\n4. RECOMMENDED RESOLUTIONS:")
+        if result['recommendations']:
+            for i, rec in enumerate(result['recommendations'][:3], 1):
+                print(f"   {i}. {rec['strategy']} (confidence: {rec['confidence']:.1%})")
+        else:
+            print("   No recommendations available")
+        
+        print("\n" + "=" * 70)
 """
 ================================================================================
 📘 DETAILED DOCUMENTATION (For Team Handoff)

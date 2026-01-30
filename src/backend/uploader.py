@@ -28,6 +28,12 @@ import hashlib
 from pathlib import Path
 from typing import List, Dict
 from dotenv import load_dotenv
+
+# Fix Windows console encoding
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
 # =====================================================================
 # === STEP 1: Setup Paths and Environment ===
 # =====================================================================
@@ -98,21 +104,38 @@ except Exception as e:
     print(f"❌ CRITICAL: Failed to load LSTMEncoder: {e}")
     print("   NEXT STEP: Ensure src/models/cascade/lstm_encoder.py exists")
     raise e
-# === STEP 3C: Load Model 3 (Semantic Encoder) with Fallback ===
+# === STEP 3C: Load Model 3 (Semantic Encoder) ===
 # Generates 384-dim text embeddings from incident descriptions
-# NEXT STEP: SemanticEncoder is available (or dummy version if import fails)
+# NEXT STEP: SemanticEncoder is available (compatible with FastEmbed)
 try:
-    from src.models.semantic_encoder import SemanticEncoder
+    from fastembed import TextEmbedding
+    import numpy as np
+    
+    class SemanticEncoderWrapper:
+        def __init__(self, model_name="sentence-transformers/all-MiniLM-L6-v2"):
+            self.model = TextEmbedding(model_name=model_name)
+            
+        def encode(self, text):
+            # Wrapper to match expected interface (text -> tensor/array)
+            # FastEmbed expects list of strings
+            if isinstance(text, str):
+                text = [text]
+            # Returns generator, convert to list -> numpy -> torch tensor-like behavior
+            embeddings = list(self.model.embed(text))
+            return np.array(embeddings[0]) # Return vector for single input
+
+    SemanticEncoder = SemanticEncoderWrapper
     SEMANTIC_AVAILABLE = True
-    print("✅ Loaded SemanticEncoder (Model 3: Semantic)")
-except (ImportError, ValueError) as e:
-    print(f"⚠️ SemanticEncoder import failed: {e}")
+    print("✅ Loaded FastEmbed (Model 3: Semantic)")
+except Exception as e:
+    print(f"⚠️ FastEmbed import failed: {e}")
     print("   Using dummy fallback (all zeros)")
-    print("   NEXT STEP: Install sentence-transformers: pip install sentence-transformers")
+    print("   NEXT STEP: Install fastembed: pip install fastembed")
     SEMANTIC_AVAILABLE = False
     
     # Dummy fallback class
     class SemanticEncoder:
+        def __init__(self, *args, **kwargs): pass
         def encode(self, text):
             import torch
             return torch.zeros(384)

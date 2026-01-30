@@ -159,15 +159,14 @@ class NeuralSearcher:
                 print(f"❌ DEBUG: Failed to get collection info: {e}")
                 return []
             
-            # Primary search using semantic TEXT to FastEmbed (most important)
+            # Primary search using semantic TEXT to FastEmbed (most important
             try:
                 print(f"🔍 DEBUG: Executing search with semantic_text='{semantic_text[:30]}...'")
-                # UPDATED: Use query() instead of query_points() for FastEmbed
-                # The client will automatically embed the text using set_model()
+                # Use query() for automatic FastEmbed text embedding
+                # The 'using' parameter is removed since FastEmbed handles it via set_model()
                 response = self.client.query(
                     collection_name=self.collection_name,
                     query_text=semantic_text,
-                    using="semantic",
                     query_filter=qdrant_filter,
                     limit=limit * 3
                 )
@@ -189,10 +188,11 @@ class NeuralSearcher:
                 try:
                     resp = self.client.query_points(
                         collection_name=self.collection_name,
-                        query=structural_vec,
+                        query=structural_vec,  # Vector array
                         using="structural",
                         query_filter=qdrant_filter,
-                        limit=limit * 2
+                        limit=limit * 2,
+                        with_payload=True
                     )
                     structural_results = resp.points
                 except Exception:
@@ -202,10 +202,11 @@ class NeuralSearcher:
                 try:
                     resp = self.client.query_points(
                         collection_name=self.collection_name,
-                        query=temporal_vec,
+                        query=temporal_vec,  # Vector array
                         using="temporal",
                         query_filter=qdrant_filter,
-                        limit=limit * 2
+                        limit=limit * 2,
+                        with_payload=True
                     )
                     temporal_results = resp.points
                 except Exception:
@@ -261,13 +262,21 @@ class NeuralSearcher:
                 
                 if inc_id not in merged:
                     merged[inc_id] = {
-                        "payload": hit.payload or {},
+                        "payload": getattr(hit, "payload", None) or getattr(hit, "metadata", {}),
                         "scores": {"semantic": 0, "structural": 0, "temporal": 0},
                         "weighted_total": 0.0
                     }
                 
                 merged[inc_id]["scores"][vector_name] = hit.score
+                
+                # Handle different object types (ScoredPoint vs QueryResponse)
+                # ScoredPoint has .payload, QueryResponse (FastEmbed) has .metadata
+                payload = getattr(hit, "payload", None) or getattr(hit, "metadata", {})
                 merged[inc_id]["weighted_total"] += hit.score * weight
+                
+                # Merge payload if not already present
+                if not merged[inc_id]["payload"] and payload:
+                    merged[inc_id]["payload"] = payload
         
         # Process each vector's results
         add_hits(semantic_hits, "semantic", self.WEIGHT_SEMANTIC)
