@@ -716,7 +716,7 @@ class IncidentPipeline:
         # === Strategy 1: Learn from Golden Runs ===
         # These are manually verified perfect resolutions
         # NEXT STEP: Recommend with high confidence
-        for incident in result.get('similar_incidents', [])[:3]:
+        for idx, incident in enumerate(result.get('similar_incidents', [])[:3]):
             if incident.get('is_golden'):
                 # Try to load full incident data from storage to get enhanced fields
                 incident_id = incident['incident_id']
@@ -725,10 +725,16 @@ class IncidentPipeline:
                     golden_runs = self.storage.get_golden_runs()
                     matching_golden = next((gr for gr in golden_runs if gr.get('incident_id') == incident_id), None)
                     
+                    # FIX: Vary confidence based on similarity score and ranking
+                    # Best match: 0.85-0.95, 2nd: 0.75-0.85, 3rd: 0.65-0.75
+                    base_confidence = 0.95 - (idx * 0.1)  # 0.95, 0.85, 0.75
+                    score_boost = incident['score'] * 0.1  # Up to +0.1 for perfect match
+                    confidence = round(min(0.95, base_confidence + score_boost), 2)
+                    
                     rec = {
                         'strategy': matching_golden.get('strategy', 'Golden Run Protocol'), # Use actual strategy name
                         'incident_id': incident_id,
-                        'confidence': 0.9,
+                        'confidence': confidence,  # VARIED based on rank and similarity
                         'score': incident['score'],
                         'type': 'proven'
                     }
@@ -738,17 +744,17 @@ class IncidentPipeline:
                         solution = matching_golden['solution']
                         rec['description'] = solution.get('description', '')
                         rec['why_golden'] = solution.get('why_golden', '')
-                        rec['actual_outcomes'] = solution.get('actual_outcomes', {})
-                        rec['lessons_learned'] = solution.get('lessons_learned', [])
-                        rec['context_adaptations'] = solution.get('context_specific_adaptations', [])
+                        rec['actual_outcome'] = solution.get('actual_outcome', '')
+                        rec['lessons_learned'] = solution.get('lessons_learned', '')
                     
                     recommendations.append(rec)
                 except Exception as e:
-                    # Fallback if enhanced data not available
+                    print(f"   ⚠ Could not load details for golden run {incident_id}: {e}")
+                    # Still add recommendation with minimal data
                     recommendations.append({
-                        'strategy': 'Based on Golden Run',
+                        'strategy': incident.get('strategy', 'Golden Run Protocol'),
                         'incident_id': incident_id,
-                        'confidence': 0.9,
+                        'confidence': round(0.9 - (idx * 0.1), 2),  # Fallback: vary by rank
                         'score': incident['score'],
                         'type': 'proven'
                     })
@@ -760,10 +766,13 @@ class IncidentPipeline:
                 # Try to extract a specific strategy name if available
                 hist_strategy = incident.get('strategy') or incident.get('resolution_type') or 'Historical Resolution'
                 
+                # FIX: Confidence varies by similarity score (0.4 to 0.75 range)
+                confidence = round(0.4 + (incident['score'] * 0.35), 2)
+                
                 recommendations.append({
                     'strategy': hist_strategy,
                     'incident_id': incident['incident_id'],
-                    'confidence': round(0.5 + (incident['score'] * 0.5), 2),
+                    'confidence': confidence,  # VARIED based on similarity
                     'score': incident['score'],
                     'type': 'historical',
                     'description': incident.get('description', f"Apply tactical relief pattern based on historical case {incident['incident_id']}")

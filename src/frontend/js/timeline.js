@@ -165,18 +165,48 @@ function updateMetricsSummary(liveStatus) {
         (liveStatus.active_incidents !== undefined) ? liveStatus.active_incidents : 0;
 }
 
+/**
+ * Helper: Count how many trains are actually affected by an incident
+ * Uses real simulation data instead of hardcoded values
+ */
+function countAffectedTrains(incident) {
+    if (!incident || !incident.parsed) return 5; // Fallback
+
+    const affectedStations = incident.parsed.station_ids || [];
+    const affectedSegments = incident.parsed.segment_ids || [];
+
+    // Get current train positions from network view
+    if (window.networkView && window.networkView.getTrains) {
+        const trains = window.networkView.getTrains();
+
+        const affected = trains.filter(train => {
+            const isStationAffected = affectedStations.includes(train.from_station) ||
+                affectedStations.includes(train.to_station) ||
+                affectedStations.includes(train.station_id);
+            const isSegmentAffected = affectedSegments.includes(train.segment_id);
+            return isStationAffected || isSegmentAffected;
+        });
+
+        return Math.max(1, affected.length); // At least 1
+    }
+
+    // Fallback: estimate based on network size
+    const stationCount = affectedStations.length;
+    return Math.max(3, Math.min(10, stationCount * 2));
+}
+
 function showComparisonView(incident, resolution) {
     const container = document.getElementById('comparison-view');
     if (!container) return;
 
     container.classList.remove('hidden');
 
-    // Calculate scenarios
+    // Calculate scenarios using REAL simulation data
     const withoutAI = calculateCascadeScenario(incident, null);
     const withAI = calculateCascadeScenario(incident, resolution);
 
     const timeSaved = withoutAI.total_delay - withAI.total_delay;
-    const improvement = (timeSaved / withoutAI.total_delay) * 100;
+    const improvement = withoutAI.total_delay > 0 ? (timeSaved / withoutAI.total_delay) * 100 : 0;
     const passengersSaved = withoutAI.passengers_affected - withAI.passengers_affected;
 
     // Update metrics
@@ -208,38 +238,59 @@ function hideComparisonView() {
 }
 
 function calculateCascadeScenario(incident, resolution) {
-    const severityDelays = {
-        low: 60,
-        medium: 120,
-        high: 180,
-        critical: 240,
-    };
+    // FIX: Use actual train count instead of hardcoded 8
+    const actualTrainsAffected = countAffectedTrains(incident);
+    const passengersPerTrain = 300; // Average passengers per train
 
-    const baseDelay = severityDelays[incident?.severity || 'medium'] || 120;
+    // FIX: Try to get delay from actual simulation engine first
+    let baseDelayMinutes;
+
+    if (window.simulation && window.simulation.getIncidentProgression) {
+        const progression = window.simulation.getIncidentProgression();
+        baseDelayMinutes = progression.delayMinutes || 15;
+    } else {
+        // Fallback: use severity-based estimate
+        const severityDelays = {
+            low: 8,
+            medium: 15,
+            high: 25,
+            critical: 35,
+        };
+        baseDelayMinutes = severityDelays[incident?.severity || 'medium'] || 15;
+    }
+
+    // Apply multipliers for context
     const cascadeMultiplier = incident?.location?.is_junction ? 1.5 : 1.0;
-    const weatherPenalty = incident?.weather === 'heavy_rain' ? 1.2 : 1.0;
+    const weatherPenalty = incident?.weather === 'heavy_rain' ? 1.3 : 1.0;
 
-    const naturalDelay = baseDelay * cascadeMultiplier * weatherPenalty;
+    const delayPerTrain = baseDelayMinutes * cascadeMultiplier * weatherPenalty;
+    const totalDelay = delayPerTrain * actualTrainsAffected;
 
     if (!resolution) {
-        // Without AI: slower recovery
+        // Without AI: full delay impact
         return {
-            total_delay: Math.round(naturalDelay),
-            trains_affected: 8,
-            passengers_affected: 8 * 300,
-            recovery_time: 90,
+            total_delay: Math.round(totalDelay),
+            trains_affected: actualTrainsAffected,
+            passengers_affected: actualTrainsAffected * passengersPerTrain,
+            recovery_time: Math.round(delayPerTrain * 3), // Recovery takes 3x the delay
         };
     }
 
-    // With AI: faster recovery based on resolution effectiveness
+    // FIX: With AI - effectiveness varies the reduction significantly
     const effectiveness = resolution.expected_outcome || 0.65;
-    const reduction = effectiveness;
+
+    // Better resolutions reduce MORE delay and affect FEWER trains
+    const delayReduction = effectiveness; // 0.5 to 0.95 range
+    const trainReduction = effectiveness * 0.7; // Slightly less reduction in train count
+
+    const reducedTrains = Math.max(1, Math.ceil(actualTrainsAffected * (1 - trainReduction)));
+    const reducedDelay = totalDelay * (1 - delayReduction);
 
     return {
-        total_delay: Math.round(naturalDelay * (1 - reduction)),
-        trains_affected: Math.ceil(8 * (1 - reduction)),
-        passengers_affected: Math.ceil(8 * 300 * (1 - reduction)),
-        recovery_time: Math.round(90 * (1 - reduction)),
+        total_delay: Math.round(reducedDelay),
+        trains_affected: reducedTrains,
+        passengers_affected: reducedTrains * passengersPerTrain,
+        recovery_time: Math.round(delayPerTrain * (1 - effectiveness) * 2),
     };
 }
 

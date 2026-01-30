@@ -374,14 +374,28 @@ class MemoryUploader:
         if 'station_ids' in incident:
             station_ids = incident['station_ids']
         elif 'location' in incident and isinstance(incident['location'], dict):
+            # Check for station_ids array inside location
             station_ids = incident['location'].get('station_ids', [])
+            
+            # FIX: Golden runs use from_station/to_station format
+            if not station_ids:
+                from_stn = incident['location'].get('from_station')
+                to_stn = incident['location'].get('to_station')
+                station_ids = [s for s in [from_stn, to_stn] if s]
         elif 'location_id' in incident:
             station_ids = [incident['location_id']]
         
         # Fallback: extract STN_XXX from text
-        if not station_ids and 'log' in incident:
-            matches = re.findall(r'STN_\d+', incident['log'])
-            station_ids = list(set(matches))
+        # FIX: Also check 'description' field (used by golden runs)
+        if not station_ids:
+            text_to_search = incident.get('log', '') or incident.get('description', '')
+            if text_to_search:
+                matches = re.findall(r'STN_\d+', text_to_search)
+                station_ids = list(set(matches))
+        
+        # CRITICAL FIX: Save station_ids back to incident dict!
+        # Without this, they're only used for GNN but not saved to Qdrant payload
+        incident['station_ids'] = station_ids
         
         # Load real data
         all_stations = self.storage.load_json('network/stations.json') or []

@@ -204,15 +204,17 @@ class FeedbackRequest(BaseModel):
     """
     incident_id: str
     resolution_id: str
-    rating: int  # 1-5
+    operator_rating: int  # 1-5 (changed from 'rating' to match frontend)
+    execution_success: bool  # Added to match frontend
     notes: Optional[str] = None
     
     class Config:
         json_schema_extra = {
             "example": {
-                "incident_id": "inc_123",
-                "resolution_id": "res_A",
-                "rating": 5,
+                "incident_id": "Signal failure at Central Station",
+                "resolution_id": "HOLD_UPSTREAM",
+                "operator_rating": 5,
+                "execution_success": True,
                 "notes": "Great resolution!"
             }
         }
@@ -440,9 +442,12 @@ async def submit_feedback(request: FeedbackRequest):
     print(f"\n📩 RECEIVED FEEDBACK:")
     print(f"   Incident: {request.incident_id}")
     print(f"   Strategy: {request.resolution_id}")
-    print(f"   Rating:   {'⭐' * request.rating} ({request.rating}/5)")
+    print(f"   Rating:   {'⭐' * request.operator_rating} ({request.operator_rating}/5)")
+    print(f"   Success:  {'✅' if request.execution_success else '❌'}")
     if request.notes:
         print(f"   Notes:    {request.notes}")
+    
+    # TODO: Persist to database/file for model training
     
     return {"status": "success", "message": "Feedback received. The AI will learn from this."}
 

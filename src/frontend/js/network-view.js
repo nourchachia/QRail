@@ -600,7 +600,7 @@ function renderTrains(trains, segments, stations) {
 
     enterGroups.append('polygon')
         .attr('class', 'train-body')
-        .attr('points', '12,0 -8,6 -8,-6')
+        .attr('points', '-8,-6 8,-6 8,6 -8,6')
         .attr('fill', d => getTrainColor(d.status, d.delay))
         .attr('stroke', '#fff')
         .attr('stroke-width', 2);

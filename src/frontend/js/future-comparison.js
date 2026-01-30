@@ -309,6 +309,7 @@ class FutureComparison {
 
     /**
      * Calculate simulation state at a given time offset
+     * FIX: Make each resolution different based on effectiveness
      */
     calculateSimulationState(scenario, timeOffsetMinutes) {
         const incident = this.incident;
@@ -317,33 +318,54 @@ class FutureComparison {
         let delayMultiplier = 1.0;
 
         if (scenario === 'baseline') {
-            // Baseline: delays keep growing
+            // Baseline: delays keep growing (no intervention)
             if (timeOffsetMinutes <= 15) {
                 delayMultiplier = 1 + (timeOffsetMinutes / 15) * 1.5;
             } else {
                 delayMultiplier = 2.5 + (timeOffsetMinutes - 15) / 25;
             }
         } else {
-            // Resolutions: faster recovery
+            // FIX: Resolutions differ based on expected_outcome quality
             const resolutionIdx = scenario === 'resolutionA' ? 0 : scenario === 'resolutionB' ? 1 : 2;
             const resolution = this.resolutions[resolutionIdx];
 
-            // Recovery starts immediately, peaks lower, decays faster
-            const peakTime = 8;
-            const peakDelay = 1.8;
-            const decayRate = 0.12;
+            // Extract quality from resolution (0.5 to 0.95 range)
+            const effectiveness = resolution?.expected_outcome || resolution?.confidence || 0.65;
+
+            // Better resolutions have:
+            // - Earlier peak (faster intervention)
+            // - Lower peak (less max delay)
+            // - Faster decay (quicker recovery)
+            const peakTime = 12 - (effectiveness * 4);        // 8-12 minutes (better = earlier)
+            const peakDelay = 2.0 - (effectiveness * 0.8);    // 1.2-2.0x (better = lower)
+            const decayRate = 0.08 + (effectiveness * 0.08);  // 0.08-0.16 (better = faster)
 
             if (timeOffsetMinutes <= peakTime) {
+                // Growth phase to peak
                 delayMultiplier = 1 + (timeOffsetMinutes / peakTime) * peakDelay;
             } else {
+                // Decay phase after intervention
                 delayMultiplier = (1 + peakDelay) * Math.exp(-decayRate * (timeOffsetMinutes - peakTime));
             }
         }
 
-        // Calculate affected trains and delays
-        const baseDelay = 12; // Base delay in minutes
+        // FIX: Use actual incident data for train count
+        const baseAffectedTrains = this.incident?.parsed?.station_ids?.length > 0
+            ? this.incident.parsed.station_ids.length * 2  // Estimate: 2 trains per affected station
+            : 5;  // Fallback
+
+        // FIX: Base delay from incident or simulation
+        let baseDelay = 15; // Default
+        if (window.simulation && window.simulation.getIncidentProgression) {
+            const progression = window.simulation.getIncidentProgression();
+            baseDelay = progression.delayMinutes || 15;
+        } else if (this.incident?.severity) {
+            const severityMap = { low: 8, medium: 15, high: 25, critical: 35 };
+            baseDelay = severityMap[this.incident.severity] || 15;
+        }
+
         const avgDelay = baseDelay * delayMultiplier;
-        const affectedTrains = Math.min(6, Math.ceil(delayMultiplier * 4));
+        const affectedTrains = Math.max(1, Math.min(baseAffectedTrains, Math.ceil(delayMultiplier * baseAffectedTrains / 2)));
 
         return {
             avgDelay: Math.max(0, avgDelay),
