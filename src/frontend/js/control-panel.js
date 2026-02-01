@@ -269,6 +269,16 @@ async function analyzeIncident(text, scenario = null) {
 
         // Display results
         displaySimilarCases(result.similar_incidents || []);
+
+        // Display Model 4 conflict predictions
+        if (result.conflicts && Object.keys(result.conflicts).length > 0) {
+            if (window.displayConflictTypes) {
+                window.displayConflictTypes(result.conflicts);
+            } else {
+                console.warn('⚠️ displayConflictTypes not loaded yet');
+            }
+        }
+
         displayResolutionOptions(result.recommendations || []);
 
         // Show Anomaly Warning if detected
@@ -661,6 +671,13 @@ function hideResults() {
     document.getElementById('similar-cases').classList.add('hidden');
     document.getElementById('resolution-options').classList.add('hidden');
     document.getElementById('feedback-form').classList.add('hidden');
+
+    // Hide conflicts section if it exists
+    const conflictsSection = document.getElementById('conflicts-section');
+    if (conflictsSection) {
+        conflictsSection.classList.add('hidden');
+    }
+
     hideAnomalyWarning();
     window.timeline.hideComparison();
 }
@@ -717,7 +734,7 @@ function hideAnomalyWarning() {
  */
 async function submitFeedback(feedbackType, incidentText) {
     console.log('📤 Submitting feedback:', feedbackType, 'for:', incidentText?.substring(0, 50));
-    
+
     const feedback = {
         incident_id: (incidentText || "").substring(0, 100),
         resolution_id: "ANOMALY_" + feedbackType.toUpperCase(),
