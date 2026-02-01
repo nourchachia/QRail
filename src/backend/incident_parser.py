@@ -57,18 +57,25 @@ class IncidentParser:
         data_dir: str = "data",
         api_key: Optional[str] = None
     ):
-        """Initialize incident parser."""
-        self.data_dir = Path(data_dir)
-        self.api_key = api_key
-        self.storage = StorageManager(data_dir=data_dir)
+        """
+        Initialize incident parser.
         
-        # Configure Gemini
-        if self.api_key and GEMINI_AVAILABLE:
-            try:
-                genai.configure(api_key=self.api_key)
-                logger.info("GenAI configured successfully")
-            except Exception as e:
-                logger.error(f"Failed to configure GenAI: {e}")
+        Args:
+            data_dir: Data directory path
+            api_key: Gemini API key (or set GEMINI_API_KEY env var)
+        """
+        self.storage = StorageManager(data_dir=data_dir)
+        self.api_key = api_key
+        
+        if GEMINI_AVAILABLE:
+            if api_key:
+                genai.configure(api_key=api_key)
+            elif hasattr(genai, 'configure'):
+                # Try to use default API key from environment
+                try:
+                    genai.configure()
+                except Exception as e:
+                    logger.warning(f"Gemini API key not configured: {e}")
     
     def _load_live_status(self) -> Dict[str, Any]:
         """Load live_status.json to get weather and network load"""
@@ -77,75 +84,68 @@ class IncidentParser:
             if not live_status:
                 raise ValueError("live_status.json is empty or missing")
             
-            # Extract weather and load strictly - NO DEFAULTS / GUESSES
+            # Extract weather and load
             weather = live_status.get("weather", {})
-            network_load = live_status.get("network_load_pct") # default None
+            network_load = live_status.get("network_load_pct", 50)
             
             return {
-                "weather_condition": weather.get("condition"),
-                "temperature_c": weather.get("temperature_c"),
-                "wind_speed_kmh": weather.get("wind_speed_kmh"),
-                "visibility_km": weather.get("visibility_km"),
-                "network_load_pct": network_load,
-                "active_trains": live_status.get("active_trains", []),
-                "data_source": "Live status sensors (data/processed/live_status.json)"
+                "weather_condition": weather.get("condition", "clear"),
+                "temperature_c": weather.get("temperature_c", 20),
+                "wind_speed_kmh": weather.get("wind_speed_kmh", 10),
+                "visibility_km": weather.get("visibility_km", 10.0),
+                "network_load_pct": network_load
             }
         except Exception as e:
             logger.warning(f"Failed to load live_status.json: {e}")
             return {
-                "weather_condition": None,
-                "temperature_c": None,
-                "wind_speed_kmh": None,
-                "visibility_km": None,
-                "network_load_pct": None,
-                "active_trains": [],
-                "data_source": "VERIFICATION FAILED: Data missing from database (No guess allowed)"
+                "weather_condition": "clear",
+                "temperature_c": 20,
+                "wind_speed_kmh": 10,
+                "visibility_km": 10.0,
+                "network_load_pct": 50
             }
     
     def _create_prompt(self, description: str, context: Dict[str, Any]) -> str:
-        """Create Gemini prompt with live telemetry context."""
+        """
+        Create Gemini prompt for precise extraction.
         
-        # Format active train data for the prompt
-        trains_summary = ""
-        for t in context.get('active_trains', []):
-            pos = t['cur_pos']
-            loc = pos.get('station_id') or pos.get('segment')
-            trains_summary += f"- {t['train_id']} at {loc} ({t['cur_delay']}m delay)\n"
-            
-        prompt = f"""You are a railway incident analysis system. 
-Directly use the LIVE NETWORK STATE below to identify which specific trains are affected.
+        Args:
+            description: Natural language incident description
+            context: Weather and load context from live_status.json
+        
+        Returns:
+            Formatted prompt string
+        """
+        prompt = f"""You are a railway incident analysis system. Extract precise information from the incident description.
 
 INCIDENT DESCRIPTION:
 {description}
 
 CURRENT NETWORK CONTEXT:
 - Weather: {context['weather_condition']}
-- Network Load: {context['network_load_pct']}%
+- Temperature: {context['temperature_c']}°C
+- Wind Speed: {context['wind_speed_kmh']} km/h
 - Visibility: {context['visibility_km']} km
-
-LIVE NETWORK STATE (Active Trains):
-{trains_summary or "No active trains."}
+- Network Load: {context['network_load_pct']}%
 
 REQUIRED OUTPUT (JSON format):
 {{
     "estimated_delay_minutes": <integer, 0-300>,
-    "segment_ids": ["list", "of", "segment_ids", "e.g.", "S1"],
-    "primary_failure_code": "<one of the 8 codes below>",
-    "station_names": ["list", "of", "mentioned", "stations"],
-    "train_id": "<ID of the most affected train>",
+    "primary_failure_code": "<standardized code>",
     "confidence": <float, 0.0-1.0>,
-    "reasoning": "<explanation>"
+    "reasoning": "<brief explanation>"
 }}
 
-FAILURE CODE STANDARDS (Choose one):
-- HEADWAY_VIOLATION
-- PLATFORM_OVERSUBSCRIPTION
-- CREW_SHORTAGE
-- SIGNAL_QUEUE
-- POWER_SUPPLY
-- TRACK_CAPACITY
-- WEATHER_SAFETY
-- EQUIPMENT_FAILURE
+FAILURE CODE STANDARDS:
+- SIGNAL_FAIL: Signal system failure
+- TRAIN_BREAKDOWN: Train mechanical failure
+- PASSENGER_ALARM: Passenger emergency alarm
+- WEATHER_SEVERE: Severe weather conditions
+- INFRASTRUCTURE_FAULT: Track/infrastructure fault
+- POWER_OUTAGE: Electrical power failure
+- SWITCH_FAILURE: Point/switch mechanism failure
+- COMMUNICATION_LOSS: Communication system failure
+- UNKNOWN: Unable to determine
 
 DELAY ESTIMATION GUIDELINES:
 - Signal failure: 15-60 minutes (depending on severity)
@@ -186,117 +186,15 @@ Output ONLY valid JSON, no additional text."""
         # Load context from live_status.json
         context = self._load_live_status()
         
-        # Try Gemini first (Smarter)
         if use_gemini and GEMINI_AVAILABLE:
             try:
                 return self._parse_with_gemini(description, context)
             except Exception as e:
-                logger.warning(f"Gemini parsing failed, falling back to patterns: {e}")
-                # Fallback to pattern matching (Reliable)
-                return self._parse_with_patterns(description, context)
-        
-        # Default to pattern matching if Gemini disabled/unavailable
-        result = self._parse_with_patterns(description, context)
-        
-        # CRITICAL: Preserve original description for Semantic Encoder
-        result['semantic_description'] = description
-        return result
-    
-    def _parse_with_patterns(
-        self, 
-        description: str, 
-        context: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-        Parse using regex patterns - WORKS WITHOUT GEMINI
-        
-        Extracts:
-        - Station names (e.g., "Central Station", "STN_001")
-        - Train IDs (e.g., "EXP_013", "Train REG_045")
-        - Failure codes (signal, breakdown, weather, etc.)
-        - Delay estimates from numbers in text
-        """
-        import re
-        
-        description_lower = description.lower()
-        
-        # === Extract Station Names ===
-        station_names = []
-        # Pattern: "at [Station Name]" or "near [Station]" or "STN_XXX"
-        station_patterns = [
-            r'(?:at|near|from|to)\s+([A-Z][a-zA-Z\s]+(?:Station|Hub|Junction))',  # "at Central Station"
-            r'(STN_\d+)',  # "STN_001"
-            r'(?:station|hub)\s+([A-Z]\d+)',  # "Station A5"
-        ]
-        for pattern in station_patterns:
-            matches = re.findall(pattern, description)
-            station_names.extend(matches)
-        
-        # === Extract Train ID ===
-        train_id = None
-        train_patterns = [
-            r'([A-Z]{3}_\d+)',  # "EXP_013", "REG_045"
-            r'Train\s+([A-Z0-9]+)',  # "Train EXP013"
-            r'train\s+#?(\d+)',  # "train #123"
-        ]
-        for pattern in train_patterns:
-            match = re.search(pattern, description, re.IGNORECASE)
-            if match:
-                train_id = match.group(1)
-                break
-        
-        # === Detect Failure Code ===
-        failure_keywords = {
-            'SIGNAL_FAIL': ['signal', 'signaling', 'signal system', 'red signal'],
-            'TRAIN_BREAKDOWN': ['breakdown', 'stalled', 'mechanical', 'engine', 'broke down'],
-            'PASSENGER_ALARM': ['alarm', 'emergency alarm', 'passenger emergency'],
-            'WEATHER_SEVERE': ['weather', 'rain', 'snow', 'storm', 'wind', 'fog'],
-            'INFRASTRUCTURE_FAULT': ['track', 'rail', 'infrastructure', 'switch failure'],
-            'POWER_OUTAGE': ['power', 'electrical', 'outage', 'electricity'],
-            'SWITCH_FAILURE': ['switch', 'point', 'junction failure'],
-            'COMMUNICATION_LOSS': ['communication', 'radio', 'connection lost'],
-        }
-        
-        primary_failure_code = 'UNKNOWN'
-        for code, keywords in failure_keywords.items():
-            if any(kw in description_lower for kw in keywords):
-                primary_failure_code = code
-                break
-        
-        # === Extract Delay Estimate ===
-        delay_patterns = [
-            r'(\d+)\s*min',  # "20min", "20 min"
-            r'(\d+)\s*minute',  # "20 minutes"
-            r'delay.*?(\d+)',  # "delay of 30"
-            r'(\d+).*?delay',  # "30 minute delay"
-        ]
-        
-        estimated_delay = 30  # Default
-        for pattern in delay_patterns:
-            match = re.search(pattern, description_lower)
-            if match:
-                estimated_delay = int(match.group(1))
-                break
-        
-        # === Build Result ===
-        result = {
-            'estimated_delay_minutes': estimated_delay,
-            'primary_failure_code': primary_failure_code,
-            'station_names': list(set(station_names)),  # Remove duplicates
-            'train_id': train_id,
-            'confidence': 0.75 if primary_failure_code != 'UNKNOWN' else 0.5,
-            'reasoning': f"Pattern-based parsing (Gemini quota exhausted). Detected: {primary_failure_code}, ~{estimated_delay}min delay",
-            'weather': {
-                'condition': context['weather_condition'],
-                'temperature_c': context['temperature_c'],
-                'wind_speed_kmh': context['wind_speed_kmh'],
-                'visibility_km': context['visibility_km']
-            },
-            'network_load_pct': context['network_load_pct'],
-            'semantic_description': description  # CRITICAL: Preserve for embedding
-        }
-        
-        return result
+                logger.error(f"Gemini parsing failed: {e}, falling back to rule-based")
+                print(f"\n❌ GEMINI ERROR: {str(e)}\n")  # Force visible log
+                return self._parse_fallback(description, context)
+        else:
+            return self._parse_fallback(description, context)
     
     def _parse_with_gemini(
         self, 
@@ -306,29 +204,19 @@ Output ONLY valid JSON, no additional text."""
         """Parse using Gemini AI"""
         import google.generativeai as genai
         
-        # Create the prompt 🧠
-        prompt = self._create_prompt(description, context)
-        
-        # Try multiple models in order of preference (using ONLY free tier models)
-        # NOTE: gemini-2.5-pro causes quota exceeded; use flash models instead
-        models_to_try = [
-            'gemini-2.0-flash',         # Primary - Latest free tier, high speed
-            'gemini-2.0-flash-latest',  # Alternative naming
-            'gemini-1.5-flash',         # Fallback - High speed, lower cost
-            'gemini-1.5-pro',           # More capable fallback (may have limits)
-        ]
+        # Try multiple models in order of preference
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
         response = None
         last_error = None
-        
+        prompt = self._create_prompt(description, context)
         for model_name in models_to_try:
             try:
                 model = genai.GenerativeModel(model_name)
                 response = model.generate_content(prompt)
-                print(f"   ✓ Used Model: {model_name}")
                 break # Success!
             except Exception as e:
                 last_error = e
-                # Don't log warning for expected 404s on fallback trial
+                logger.warning(f"Model {model_name} failed: {e}")
                 continue
                 
         if not response:
@@ -337,15 +225,11 @@ Output ONLY valid JSON, no additional text."""
         # Extract JSON from response
         response_text = response.text.strip()
         
-        # Robust JSON extraction: Find the first '{' and the last '}'
-        start_idx = response_text.find('{')
-        end_idx = response_text.rfind('}')
-        
-        if start_idx != -1 and end_idx != -1:
-            response_text = response_text[start_idx : end_idx + 1]
-        else:
-            logger.warning(f"No JSON object found in response: {response_text[:100]}...")
-            # Let JSON decoder fail and trigger fallback if really invalid
+        # Try to extract JSON if wrapped in markdown
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
         
         # Parse JSON
         try:
@@ -353,8 +237,7 @@ Output ONLY valid JSON, no additional text."""
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse Gemini JSON response: {e}")
             logger.debug(f"Response text: {response_text}")
-            # FIX: Call the correct pattern matching method
-            return self._parse_with_patterns(description, context)
+            return self._parse_fallback(description, context)
         
         # Add context data
         result["weather"] = {
@@ -364,11 +247,74 @@ Output ONLY valid JSON, no additional text."""
             "visibility_km": context["visibility_km"]
         }
         result["network_load_pct"] = context["network_load_pct"]
-        result["semantic_description"] = description # CRITICAL: Preserve for embedding
         
         return result
     
-    # LEGACY FALLBACK DELETED - ZERO GUESSING POLICY ENFORCED
+    def _parse_fallback(
+        self, 
+        description: str, 
+        context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """
+        Fallback rule-based parsing when Gemini is unavailable.
+        
+        Uses keyword matching and heuristics.
+        """
+        description_lower = description.lower()
+        
+        # Determine failure code
+        failure_code = "UNKNOWN"
+        if "signal" in description_lower:
+            failure_code = "SIGNAL_FAIL"
+        elif "breakdown" in description_lower or "mechanical" in description_lower:
+            failure_code = "TRAIN_BREAKDOWN"
+        elif "alarm" in description_lower or "passenger" in description_lower:
+            failure_code = "PASSENGER_ALARM"
+        elif "weather" in description_lower or "storm" in description_lower or "snow" in description_lower:
+            failure_code = "WEATHER_SEVERE"
+        elif "infrastructure" in description_lower or "track" in description_lower:
+            failure_code = "INFRASTRUCTURE_FAULT"
+        elif "power" in description_lower:
+            failure_code = "POWER_OUTAGE"
+        elif "switch" in description_lower:
+            failure_code = "SWITCH_FAILURE"
+        
+        # Estimate delay (heuristic)
+        base_delay = 30
+        if failure_code == "SIGNAL_FAIL":
+            base_delay = 45
+        elif failure_code == "TRAIN_BREAKDOWN":
+            base_delay = 60
+        elif failure_code == "PASSENGER_ALARM":
+            base_delay = 15
+        elif failure_code == "WEATHER_SEVERE":
+            base_delay = 40
+        elif failure_code == "INFRASTRUCTURE_FAULT":
+            base_delay = 90
+        
+        # Adjust for network load
+        load_multiplier = 1.0 + (context["network_load_pct"] / 100) * 0.3
+        estimated_delay = int(base_delay * load_multiplier)
+        
+        # Adjust for weather
+        if context["weather_condition"] in ["storm", "snow"]:
+            estimated_delay = int(estimated_delay * 1.5)
+        
+        return {
+            "estimated_delay_minutes": estimated_delay,
+            "primary_failure_code": failure_code,
+            "confidence": 0.6,  # Lower confidence for rule-based
+            "reasoning": "Rule-based parsing (Gemini unavailable)",
+            "weather": {
+                "condition": context["weather_condition"],
+                "temperature_c": context["temperature_c"],
+                "wind_speed_kmh": context["wind_speed_kmh"],
+                "visibility_km": context["visibility_km"]
+            },
+            "network_load_pct": context["network_load_pct"],
+            "station_ids": ["STN_001"] if "central" in description_lower else [],
+            "is_junction": False
+        }
     
     def parse_incident(
         self, 
